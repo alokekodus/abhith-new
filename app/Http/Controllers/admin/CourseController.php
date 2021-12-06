@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Chapter;
 use App\Common\Activation;
 use App\Common\BadWords;
+use Illuminate\Support\Facades\Crypt;
 
 class CourseController extends Controller
 {
@@ -120,7 +121,6 @@ class CourseController extends Controller
                     'subject_id' => $request->subject_id,
                     'course_pic' => $imgFile,
                     'course_video' => $videoFile,
-                    'course_video_thumbnail' => $videoThumbnailFile,
                     'durations' => $request->duration.' '.$request->duration_type,
                     'publish_date' => Carbon::parse($request->publish_date.$request->publish_time)->format('Y-m-d H:i:s'),
                     'time' => Carbon::parse($request->publish_time)->format('H:i:s'),
@@ -154,7 +154,7 @@ class CourseController extends Controller
 
     protected function editCourse(Request $request)
     {
-        $course_id = \Crypt::decrypt($request->id);
+        $course_id = Crypt::decrypt($request->id);
 
         $course = Course::find($course_id);
 
@@ -163,7 +163,7 @@ class CourseController extends Controller
 
     protected function edit(Request $request)
     {
-        $course_id = \Crypt::decrypt($request->id);
+        $course_id = Crypt::decrypt($request->id);
         $document = $request->pic;
         $course = Course::where('id', $course_id)->first();
 
@@ -205,7 +205,7 @@ class CourseController extends Controller
     protected function chapterPrice(Request $request)
     {
         # code...
-        $course_id = \Crypt::decrypt($request->id);
+        $course_id = Crypt::decrypt($request->id);
         $Total_price = Course::where([['is_activate',Activation::Activate],['id',$course_id]])->with('priceList')->first();
         // dd($Total_price['priceList']);
         $price = [];

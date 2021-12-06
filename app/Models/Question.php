@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
+
+    protected $table = "questions";
+    protected $guarded = [];
+
+    public function set(){
+        return $this->belongsTo('App\Models\Set');
+    }
 }

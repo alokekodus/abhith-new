@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-7">
-                <h2 class="heading-black">All Course</h2>
+                <h2 class="heading-black">All Courses</h2>
             </div>
             <div class="col-lg-5 p0">
                 <ul class="list-inline course-btn-list">

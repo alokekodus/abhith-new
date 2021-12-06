@@ -28,14 +28,17 @@
                     <thead>
                         <tr>
                             <th> # </th>
+                            <th>Set Name</th>
                             <th> Subject Name </th>
                             <th> Active Status </th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                        @forelse ($getMultipleChoice as $key => $mcq)
                             <tr>
                                 <td>{{$key + 1}}</td>
+                                <td>{{$mcq->set_name}}</td>
                                 <td>{{$mcq->subject->name}}</td>
                                 <td>
                                     @if ($mcq->is_activate == 1)
@@ -49,6 +52,9 @@
                                             <span class="slider round"></span>
                                         </label>
                                     @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('admin.view.edit.mcq.question',['id' => \Crypt::encrypt($mcq->id)])}}" data-toggle="tooltip" data-placement="top" title="Edit Mcq" class="btn mr-2 btn-gradient-primary btn-rounded btn-icon anchor_rounded"><i class="mdi mdi-pencil-outline"></i></a>
                                 </td>
                             </tr>
                        @empty
