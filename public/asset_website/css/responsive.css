@@ -1,0 +1,506 @@
+@media only screen and (min-width: 1024px) {}
+
+@media only screen and (max-width: 1023px) {}
+
+@media only screen and (min-width: 1024px) and (max-width: 1024px) {}
+
+@media only screen and (min-width: 1440px) and (max-width: 1440px) {}
+
+@media only screen and (min-width: 1280px) and (max-width: 1280px) {}
+
+@media only screen and (min-width: 1900px) and (max-width: 1920px) {}
+
+@media only screen and (min-width: 767px) and (max-width: 1023px) {}
+
+@media (max-width: 767px) {
+
+    .testimonial,
+    .professionals {
+        margin: 0px 15px;
+        padding: 15px 0px;
+    }
+
+    .about-us,
+    .home-courses,
+    .subheader {
+        margin: 0px 0px;
+        padding: 15px 0px;
+    }
+
+    .blogs {
+        margin: 15px 0px;
+    }
+
+    .about-us1,
+    .counter {
+        margin: 0px 0px;
+        padding: 0px 0px;
+    }
+
+    .home-banner,
+    footer {
+        margin: 0px 15px;
+    }
+
+    .upcoming-course {
+        margin: 0px 0px;
+    }
+
+    .top-header {
+        padding: 10px 0px;
+    }
+
+    #header {
+        padding: 0px 15px;
+        top: 73px;
+    }
+
+    .header-social li {
+        margin: 0px 2px;
+    }
+
+    .login-details {
+        float: left;
+        width: 100%;
+        padding: 3px 0px;
+    }
+
+    .login-details li:first-child {
+        margin-right: 30px;
+        width: 70%;
+    }
+
+    main {
+        margin-top: 150px;
+    }
+
+    /*    owl-slider*/
+    .home-banner .owl-slider {
+        height: 150px;
+    }
+
+    #carousel-banner {
+        height: 100%;
+    }
+
+    #carousel-banner .home-slide {
+        height: 100%;
+    }
+
+    .home-desc {
+        width: 100%;
+        padding: 10px 15px;
+    }
+
+    .banner-para {
+        display: none;
+    }
+
+    .heading-black,
+    .heading-white,
+    .heading-blue {
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+    .about-right {
+        padding: 30px 15px;
+    }
+
+    .courses-list li {
+        width: 100%;
+        margin: 15px 0px;
+    }
+
+    .cross-line2 {
+        width: 70%;
+    }
+
+    .knowledge {
+        margin: 15px 15px;
+        padding: 20px 15px 100px 15px;
+    }
+
+    .blog-list li {
+        width: 100%;
+        border: none !important;
+    }
+
+    .blog-list li:first-child,
+    .blog-list li:nth-child(2),
+    .blog-list li:last-child {
+        padding: 0px 15px;
+    }
+
+    .view {
+        right: 15px;
+        top: -157px;
+        padding: 10px 5px;
+    }
+
+    .footer-logo {
+        margin: 15px 0px;
+    }
+
+    .footer-top {
+        padding-bottom: 0px;
+    }
+
+    .footer-image-list li {
+        width: 15%;
+        height: 50px;
+    }
+
+    .footer-first,
+    .footer-second {
+        margin-bottom: 10px;
+    }
+
+    .footer-menu-list {
+        display: inline-block
+    }
+
+    .footer-menu-list li {
+        width: 100% !important;
+        list-style-type: disc !important;
+    }
+
+    .p0 {
+        padding: 0px 15px;
+    }
+
+    .footer-mid-right {
+        margin: 10px 0px;
+    }
+
+    .knowledge-header-section {
+        top: 45px;
+        padding: 5px 0px;
+    }
+
+    .knowledge-header-list li:first-child {
+        width: 16%;
+    }
+
+    .knowledge-header-list li:nth-child(2) {
+        width: 50%;
+        margin-right: 4px;
+    }
+
+    .knowledge-header-list li:last-child {
+        width: 32%;
+        margin-right: 0px;
+    }
+
+    .add-post {
+        padding: 10px 15px;
+    }
+
+    .counter-list li:first-child,
+    .counter-list li:nth-child(2),
+    .counter-list li:nth-child(3) {
+        width: 100%;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .counter-list li {
+        margin-top: 0px;
+    }
+
+    .counter-list li:nth-child(3) {
+        padding: 15px 15px;
+    }
+
+    .projectFactsWrap .item:first-child,
+    .projectFactsWrap .item:nth-child(2),
+    .projectFactsWrap .item:nth-child(3) {
+        width: 100%;
+    }
+
+    .icon1 {
+        left: 38%;
+    }
+
+    .icon2 {
+        left: 38%;
+    }
+
+    .icon3 {
+        left: 38%;
+    }
+
+    .moto {
+        margin: 0px 15px;
+    }
+
+    .moto-list li:first-child,
+    .moto-list li:last-child {
+        border-right: none;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+    .moto-list li {
+        width: 100%;
+    }
+
+    .subheader-image-desc {
+        left: 0px;
+    }
+
+    .course-select .selectDropdown {
+        left: 0px;
+    }
+
+    .subheader1 {
+        margin: 0px 15px;
+    }
+
+    .course-describtion {
+        margin: 0px 0px;
+    }
+
+    .course-desc-list li,
+    .cart-desc-list1 li {
+        width: 100%;
+    }
+
+    .course-desc-list li:first-child,
+    .course-desc-list1 {
+        padding: 15px 0px;
+        border: none !important;
+    }
+
+    .course-desc-list li:last-child,
+    .cart-desc-list1 li:last-child {
+        border-left: none !important;
+    }
+
+    .styled-checkbox + label {
+        font-size: 12px;
+    }
+
+    .total-car-list li:first-child,
+    .total-car-list li:last-child {
+        width: 50%;
+    }
+
+    .add-cart,
+    .enquiry {
+        padding: 10px 25px;
+    }
+
+    .subheader1 .p0 {
+        padding: 0px 0px;
+    }
+
+    .blog-section {
+        margin: 15px 0px;
+    }
+
+    .blog-list-div li {
+        width: 100%;
+        padding: 15px 15px;
+        margin: 15px 0px;
+    }
+
+    .blog-desc {
+        width: 100%;
+    }
+
+    .blog-box {
+        display: inline-block;
+    }
+
+    .blog-image {
+        float: none;
+        margin-right: 0px;
+    }
+
+    .block-ellipsis2 {
+        height: 73px;
+    }
+
+    .knowledge-forum {
+        padding: 30px 0px;
+    }
+
+    .answer-btn-list li {
+        width: 33%;
+    }
+
+    .answer-btn-list li:nth-child(3) {
+        width: 33%;
+    }
+
+    .knowledge-tabs li {
+        width: 100%;
+    }
+
+    .cart {
+        margin: 20px 15px;
+        padding: 15px 10px 15px 10px;
+    }
+
+    .contact-section {
+        margin: 0px 0px;
+    }
+
+    .cart-describtion {
+        margin: 0px 15px;
+    }
+
+    .check-describtion {
+        margin: 0px 0px;
+        padding: 15px 0px;
+    }
+
+    .cart-box {
+        padding: 0px 15px;
+    }
+
+    .payment-cart-list {
+        display: -webkit-inline-box;
+        width: 10%;
+        top: 85px;
+        left: 45%;
+    }
+
+    .form-div2 .p0 {
+        padding: 0px 0px;
+    }
+
+    .course-desc-list-right {
+        padding: 20px 0px;
+    }
+
+    .course-tooltip .dropdown-content {
+        left: -40px;
+    }
+
+    .login-div {
+        width: 100%;
+        margin: 123px auto;
+        padding: 30px 15px;
+        position: relative;
+    }
+
+    .page-close {
+        right: 0px;
+        top: -35px;
+    }
+
+    .forget-div,
+    .newpass-div {
+        width: 100%;
+    }
+
+    .account-section {
+        margin: 15px 0px;
+    }
+
+    .knowledge-forum-right1 {
+        margin-bottom: 30px
+    }
+
+    .profile-form .pl10 {
+        padding-left: 15px
+    }
+
+    .profile-form .pr10 {
+        padding-right: 15px
+    }
+
+    .button-div {
+        width: 30%;
+    }
+
+    .card2-list li {
+        width: 100%;
+    }
+
+    .name-on-card {
+        position: relative;
+        left: 0px;
+    }
+
+    .course-price2 {
+        top: 10%;
+    }
+
+    .button-div1 {
+        width: 65%;
+    }
+
+    .avatar-upload .avatar-preview {
+        width: 100%;
+    }
+
+    .avatar-upload .avatar-edit {
+        position: relative;
+        width: 100%;
+    }
+
+    .gallery-list li {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .gallery-section {
+        margin: 0px 15px;
+    }
+
+    #portfoliolist > .portfolio {
+        height: 300px;
+    }
+
+}
+
+@media only screen and (min-width: 360px) and (max-width: 375px) {}
+
+@media only screen and (min-width: 384px) and (max-width: 384px),
+only screen and (min-width: 800px) and (max-width: 800px),
+only screen and (min-width: 412px) and (max-width: 414px)
+    {}
+
+@media only screen and (min-width: 600px) and (max-width: 600px) {}
+
+@media only screen and (min-width: 320px) and (max-width: 320px) {}
+
+
+
+/* iPad Mini in landscape only */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {}
+
+/* iPad Mini in portrait only */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {}
+
+
+/*iPhone X in portrait & landscape*/
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {}
+
+
+/*iPhone 6, 7, & 8 in portrait & landscape*/
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {}
+
+/*iPhone 6, 7, & 8 Plus in portrait & landscape*/
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) {}
+
+/*iPhone 5 & 5S in portrait & landscape*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {}
+
+
+/*iPhone 2G-4S in portrait & landscape*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {}
+
+/*Only iPhone 4/4S (both: landscape and portrait)*/
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) {}
