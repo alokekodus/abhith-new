@@ -62,7 +62,7 @@ $subjects = Subject::where('is_activate', Activation::Activate)
 
                     <div class="form-group">
                         <label for="">Upload questions in excel format</label>
-                        <input type="file" name="questionExcel" class="form-control">
+                        <input type="file" name="questionExcel" class="form-control" required>
                     </div>
                     <button class="btn btn-primary">Submit</button>
                 </form>
