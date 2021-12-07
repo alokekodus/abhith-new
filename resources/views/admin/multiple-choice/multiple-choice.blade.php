@@ -31,7 +31,7 @@
                             <th>Set Name</th>
                             <th> Subject Name </th>
                             <th> Active Status </th>
-                            <th>Edit</th>
+                            <th>View</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,18 +43,18 @@
                                 <td>
                                     @if ($mcq->is_activate == 1)
                                         <label class="switch">
-                                            <input type="checkbox" id="mcqStatusUpdate" data-id="{{ $mcq->subject_id }}" checked>
+                                            <input type="checkbox" id="mcqStatusUpdate" data-id="{{ $mcq->id }}" checked>
                                             <span class="slider round"></span>
                                         </label>
                                     @else
                                         <label class="switch">
-                                            <input type="checkbox" id="mcqStatusUpdate" data-id="{{ $mcq->subject_id }}">
+                                            <input type="checkbox" id="mcqStatusUpdate" data-id="{{ $mcq->id}}">
                                             <span class="slider round"></span>
                                         </label>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{route('admin.view.mcq.question',['id' => \Crypt::encrypt($mcq->id)])}}" data-toggle="tooltip" data-placement="top" title="View Mcq" class="btn mr-2 btn-gradient-primary btn-rounded btn-icon anchor_rounded"><i class="mdi mdi-pencil-outline"></i></a>
+                                    <a href="{{route('admin.view.mcq.question',['id' => \Crypt::encrypt($mcq->id)])}}" data-toggle="tooltip" data-placement="top" title="View Mcq" class="btn mr-2 btn-gradient-primary btn-rounded btn-icon anchor_rounded"><i class="mdi mdi-eye-outline"></i></a>
                                 </td>
                             </tr>
                        @empty
@@ -71,9 +71,9 @@
     <script>
         $(document.body).on('change', '#mcqStatusUpdate', function() {
             let status = $(this).prop('checked') == true ? 1 : 0;
-            let subject_id = $(this).data('id');
+            let mcq_id = $(this).data('id');
             let formData = {
-                'subject_id': subject_id,
+                'mcq_id': mcq_id,
                 'active': status
             }
             $.ajax({
@@ -83,7 +83,7 @@
                 data: formData,
 
                 success: function(result) {
-                    toastr.success(result.message)
+                    toastr.success(result.message);
                 },
                 error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){

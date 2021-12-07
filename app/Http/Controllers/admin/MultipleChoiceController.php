@@ -45,24 +45,21 @@ class MultipleChoiceController extends Controller
                     return back()->with(['error' => 'Not a valid excel file.']);
                 }else{
 
-                    $create = Set::create([
-                        'set_name' => $setName,
-                        'subject_id' => $subject_id
-                    ]);
-
-                    if($create){
-                        $get_set_id = Set::where('subject_id',$subject_id)->first();
+                    // $id = 1;
+                    // $questionFile = $request->file('questionExcel');
+                
+                    // $questionFile = $request->file('questionExcel')->store('imports');
+                    // $import = new QuestionImport($id);
+                    // dd($import->validator->fails());
+                   
                         $questionFile = $request->file('questionExcel');
                 
                         $questionFile = $request->file('questionExcel')->store('imports');
-                        $import = new QuestionImport($get_set_id->id);
+                        $import = new QuestionImport($setName, $subject_id);
                         $import->import($questionFile);
             
                         return back()->withStatus('File uploaded successfully');
-                    }else{
-                        return back()->with(['error' => $setName.' '.'already exists with subject '.$subject->name.'. Please select another subject.']);
-                    }
-                   
+                    
                 }
             
             }else{
@@ -77,7 +74,7 @@ class MultipleChoiceController extends Controller
 
         $mcq_set_id = Crypt::decrypt($id);
 
-        $details = Question::where('set_id',$mcq_set_id)->get();
+        $details = Question::with('set')->where('set_id',$mcq_set_id)->get();
 
         return view('admin.multiple-choice.edit-multiple-choice')->with('details' , $details);
     }
@@ -160,8 +157,8 @@ class MultipleChoiceController extends Controller
 
 
     public function isActivateMultipleChoice(Request $request){
-        MultipleChoice::where('subject_id' ,$request->subject_id)->update([ 'is_activate' => $request->active, ]);
-        return response()->json(['message' => 'MCQ status updated successfully']);
+        Set::where('id' ,$request->mcq_id)->update([ 'is_activate' => $request->active, ]);
+        return response()->json(['message' => 'MCQ visibility status updated successfully']);
     }
 
 

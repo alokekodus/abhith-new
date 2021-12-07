@@ -6,17 +6,16 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Active Multiple Choice</h4>
+                <h4 class="card-title">Multiple Choice Questions For - <q><cite> {{$details[0]['set']['set_name']}} </cite></q>.</h4>
+                <hr>
                 <form action="#"  method="POST">
                     @csrf
-
-                  
                     @foreach ($details as $key => $item)
                         <ol style="list-style-type: none;">
                             <li>
-                                <span style="font-weight:bold;font-size:17px;">{{$key + 1}}.</span> <span style="font-size:.9375rem;"> Question:</span>
+                                <span style="font-weight:bold;font-size:15px;">{{$key + 1}}.</span> <span style="font-size:.9375rem;"> Question:</span>
                                 <p style="margin-left:10px;margin-bottom:5px;font-weight:bold;">-> {{$item->question}}</p>
-                                <p style="margin-left:10px;margin-bottom:5px;">Options:</p>
+                                <p style="margin-left:10px;margin-bottom:5px;color:grey;">Options:</p>
                                 <div class="sub-view-option">
                                     <p> i) {{$item->option_1}} </p>
                                     <p> ii) {{$item->option_2}} </p>

@@ -55,110 +55,31 @@ $subjects = Subject::where('is_activate', Activation::Activate)
                     </div>
 
                     <div class="form-group">
+                        <p>
+                            <span style="color:red;">Note <sup>*</sup></span>  To upload questions, proper excel format is required to avoid errors. Download the format by <a href="{{asset('/files/mcq_format/Mcq_Upload_Format.xlsx')}}" download>Clicking Here <i class="mdi mdi-cloud-download menu-icon"></i></a>  &nbsp;and fillup the excel sheet without removing the headers.
+                        </p>
+                    </div>
+
+                    <div class="form-group">
                         <label for="">Upload questions in excel format</label>
                         <input type="file" name="questionExcel" class="form-control">
                     </div>
-                    {{-- <div class="after-add-more">
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Question</label>
-                                    <input type="text" class="form-control" name="question[]" placeholder="e.g what is the unit of temperature ?" required>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-success" style="margin-top:23px;float:right;" id="addMoreMultipleChoice">Add More</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 1</label>
-                                    <input type="text" class="form-control" name="option1[]" placeholder="e.g Celcius" required>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 2</label>
-                                    <input type="text" class="form-control" name="option2[]" placeholder="e.g Hertz" required>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 3</label>
-                                    <input type="text" class="form-control" name="option3[]" placeholder="e.g Pascal" required>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 4</label>
-                                    <input type="text" class="form-control" name="option4[]" placeholder="e.g Kelvin" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Correct Answer</label>
-                                    <input type="text" class="form-control" name="correct_answer[]" placeholder="e.g what is the unit of temperature ?" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                     <button class="btn btn-primary">Submit</button>
                 </form>
 
-
-                {{-- <div class="copy" style="display: none;">
-                    <div class="control-group">
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Question</label>
-                                    <input type="text" class="form-control" name="question[]" placeholder="e.g what is the unit of temperature ?">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-danger" style="margin-top:23px;float:right;" id="removeMultipleChoice">remove</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 1</label>
-                                    <input type="text" class="form-control" name="option1[]" placeholder="e.g Celcius">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 2</label>
-                                    <input type="text" class="form-control" name="option2[]" placeholder="e.g Hertz">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 3</label>
-                                    <input type="text" class="form-control" name="option3[]" placeholder="e.g Pascal">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 4</label>
-                                    <input type="text" class="form-control" name="option4[]" placeholder="e.g Kelvin">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Correct Answer</label>
-                                    <input type="text" class="form-control" name="correct_answer[]" placeholder="e.g what is the unit of temperature ?" required>
-                                </div>
-                            </div>
-                        </div>
+                @if (count($errors) > 0)
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                      <div class="alert alert-danger alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                          @foreach($errors->all() as $error)
+                          {{ $error }} <br>
+                          @endforeach      
+                      </div>
                     </div>
-                </div> --}}
+                </div>
+                @endif
             </div>
         </div>
     </div>
