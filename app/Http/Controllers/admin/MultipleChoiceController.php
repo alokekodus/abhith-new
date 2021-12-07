@@ -73,13 +73,51 @@ class MultipleChoiceController extends Controller
     }
 
 
-    public function viewEditMcq(Request $request,$id){
+    public function viewMcq(Request $request,$id){
 
         $mcq_set_id = Crypt::decrypt($id);
 
         $details = Question::where('set_id',$mcq_set_id)->get();
 
         return view('admin.multiple-choice.edit-multiple-choice')->with('details' , $details);
+    }
+
+
+    public function updateMcqQuestion(Request $request){
+
+        // dd($request->all());
+        $set_id = $request->set_id;
+        $question = $request->question;
+        $option1 = $request->option1;
+        $option2 = $request->option2;
+        $option3 = $request->option3;
+        $option4 = $request->option4;
+        $correct_answer = $request->correct_answer;
+
+        foreach($question as $key =>$value){
+            foreach($option1 as $key1 => $value1){
+                foreach($option2 as $key2 => $value2){
+                    foreach($option3 as $key3 => $value3){
+                        foreach($option4 as $key4 => $value4){
+                            foreach($correct_answer as $key5 => $value5){
+                                if($key == $key1 && $key1 == $key2 && $key2 == $key3 && $key3 == $key4 && $key4 == $key5){
+                                    $data['question'] = $value;
+                                    $data['option_1'] = $value1;
+                                    $data['option_2'] = $value2;
+                                    $data['option_3'] = $value3;
+                                    $data['option_4'] = $value4;
+                                    $data['correct_answer'] = $value5;
+                                    $insertingData[] = $data;
+                                }
+                            }
+                        } 
+                    }
+                } 
+            } 
+        }
+
+        MultipleChoice::insert($insertingData);
+        return back()->withSuccess('Mcq details updated successfully');
     }
 
 

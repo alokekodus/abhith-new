@@ -6,64 +6,79 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Add Multiple Choice Questions</h4>
-                <form action="{{route('admin.insert.multiple.choice')}}"  method="POST">
+                <h4 class="card-title">Active Multiple Choice</h4>
+                <form action="#"  method="POST">
                     @csrf
 
-                    @foreach ($details as $item)
-                    <div class="after-add-more">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Question</label>
-                                    <input type="text" class="form-control" name="question[]" value="{{$item->question}}" placeholder="e.g what is the unit of temperature ?" required>
+                  
+                    @foreach ($details as $key => $item)
+                        <ol style="list-style-type: none;">
+                            <li>
+                                <span style="font-weight:bold;font-size:17px;">{{$key + 1}}.</span> <span style="font-size:.9375rem;"> Question:</span>
+                                <p style="margin-left:10px;margin-bottom:5px;font-weight:bold;">-> {{$item->question}}</p>
+                                <p style="margin-left:10px;margin-bottom:5px;">Options:</p>
+                                <div class="sub-view-option">
+                                    <p> i) {{$item->option_1}} </p>
+                                    <p> ii) {{$item->option_2}} </p>
+                                    <p> iii) {{$item->option_3}} </p>
+                                    <p> iv) {{$item->option_4}} </p>
+                                </div>
+                                <p style="margin-left:20px;margin-bottom:5px;">Correct Answer -> {{$item->correct_answer}}</p>
+                            </li>
+                        </ol>
+                        {{-- <div class="after-add-more">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1"> <span style="font-weight:bold;">{{$key + 1}}.</span> Question</label>
+                                        <input type="text" class="form-control" name="question[]" value="{{$item->question}}" placeholder="e.g what is the unit of temperature ?" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 1</label>
-                                    <input type="text" class="form-control" name="option1[]" value="{{$item->option_1}}" placeholder="e.g Celcius" required>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Option 1</label>
+                                        <input type="text" class="form-control" name="option1[]" value="{{$item->option_1}}" placeholder="e.g Celcius" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Option 2</label>
+                                        <input type="text" class="form-control" name="option2[]" value="{{$item->option_2}}" placeholder="e.g Hertz" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Option 3</label>
+                                        <input type="text" class="form-control" name="option3[]" value="{{$item->option_3}}" placeholder="e.g Pascal" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Option 4</label>
+                                        <input type="text" class="form-control" name="option4[]" value="{{$item->option_4}}" placeholder="e.g Kelvin" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 2</label>
-                                    <input type="text" class="form-control" name="option2[]" value="{{$item->option_2}}" placeholder="e.g Hertz" required>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Correct Answer</label>
+                                        <input type="text" class="form-control" name="correct_answer[]" value="{{$item->correct_answer}}" placeholder="e.g what is the unit of temperature ?" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 3</label>
-                                    <input type="text" class="form-control" name="option3[]" value="{{$item->option_3}}" placeholder="e.g Pascal" required>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Option 4</label>
-                                    <input type="text" class="form-control" name="option4[]" value="{{$item->option_4}}" placeholder="e.g Kelvin" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputName1">Correct Answer</label>
-                                    <input type="text" class="form-control" name="correct_answer[]" value="{{$item->correct_answer}}" placeholder="e.g what is the unit of temperature ?" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </div> --}}
                     @endforeach
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <button class="btn btn-success"  id="addMoreMultipleChoice">Add More</button>
                         <button class="btn btn-primary">Submit</button>
-                    </div>
+                    </div> --}}
                 </form>
 
 
-                <div class="copy" style="display: none;">
+                {{-- <div class="copy" style="display: none;">
                     <div class="control-group">
                         <hr>
                         <div class="row">
@@ -112,7 +127,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -135,5 +150,11 @@
         });
         
     </script>
+
+    @if ( session('success'))
+        <script>
+            toastr.success("{!! session('success') !!}");
+        </script>
+    @endif
 
 @endsection

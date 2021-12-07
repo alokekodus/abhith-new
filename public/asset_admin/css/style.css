@@ -13663,3 +13663,12 @@ input:checked + .slider:before {
   margin-left: 50px;
   margin-top: 25px;
 }
+
+.sub-view-list{
+  margin-left:20px;
+}
+
+.sub-view-option p{
+  display:inline-block;
+  margin-left:20px;
+}

@@ -54,7 +54,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{route('admin.view.edit.mcq.question',['id' => \Crypt::encrypt($mcq->id)])}}" data-toggle="tooltip" data-placement="top" title="Edit Mcq" class="btn mr-2 btn-gradient-primary btn-rounded btn-icon anchor_rounded"><i class="mdi mdi-pencil-outline"></i></a>
+                                    <a href="{{route('admin.view.mcq.question',['id' => \Crypt::encrypt($mcq->id)])}}" data-toggle="tooltip" data-placement="top" title="View Mcq" class="btn mr-2 btn-gradient-primary btn-rounded btn-icon anchor_rounded"><i class="mdi mdi-pencil-outline"></i></a>
                                 </td>
                             </tr>
                        @empty

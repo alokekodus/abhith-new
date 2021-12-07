@@ -112,11 +112,11 @@ Route::prefix('master')->group(function () {
 Route::prefix('multiple-choice')->group(function(){
     Route::get('multiple-choice-question',[MultipleChoiceController::class,'index'])->name('admin.index.multiple.choice');
     Route::get('add-multiple-choice',[MultipleChoiceController::class,'addMultipleChoice'])->name('admin.add.multiple.choice');
-    Route::post('insert-multiple-choice',[MultipleChoiceController::class,'insertMultipleChoice'])->name('admin.insert.multiple.choice');
+    // Route::post('insert-multiple-choice',[MultipleChoiceController::class,'insertMultipleChoice'])->name('admin.insert.multiple.choice');
     Route::post('is-activate-multiple-choice',[MultipleChoiceController::class,'isActivateMultipleChoice'])->name('admin.is.activate.multiple.choice');
 
     Route::post('insert-mcq-question',[MultipleChoiceController::class,'insertQuestions'])->name('admin.insert.mcq.question');
-    Route::get('edit-mcq-question/{id}',[MultipleChoiceController::class,'viewEditMcq'])->name('admin.view.edit.mcq.question');
+    Route::get('view-mcq-question/{id}',[MultipleChoiceController::class,'viewMcq'])->name('admin.view.mcq.question');
 });
 
 
