@@ -41,13 +41,13 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ (request()->routeIs('admin.create.course')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.get.course')}}">
                 <span class="menu-title">Course</span>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ (request()->routeIs('admin.insert.mcq.question')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.index.multiple.choice')}}"><span class="menu-title">MCQ's</span>
                 <i class="mdi  mdi-format-list-bulleted menu-icon"></i></a>
         </li>
@@ -63,7 +63,7 @@
             <a class="nav-link" href="{{route('admin.get.enrolled.students')}}"><span class="menu-title">Enrolled Students</span>
                 <i class="mdi  mdi-account-multiple menu-icon"></i></a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item {{ (request()->routeIs('admin.create.time.table')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.view.time.table')}}"><span class="menu-title">Time-Table</span>
                 <i class="mdi  mdi-calendar-clock menu-icon"></i></a>
         </li>

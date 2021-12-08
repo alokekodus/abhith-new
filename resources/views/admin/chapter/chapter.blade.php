@@ -3,7 +3,11 @@
 @section('title','Chapter')
 
 @section('head')
-
+<style>
+    .width-100{
+        width: 100%;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -42,12 +46,12 @@
                     <tbody>
                         <tr>
                             <th>#</th>
-                            <th>Chapter Name</th>
+                            <th class="ml-5">Chapter Name</th>
                             <th>Price</th>
                             <th>Status</th>
                             @if (!$chapters->isEmpty())
                                 <th>
-                                    <button type="button" class="btn btn-success editChapterBtn">Edit</button>
+                                    <button type="button" class="btn btn-success editChapterBtn width-100">Edit</button>
                                     <button type="button" class="btn btn-warning cancelEditChapterBtn" style="display:none;color:black;">Cancel Edit</button>
                                 </th>
                             @endif
@@ -75,7 +79,7 @@
                                     @endif
                                 </td>
                                 <td class="footable-last-visible" style="display: table-cell;">
-                                    <button type="button" name="add"  class="btn btn-success updateChapterBtn" data-id="{{$item->id}}" data-name="" data-price="{{$item->price}}" style="display:none;">Update</button>
+                                    <button type="button" name="add"  class="btn btn-success updateChapterBtn width-100" data-id="{{$item->id}}" data-name="" data-price="{{$item->price}}" style="display:none;">Update</button>
                                 </td>
                             </tr>
                         @empty
