@@ -15,4 +15,8 @@ class Set extends Model
     public function subject(){
         return $this->belongsTo('App\Models\Subject');
     }
+
+    public function question(){
+        return $this->hasMany('App\Models\Question');
+    }
 }

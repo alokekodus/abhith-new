@@ -185,8 +185,8 @@
                 <!-- Modal Header -->
                 <div class="modal-heading">
                     <h5>{{ $course->subject->name }} Test</h5>
-                    <p class="modal-sub-head-left">Question <span id="mcqLeft">1</span> /{{ $countMultiChoice }}</p>
-                    <p class="modal-sub-head-right">Time Left : <b><span id="timer">15:00</span></b></p>
+                    {{-- <p class="modal-sub-head-left">Question <span id="mcqLeft">1</span> /{{ $countMultiChoice }}</p> --}}
+                    <p class="modal-sub-head-left">Time Left : <b><span id="timer">15:00</span></b></p>
                     {{-- <button type="button" class="close" data-dismiss="modal"><span class="icon-cancel-20"></span></button> --}}
                 </div>
 
@@ -200,13 +200,16 @@
         </div>
     </div>
 
+    
+
+
     <div class="modal" id="startMcqModel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-heading">
                     <h4>{{ $course->subject->name }} Test</h4>
-                    <p class="modal-sub-head-left">Total Questions {{ $countMultiChoice }}</p>
+                    {{-- <p class="modal-sub-head-left">Total Questions {{ $countMultiChoice }}</p> --}}
                     <p class="modal-sub-head-right">Time : <b>15:00 Mins</b></p>
                     <button type="button" class="close" data-dismiss="modal"><span
                             class="icon-cancel-20"></span></button>
@@ -218,6 +221,24 @@
                     <div class="text-center">
                         <button class="knowledge-link startTest">Start Test</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" id="reviewMcqResultModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-heading">
+                    <h4>Mcq Result</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span class="icon-cancel-20"></span></button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="height:300px;overflow-y:scroll;scroll-behaviour:smooth;">
+                    <div id="reviewMcqResultQuestions"></div>
                 </div>
             </div>
         </div>
@@ -364,7 +385,7 @@
             let html =
                 '<div class="text-center"> <i class="fa fa-check-circle-o" aria-hidden="true" style="color:green;font-size:22px;"></i>&nbsp;Test Done</div>';
             $.ajax({
-                    url: '?page=' + page,
+                    url: '?page='+page,
                     type: 'get',
                 })
                 .done(function(data) {
@@ -424,8 +445,10 @@
 
         /******************************* Check MCQ's If it is correct *********************************/
         let mcqArray = [];
+        let setId ;
         $(document).on('click', '.mcq-page-link #saveOptions', function() {
             let options = document.getElementsByName('mcq-group');
+            setId = document.getElementById('setId').value;
             for (let i = 0; i < options.length; i++) {
                 if (options[i].checked) {
                     mcqArray.push(options[i].value);
@@ -443,17 +466,79 @@
                 type: "POST",
                 data: {
                     '_token': '{{ csrf_token() }}',
+                    'setId' : setId,
                     'mcArray': mcqArray,
                     'subject_id': "{{ $course->subject->id }}"
                 },
                 success: function(result) {
+
+                    console.log(result);
                     $('#mcqSubmitBtn').hide();
-                    $('#totalCorrect').html('<div class="text-center text-success">' +
-                        '<span style="font-size:20px;">Total Corrects: ' + result.Total_corrects +
-                        ' out of ' + "{{ $countMultiChoice }}" + '</div>');
-                    setTimeout(() => {
-                        location.reload(true);
-                    }, 2000);
+                    console.log('Check Mcq====> ', result.checkMcq);
+                    console.log('Selected Answer====> ', result.selectedAnswer);
+                    console.log('Set Id====> ', result.setId);
+                    $('#add-test-modal').modal('hide');
+                    $('#reviewMcqResultModal').modal('show');
+                    let mcqAnswers = '';
+                    let userAnswer = '';
+                    let finalMcqArray = [];
+                    
+                    for(let j = 0; j < result.selectedAnswer.length ; j++){
+                        userAnswer +=  '<p style="margin-left:20px;margin-bottom:5px;">Your Answer : '+ result.selectedAnswer[j] +' </p>'
+                    }
+                    for(let i= 0; i <result.checkMcq.length;i++){
+                        mcqAnswers +=   '<ul style="list-style-type: none;">'+
+                            '<li>' +
+                               '<span style="font-weight:bold;font-size:15px;"></span> <span style="font-size:.9375rem;">'+ (i+1) +' ) Question:</span>'+
+                                '<p style="margin-left:10px;margin-bottom:5px;font-weight:bold;">'+ result.checkMcq[i]["question"]  +'</p>';
+
+                                    mcqAnswers += '<p style="background-color:green;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Correct Answer</span> -> '+ result.checkMcq[i]["correct_answer"] +'</span> </p>';                                        
+                                    mcqAnswers += '<p style="background-color:grey;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Your Answer</span> -> '+ result.selectedAnswer[i] +'</span> </p>';                                        
+
+                                   
+                                // if( result.checkMcq[i]["option_1"] ==  result.checkMcq[i]["correct_answer"]){
+                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> i)'+  '<span>'+  result.checkMcq[i]["option_1"]+'</span>  <span style="font-size:12px;">Correct Answer</span> </p>';
+                                // }else{
+                                //     mcqAnswers += '<p> i)'+  '<span>'+  result.checkMcq[i]["option_1"]+'</span>  </p>';
+                                // }
+
+                                // if( result.checkMcq[i]["option_2"] ==  result.checkMcq[i]["correct_answer"]){
+                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> ii)'+  '<span>'+  result.checkMcq[i]["option_2"]+'</span>  <span style="font-size:12px;">Correct Answer</span> </p>';
+                                // }else{
+                                //     mcqAnswers += '<p> ii)'+  '<span>'+  result.checkMcq[i]["option_2"]+'</span>  </p>';
+                                // }
+
+                                // if( result.checkMcq[i]["option_3"] ==  result.checkMcq[i]["correct_answer"]){
+                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> iii)'+  '<span>'+  result.checkMcq[i]["option_3"]+'</span>  <span style="font-size:12px;">Correct Answer</span> </p>';
+                                // }else{
+                                //     mcqAnswers += '<p> iii)'+  '<span>'+  result.checkMcq[i]["option_3"]+'</span>  </p>';
+                                // }
+
+                                // if( result.checkMcq[i]["option_4"] ==  result.checkMcq[i]["correct_answer"]){
+                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> iv)'+  '<span>'+  result.checkMcq[i]["option_4"]+'</span> <span style="font-size:12px;">Correct Answer</span>  </p>';
+                                // }else{
+                                //     mcqAnswers += '<p> iv)'+  '<span>'+  result.checkMcq[i]["option_4"]+'</span>  </p>';
+                                // }
+
+
+
+
+
+                                mcqAnswers += '</li>'+
+                        '</ul>'
+                    }
+
+                    document.getElementById('reviewMcqResultQuestions').innerHTML = mcqAnswers;
+
+
+
+
+                    // $('#mcqResult').html('<div class="text-center text-success">' +
+                    //     '<span style="font-size:20px;">Total Corrects: ' + result.Total_corrects +
+                    //     ' out of ' + "{{ $countMultiChoice }}" + '</div>');
+                    // setTimeout(() => {
+                    //     location.reload(true);
+                    // }, 2000);
                 },
                 error: function(xhr, status, error) {
                     if (xhr.status == 500 || xhr.status == 422) {
