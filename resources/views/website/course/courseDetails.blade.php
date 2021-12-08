@@ -234,10 +234,10 @@
                 <!-- Modal Header -->
                 <div class="modal-heading">
                     <h4>Mcq Result</h4>
-                    <button type="button" class="close" data-dismiss="modal"><span class="icon-cancel-20"></span></button>
+                    <button type="button" class="close" data-dismiss="modal" id="closeReviewMcqResultModal"><span class="icon-cancel-20"></span></button>
                 </div>
                 <!-- Modal body -->
-                <div class="modal-body" style="height:300px;overflow-y:scroll;scroll-behaviour:smooth;">
+                <div class="modal-body" style="height:300px;overflow-y:scroll;scroll-behaviour:smooth; padding-right:50px">
                     <div id="reviewMcqResultQuestions"></div>
                 </div>
             </div>
@@ -249,6 +249,14 @@
 
 @section('scripts')
     @include('layout.website.include.modal_scripts')
+
+    {{-- Close review modal --}}
+    <script>
+        $('#closeReviewMcqResultModal').on('click', function(){
+            location.reload(true);
+        });
+    </script>
+
     <script type="text/javascript">
         $('#add_cart').prop('disabled', true);
         $("#add_cart").css("background-color", "grey");
