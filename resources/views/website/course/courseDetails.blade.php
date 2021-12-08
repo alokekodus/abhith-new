@@ -480,11 +480,7 @@
                 },
                 success: function(result) {
 
-                    console.log(result);
                     $('#mcqSubmitBtn').hide();
-                    console.log('Check Mcq====> ', result.checkMcq);
-                    console.log('Selected Answer====> ', result.selectedAnswer);
-                    console.log('Set Id====> ', result.setId);
                     $('#add-test-modal').modal('hide');
                     $('#reviewMcqResultModal').modal('show');
                     let mcqAnswers = '';
@@ -502,36 +498,6 @@
 
                                     mcqAnswers += '<p style="background-color:green;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Correct Answer</span> -> '+ result.checkMcq[i]["correct_answer"] +'</span> </p>';                                        
                                     mcqAnswers += '<p style="background-color:grey;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Your Answer</span> -> '+ result.selectedAnswer[i] +'</span> </p>';                                        
-
-                                   
-                                // if( result.checkMcq[i]["option_1"] ==  result.checkMcq[i]["correct_answer"]){
-                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> i)'+  '<span>'+  result.checkMcq[i]["option_1"]+'</span>  <span style="font-size:12px;">Correct Answer</span> </p>';
-                                // }else{
-                                //     mcqAnswers += '<p> i)'+  '<span>'+  result.checkMcq[i]["option_1"]+'</span>  </p>';
-                                // }
-
-                                // if( result.checkMcq[i]["option_2"] ==  result.checkMcq[i]["correct_answer"]){
-                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> ii)'+  '<span>'+  result.checkMcq[i]["option_2"]+'</span>  <span style="font-size:12px;">Correct Answer</span> </p>';
-                                // }else{
-                                //     mcqAnswers += '<p> ii)'+  '<span>'+  result.checkMcq[i]["option_2"]+'</span>  </p>';
-                                // }
-
-                                // if( result.checkMcq[i]["option_3"] ==  result.checkMcq[i]["correct_answer"]){
-                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> iii)'+  '<span>'+  result.checkMcq[i]["option_3"]+'</span>  <span style="font-size:12px;">Correct Answer</span> </p>';
-                                // }else{
-                                //     mcqAnswers += '<p> iii)'+  '<span>'+  result.checkMcq[i]["option_3"]+'</span>  </p>';
-                                // }
-
-                                // if( result.checkMcq[i]["option_4"] ==  result.checkMcq[i]["correct_answer"]){
-                                //     mcqAnswers += '<p style="background-color:green;color:white;width:100%;"> iv)'+  '<span>'+  result.checkMcq[i]["option_4"]+'</span> <span style="font-size:12px;">Correct Answer</span>  </p>';
-                                // }else{
-                                //     mcqAnswers += '<p> iv)'+  '<span>'+  result.checkMcq[i]["option_4"]+'</span>  </p>';
-                                // }
-
-
-
-
-
                                 mcqAnswers += '</li>'+
                         '</ul>'
                     }

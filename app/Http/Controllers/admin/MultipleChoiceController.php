@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 class MultipleChoiceController extends Controller
 {
     public function index(Request $request){
-        $getMultipleChoice = Set::with('subject')->get();
+        $getMultipleChoice = Set::with('subject')->paginate(10);
         return view('admin.multiple-choice.multiple-choice')->with('getMultipleChoice', $getMultipleChoice);
     }
 

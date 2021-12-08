@@ -62,6 +62,9 @@
                        @endforelse
                     </tbody>
                 </table>
+                <div style="float:right;margin-top:10px;">
+                    {{$getMultipleChoice->links()}}
+                </div>
             </div>
         </div>
     </div>
