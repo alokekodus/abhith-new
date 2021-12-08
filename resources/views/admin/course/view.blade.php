@@ -21,10 +21,13 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            <img class="rounded mt-2" src="{{ asset($Total_price->course_pic) }}" width="100%" alt="">
+                            @if ($Total_price->course_pic != null && $Total_price->course_video != null)
+                                <iframe width="100%" class="mt-3" src="{{ asset($Total_price->course_video) }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                                
+                            @else
+                                <img class="rounded mt-2" src="{{ asset($Total_price->course_pic) }}" width="100%" alt="">                                
+                            @endif
 
                             {{-- If course with video --}}
-                            <iframe width="100%" class="mt-3" src="https://www.youtube.com/embed/8aeW2Qz74Vo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                         <div class="col-md-8">
                             <ul class="list-inline centered view-chapters">
