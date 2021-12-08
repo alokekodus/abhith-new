@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\Subject;
 use App\Imports\QuestionImport;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
 
 
 class MultipleChoiceController extends Controller
@@ -44,22 +45,13 @@ class MultipleChoiceController extends Controller
                 if($questionFileExtension != 'xlsx'){
                     return back()->with(['error' => 'Not a valid excel file.']);
                 }else{
-
-                    // $id = 1;
-                    // $questionFile = $request->file('questionExcel');
-                
-                    // $questionFile = $request->file('questionExcel')->store('imports');
-                    // $import = new QuestionImport($id);
-                    // dd($import->validator->fails());
-                   
-                        $questionFile = $request->file('questionExcel');
-                
-                        $questionFile = $request->file('questionExcel')->store('imports');
-                        $import = new QuestionImport($setName, $subject_id);
-                        $import->import($questionFile);
+                    $questionFile = $request->file('questionExcel');
             
-                        return back()->withStatus('File uploaded successfully');
-                    
+                    $questionFile = $request->file('questionExcel')->store('imports');
+                    $import = new QuestionImport($setName, $subject_id);
+                    $import->import($questionFile);
+        
+                    return back()->withStatus('File uploaded successfully');
                 }
             
             }else{
@@ -80,42 +72,40 @@ class MultipleChoiceController extends Controller
     }
 
 
-    public function updateMcqQuestion(Request $request){
+    // public function updateMcqQuestion(Request $request){
+    //     $set_id = $request->set_id;
+    //     $question = $request->question;
+    //     $option1 = $request->option1;
+    //     $option2 = $request->option2;
+    //     $option3 = $request->option3;
+    //     $option4 = $request->option4;
+    //     $correct_answer = $request->correct_answer;
 
-        // dd($request->all());
-        $set_id = $request->set_id;
-        $question = $request->question;
-        $option1 = $request->option1;
-        $option2 = $request->option2;
-        $option3 = $request->option3;
-        $option4 = $request->option4;
-        $correct_answer = $request->correct_answer;
+    //     foreach($question as $key =>$value){
+    //         foreach($option1 as $key1 => $value1){
+    //             foreach($option2 as $key2 => $value2){
+    //                 foreach($option3 as $key3 => $value3){
+    //                     foreach($option4 as $key4 => $value4){
+    //                         foreach($correct_answer as $key5 => $value5){
+    //                             if($key == $key1 && $key1 == $key2 && $key2 == $key3 && $key3 == $key4 && $key4 == $key5){
+    //                                 $data['question'] = $value;
+    //                                 $data['option_1'] = $value1;
+    //                                 $data['option_2'] = $value2;
+    //                                 $data['option_3'] = $value3;
+    //                                 $data['option_4'] = $value4;
+    //                                 $data['correct_answer'] = $value5;
+    //                                 $insertingData[] = $data;
+    //                             }
+    //                         }
+    //                     } 
+    //                 }
+    //             } 
+    //         } 
+    //     }
 
-        foreach($question as $key =>$value){
-            foreach($option1 as $key1 => $value1){
-                foreach($option2 as $key2 => $value2){
-                    foreach($option3 as $key3 => $value3){
-                        foreach($option4 as $key4 => $value4){
-                            foreach($correct_answer as $key5 => $value5){
-                                if($key == $key1 && $key1 == $key2 && $key2 == $key3 && $key3 == $key4 && $key4 == $key5){
-                                    $data['question'] = $value;
-                                    $data['option_1'] = $value1;
-                                    $data['option_2'] = $value2;
-                                    $data['option_3'] = $value3;
-                                    $data['option_4'] = $value4;
-                                    $data['correct_answer'] = $value5;
-                                    $insertingData[] = $data;
-                                }
-                            }
-                        } 
-                    }
-                } 
-            } 
-        }
-
-        MultipleChoice::insert($insertingData);
-        return back()->withSuccess('Mcq details updated successfully');
-    }
+    //     MultipleChoice::insert($insertingData);
+    //     return back()->withSuccess('Mcq details updated successfully');
+    // }
 
 
     // public function insertMultipleChoice(Request $request){
@@ -170,15 +160,20 @@ class MultipleChoiceController extends Controller
 
     public function checkIsCorrectMcq(Request $request){
         $subject_id = $request->subject_id;
-        $mcArray = $request->mcArray;
+        $setId = $request->setId;
 
-        $checkMcq = MultipleChoice::where('subject_id', $subject_id)->get();
-        $correctAnswerArray = [];
-        foreach( $checkMcq as $item){
-            array_push($correctAnswerArray, $item->correct_answer);
-        }
-        $output = array_intersect( $mcArray,$correctAnswerArray);
+        $checkMcq = Question::where('set_id',  $setId)->get();
+        $correctAnswer = [];
+        $selectedAnswer = $request->mcArray;
+        
+        // return response( $selectedAnswer);
+       
+        // $correctAnswerArray = [];
+        // foreach( $checkMcq as $item){
+        //     array_push($correctAnswerArray, $item->correct_answer);
+        // }
+        // $output = array_intersect( $selectedAnswer,$correctAnswerArray);
 
-        return response()->json(['Total_corrects' => count($output)]);
+        return response()->json(['selectedAnswer' =>  $selectedAnswer, 'checkMcq' => $checkMcq, 'setId' => $setId]);
     }
 }

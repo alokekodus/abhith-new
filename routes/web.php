@@ -96,6 +96,7 @@ Route::prefix('knowledge')->group(function(){
 /* ------------------------------- Multiple Choice Question ------------------------------------ */
 
 Route::post('check-is-correct-mcq',[MultipleChoiceController::class,'checkIsCorrectMcq'])->name('website.check.is.correct-mcq');
+Route::view('mcq-result','website.multiple-choice.review-mcq')->name('website.mcq-result');
 
 /* ------------------------------- Cart ------------------------------------ */
 

@@ -65,13 +65,13 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#account" role="tab" aria-controls="account">Account</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#payment" role="tab" aria-controls="payment">Payment</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#notification" role="tab" aria-controls="notification">Notification <span class="notification-badge">4</span></a>
 
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#purchase" role="tab" aria-controls="purchase">Purchase History</a>
                         </li>
@@ -207,7 +207,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="tab-pane" id="payment" role="tabpanel">
+                    {{-- <div class="tab-pane" id="payment" role="tabpanel">
                         <div class="row">
                             <div class="col-lg-12 col-12">
                                 <h4 class="small-heading-black">Card Saved</h4>
@@ -331,7 +331,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="tab-pane" id="purchase" role="tabpanel">
                         <div class="row">
                             <div class="col-lg-12 col-6">
