@@ -6,7 +6,13 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Multiple Choice Questions For - <q><cite> {{$details[0]['set']['set_name']}} </cite></q>.</h4>
+                <h4 class="card-title">Multiple Choice Questions For - <q><cite> {{$details[0]['set']['set_name']}} </cite></q>. &nbsp;
+                    @if ($details[0]['set']['is_activate'] == 1)
+                       <span style="color:green">ACTIVE</span> 
+                    @else
+                        <span style="color:red">DEACTIVE</span> 
+                    @endif
+                </h4>
                 <hr>
                 <form action="#"  method="POST">
                     @csrf

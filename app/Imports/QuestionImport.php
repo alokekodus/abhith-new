@@ -41,7 +41,7 @@ class QuestionImport implements ToCollection, WithHeadingRow
             'subject_id' => $this->subject_id
         ]);
 
-        $get_set_id = Set::where('subject_id',$this->subject_id)->where('set_name',$this->setName)->first();
+        $get_set_id = Set::where('subject_id',$this->subject_id)->where('set_name',$this->setName)->where('is_activate',1)->first();
 
         foreach ($rows as $row) 
         {

@@ -29,12 +29,12 @@ class MultipleChoiceController extends Controller
         $subject_id = $request->subject_id;
         $questionFile = $request->questionExcel;
 
-        $checkIfSetExists = Set::where('subject_id',$subject_id)->where('set_name',$setName)->exists();
+        $checkIfSetExists = Set::where('subject_id',$subject_id)->where('set_name',$setName)->where('is_activate',1)->exists();
 
         $subject = Subject::where('id', $subject_id)->first();
 
         if($checkIfSetExists == true){
-            return back()->with(['error' => $setName.' '.'already exists with subject '.$subject->name.'. Please select another subject.']);
+            return back()->with(['error' => $setName.' '.'already active with subject '.$subject->name.'. Please select another subject or deactive the currently active Set']);
         }else{
 
 
@@ -148,6 +148,7 @@ class MultipleChoiceController extends Controller
 
     public function isActivateMultipleChoice(Request $request){
         Set::where('id' ,$request->mcq_id)->update([ 'is_activate' => $request->active, ]);
+        Question::where('set_id' ,$request->mcq_id)->update([ 'is_activate' => $request->active, ]);
         return response()->json(['message' => 'MCQ visibility status updated successfully']);
     }
 
