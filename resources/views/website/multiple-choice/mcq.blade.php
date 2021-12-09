@@ -46,10 +46,8 @@
 
 <div class="mcq-page-link">
    
-    {{-- @if ()
-        
-    @else
-        
-    @endif --}}
-    <a href="{{ $mcqRandom->nextPageUrl() }}" class="knowledge-link" id="saveOptions">Next</a>
+    @if ($mcqRandom != null)
+         <a href="{{ $mcqRandom->nextPageUrl() }}" class="knowledge-link" id="saveOptions">Next</a>
+    @endif
+   
 </div>
