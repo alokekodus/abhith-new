@@ -464,6 +464,61 @@
             }
         });
 
+        $('.check-result ').on('click',function(e){
+            $.ajax({
+                url: "{{ route('website.check.is.correct-mcq') }}",
+                type: "POST",
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'setId' : setId,
+                    'mcArray': mcqArray,
+                    'subject_id': "{{ $course->subject->id }}"
+                },
+                success: function(result) {
+
+                    $('#mcqSubmitBtn').hide();
+                    $('#add-test-modal').modal('hide');
+                    $('#reviewMcqResultModal').modal('show');
+                    let mcqAnswers = '';
+                    let userAnswer = '';
+                    let finalMcqArray = [];
+                    if(result.selectedAnswer == null){
+                        document.getElementById('reviewMcqResultQuestions').innerHTML = 'No option Selected. Test evaluation incomplete.';
+                    }else{
+                        for(let j = 0; j < result.selectedAnswer.length ; j++){
+                        userAnswer +=  '<p style="margin-left:20px;margin-bottom:5px;">Your Answer : '+ result.selectedAnswer[j] +' </p>'
+                        }
+                        for(let i= 0; i <result.checkMcq.length;i++){
+                            mcqAnswers +=   '<ul style="list-style-type: none;">'+
+                                '<li>' +
+                                '<span style="font-weight:bold;font-size:15px;"></span> <span style="font-size:.9375rem;">'+ (i+1) +' ) Question:</span>'+
+                                    '<p style="margin-left:10px;margin-bottom:5px;font-weight:bold;">'+ result.checkMcq[i]["question"]  +'</p>';
+
+                                        mcqAnswers += '<p style="background-color:green;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Correct Answer</span> -> '+ result.checkMcq[i]["correct_answer"] +'</span> </p>';                                        
+                                        mcqAnswers += '<p style="background-color:grey;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Your Answer</span> -> '+ result.selectedAnswer[i] +'</span> </p>';                                        
+                                    mcqAnswers += '</li>'+
+                            '</ul>'
+                        }
+
+                        document.getElementById('reviewMcqResultQuestions').innerHTML = mcqAnswers;
+                    }
+                    
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 500 || xhr.status == 422) {
+                        toastr.error("Oops! Something went wrong");
+                    }
+                }
+            });
+        })
+
+
+
+
+
+
+
+
         $(document).on('submit', '#mcqForm', function(e) {
             e.preventDefault();
             timer.innerHTML = '0:00';
@@ -487,22 +542,26 @@
                     let userAnswer = '';
                     let finalMcqArray = [];
                     
-                    for(let j = 0; j < result.selectedAnswer.length ; j++){
+                    if(result.selectedAnswer == null){
+                        document.getElementById('reviewMcqResultQuestions').innerHTML = 'No option Selected. Test evaluation incomplete.';
+                    }else{
+                        for(let j = 0; j < result.selectedAnswer.length ; j++){
                         userAnswer +=  '<p style="margin-left:20px;margin-bottom:5px;">Your Answer : '+ result.selectedAnswer[j] +' </p>'
-                    }
-                    for(let i= 0; i <result.checkMcq.length;i++){
-                        mcqAnswers +=   '<ul style="list-style-type: none;">'+
-                            '<li>' +
-                               '<span style="font-weight:bold;font-size:15px;"></span> <span style="font-size:.9375rem;">'+ (i+1) +' ) Question:</span>'+
-                                '<p style="margin-left:10px;margin-bottom:5px;font-weight:bold;">'+ result.checkMcq[i]["question"]  +'</p>';
+                        }
+                        for(let i= 0; i <result.checkMcq.length;i++){
+                            mcqAnswers +=   '<ul style="list-style-type: none;">'+
+                                '<li>' +
+                                '<span style="font-weight:bold;font-size:15px;"></span> <span style="font-size:.9375rem;">'+ (i+1) +' ) Question:</span>'+
+                                    '<p style="margin-left:10px;margin-bottom:5px;font-weight:bold;">'+ result.checkMcq[i]["question"]  +'</p>';
 
-                                    mcqAnswers += '<p style="background-color:green;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Correct Answer</span> -> '+ result.checkMcq[i]["correct_answer"] +'</span> </p>';                                        
-                                    mcqAnswers += '<p style="background-color:grey;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Your Answer</span> -> '+ result.selectedAnswer[i] +'</span> </p>';                                        
-                                mcqAnswers += '</li>'+
-                        '</ul>'
-                    }
+                                        mcqAnswers += '<p style="background-color:green;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Correct Answer</span> -> '+ result.checkMcq[i]["correct_answer"] +'</span> </p>';                                        
+                                        mcqAnswers += '<p style="background-color:grey;color:white;width:100%;padding-left:20px;">'+  '<span> <span style="font-size:12px;">Your Answer</span> -> '+ result.selectedAnswer[i] +'</span> </p>';                                        
+                                    mcqAnswers += '</li>'+
+                            '</ul>'
+                        }
 
-                    document.getElementById('reviewMcqResultQuestions').innerHTML = mcqAnswers;
+                        document.getElementById('reviewMcqResultQuestions').innerHTML = mcqAnswers;
+                    }
 
 
 
