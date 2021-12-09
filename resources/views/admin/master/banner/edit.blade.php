@@ -29,20 +29,20 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                     <input type="hidden" name="id" id="id" value="{{\Crypt::encrypt($banner->id)}}">
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="banner_name" value="{{ $banner->name }}" name="name"
-                            placeholder="Enter Banner Name">
+                        <input type="text" class="form-control" id="banner_name" value="{{ $banner->name }}" name="name" maxlength="20" placeholder="Enter Banner Name" required>
+                        <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
                     </div>
 
                     <div class="form-group">
                         <label>File upload</label>
                         <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
-                            data-max-files="1" />
+                            data-max-files="1" required/>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleTextarea1">Description</label>
-                        <textarea class="form-control"  name="description"
-                            rows="4">{{ $banner->description }}</textarea>
+                        <textarea class="form-control"  name="description" maxlength="80" placeholder="Describe banner here" rows="4" required>{{ $banner->description }}</textarea>
+                        <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
                     </div>
 
                     <div class="form-group">
@@ -62,7 +62,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                         style="display:none"
                     @endif>
                         <label for="exampleSelectGender">Course</label>
-                        <select class="form-control" id="course_list" name="course_list">
+                        <select class="form-control" id="course_list" name="course_list" required>
                             <option value="" disabled selected> -- Select Course --</option>
                             @foreach ($course as $item)
                                 <option value="{{ $item->id }}" @if ($banner->course_id == $item->id)
@@ -88,6 +88,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
         src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
     </script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 
 
@@ -114,7 +115,9 @@ $course = Course::where('is_activate', Activation::Activate)->get();
             FilePondPluginImageExifOrientation,
 
             // previews dropped images
-            FilePondPluginImagePreview
+            FilePondPluginImagePreview,
+
+            FilePondPluginFileValidateType
         );
 
         // Select the file input and use create() to turn it into a pond
@@ -124,6 +127,8 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                 maxFiles: 5,
                 instantUpload: false,
                 imagePreviewHeight: 135,
+                acceptedFileTypes: ['image/png', 'image/jpeg'],
+                labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
                 labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
                 files: [{
                     source: "{{ asset($banner->banner_image) }}",

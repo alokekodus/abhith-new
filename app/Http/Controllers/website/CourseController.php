@@ -104,26 +104,26 @@ class CourseController extends Controller
         $course_id = Crypt::decrypt($request->id);
         $course = Course::find($course_id);
         $chapters = Chapter::with('cart')->where([['course_id',$course_id],['is_activate',Activation::Activate]])->get();
-        $multiChoice = Set::inRandomOrder()->where('subject_id', $course->subject->id)->where('is_activate', 1)->take(1)->get();
-        $mcqRandom = [];
+        $multiChoice = Set::inRandomOrder()->where('subject_id', $course->subject->id)->where('is_activate', 1)->limit(1)->get();
+       
         $countMultiChoice = 0;
 
-        
         foreach( $multiChoice as $item){
             $mcqRandom = Question::where('set_id', $item->id)->where('is_activate', 1)->paginate(1);
-           
+            if($request->ajax()){
+                $view = view('website.multiple-choice.mcq', compact('mcqRandom'))->render();
+                return response()->json(['mcq' => $view]);
+            }
             $countMultiChoice = Question::where('set_id', $item->id)->where('is_activate', 1)->count();
         }
+
         $cart = []; $order = [];
         if(Auth::check()){
             $cart = Cart::where('user_id', Auth::user()->id )->where('is_remove_from_cart',0)->where('is_paid',0)->get();
             $order = Order::where('user_id', Auth::user()->id )->get();
         }
 
-        if($request->ajax()){
-            $view = view('website.multiple-choice.mcq', compact('mcqRandom'))->render();
-            return response()->json(['mcq' => $view]);
-        }
+        
         return view('website.course.courseDetails')->with(['course' => $course, 'chapters' => $chapters,'multiChoice' => $multiChoice, 'mcqRandom' => $mcqRandom,'countMultiChoice' => $countMultiChoice, 'cart' => $cart, 'order' => $order]);
 
     }

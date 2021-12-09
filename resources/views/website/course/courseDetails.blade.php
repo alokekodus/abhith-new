@@ -210,7 +210,7 @@
                 <div class="modal-heading">
                     <h4>{{ $course->subject->name }} Test</h4>
                     {{-- <p class="modal-sub-head-left">Total Questions {{ $countMultiChoice }}</p> --}}
-                    <p class="modal-sub-head-right">Time : <b>15:00 Mins</b></p>
+                    <p class="modal-sub-head-right mcqTimer">Time : <b>15:00 Minutes</b></p>
                     <button type="button" class="close" data-dismiss="modal"><span
                             class="icon-cancel-20"></span></button>
                 </div>
@@ -375,11 +375,13 @@
         $('.mcq-test').on('click', function() {
             $('#startMcqModel').modal('show');
             if ({{ $countMultiChoice }} == 0) {
+                $('.mcqTimer').css('display','none');
                 $('#startMcqModel').find('.modal-body').addClass('text-center');
-                $('#startMcqModel').find('.modal-body').html('<strong>Oops! No Questions Found</strong>');
+                $('#startMcqModel').find('.modal-body').html('<strong style="color:red;">Oops! No Questions Found</strong>');
             } else {
                 $('.startTest').on('click', function(e) {
                     e.preventDefault();
+                    $('.mcqTimer').css('display','block');
                     $('#add-test-modal').modal('show');
                     $('#startMcqModel').modal('hide');
                     interval = setInterval(updateTimer, 1000);
@@ -393,7 +395,7 @@
             let html =
                 '<div class="text-center"> <i class="fa fa-check-circle-o" aria-hidden="true" style="color:green;font-size:22px;"></i>&nbsp;Test Done</div>';
             $.ajax({
-                    url: '?page='+page,
+                    url: '?page=' + page,
                     type: 'get',
                 })
                 .done(function(data) {
