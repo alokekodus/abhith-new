@@ -107,7 +107,7 @@ class CourseController extends Controller
         $multiChoice = Set::inRandomOrder()->where('subject_id', $course->subject->id)->where('is_activate', 1)->limit(1)->get();
        
         $countMultiChoice = 0;
-
+        $mcqRandom = [];
         foreach( $multiChoice as $item){
             $mcqRandom = Question::where('set_id', $item->id)->where('is_activate', 1)->paginate(1);
             if($request->ajax()){
