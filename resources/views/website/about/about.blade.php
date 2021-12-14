@@ -28,19 +28,19 @@
                 <p class="cross-line">
                     <span>ABOUT US</span>
                 </p>
-                <h2 class="heading-black">Offering The Best In Education To The World.</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <h2 class="heading-black">Learning Beyond Limits</h2>
+                <p>With a rapid increase in technology and anything being available at just a click away, people are becoming more inclined towards modern technological gadgets. The digital urgency has proved to be a boon for society as a whole.</p>
+                <p>Learning has invariably expanded its horizons and has carved a niche for itself in the larger scenario. The advent of a more learner-centric, skill-based approach has eventually led to the rise of a platform for learners online. </p>
                 <ul class="list-inline about-list">
                     <li>
                         <span class="icon-best-learning--09"></span>
                         <h3 class="small-heading-black">Best Learning Communities</h3>
-                        <p>Lorem ipsum dolor sit amet adipisicing elit, sed do eiusmod tempor.</p>
+                        <p>Abith Siksha is an interactive learning platform created to improve student engagement and teacher efficiency. Join millions of learners from around the world, find the right instructor for you, choose from many topics, skill levels, and languages.</p>
                     </li>
                     <li>
                         <span class="icon-learn-online-09"></span>
                         <h3 class="small-heading-black">Learn Courses Online</h3>
-                        <p>Lorem ipsum dolor sit amet adipisicing elit, sed do eiusmod tempor</p>
+                        <p>Unlimited access to a wide range of courses, specializations, and certifications. Earn recognition for every learning program that you complete.  </p>
                     </li>
                 </ul>
             </div>
@@ -70,11 +70,10 @@
                             <span>Who We Are</span>
                         </p>
                         <h2 class="heading-white">Who We Are</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat</p>
+                        <p>Abith Siksha is an incredibly personalized online learning platform for aspirants wanting to take the next step towards enhancing personal and professional goals. </p>
+                        <p>We believe in breaking the barriers of traditional learning experience to a more interactive, user-friendly approach thus redefining one's learning behavior for the learners to grow. </p>
+                        <p>We partner with the best institutions to bring the best learning to every corner of the world so that anyone anywhere can easily access the perks of an effective e-learning platform. </p>
+                        <p>Abith Siksha is an amalgamation of immensely talented teachers and aspiring learners under one roof, thus providing an environment for an individual to grow leaps and bounds. </p>
                         <div id="projectFacts">
                             <div class="">
                                 <div class="projectFactsWrap ">
@@ -112,26 +111,14 @@
                     <li>
                         <div class="moto-image"><img src="{{asset('asset_website/img/about/mission.png')}}" class="w100" alt=""></div>
                         <h2 class="heading-black">Mission</h2>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis
-                            et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                            voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                            consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-                            consectetur, adipisci velit, sed quia non numquam eius modi tempora
-                            incidunt ut labore et dolore magnam aliquam quaerat voluptatem</p>
+                        <p>We believe in expanding access to world-class learning for anyone, anywhere, with leading universities to bring flexible, affordable online learning to individuals globally. </p>
+                        <p>Learn and avail high-quality curriculum at affordable pricing and flexible scheduling. The content would be streamed live. If you happen to miss out on some of the sessions online, you can always go back and have a look at the recorded content available at any convenient hour. </p>
+                        <p>Master the art of productivity with comprehensive skills data, expand professional skills with applied learning. </p>
                     </li>
                     <li>
                         <div class="moto-image"><img src="{{asset('asset_website/img/about/vision.png')}}" class="w100" alt=""></div>
                         <h2 class="heading-black">Vision</h2>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque
-                            laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis
-                            et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-                            voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                            consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                            Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-                            consectetur, adipisci velit, sed quia non numquam eius modi tempora
-                            incidunt ut labore et dolore magnam aliquam quaerat voluptatem</p>
+                        <p>Technology integrates well-crafted content offering students the best learning experience. The holistic learning approach has merged technology with the best practices like the use of videos and engaging content, with the best teachers who provide assessments along with recommendations, personalized to each student's learning style. </p>
                     </li>
                 </ul>
             </div>

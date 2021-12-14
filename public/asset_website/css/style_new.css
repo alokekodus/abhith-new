@@ -7,10 +7,10 @@
 }
 
 .counter-list li{
-    height: 350px;
+    height: 520px;
 }
 .counter-list img{
-    height: 350px;
+    height: 520px;
     object-fit: cover;
 }
 
