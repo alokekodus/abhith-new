@@ -70,6 +70,7 @@ class BlogController extends Controller
             'name' => $request->name,
             'blog_image' => $file,
             'blog' => \ConsoleTVs\Profanity\Builder::blocker($blog, BadWords::badWordsReplace)->strictClean(false)->filter(),
+            'category' => $request->blog_category
         ]);
 
         return response()->json(['status'=>1,'message' => 'Blog created successfully']);
