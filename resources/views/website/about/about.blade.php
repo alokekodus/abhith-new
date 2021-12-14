@@ -35,7 +35,7 @@
                     <li>
                         <span class="icon-best-learning--09"></span>
                         <h3 class="small-heading-black">Best Learning Communities</h3>
-                        <p>Abith Siksha is an interactive learning platform created to improve student engagement and teacher efficiency. Join millions of learners from around the world, find the right instructor for you, choose from many topics, skill levels, and languages.</p>
+                        <p>Abhith Siksha is an interactive learning platform created to improve student engagement and teacher efficiency. Join millions of learners from around the world, find the right instructor for you, choose from many topics, skill levels, and languages.</p>
                     </li>
                     <li>
                         <span class="icon-learn-online-09"></span>
@@ -70,10 +70,10 @@
                             <span>Who We Are</span>
                         </p>
                         <h2 class="heading-white">Who We Are</h2>
-                        <p>Abith Siksha is an incredibly personalized online learning platform for aspirants wanting to take the next step towards enhancing personal and professional goals. </p>
+                        <p>Abhith Siksha is an incredibly personalized online learning platform for aspirants wanting to take the next step towards enhancing personal and professional goals. </p>
                         <p>We believe in breaking the barriers of traditional learning experience to a more interactive, user-friendly approach thus redefining one's learning behavior for the learners to grow. </p>
                         <p>We partner with the best institutions to bring the best learning to every corner of the world so that anyone anywhere can easily access the perks of an effective e-learning platform. </p>
-                        <p>Abith Siksha is an amalgamation of immensely talented teachers and aspiring learners under one roof, thus providing an environment for an individual to grow leaps and bounds. </p>
+                        <p>Abhith Siksha is an amalgamation of immensely talented teachers and aspiring learners under one roof, thus providing an environment for an individual to grow leaps and bounds. </p>
                         <div id="projectFacts">
                             <div class="">
                                 <div class="projectFactsWrap ">
