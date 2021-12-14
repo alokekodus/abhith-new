@@ -65,10 +65,10 @@
             <div class="col-lg-12 p0">
                 <ul class="list-inline counter-list">
                     <li>
-                        <img src="{{asset('asset_website/img/about/image1.png')}}" class="w100" alt="">
+                        <img src="{{asset('asset_website/img/about/image1.jpg')}}" class="w100" alt="">
                     </li>
                     <li>
-                        <img src="{{asset('asset_website/img/about/image2.png')}}" class="w100" alt="">
+                        <img src="{{asset('asset_website/img/about/image2.jpg')}}" class="w100" alt="">
                     </li>
                     <li>
                         <p class="cross-line3">

@@ -1,5 +1,7 @@
 @extends('layout.website.website')
 
+@section('title','Courses')
+
 @section('content')
 
 <section class="subheader">

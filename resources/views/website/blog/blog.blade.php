@@ -1,5 +1,7 @@
 @extends('layout.website.website')
 
+@section('title','Blogs')
+
 @section('head')
 <style>
     .add-blog-floating{
