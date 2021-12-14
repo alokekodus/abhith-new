@@ -83,24 +83,24 @@
                     <p class="cross-line">
                         <span>ABOUT US</span>
                     </p>
-                    <h2 class="heading-black">Offering The Best In Education To The World.</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur.</p>
-                    <ul class="list-inline about-list">
-                        <li>
-                            <span class="icon-best-learning--09"></span>
-                            <h3 class="small-heading-black">Best Learning Communities</h3>
-                            <p>Lorem ipsum dolor sit amet adipisicing elit, sed do eiusmod tempor.</p>
-                        </li>
-                        <li>
-                            <span class="icon-learn-online-09"></span>
-                            <h3 class="small-heading-black">Learn Courses Online</h3>
-                            <p>Lorem ipsum dolor sit amet adipisicing elit, sed do eiusmod tempor</p>
-                        </li>
-                    </ul>
+                    <h2 class="heading-black">Learning Beyond Limits</h2>
+                <p>With a rapid increase in technology and anything being available at just a click away, people are becoming more inclined towards modern technological gadgets. The digital urgency has proved to be a boon for society as a whole.</p>
+                <p>Learning has invariably expanded its horizons and has carved a niche for itself in the larger scenario. The advent of a more learner-centric, skill-based approach has eventually led to the rise of a platform for learners online. </p>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="icon-best-learning--09" style="font-size: 35px"></span>
+                                    <h3 class="small-heading-black">Best Learning Communities</h3>
+                                    <p>Abith Siksha is an interactive learning platform created to improve student engagement and teacher efficiency. Join millions of learners from around the world, find the right instructor for you, choose from many topics, skill levels, and languages.</p>
+                                </div>
+        
+                                <div class="col-md-6">
+                                    <span class="icon-learn-online-09" style="font-size: 35px"></span>
+                                <h3 class="small-heading-black">Learn Courses Online</h3>
+                                <p>Unlimited access to a wide range of courses, specializations, and certifications. Earn recognition for every learning program that you complete.  </p>
+                                </div>
+                            </div>
+                        </div>
                     <div><a href="{{ route('website.about') }}" target="_blank" class="about-view">View More</a></div>
                 </div>
                 <div class="col-lg-5 about-right">

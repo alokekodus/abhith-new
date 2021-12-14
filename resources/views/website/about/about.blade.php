@@ -41,8 +41,10 @@
                         <span class="icon-learn-online-09"></span>
                         <h3 class="small-heading-black">Learn Courses Online</h3>
                         <p>Unlimited access to a wide range of courses, specializations, and certifications. Earn recognition for every learning program that you complete.  </p>
-                    </li>
-                </ul>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <div class="col-lg-5 about-right">
                 <div class="about-us-img">

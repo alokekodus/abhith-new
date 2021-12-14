@@ -115,6 +115,7 @@ h6 {
 
 .nav-menu a:hover,
 .nav-menu .active > a,
+.about-view:hover,
 .nav-menu li:hover > a {
     /* color: #5fcf80; */
     color: #0770EF;
