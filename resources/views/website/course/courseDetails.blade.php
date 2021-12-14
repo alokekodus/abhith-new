@@ -354,8 +354,9 @@
                                 '<i class="fa fa-inr" aria-hidden="true"></i>' + allPrice)
                             $('#add_cart').prop('disabled', true)
                             $("#add_cart").css("background-color", "grey");
-                            window.location.href = "{{route('website.cart')}}";
+                            // window.location.href = "{{route('website.cart')}}";
                         });
+                        location.reload(true);
                         chapterId = [];
                     },
                     error: function(xhr, status, error) {

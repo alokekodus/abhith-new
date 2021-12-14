@@ -54,6 +54,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
         src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
     </script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 
 
@@ -72,7 +73,8 @@ $course = Course::where('is_activate', Activation::Activate)->get();
             FilePondPluginImageExifOrientation,
 
             // previews dropped images
-            FilePondPluginImagePreview
+            FilePondPluginImagePreview,
+            FilePondPluginFileValidateType
         );
 
         // Select the file input and use create() to turn it into a pond
@@ -82,6 +84,8 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                 maxFiles: 5,
                 instantUpload: false,
                 imagePreviewHeight: 135,
+                acceptedFileTypes: ['image/png', 'image/jpeg'],
+                labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
                 labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
                 // files: [{
                 //     source: "{{ asset('site/img/icons/check.png') }}",
