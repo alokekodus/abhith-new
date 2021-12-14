@@ -31,18 +31,23 @@
                 <h2 class="heading-black">Learning Beyond Limits</h2>
                 <p>With a rapid increase in technology and anything being available at just a click away, people are becoming more inclined towards modern technological gadgets. The digital urgency has proved to be a boon for society as a whole.</p>
                 <p>Learning has invariably expanded its horizons and has carved a niche for itself in the larger scenario. The advent of a more learner-centric, skill-based approach has eventually led to the rise of a platform for learners online. </p>
-                <ul class="list-inline about-list">
-                    <li>
-                        <span class="icon-best-learning--09"></span>
-                        <h3 class="small-heading-black">Best Learning Communities</h3>
-                        <p>Abith Siksha is an interactive learning platform created to improve student engagement and teacher efficiency. Join millions of learners from around the world, find the right instructor for you, choose from many topics, skill levels, and languages.</p>
-                    </li>
-                    <li>
-                        <span class="icon-learn-online-09"></span>
+                
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="icon-best-learning--09" style="font-size: 35px"></span>
+                            <h3 class="small-heading-black">Best Learning Communities</h3>
+                            <p>Abith Siksha is an interactive learning platform created to improve student engagement and teacher efficiency. Join millions of learners from around the world, find the right instructor for you, choose from many topics, skill levels, and languages.</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <span class="icon-learn-online-09" style="font-size: 35px"></span>
                         <h3 class="small-heading-black">Learn Courses Online</h3>
                         <p>Unlimited access to a wide range of courses, specializations, and certifications. Earn recognition for every learning program that you complete.  </p>
-                    </li>
-                </ul>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <div class="col-lg-5 about-right">
                 <div class="about-us-img">
