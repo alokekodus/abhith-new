@@ -108,7 +108,9 @@
 
             FilePondPluginImageExifOrientation,
 
-            FilePondPluginImagePreview
+            FilePondPluginImagePreview,
+
+            FilePondPluginFileValidateType
         );
 
         // Select the file input and use create() to turn it into a pond
@@ -118,6 +120,8 @@
                 maxFiles: 5,
                 instantUpload: false,
                 imagePreviewHeight: 135,
+                acceptedFileTypes: ['image/png', 'image/jpeg'],
+                labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
                 labelIdle: '<div style="width:100%;height:100%;margin-top:10px;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
             }
         );

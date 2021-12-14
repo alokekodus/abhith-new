@@ -121,7 +121,7 @@
             data: formDat,
 
             success: function(data) {
-                console.log(data)
+                toastr.success(data.message);
             }
         });
     });

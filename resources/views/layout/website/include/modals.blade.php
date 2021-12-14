@@ -308,7 +308,8 @@
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputName1">Name</label>
-                                <input type="text" class="form-control" id="blogName" name="blogName" placeholder="Enter Blog Name" required>
+                                <input type="text" class="form-control" id="blogName" name="blogName" maxlength="100" placeholder="Enter Blog Name" required>
+                                <span class="text-muted" style="font-size:12px;margin-top:5px;">Allowed characters 100.</span>
                                 <span class="text-danger" id="name_error"></span>
                             </div>
         
@@ -320,7 +321,7 @@
         
                             <div class="form-group">
                                 <label for="exampleTextarea1">Description</label>
-                                <textarea class="form-control" id="websiteAddBlogEditor" name="blogDescription"></textarea>
+                                <textarea class="form-control" id="websiteAddBlogEditor" name="blogDescription" required></textarea>
                                 <span class="text-danger" id="data_error"></span>
                             </div>
                             <button type="submit" class="btn add-post float-right mr-3 websiteAddBlogBtn">Create</button>

@@ -9,13 +9,6 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 
 @section('title','Gallery')
 
-@section('head')
-
-    <link rel="stylesheet"
-        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
-@endsection
-
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
@@ -47,15 +40,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 
 @section('scripts')
 
-    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
-    </script>
-    <script
-        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
-    </script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    
 
 
     <script>

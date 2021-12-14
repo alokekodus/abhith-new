@@ -2,14 +2,6 @@
 
 @section('title', 'Blog')
 
-@section('head')
-
-<script src="{{asset('asset_admin/ckeditor/ckeditor.js')}}"></script>
-
-    <link rel="stylesheet"  href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
-@endsection
-
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
@@ -47,14 +39,7 @@
 
 @section('scripts')
 
-    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
-    </script>
-    <script
-        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
-    </script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+   
 
     <script>
 
@@ -74,7 +59,9 @@
 
             FilePondPluginImageExifOrientation,
 
-            FilePondPluginImagePreview
+            FilePondPluginImagePreview,
+
+            FilePondPluginFileValidateType
         );
 
         // Select the file input and use create() to turn it into a pond
@@ -84,6 +71,8 @@
                 maxFiles: 5,
                 instantUpload: false,
                 imagePreviewHeight: 135,
+                acceptedFileTypes: ['image/png', 'image/jpeg'],
+                labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
                 labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
             }
         );

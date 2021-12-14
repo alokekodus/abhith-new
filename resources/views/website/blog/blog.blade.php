@@ -27,12 +27,12 @@
 
 @section('content')
 {{-- Floating button --}}
-{{-- @auth
+@auth
     <a href="javascript:void(0)" class="btn add-blog-floating" data-toggle="modal" data-target="#websiteAddBlogModal"><p class="mt-2">Add Blog</p></a>    
 @endauth
 @guest
     <a href="javascript:void(0)" class="btn add-blog-floating" data-toggle="modal" data-target="#login-modal"><p class="mt-2">Add Blog</p></a>    
-@endguest --}}
+@endguest
 
     <section class="subheader">
         <div class="container-fluid">

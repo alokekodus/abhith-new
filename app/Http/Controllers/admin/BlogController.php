@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Common\BadWords;
+use Illuminate\Support\Facades\Crypt;
+
 
 class BlogController extends Controller
 {
@@ -15,7 +17,7 @@ class BlogController extends Controller
 
         $blog_id = 0;
         if($id != null){
-            $blog_id = \Crypt::decrypt($id);
+            $blog_id = Crypt::decrypt($id);
         }
 
         $blogs = Blog::orderBy('id','DESC')->paginate(10);
@@ -70,7 +72,7 @@ class BlogController extends Controller
             'blog' => \ConsoleTVs\Profanity\Builder::blocker($blog, BadWords::badWordsReplace)->strictClean(false)->filter(),
         ]);
 
-        return \response()->json(['status'=>1,'message' => 'Blog created successfully']);
+        return response()->json(['status'=>1,'message' => 'Blog created successfully']);
     }
 
     protected function active(Request $request) {
@@ -78,20 +80,24 @@ class BlogController extends Controller
         $blog->is_activate = $request->active;
         $blog->save();
 
-        return \response()->json(['status'=>1]);
+        if($request->active == 0){
+            return response()->json(['status'=>1,'message' => 'Blog visibility changed from show to hide']);
+        }else{
+            return response()->json(['status'=>1,'message' => 'Blog visibility changed from hide to show']);
+        }
     }
 
     protected function viewBlog(Request $request)
     {
         # code...
-        $blog_id = \Crypt::decrypt($request->id);
+        $blog_id = Crypt::decrypt($request->id);
         $blog = Blog::find($blog_id);
 
         return view('admin.master.blog.read', \compact('blog'));
     }
 
     protected function editBlog(Request $request){
-        $main_id = \Crypt::decrypt($request->id);
+        $main_id = Crypt::decrypt($request->id);
 
         $blog = Blog::find($main_id);
         
@@ -101,7 +107,7 @@ class BlogController extends Controller
 
     protected function edit(Request $request){
 
-        $blog_id = \Crypt::decrypt($request->id);
+        $blog_id = Crypt::decrypt($request->id);
         $document = $request->pic;
         $blog = Blog::where('id', $blog_id)->first();
 
