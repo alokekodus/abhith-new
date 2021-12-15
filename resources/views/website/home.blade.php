@@ -110,13 +110,13 @@
                             <form id="enquiryFormSubmit">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="name" placeholder="Name" id="name" required>
+                                    <input type="text" class="form-control" name="name" placeholder="Name" id="name" maxlength="30" pattern="^[a-zA-Z]+\s?[a-zA-Z]+\s?[a-zA-Z]+" title="Only alphabets are accepted. Space between word allowed is 2" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="phone" pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" name="email" placeholder="Email Id" id="email" required>
+                                    <input type="text" class="form-control" name="email" placeholder="Email Id" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" title="Please enter a valid email address." required>
                                 </div>
                                 <div class="form-group">
                                     <textarea class="form-control" rows="5" name="message" placeholder="Enquiry reason" id="message" required></textarea>
