@@ -43,7 +43,7 @@
                                 <th> Email </th>
                                 <th> Message </th>
                                 <th> Date of Enquiry </th>
-                                <th>Marked as Contacted</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,9 +57,9 @@
                                 <td>{{$item->date_of_enquiry}}</td>
                                 <td>
                                     @if ($item->marked_as_contacted == 0)
-                                        <button class="btn btn-sm btn-success" id="markContact" data-id="{{$item->id}}" data-status="1">Reach User</button>
+                                        <button class="btn btn-sm btn-success" id="markContact" data-id="{{$item->id}}" data-status="1">Mark as Reached</button>
                                     @else
-                                       <h6 class="text-success">Contacted</h6>
+                                       <h6 class="text-success">Reached</h6>
                                     @endif
                                 </td>
                             </tr>
