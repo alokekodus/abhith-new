@@ -107,21 +107,21 @@
                     <div class="enquiry-form">
                         <h3 class="form-heading mb0">Enquiry</h3>
                         <div class="form-div">
-                            <form action="">
+                            <form id="enquiryFormSubmit">
+                                @csrf
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Name" id="name">
+                                    <input type="text" class="form-control" name="name" placeholder="Name" id="name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Phone Number" id="p_number">
+                                    <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="phone" pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Email Id" id="email">
+                                    <input type="email" class="form-control" name="email" placeholder="Email Id" id="email" required>
                                 </div>
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="5" placeholder="Message" id="Message"></textarea>
+                                    <textarea class="form-control" rows="5" name="message" placeholder="Enquiry reason" id="message" required></textarea>
                                 </div>
-
-                                <button type="submit" class="btn btn-block knowledge-link">Submit</button>
+                                <button type="submit" class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -495,6 +495,53 @@
                     items: 1
                 }
             }
+        });
+
+
+
+
+        $('#enquiryFormSubmit').on('submit',function(e){
+            e.preventDefault();
+
+            let formData = new FormData(this);
+            $('.enquiry-form-btn').text('submiting....');
+            $('.enquiry-form-btn').attr('disabled',true);
+
+            if($('#name').val().length == 0){
+                toastr.error('Name is required');
+            }else if($('#phone').val().length == 0){
+                toastr.error('Phone number is required');
+            }else if($('#email').val().length == 0){
+                toastr.error('Email is required');
+            }else if($('#message').val().length == 0){
+                toastr.error('Message is required');
+            }else{
+                $.ajax({
+                    url:'{{route("website.save.enquiry.details")}}',
+                    type:'POST',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data:formData,
+                    success:function(data){
+                        if(data.status == 1){
+                            toastr.success(data.message);
+                            $('.enquiry-form-btn').text('Submit');
+                             $('.enquiry-form-btn').attr('disabled',false);
+                            $('#enquiryFormSubmit')[0].reset();
+                        }else{
+                            toastr.error(data.message);
+                            $('.enquiry-form-btn').text('Submit');
+                             $('.enquiry-form-btn').attr('disabled',false);
+                        }
+                    },
+                    error:function(xhr, status, error){
+                        if(xhr.status == 500 || xhr.status == 422){
+                            toastr.error('Oops! Something went wrong while saving.');
+                        }
+                    }
+                });
+            }     
         });
     </script>
 

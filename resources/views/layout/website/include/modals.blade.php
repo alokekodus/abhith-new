@@ -297,7 +297,7 @@
 
 
 <!-- Add Blog Modal -->
-<div class="modal" id="websiteAddBlogModal">
+<div class="modal" id="websiteAddBlogModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog mw-100 w-75 h-100 d-md-flex flex-column justify-content-center my-0">
         <div class="modal-content">
             <div class="modal-body p-0">
@@ -311,6 +311,23 @@
                                 <input type="text" class="form-control" id="blogName" name="blogName" maxlength="100" placeholder="Enter Blog Name" required>
                                 <span class="text-muted" style="font-size:12px;margin-top:5px;">Allowed characters 100.</span>
                                 <span class="text-danger" id="name_error"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Select Category</label>
+                                <select name="blog_category" id="blog_category" class="form-control" required>
+                                    <option value="" selected disabled> -- Select -- </option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Food ">Food </option>
+                                    <option value="Travel">Travel</option>
+                                    <option value="Music">Music</option>
+                                    <option value="Lifestyle">Lifestyle</option>
+                                    <option value="Fitness">Fitness</option>
+                                    <option value="DIY">DIY</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Movie">Movie</option>
+                                </select>
+                                <span class="text-danger" id="blog_category_error"></span>
                             </div>
         
                             <div class="form-group">

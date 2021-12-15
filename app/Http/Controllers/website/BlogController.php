@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Common\Activation;
+use Illuminate\Support\Facades\Crypt;
 
 class BlogController extends Controller
 {
     //
 
     protected function details(Request $request){
-        $blog_id = \Crypt::decrypt($request->id);
+        $blog_id = Crypt::decrypt($request->id);
 
         $blog = Blog::find($blog_id);
 
@@ -34,7 +35,8 @@ class BlogController extends Controller
         $request->validate([
             'blogName' => 'required',
             'pic' => 'required',
-            'description'  => 'required'
+            'description'  => 'required',
+            'blog_category' => 'required'
         ]);
 
         if (isset($blogPic) && !empty($blogPic)) {
@@ -48,6 +50,7 @@ class BlogController extends Controller
             'name' => $blogName,
             'blog_image' => $file,
             'blog' => $blogDescription,
+            'category' => $request->blog_category,
             'is_activate' => 0,
         ]);
 

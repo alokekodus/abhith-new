@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\SubjectController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\ChapterController;
 use App\Http\Controllers\admin\BlogController;
+use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
@@ -125,6 +126,14 @@ Route::prefix('enrolled')->group(function(){
     Route::get('students',[ EnrolledController::class, 'getEnrolledStudents'])->name('admin.get.enrolled.students');
 });
 
+/* ------------------------------- Enquiry ------------------------------------ */
+Route::prefix('enquiry')->group(function(){
+    Route::get('get-enquiry-details',[EnquiryController::class,'getEnquiryDetails'])->name('admin.get.enquiry.details');
+    Route::post('save-enquiry-details',[EnquiryController::class,'saveEnquiryDetails'])->name('website.save.enquiry.details');
+    Route::post('mark-enquiry',[EnquiryController::class,'markEnquiry'])->name('admin.mark.enquiry');
+});
+
+
 /* ------------------------------- Time Table ------------------------------------ */
 Route::prefix('time-table')->group(function(){
     Route::get('view-time-table',[ TimeTableController::class, 'adminViewTimeTable'])->name('admin.view.time.table');
@@ -132,3 +141,4 @@ Route::prefix('time-table')->group(function(){
     Route::post('save-time-table',[ TimeTableController::class, 'saveTimeTable'])->name('admin.save.time.table');
     Route::post('change-visibility-time-table',[ TimeTableController::class, 'changeVisibility'])->name('admin.change.visibility.time.table');
 });
+

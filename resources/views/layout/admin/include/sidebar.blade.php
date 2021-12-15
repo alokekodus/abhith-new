@@ -63,6 +63,10 @@
             <a class="nav-link" href="{{route('admin.get.enrolled.students')}}"><span class="menu-title">Enrolled Students</span>
                 <i class="mdi  mdi-account-multiple menu-icon"></i></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.get.enquiry.details')}}"><span class="menu-title">Enquiry Details</span>
+                <i class="mdi mdi-account-network menu-icon"></i></a>
+        </li>
         <li class="nav-item {{ (request()->routeIs('admin.create.time.table')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.view.time.table')}}"><span class="menu-title">Time-Table</span>
                 <i class="mdi  mdi-calendar-clock menu-icon"></i></a>
