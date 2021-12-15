@@ -298,7 +298,7 @@
 
 <!-- Add Blog Modal -->
 <div class="modal" id="websiteAddBlogModal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog mw-100 w-75 h-100 d-md-flex flex-column justify-content-center my-0">
+    <div class="modal-dialog mw-100 w-75 h-100 d-md-flex flex-column mt-5 my-0">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card border-0">

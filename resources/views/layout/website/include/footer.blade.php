@@ -50,18 +50,16 @@
                     @foreach ($gallery as $item)
                         <li><img src="{{asset($item->gallery)}}" class="w100"></li>
                     @endforeach
-                    {{-- <li><img src="{{asset('asset_website/img/home/image1.jpg')}}" class="w100"></li>
-                    <li><img src="{{asset('asset_website/img/home/image1.jpg')}}" class="w100"></li>
-                    <li><img src="{{asset('asset_website/img/home/image1.jpg')}}" class="w100"></li> --}}
                 </ul>
             </div>
         </div>
         <div class="row footer-mid">
             <div class="col-lg-6 p0 footer-mid-left">
                 <ul class="list-inline footer-menu-list mb0">
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Privacy Policy </a></li>
-                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="{{route('website.faq')}}">FAQ</a></li>
+                    <li><a href="{{route('website.privacy')}}">Privacy Policy </a></li>
+                    <li><a href="{{route('website.terms')}}">Terms and Conditions</a></li>
+                    <li><a href="{{route('website.refund')}}">Refund & Cancellation Policy</a></li>
                 </ul>
             </div>
             <div class="col-lg-6 p0 footer-mid-right">

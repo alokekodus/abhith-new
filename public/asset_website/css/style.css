@@ -115,7 +115,7 @@ h6 {
 
 .nav-menu a:hover,
 .nav-menu .active > a,
-.about-view:hover,
+a:hover,
 .nav-menu li:hover > a {
     /* color: #5fcf80; */
     color: #0770EF;
@@ -2204,9 +2204,9 @@ input[type=number] {
     display: block;
     display: -webkit-box;
     max-width: 100%;
-    height: 63px;
+    /* height: 63px; */
     margin: 0 auto;
-    margin-bottom: 25px;
+    margin-top: 10px;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -2219,7 +2219,7 @@ input[type=number] {
     display: -webkit-box;
     max-width: 100%;
     /* height: 82px; */
-    margin: 15px auto 30px auto;
+    margin: 0px auto 20px auto;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
