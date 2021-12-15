@@ -130,4 +130,9 @@ Route::view('website/forgot-password','website.auth.forgot')->name('website.forg
 Route::view('website/new-password','website.auth.newpassword')->name('website.new.password');
 Route::view('admin/course/view','admin.course.view')->name('admin.course.view');
 
+Route::view('website/faq', 'website.docs.faq')->name('website.faq');
+Route::view('website/privacy-policy', 'website.docs.privacy')->name('website.privacy');
+Route::view('website/terms-and-conditions', 'website.docs.terms')->name('website.terms');
+Route::view('website/refund-and-cancellation-policy', 'website.docs.refund')->name('website.refund');
+
 
