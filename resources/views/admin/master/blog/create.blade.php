@@ -29,6 +29,8 @@
                             <option value="DIY">DIY</option>
                             <option value="Sports">Sports</option>
                             <option value="Movie">Movie</option>
+                            <option value="Education">Education</option>
+                            <option value="Technology">Technology</option>
                         </select>
                         <span class="text-danger" id="blog_category_error"></span>
                     </div>
