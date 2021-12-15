@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class EnquiryController extends Controller
 {
     public function getEnquiryDetails(Request $request){
-        $details = Enquiry::all();
+        $details = Enquiry::orderBy('created_at','desc')->get();
         return view('admin.enquiry.enquiry')->with('details',$details);
     }
 
