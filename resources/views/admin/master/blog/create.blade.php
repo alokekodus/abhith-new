@@ -89,7 +89,7 @@
                 instantUpload: false,
                 imagePreviewHeight: 135,
                 acceptedFileTypes: ['image/*'],
-                labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
+                labelFileTypeNotAllowed:'Not a valid image.',
                 labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
             }
         );

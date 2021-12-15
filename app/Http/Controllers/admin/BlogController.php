@@ -115,6 +115,7 @@ class BlogController extends Controller
         if ($document->getClientOriginalName() == 'blob') {
             $blog->name = $request->name;
             $blog->blog = \ConsoleTVs\Profanity\Builder::blocker($request->data , BadWords::badWordsReplace)->strictClean(false)->filter();
+            $blog->category = $request->blog_category;
             $blog->save();
         } else {
             if (isset($document) && !empty($document)) {
@@ -126,9 +127,10 @@ class BlogController extends Controller
             $blog->name = $request->name;
             $blog->blog_image = $file;
             $blog->blog = \ConsoleTVs\Profanity\Builder::blocker($request->data , BadWords::badWordsReplace)->strictClean(false)->filter();
+            $blog->category = $request->blog_category;
             $blog->save();
         }
 
-        return response()->json(['status'=>1]);
+        return response()->json(['status'=>1, 'message' => 'Blog edited successfully']);
     }
 }

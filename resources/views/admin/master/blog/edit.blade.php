@@ -21,12 +21,30 @@
                     <input type="hidden" name="id" value="{{\Crypt::encrypt($blog->id)}}">
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" maxlength="100" value="{{$blog->name}}"
-                            placeholder="Enter Blog Name" required>
+                        <input type="text" class="form-control" id="name" name="name" maxlength="100" value="{{$blog->name}}" placeholder="Enter Blog Name" required>
                         <span class="text-muted" style="font-size:12px;margin-top:5px;">Allowed characters 100.</span>
 
                         <span class="text-danger" id="name_error"></span>
                     </div>
+
+                    <div class="form-group">
+                        <label for="">Select Category</label>
+                        <select name="blog_category" id="blog_category" class="form-control" required>
+                            <option value="{{$blog->name}}" selected disabled> {{$blog->category}} </option>
+                            <option value="Fashion">Fashion</option>
+                            <option value="Food ">Food </option>
+                            <option value="Travel">Travel</option>
+                            <option value="Music">Music</option>
+                            <option value="Lifestyle">Lifestyle</option>
+                            <option value="Fitness">Fitness</option>
+                            <option value="DIY">DIY</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Movie">Movie</option>
+                        </select>
+                        <span class="text-danger" id="blog_category_error"></span>
+                    </div>
+
+
 
                     <div class="form-group">
                         <label>Blog image upload</label>
@@ -78,7 +96,9 @@
 
             FilePondPluginImageExifOrientation,
 
-            FilePondPluginImagePreview
+            FilePondPluginImagePreview,
+
+            FilePondPluginFileValidateType
         );
 
         // Select the file input and use create() to turn it into a pond
@@ -88,6 +108,8 @@
                 maxFiles: 5,
                 instantUpload: false,
                 imagePreviewHeight: 135,
+                acceptedFileTypes: ['image/*'],
+                labelFileTypeNotAllowed:'Not a valid image.',
                 labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
                 files: [{
                     source: "{{ asset($blog->blog_image) }}",
@@ -121,6 +143,8 @@
                 toastr.error('Blog image is required.');
             }else if(data.length == 0){
                 toastr.error('Description is required.');
+            }else if(pondFiles[0].status != 2){
+                toastr.error('Not a valid image.');
             }else{
                 $.ajax({
 
@@ -141,7 +165,7 @@
                         },
                         200: function(data) {
                             // $('#bannerForm').trigger("reset");
-                            toastr.success('Blog details updated successfully');
+                            toastr.success(data.message);
                             location.reload();
 
                             // alert('200 status code! success');
