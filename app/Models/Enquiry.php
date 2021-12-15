@@ -9,5 +9,5 @@ class Enquiry extends Model
 {
     use HasFactory;
     protected $table = 'enquiries';
-    protected $guarded = [];
+    protected $fillable = ['name','phone','email','message','date_of_enquiry','marked_as_contacted'];
 }

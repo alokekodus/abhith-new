@@ -506,6 +506,7 @@
 
             let formData = new FormData(this);
             $('.enquiry-form-btn').text('submiting....');
+            $('.enquiry-form-btn').attr('disabled',true);
 
             if($('#name').val().length == 0){
                 toastr.error('Name is required');
@@ -527,10 +528,12 @@
                         if(data.status == 1){
                             toastr.success(data.message);
                             $('.enquiry-form-btn').text('Submit');
+                             $('.enquiry-form-btn').attr('disabled',false);
                             $('#enquiryFormSubmit')[0].reset();
                         }else{
                             toastr.error(data.message);
                             $('.enquiry-form-btn').text('Submit');
+                             $('.enquiry-form-btn').attr('disabled',false);
                         }
                     },
                     error:function(xhr, status, error){
