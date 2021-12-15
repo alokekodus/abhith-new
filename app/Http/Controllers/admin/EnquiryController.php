@@ -19,18 +19,23 @@ class EnquiryController extends Controller
         $email = $request->email;
         $message = $request->message;
 
-        $create = Enquiry::create([
-            'name' => $name,
-            'phone' => $phone,
-            'email' => $email,
-            'message' => $message,
-            'date_of_enquiry' => date('Y-m-d'),
-            'marked_as_contacted' => 0
-        ]);
-        if($create){
-            return response()->json(['status' => 1, 'message' => 'Thank you for contacting us. Our customer support will contact you shortly.']);
+        $email_exists = Enquiry::where('email',$email)->exists();
+        if($email_exists == true){
+            return response()->json(['message' => 'Email already exists']);
         }else{
-            return response()->json(['status' => 2 ,'message' => 'Something went wrong while enquiring']);
+            $create = Enquiry::create([
+                'name' => $name,
+                'phone' => $phone,
+                'email' => $email,
+                'message' => $message,
+                'date_of_enquiry' => date('Y-m-d'),
+                'marked_as_contacted' => 0
+            ]);
+            if($create){
+                return response()->json(['status' => 1, 'message' => 'Thank you for contacting us. Our customer support will contact you shortly.']);
+            }else{
+                return response()->json(['status' => 2 ,'message' => 'Something went wrong while enquiring']);
+            }
         }
     }
 

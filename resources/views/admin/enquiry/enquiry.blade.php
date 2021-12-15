@@ -93,7 +93,6 @@
             e.preventDefault();
             let enquiry_id = $('#markContact').data('id');
             let enquiry_status = $('#markContact').data('status');
-
             $.ajax({
                 url:"{{route('admin.mark.enquiry')}}",
                 type:'POST',
