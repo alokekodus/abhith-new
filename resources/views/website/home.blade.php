@@ -104,28 +104,30 @@
                     <div><a href="{{ route('website.about') }}" target="_blank" class="about-view">View More</a></div>
                 </div>
                 <div class="col-lg-5 about-right">
-                    <div class="enquiry-form">
-                        <h3 class="form-heading mb0">Enquiry</h3>
-                        <div class="form-div">
-                            <form id="enquiryFormSubmit">
-                                @csrf
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="name" placeholder="Name" id="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="phone" pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" name="email" placeholder="Email Id" id="email" required>
-                                </div>
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="5" name="message" placeholder="Enquiry reason" id="message" required></textarea>
-                                </div>
+                    @guest
+                        <div class="enquiry-form">
+                            <h3 class="form-heading mb0">Enquiry</h3>
+                            <div class="form-div">
+                                <form id="enquiryFormSubmit">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="name" placeholder="Name" id="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="phone" placeholder="Phone Number" id="phone" pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" placeholder="Email Id" id="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="5" name="message" placeholder="Enquiry reason" id="message" required></textarea>
+                                    </div>
 
-                                <button type="submit" class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
-                            </form>
+                                    <button type="submit" class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    @endguest
                 </div>
             </div>
         </div>
