@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label>File upload</label>
                         <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
-                            data-max-files="1" />
+                            data-max-files="1" required>
                             <span class="text-danger" id="pic_error"></span>
 
                     </div>
@@ -49,7 +49,7 @@
                         <span class="text-danger" id="data_error"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                    <button type="submit" class="btn btn-gradient-primary mr-2 blog-form-submit">Submit</button>
                 </form>
             </div>
         </div>
@@ -122,7 +122,12 @@
             formdata.append('data', data);
             if(pondFiles[0].status != 2){
                 toastr.error('Not a valid image. Allowed image extensions png or jpg/jpeg');
+            }else if(data.length <= 1){
+                toastr.error('Blog description required.');
             }else{
+
+                $('.blog-form-submit').text('Please wait...');
+                $('.blog-form-submit').attr('disabled',true);
                 $.ajax({
 
                     type: "POST",
@@ -142,6 +147,8 @@
                         },
                         200: function(data) {
                             // $('#blogForm').trigger("reset");
+                            $('.blog-form-submit').text('Submit');
+                            $('.blog-form-submit').attr('disabled',false);
                             toastr.success(data.message);
                             location.reload();
 
@@ -149,6 +156,8 @@
                         },
                         500: function() {
                             alert('500 someting went wrong');
+                            $('.blog-form-submit').text('Submit');
+                            $('.blog-form-submit').attr('disabled',false);
                         }
                     }
                 });
