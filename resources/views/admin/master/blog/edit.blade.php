@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label for="">Select Category</label>
                         <select name="blog_category" id="blog_category" class="form-control" required>
-                            <option value="{{$blog->name}}" selected disabled> {{$blog->category}} </option>
+                            <option value="{{$blog->category}}" selected> {{$blog->category}} </option>
                             <option value="Fashion">Fashion</option>
                             <option value="Food ">Food </option>
                             <option value="Travel">Travel</option>

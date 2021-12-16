@@ -11,7 +11,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" maxlength="100" placeholder="Enter Blog Name">
+                        <input type="text" class="form-control" id="name" name="name" maxlength="100" placeholder="Enter Blog Name" required>
                         <span class="text-muted" style="font-size:12px;margin-top:5px;">Allowed characters 100.</span>
                         <span class="text-danger" id="name_error"></span>
                     </div>
