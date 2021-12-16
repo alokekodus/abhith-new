@@ -50,14 +50,15 @@
                                                 class="text-center">Forgot Password</a></div>
                                     </form>
 
-                                    <div class="google-div"><a href="#" class="google-btn"><span
+                                    {{-- <div class="google-div"><a href="#" class="google-btn"><span
                                                 class="icon-google-30 google-icon"><span class="path1"></span><span
                                                     class="path2"></span><span class="path3"></span><span
                                                     class="path4"></span><span class="path5"></span><span
-                                                    class="path6"></span></span>Continue with Google</a></div>
+                                                    class="path6"></span></span>Continue with Google</a>
+                                    </div>
                                     <div class="facebook-div"><a href="#" class="facebook-btn"><span
                                                 class="icon-facebook-07 facebook-icon"></span>Continue with Facebook</a>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -76,15 +77,27 @@
                                             <span class="text-danger">@error('email'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="password" name="password" class="form-control" placeholder="Password" id="pwd" required>
+                                            <div class="input-group">
+                                                <input type="text" name="phone" class="form-control" placeholder="e.g. 7895123572" id="phone"  pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
+                                                <div class="input-group-append">
+                                                  <span class="input-group-text" id="sendOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send OTP</span>
+                                                </div>
+                                            </div>
+                                            <span class="text-danger">@error('phone'){{$message}}@enderror</span>
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <input type="text" name="otp" class="form-control" placeholder="Enter OTP e.g. 123456" id="enterOtp"  pattern="[0-9]" title="Enter numbers only." style="display:none;" required>
+                                            <span class="text-danger">@error('otp'){{$message}}@enderror</span>
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <input type="password" name="password" class="form-control" placeholder="Password" id="pwd"  style="display:none;" required>
                                             <span class="text-danger">@error('password'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password"
-                                                id="confPwd" required>
+                                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="confPwd" style="display:none;"  required>
                                         </div>
                                         <div class="form-group mb0 col-lg-12">
-                                            <button type="submit" class="btn btn-block sign-btn" id="signupBtn">Sign up</button>
+                                            <button type="submit" class="btn btn-block sign-btn" disabled id="signupBtn">Sign up</button>
                                         </div>
                                     </form>
                                 </div>
@@ -100,6 +113,45 @@
 @section('script')
    
     <script>
+        
+        let interval = '';
+        let no_of_otp_sent = 0;
+        $('#sendOtpBtn').on('click',function(e){
+            e.preventDefault();
+            $('#sendOtpBtn').attr('disabled',true); 
+            $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
+            $('#sendOtpBtn').text('OTP Sent');
+            $('#enterOtp').css('display','block');
+            no_of_otp_sent = 1;
+            interval = setInterval(updateTimer, 2000);
+            
+        });
+
+        const startingMinutes = 0.5;
+        let time = startingMinutes * 60;
+
+        function updateTimer() {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            // seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            $('#sendOtpBtn').text(` Resend in ${seconds} s`);
+            if (time == 0) {
+                time = 0;
+                $('#sendOtpBtn').attr('disabled',false); 
+                $('#sendOtpBtn').text('Send OTP');
+                $('#sendOtpBtn').css('background-image','linear-gradient(to left, #076fef, #01b9f1)');
+                if(no_of_otp_sent != 2){
+                    interval;
+                }else{
+                    clearInterval(interval);
+                }
+            } else {
+                time--;
+            }
+        }
+
+
         $('#signupForm').on('submit',function(e){
             e.preventDefault();
 
