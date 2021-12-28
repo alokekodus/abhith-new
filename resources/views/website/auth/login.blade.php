@@ -65,11 +65,11 @@
                                     <form class="row" id="signupForm">
                                         @csrf
                                         <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="fname" placeholder="First Name" id="fname" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('fname')}}" required>
+                                            <input type="text" class="form-control" name="fname" placeholder="First Name" id="fname"  maxlength="20" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('fname')}}" required>
                                             <span class="text-danger">@error('fname'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="lname" placeholder="Last Name" id="lname" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('lname')}}" required>
+                                            <input type="text" class="form-control" name="lname" placeholder="Last Name" id="lname" maxlength="20"  pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('lname')}}" required>
                                             <span class="text-danger">@error('lname'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
@@ -122,15 +122,29 @@
 
         let interval = '';
         let no_of_otp_sent = 0;
-        $('#sendOtpBtn').on('click',function(){
-            if($('#phone').val().length < 10){
-                toastr.error('Phone number is required. Enter valid phone number');
-            }else if($('#signupEmail').val().length == 0){
-                toastr.error('Email is required');
+        let nameRegex = /^([a-zA-Z]+)$/;
+        let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
+
+        $('#sendOtpBtn').on('click',function(e){
+            e.preventDefault();
+
+            if($('#fname').val().length == 0){
+                toastr.error('Firstname is required');
+            }else if(!nameRegex.test($('#fname').val())){
+                toastr.error('Firstname should contain letters only.');
             }else if($('#lname').val().length == 0){
                 toastr.error('Lastname is required');
-            }else if($('#fname').val().length == 0){
-                toastr.error('Firstname is required');
+            }else if(!nameRegex.test($('#lname').val())){
+                toastr.error('Lastname should contain letters only.');
+            }else if($('#signupEmail').val().length == 0){
+                toastr.error('Email is required');
+            }else if(!emailRegex.test($('#signupEmail').val())){
+                toastr.error('Email is invalid');
+            }else if($('#phone').val().length < 10){
+                toastr.error('Phone number is required. Enter valid phone number');
+            }else if(!phoneRegex.test($('#phone').val())){
+                toastr.error('Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)');
             }else{
                 
 
@@ -188,9 +202,14 @@
             
         });
 
-        $('#verifyOtpBtn').on('click',function(){
+        $('#verifyOtpBtn').on('click',function(e){
+            e.preventDefault();
+            let otpRegex = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
+
             if($('#enterOtp').val().length > 6){
                 toastr.error('Not a valid OTP');
+            }else if(!otpRegex.test($('#enterOtp').val())){
+                toastr.error('Enter numbers only');
             }else{
                 $.ajax({
                     url:"{{route('website.auth.verify.otp')}}",
@@ -206,6 +225,7 @@
                             toastr.success(data.message);
                             $('#phone').prop('readonly',true);
                             $('#enterOtp').prop('readonly',true);
+                            $('#sendOtpBtn').attr('disabled',true);
                             $('#verifyOtpBtn').attr('disabled',true);
                             $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
                             $('#pwd').css('display','block');

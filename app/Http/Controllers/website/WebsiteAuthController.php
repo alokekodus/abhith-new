@@ -39,7 +39,7 @@ class WebsiteAuthController extends Controller
                     'otp' => $otp
                 ]);
 
-                // $this->otpSend($phone, $otp);
+                $this->otpSend($phone, $otp);
                 return response()->json(['message' => 'OTP sent successfully', 'status' => 1]);
             }else if( $check_otp_verified_but_user_not_activate){
                 return response()->json(['message' => 'Oops! User already exists', 'status' => 2]);
@@ -66,7 +66,7 @@ class WebsiteAuthController extends Controller
                     'user_id' => $user->id,
                 ]);
 
-                // $this->otpSend($phone, $otp);
+                $this->otpSend($phone, $otp);
     
                 if($create && $userDetails){
                     return response()->json(['message'=> 'OTP sent successfully', 'status' => 1]);
