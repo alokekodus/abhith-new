@@ -38,6 +38,8 @@ class WebsiteAuthController extends Controller
                 User::where([['email',$email],['role_id',Role::User],['phone',$phone],['verify_otp',0],['is_activate',0]])->update([
                     'otp' => $otp
                 ]);
+
+                // $this->otpSend($phone, $otp);
                 return response()->json(['message' => 'OTP sent successfully', 'status' => 1]);
             }else if( $check_otp_verified_but_user_not_activate){
                 return response()->json(['message' => 'Oops! User already exists', 'status' => 2]);
@@ -51,6 +53,8 @@ class WebsiteAuthController extends Controller
                     'role_id' => Role::User,
                     'is_activate' => 0
                 ]);
+
+                
     
                 $user = User::where('email',$email)->first();
     
@@ -61,6 +65,8 @@ class WebsiteAuthController extends Controller
                     'phone' => $phone,
                     'user_id' => $user->id,
                 ]);
+
+                // $this->otpSend($phone, $otp);
     
                 if($create && $userDetails){
                     return response()->json(['message'=> 'OTP sent successfully', 'status' => 1]);
@@ -69,49 +75,8 @@ class WebsiteAuthController extends Controller
                 }
             }
 
-            // $isError = 0;
-            // $errorMessage = true;
-
-            // //Your message to send, Adding URL encoding.
-            // $message = urlencode("<#> Your OTP verification code is : $otp - regards Abhith Siksha");
-
-
-            // //Preparing post parameters
-            // $postData = array(
-            //     'authkey' => '19403ARfxb6xCGLJ619221c6P15',
-            //     'mobiles' => $phone,
-            //     'message' => $message,
-            //     'sender' => 'A',
-            //     'DLT_TE_ID'=> 1207162425416359618,
-            //     'route' => 4,
-            //     'response' => 'json'
-            // );
-
-            // $url = "http://login.yourbulksms.com/api/sendhttp.php";
-
-            // $ch = curl_init();
-            // curl_setopt_array($ch, array(
-            //     CURLOPT_URL => $url,
-            //     CURLOPT_RETURNTRANSFER => true,
-            //     CURLOPT_POST => true,
-            //     CURLOPT_POSTFIELDS => $postData
-            // ));
-            // //Ignore SSL certificate verification
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-            // //get response
-            // $output = curl_exec($ch);
-            // //Print error if any
-            // if (curl_errno($ch)) {
-            //     $isError = true;
-            //     $errorMessage = curl_error($ch);
-            // }
-            // curl_close($ch);
-            // if($isError){
-            //     return array('error' => 1 , 'message' => $errorMessage);
-            // }else{
-            //     return array('error' => 0 );
-            // }
+           
+            
 
 
             
@@ -120,6 +85,57 @@ class WebsiteAuthController extends Controller
         }
 
     }
+
+
+    public function otpSend($phone, $otp){
+        $isError = 0;
+        $errorMessage = true;
+
+        //Your message to send, Adding URL encoding.
+        $message = urlencode("<#> Use $otp as your verification code. The OTP expires within 10 mins. Do not share it with anyone. -regards Abhith Siksha");
+
+
+        //Preparing post parameters
+        $postData = array(
+            'authkey' => '19403ARfxb6xCGLJ619221c6P15',
+            'mobiles' => $phone,
+            'message' => $message,
+            'sender' => 'ABHSKH',
+            'DLT_TE_ID'=> 1207164006513329391,
+            'route' => 4,
+            'response' => 'json'
+        );
+
+        $url = "http://login.yourbulksms.com/api/sendhttp.php";
+
+        $ch = curl_init();
+        curl_setopt_array($ch, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postData
+        ));
+        //Ignore SSL certificate verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        //get response
+        $output = curl_exec($ch);
+        //Print error if any
+        if (curl_errno($ch)) {
+            $isError = true;
+            $errorMessage = curl_error($ch);
+        }
+        curl_close($ch);
+        if($isError){
+            return array('error' => 1 , 'message' => $errorMessage);
+        }else{
+            return array('error' => 0 );
+        }
+    }
+
+
+
+
 
     public function verifyOtp(Request $request){
         $details = User::where([['email',$request->email],['phone',$request->phone],['verify_otp',0],['is_activate',0]])->first(); 

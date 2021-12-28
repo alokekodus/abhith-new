@@ -78,18 +78,18 @@
                                         </div>
                                         <div class="form-group col-lg-12">
                                             <div class="input-group">
-                                                <input type="text" name="phone" class="form-control" placeholder="e.g. 7895123572" id="phone"  pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
+                                                <input type="text" name="phone" class="form-control" placeholder="e.g. 7895123572" id="phone"  pattern="(0|91)?[6-9][0-9]{9}" maxlength="10" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
                                                 <div class="input-group-append">
-                                                  <span class="input-group-text" id="sendOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send OTP</span>
+                                                  <button class="input-group-text" id="sendOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send OTP</button>
                                                 </div>
                                             </div>
                                             <span class="text-danger">@error('phone'){{$message}}@enderror</span>
                                         </div>
-                                        <div class="form-group  verify-otp-div col-lg-12"  style="display:none;">
+                                        <div class="form-group  verify-otp-div col-lg-12" style="display: none;">
                                             <div class="input-group ">
                                                 <input type="text" name="otp" class="form-control" placeholder="Enter OTP e.g. 123456" id="enterOtp"  pattern="[0-9]+" title="Enter numbers only."  required>
                                                 <div class="input-group-append">
-                                                  <span class="input-group-text" id="verifyOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify OTP</span>
+                                                  <button class="btn input-group-text" id="verifyOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify OTP</button>
                                                 </div>
                                             </div>
                                             <span class="text-danger">@error('otp'){{$message}}@enderror</span>
@@ -118,7 +118,8 @@
 @section('script')
    
     <script>
-        
+        $('#verifyOtpBtn').attr('disabled',true);
+
         let interval = '';
         let no_of_otp_sent = 0;
         $('#sendOtpBtn').on('click',function(){
@@ -136,7 +137,7 @@
 
                 if(no_of_otp_sent < 2){
                     no_of_otp_sent += 1;
-                    interval = setInterval(updateTimer, 2000);
+                    
 
                     $.ajax({
                         url:"{{route('website.auth.signup')}}",
@@ -154,7 +155,8 @@
                                 $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
                                 $('#sendOtpBtn').text('OTP Sent');
                                 $('.verify-otp-div').css('display','block');
-                                $('#verifyOtpBtn').attr('disabled',true);
+                               
+                                interval = setInterval(updateTimer, 2000);
                                 toastr.success(data.message);
                             }else{
                                 toastr.error(data.message);
@@ -202,6 +204,8 @@
                     success:function(data){
                         if(data.status == 1){
                             toastr.success(data.message);
+                            $('#phone').prop('readonly',true);
+                            $('#enterOtp').prop('readonly',true);
                             $('#verifyOtpBtn').attr('disabled',true);
                             $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
                             $('#pwd').css('display','block');
