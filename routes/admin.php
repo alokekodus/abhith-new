@@ -7,7 +7,8 @@ use App\Http\Controllers\admin\SubjectController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\ChapterController;
 use App\Http\Controllers\admin\BlogController;
-use App\Http\Controllers\admin\CourseManagementController;
+use App\Http\Controllers\admin\BoardController;
+use App\Http\Controllers\admin\ClassController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
@@ -51,8 +52,16 @@ Route::group(['middleware' => ['auth'] ],function(){
     // });
 
     Route::prefix('course-management')->group(function(){
-        Route::get('board', [CourseManagementController::class, 'board'])->name('admin.course.management.board');
-        Route::post('add-board', [CourseManagementController::class, 'addBoard'])->name('admin.course.management.add.board');
+        Route::prefix('board')->group(function(){
+            Route::get('all', [BoardController::class, 'allBoard'])->name('admin.course.management.board.all');
+            Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
+            Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
+        });
+
+        Route::prefix('class')->group(function(){
+            Route::get('all', [ClassController::class, 'allClasses'])->name('admin.course.management.class.all');
+        });
+        
     });
 
     /* ------------------------------- CHAPTER ------------------------------------ */
@@ -70,16 +79,16 @@ Route::group(['middleware' => ['auth'] ],function(){
     /* ------------------------------- Master ------------------------------------ */
     Route::prefix('master')->group(function () {
 
-        /* ------------------------------- COURSE ------------------------------------ */
-        Route::prefix('subject')->group(function () {
-            Route::get('',[SubjectController::class,'index'])->name('admin.get.subject');
-            Route::view('create', 'admin.master.subjects.create')->name('admin.create.subject');
-            Route::post('creating',[SubjectController::class,'create'])->name('admin.creating.subject');
-            Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
-            Route::get('edit/{id}',[SubjectController::class,'editSubject'])->name('admin.edit.subject');
-            Route::post('editing',[SubjectController::class,'edit'])->name('admin.editing.subject');
+        // /* ------------------------------- COURSE ------------------------------------ */
+        // Route::prefix('subject')->group(function () {
+        //     Route::get('',[SubjectController::class,'index'])->name('admin.get.subject');
+        //     Route::view('create', 'admin.master.subjects.create')->name('admin.create.subject');
+        //     Route::post('creating',[SubjectController::class,'create'])->name('admin.creating.subject');
+        //     Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
+        //     Route::get('edit/{id}',[SubjectController::class,'editSubject'])->name('admin.edit.subject');
+        //     Route::post('editing',[SubjectController::class,'edit'])->name('admin.editing.subject');
 
-        });
+        // });
 
         /* ------------------------------- Banner ------------------------------------ */
         Route::prefix('banner')->group(function () {

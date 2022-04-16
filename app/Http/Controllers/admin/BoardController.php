@@ -7,11 +7,11 @@ use App\Models\Board;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CourseManagementController extends Controller
+class BoardController extends Controller
 {
-    public function board(){
+    public function allBoard(){
         $board_details = Board::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
-        return view('admin.course-management.board')->with('board', $board_details);
+        return view('admin.course-management.board.board')->with('board', $board_details);
     }
 
     public function addBoard(Request $request){
@@ -31,6 +31,23 @@ class CourseManagementController extends Controller
             }else{
                 return response()->json(['message' => 'Whoops! Somethinf went wrong. Failed to add board', 'status' => 2]);
             }
+        }
+    }
+
+    public function updateBoardStatus(Request $request){
+        
+        $update = Board::where('id', $request->board_id)->update([
+            'is_activate' => $request->active
+        ]);
+
+        if($update){
+            if($request->active == 0){
+                return response()->json(['message' => 'Visibility changed from show to hide', 'status' => 1]);
+            }else{
+                return response()->json(['message' => 'Visibility changed from hide to show', 'status' => 1]);
+            }
+        }else{
+            return response()->json(['message' => 'Whoops! Something went wrong. Failed to update status', 'status' => 2]);
         }
     }
 }

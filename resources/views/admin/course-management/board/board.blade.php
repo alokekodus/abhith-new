@@ -1,7 +1,6 @@
 @extends('layout.admin.layoout.admin')
 @section('title', 'Course Management - Board')
 
-
 @section('content')
 
     <div class="page-header">
@@ -29,7 +28,7 @@
                                 <th> # </th>
                                 <th> Exam Board </th>
                                 <th>Created At</th>
-                                <th> Action </th>
+                                <th> Status </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,12 +40,12 @@
                                 <td>
                                     @if ($item->is_activate == 1)
                                         <label class="switch">
-                                            <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}" checked>
+                                            <input type="checkbox" id="boardStatus" data-id="{{ $item->id }}" checked>
                                             <span class="slider round"></span>
                                         </label>
                                     @else
                                         <label class="switch">
-                                            <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}">
+                                            <input type="checkbox" id="boardStatus" data-id="{{ $item->id }}">
                                             <span class="slider round"></span>
                                         </label>
                                     @endif
@@ -109,7 +108,7 @@
 
             let formData = new FormData(this);
              $.ajax({
-                url:"{{route('admin.course.management.add.board')}}",
+                url:"{{route('admin.course.management.board.add')}}",
                 type:"POST",
                 processData:false,
                 contentType:false,
@@ -145,7 +144,38 @@
                     $('#addBoardCancelBtn').attr('disabled', false);
                 }
 
-             });
+            });
         })
+
+        //For active deactive board
+
+        $(document.body).on('change', '#boardStatus', function() {
+            let status = $(this).prop('checked') == true ? 1 : 0;
+            let board_id = $(this).data('id');
+            let formData = {
+                "board_id": board_id,
+                "active": status,
+                "_token" : "{{csrf_token()}}"
+            }
+            $.ajax({
+                url : "{{route('admin.course.management.board.update.status')}}",
+                type:"POST",
+                data:formData,
+                success:function(data){
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                    }else{
+                        toastr.error(data.message);
+                    }
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to update status.');
+                    }
+                }
+
+            });
+
+        });
     </script>
 @endsection
