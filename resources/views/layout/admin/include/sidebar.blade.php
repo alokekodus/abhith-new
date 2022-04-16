@@ -41,12 +41,28 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item {{ (request()->routeIs('admin.create.course')) ? 'active' : '' }}">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#course-management" aria-expanded="false"
+                aria-controls="course-management">
+                <span class="menu-title">Course Management</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-book menu-icon menu-icon"></i>
+            </a>
+            <div class="collapse" id="course-management">
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.board')}}">Examination Board</a></li>
+
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.subject')}}">Subjects</a></li>
+                </ul>
+            </div>
+        </li>
+        {{-- <li class="nav-item {{ (request()->routeIs('admin.create.course')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.get.course')}}">
                 <span class="menu-title">Course</span>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item {{ (request()->routeIs('admin.insert.mcq.question')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.index.multiple.choice')}}"><span class="menu-title">MCQ's</span>
                 <i class="mdi  mdi-format-list-bulleted menu-icon"></i></a>

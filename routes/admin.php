@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\SubjectController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\ChapterController;
 use App\Http\Controllers\admin\BlogController;
+use App\Http\Controllers\admin\CourseManagementController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
@@ -35,18 +36,23 @@ Route::group(['middleware' => ['auth'] ],function(){
     })->name('admin.dashboard');
 
     /* ------------------------------- COURSE ------------------------------------ */
-    Route::prefix('course')->group(function () {
+    // Route::prefix('course')->group(function () {
 
-        /* ------------------------------- COURSE ------------------------------------ */
-        Route::get('',[CourseController::class,'index'])->name('admin.get.course');
-        Route::view('create', 'admin.course.create')->name('admin.create.course');
-        Route::post('creating',[CourseController::class,'create'])->name('admin.creating.course');
-        Route::post('ckeditorImage',[CourseController::class,'ckeditorImage'])->name('admin.course.upload');
-        Route::get('edit/{id}',[CourseController::class,'editCourse'])->name('admin.edit.course');
-        Route::post('editing',[CourseController::class,'edit'])->name('admin.editing.course');
-        Route::post('active',[CourseController::class,'active'])->name('admin.active.course');
-        Route::get('price/{id}',[CourseController::class,'chapterPrice'])->name('admin.price.course');
+    //     /* ------------------------------- COURSE ------------------------------------ */
+    //     Route::get('',[CourseController::class,'index'])->name('admin.get.course');
+    //     Route::view('create', 'admin.course.create')->name('admin.create.course');
+    //     Route::post('creating',[CourseController::class,'create'])->name('admin.creating.course');
+    //     Route::post('ckeditorImage',[CourseController::class,'ckeditorImage'])->name('admin.course.upload');
+    //     Route::get('edit/{id}',[CourseController::class,'editCourse'])->name('admin.edit.course');
+    //     Route::post('editing',[CourseController::class,'edit'])->name('admin.editing.course');
+    //     Route::post('active',[CourseController::class,'active'])->name('admin.active.course');
+    //     Route::get('price/{id}',[CourseController::class,'chapterPrice'])->name('admin.price.course');
 
+    // });
+
+    Route::prefix('course-management')->group(function(){
+        Route::get('board', [CourseManagementController::class, 'board'])->name('admin.course.management.board');
+        Route::post('add-board', [CourseManagementController::class, 'addBoard'])->name('admin.course.management.add.board');
     });
 
     /* ------------------------------- CHAPTER ------------------------------------ */
