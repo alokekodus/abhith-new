@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="#" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#assignClassModal" data-backdrop="static" data-keyboard="false">Assign Class</a>
+                    <a href="#" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#assignClassModal" data-backdrop="static" data-keyboard="false">Add Class</a>
                 </li>
             </ul>
         </nav>
@@ -62,7 +62,7 @@
                         </select>
                     </div>
                     <div class="form-group assignedBoardDiv" style="display:none;">
-                        <label for="">Assigned to Board</label>
+                        <label for="">Belongs to Board</label>
                         <select name="board" id="board" class="form-control">
                             <option value="">-- Select -- </option>
                             @forelse ($boards as $item)

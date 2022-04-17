@@ -20,6 +20,7 @@ class AssignSubjectController extends Controller
     public function assignSubject(Request $request){
         $validator = Validator::make($request->all(),[
             'subjectName' => 'required',
+            'subjectCoverPic' => 'required',
             'assignedClass' => 'required'
         ]);
 
@@ -34,9 +35,18 @@ class AssignSubjectController extends Controller
             if($is_subject_assigned_already){
                 return response()->json(['message' => 'Whoops! Subject already assigned with the class.', 'status' => 2]);
             }else{
+
+                $document = $request->subjectCoverPic;
+                $file = '';
+                if (isset($document) && !empty($document)) {
+                    $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
+                    $document->move(public_path('/files/course/subject/'), $new_name);
+                    $file = '/files/course/subject/' . $new_name;
+                }
                
                 $create = AssignSubject::create([
                     'subject_name' => $request->subjectName,
+                    'image' => $file,
                     'assign_class_id' => $assignedClass,
                     'board_id' => $assignedBoard
                 ]);

@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="#" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#assignSubjectModal" data-backdrop="static" data-keyboard="false">Assign Subjects</a>
+                    <a href="#" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#assignSubjectModal" data-backdrop="static" data-keyboard="false">Add Subject</a>
                 </li>
             </ul>
         </nav>
@@ -54,11 +54,16 @@
                 <form id="assignSubjectForm">
                     @csrf
                     <div class="form-group">
-                        <label for="">Add Subject Name</label>
+                        <label for="">Subject Name</label>
                         <input type="text" name="subjectName" class="form-control" id="subjectName" placeholder="e.g Science, Math etc.">
                     </div>
                     <div class="form-group assignedClassdDiv" style="display:none;">
-                        <label for="">Assigned to Class</label>
+
+                        <div class="form-group">
+                            <label for="">Upload Subject Cover Picture</label>
+                            <input type="file" class="filepond" name="subjectCoverPic" id="subjectCoverPic" data-max-file-size="1MB" data-max-files="1" />
+                        </div>
+                        <label for="">Belongs to Class</label>
                         <select name="assignedClass" id="assignedClass" class="form-control">
                             <option value="">-- Select -- </option>
                             @forelse ($classes as $key => $item)
@@ -91,11 +96,42 @@
             });
         });
 
+         //Upload subject cover pic
+
+         FilePond.registerPlugin(
+                // encodes the file as base64 data
+                FilePondPluginFileEncode,
+
+                // validates the size of the file
+                FilePondPluginFileValidateSize,
+
+                // corrects mobile image orientation
+                FilePondPluginImageExifOrientation,
+
+                // previews dropped images
+                FilePondPluginImagePreview,
+                FilePondPluginFileValidateType
+            );
+
+            // Select the file input and use create() to turn it into a pond
+            pond = FilePond.create(
+                document.getElementById('subjectCoverPic'), {
+                    allowMultiple: true,
+                    maxFiles: 1,
+                    instantUpload: false,
+                    imagePreviewHeight: 135,
+                    acceptedFileTypes: ['image/png', 'image/jpeg'],
+                    labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
+                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
+                }
+            );
+
         //For hiding modal 
         $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');
             $('#assignSubjectForm')[0].reset();
             $('.assignedClassdDiv').css('display', 'none');
+            pond.removeFiles();
         });
 
 
@@ -108,6 +144,7 @@
 
 
 
+       
         $('#assignSubjectForm').on('submit', function(e){
             e.preventDefault();
 
@@ -117,7 +154,11 @@
 
 
             let formData = new FormData(this);
-
+            pondFiles = pond.getFiles();
+            for (var i = 0; i < pondFiles.length; i++) {
+                // append the blob file
+                formData.append('subjectCoverPic', pondFiles[i].file);
+            }
 
             $.ajax({
                 url:"{{route('admin.course.management.subject.assign')}}",
