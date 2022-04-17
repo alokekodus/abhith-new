@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignClass;
+use App\Models\AssignSubject;
 use App\Models\Board;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class BoardController extends Controller
 {
     public function allBoard(){
-        $board_details = Board::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $board_details = Board::orderBy('created_at', 'DESC')->get();
         return view('admin.course-management.board.board')->with('board', $board_details);
     }
 
@@ -37,6 +39,14 @@ class BoardController extends Controller
     public function updateBoardStatus(Request $request){
         
         $update = Board::where('id', $request->board_id)->update([
+            'is_activate' => $request->active
+        ]);
+
+        AssignClass::where('board_id', $request->board_id)->update([
+            'is_activate' => $request->active
+        ]);
+
+        AssignSubject::where('board_id', $request->board_id)->update([
             'is_activate' => $request->active
         ]);
 

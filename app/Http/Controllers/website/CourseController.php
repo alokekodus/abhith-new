@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Common\Activation;
 use App\Models\AssignClass;
+use App\Models\AssignSubject;
 use App\Models\Board;
 use App\Models\Subject;
 use App\Models\Chapter;
@@ -22,8 +23,9 @@ use Illuminate\Support\Facades\Crypt;
 class CourseController extends Controller
 {
     public function index(){
-        $board_details = Board::with('assignedClasses')->where('is_activate', 1)->get();
-        return view('website.course.course')->with(['boards' => $board_details]);
+        $board_details = Board::where('is_activate', 1)->get();
+        $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->get();
+        return view('website.course.course')->with(['boards' => $board_details, 'subjects' => $subject_details]);
     }
     //
     // protected function index()

@@ -29,10 +29,10 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label" style="font-size:15px; font-weight:bold;">Select Board</label>
                     <div class="col-sm-9">
-                      <select class="form-control">
+                      <select class="form-control" name="board" id="board">
                         <option value=''>-- select --</option>
                         @forelse ($boards as $item)
-                            <option>{{$item->exam_board}}</option>
+                            <option value="{{$item->id}}">{{$item->exam_board}}</option>
                         @empty
                             <option>No boards to show</option>
                         @endforelse
@@ -42,22 +42,26 @@
             </div>
             <div class="col-lg-12 p-0">
                 <ul class="list-inline courses-list">
-                    {{-- @foreach ($publishCourse as $item) --}}
-                    <li>
-                        <div class="course-pic"><img src="{{asset('asset_website/img/course/banner.png')}}" class="w100"></div>
-                        <div class="course-desc"><span class="icon-clock-09 clock-icon">
-                            {{-- </span><span>{{$item['duration']}}</span> --}}
-                            <div class="block-ellipsis5"><h4 class="small-heading-black">Class 1</h4></div>
-                            {{-- <span>₹{{$item['final_price']}}</span> --}}
-                            <a href="#"  class="enroll">Enroll Now</a>
+                    @forelse ($subjects as $item)
+                        <li>
+                            <div class="course-pic"><img src="{{asset($item->image)}}" class="w100" style="object-fit: cover; object-position:top;"></div>
+                            <div class="course-desc">
+                                <i class="fa fa-dashcube"></i>
+                                <span>{{$item->boards->exam_board}} Board</span>
+                                <div class="block-ellipsis5"><h4 class="small-heading-black">Class {{$item->assignClass->class}} {{$item->subject_name}}</h4></div>
+                                {{-- <span>₹{{$item['final_price']}}</span> --}}
+                                <a href="#"  class="enroll">Enroll Now</a>
+                            </div>
+                        </li>
+                    @empty
+                        <div class="text-center">
+                            No course to show
                         </div>
-                    </li>
-
-                    {{-- @endforeach --}}
+                    @endforelse
                 </ul>
                 {{-- <div style="float:right;margin-top:10px;">
-                    {{$publishCourse->links()}}
-                </div>--}}
+                    {{$subjects->links()}}
+                </div> --}}
             </div>
         </div>
     </div>
@@ -68,6 +72,31 @@
 @section('scripts')
 
 <script>
+
+    $('#board').on('change', function(){
+        if($(this).val() == ''){
+            // toastr.error('Select board');
+        }else{
+            let board_id = $(this).val();
+
+            $.ajax({
+                url:"{{route('website.course')}}",
+                type:"get",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'board_id' : board_id
+                },
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+        }
+    });
     // const select = document.querySelectorAll('.selectBtn');
     // const option = document.querySelectorAll('.option');
     // let index = 1;
