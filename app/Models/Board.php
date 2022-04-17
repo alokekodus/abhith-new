@@ -11,4 +11,8 @@ class Board extends Model
 
     protected $table = 'boards';
     protected $guarded = [];
+
+    public function assignedClasses(){
+        return $this->hasMany(AssignClass::class);
+    }
 }

@@ -8,13 +8,14 @@ use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\ChapterController;
 use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\BoardController;
-use App\Http\Controllers\admin\ClassController;
+use App\Http\Controllers\admin\AssignClassController;
+use App\Http\Controllers\admin\AssignSubjectController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
-
+use App\Models\AssignSubject;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +60,13 @@ Route::group(['middleware' => ['auth'] ],function(){
         });
 
         Route::prefix('class')->group(function(){
-            Route::get('all', [ClassController::class, 'allClasses'])->name('admin.course.management.class.all');
+            Route::get('all', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
+            Route::post('assign', [AssignClassController::class, 'assignClass'])->name('admin.course.management.class.assign');
+        });
+
+        Route::prefix('subject')->group(function(){
+            Route::get('all', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
+            Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
         });
         
     });
