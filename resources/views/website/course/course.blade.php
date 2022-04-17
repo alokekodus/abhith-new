@@ -29,14 +29,19 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label" style="font-size:15px; font-weight:bold;">Select Board</label>
                     <div class="col-sm-9">
-                      <select class="form-control" name="board" id="board">
-                        <option value=''>-- select --</option>
-                        @forelse ($boards as $item)
-                            <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                        @empty
-                            <option>No boards to show</option>
-                        @endforelse
-                      </select>
+                        <div class="input-group">
+                            <select class="form-control" name="board" id="board">
+                                <option value=''>-- select --</option>
+                                @forelse ($boards as $item)
+                                    <option value="{{$item->id}}">{{$item->exam_board}}</option>
+                                @empty
+                                    <option>No boards to show</option>
+                                @endforelse
+                              </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-sm btn-primary" type="button">Search</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
