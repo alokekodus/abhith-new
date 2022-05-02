@@ -36,6 +36,7 @@ Route::get('',[DashboardController::class,'index'])->name('website.dashboard');
 Route::prefix('course')->group(function(){
     Route::get('', [CourseController::class,'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class,'details'])->name('website.course.details');
+    Route::post('package', [CourseController::class,'coursePackage'])->name('website.course.package');
 });
 
 /* ------------------------------- Blog ------------------------------------ */

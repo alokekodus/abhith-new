@@ -25,49 +25,36 @@
             <div class="col-lg-7">
                 <h2 class="heading-black">All Courses</h2>
             </div>
-            <div class="col-lg-5 p0">
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label" style="font-size:15px; font-weight:bold;">Select Board</label>
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <select class="form-control" name="board" id="board">
-                                <option value=''>-- select --</option>
-                                @forelse ($boards as $item)
-                                    <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                                @empty
-                                    <option>No boards to show</option>
-                                @endforelse
-                              </select>
-                            <div class="input-group-append">
-                                <button class="btn btn-sm btn-primary" type="button">Search</button>
-                            </div>
-                        </div>
+            
+            <div class="col-lg-12 p-4">
+                <form  action="{{route('website.course.package')}}" class="row justify-content-center" method="post">
+                   @csrf
+                    <div class="col-4">
+                        <label>Select Board</label>
+                        <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
+                            <option value="">-- Select -- </option>
+                            @forelse ($boards as $item)                         
+                            <option value="{{$item->id}}">{{$item->exam_board}}</option>
+                            @empty
+                            <option>No boards to show</option>
+                            @endforelse
+                        </select>
                     </div>
+                    <div class="col-4">
+                        <label>Select Class</label>
+                        <select id="board-class-dd" class="form-control" name="class_id">
+                        </select>
+                    </div>
+                    <div class="col-3 p-4">
+                        <button type="submit" class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
+                    </div>
+                   
                 </div>
-            </div>
-            <div class="col-lg-12 p-0">
-                <ul class="list-inline courses-list">
-                    @forelse ($subjects as $item)
-                        <li>
-                            <div class="course-pic"><img src="{{asset($item->image)}}" class="w100" style="object-fit: cover; object-position:top;"></div>
-                            <div class="course-desc">
-                                <i class="fa fa-dashcube"></i>
-                                <span>{{$item->boards->exam_board}} Board</span>
-                                <div class="block-ellipsis5"><h4 class="small-heading-black">Class {{$item->assignClass->class}} {{$item->subject_name}}</h4></div>
-                                {{-- <span>₹{{$item['final_price']}}</span> --}}
-                                <a href="#"  class="enroll">Enroll Now</a>
-                            </div>
-                        </li>
-                    @empty
-                        <div class="text-center">
-                            No course to show
-                        </div>
-                    @endforelse
-                </ul>
-                {{-- <div style="float:right;margin-top:10px;">
-                    {{$subjects->links()}}
-                </div> --}}
-            </div>
+             
+            </form>
+           
+            
+           
         </div>
     </div>
 </section>
@@ -77,22 +64,24 @@
 @section('scripts')
 
 <script>
-
-    $('#board').on('change', function(){
-        if($(this).val() == ''){
-            // toastr.error('Select board');
-        }else{
-            let board_id = $(this).val();
-
-            $.ajax({
-                url:"{{route('website.course')}}",
+ function changeBoard()
+{
+    let board_id=$("#assignedBoard").val();
+    $.ajax({
+                url:"{{route('board.class')}}",
                 type:"get",
                 data:{
                     '_token' : "{{csrf_token()}}",
                     'board_id' : board_id
                 },
                 success:function(data){
-                    console.log(data);
+                    $('#board-class-dd').html('<option value="">Select State</option>');
+                    data.forEach((boardClass) => {
+                        $("#board-class-dd").append('<option value="' + boardClass
+                                .id + '">'+'Class-' + boardClass.class + '</option>');  
+                    });
+                   
+                      
                 },
                 error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){
@@ -100,28 +89,9 @@
                     }
                 }
             });
-        }
-    });
-    // const select = document.querySelectorAll('.selectBtn');
-    // const option = document.querySelectorAll('.option');
-    // let index = 1;
-
-    // select.forEach(a => {
-    //     a.addEventListener('click', b => {
-    //         const next = b.target.nextElementSibling;
-    //         next.classList.toggle('toggle');
-    //         next.style.zIndex = index++;
-    //     })
-    // })
-    // option.forEach(a => {
-    //     a.addEventListener('click', b => {
-    //         b.target.parentElement.classList.remove('toggle');
-
-    //         const parent = b.target.closest('.course-select').children[0];
-    //         parent.setAttribute('data-type', b.target.getAttribute('data-type'));
-    //         parent.innerText = b.target.getAttribute('data-type');
-    //     })
-    // })
+};
+    
+ 
 </script>
 
 @endsection

@@ -135,4 +135,26 @@ class CourseController extends Controller
     //     return view('website.course.courseDetails')->with(['course' => $course, 'chapters' => $chapters,'multiChoice' => $multiChoice, 'mcqRandom' => $mcqRandom,'countMultiChoice' => $countMultiChoice, 'cart' => $cart, 'order' => $order]);
 
     // }
+    public function coursePackage(Request $request){
+       try {
+          
+        $board_id=$request->assignedBoard;
+        $assign_class_id=$request->class_id;
+
+        if(($board_id==null)||($assign_class_id==null)){
+            return response()->back()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
+        }else{
+           
+            $all_subjects=AssignSubject::where(['board_id'=>$board_id,'assign_class_id'=>$assign_class_id,'is_activate'=>1])->get();
+            $total_amount=$all_subjects->sum('subject_amount');
+
+            return view('website.course.filter-course',compact('all_subjects','total_amount'));
+        
+        }
+          
+         
+        } catch (\Throwable $th) {
+        return response()->json(['message' => 'Whoops! Something went wrong. Failed to Find Packages.', 'status' => 2]);
+       }
+    }
 }
