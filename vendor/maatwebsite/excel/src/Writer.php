@@ -2,7 +2,6 @@
 
 namespace Maatwebsite\Excel;
 
-use Maatwebsite\Excel\Cache\CacheManager;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
@@ -18,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
+/** @mixin Spreadsheet */
 class Writer
 {
     use DelegatedMacroable, HasEventBus;
@@ -146,7 +146,6 @@ class Writer
         $this->clearListeners();
         $this->spreadsheet->disconnectWorksheets();
         unset($this->spreadsheet);
-        app(CacheManager::class)->flush();
 
         return $temporaryFile;
     }
