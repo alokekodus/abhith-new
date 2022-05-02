@@ -31,22 +31,32 @@
                 <ul class="nav flex-column sub-menu">
 
                     <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.banner')}}">Banner</a></li>
-
-                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.subject')}}">Subjects</a></li>
-
-                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.blog.by.id')}}">Blog</a></li>           
-
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.blog.by.id')}}">Blog</a></li>   
                     <li class="nav-item"> <a class="nav-link"  href="{{route('admin.get.gallery')}}">Gallery</a></li>
 
                 </ul>
             </div>
         </li>
-        <li class="nav-item {{ (request()->routeIs('admin.create.course')) ? 'active' : '' }}">
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false" aria-controls="course-management">
+              <span class="menu-title">Course Management</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-book menu-icon"></i>
+            </a>
+            <div class="collapse" id="course-management" style="">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.class.all')}}">Classes</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.subject.all')}}">Subjects</a></li>
+              </ul>
+            </div>
+        </li>
+        {{-- <li class="nav-item {{ (request()->routeIs('admin.create.course')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.get.course')}}">
                 <span class="menu-title">Course</span>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item {{ (request()->routeIs('admin.insert.mcq.question')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.index.multiple.choice')}}"><span class="menu-title">MCQ's</span>
                 <i class="mdi  mdi-format-list-bulleted menu-icon"></i></a>

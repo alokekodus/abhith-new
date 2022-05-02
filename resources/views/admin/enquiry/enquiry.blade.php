@@ -93,6 +93,9 @@
             e.preventDefault();
             let enquiry_id = $('#markContact').data('id');
             let enquiry_status = $('#markContact').data('status');
+
+            $('#markContact').text('Please wait...');
+            $('#markContact').attr('disabled',true);
             $.ajax({
                 url:"{{route('admin.mark.enquiry')}}",
                 type:'POST',
@@ -101,12 +104,13 @@
                     'enquiry_status':enquiry_status
                 },
                 success:function(data){
-                    toastr.success(data.message);
                     location.reload(true);
                 },
                 error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){
                         toastr.error('Oops! Something went wrong.');
+                        $('#markContact').text('Mark as Reached');
+                        $('#markContact').attr('disabled',false);
                     }
                 }
             });

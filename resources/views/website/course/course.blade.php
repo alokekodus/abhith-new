@@ -26,38 +26,46 @@
                 <h2 class="heading-black">All Courses</h2>
             </div>
             <div class="col-lg-5 p0">
-                <ul class="list-inline course-btn-list">
-                    {{-- <li>
-                        <div class="course-select">
-                            <div class="selectBtn" data-type="planningStage">Subjects</div>
-                            <div class="selectDropdown">
-                                <div class="option" data-type="Subjects">-- Select Subjects --</div>
-                                @foreach ($subjects as $item)
-                                    <div class="option" data-type="{{$item->name}}">{{$item->name}}</div>
-                                @endforeach
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" style="font-size:15px; font-weight:bold;">Select Board</label>
+                    <div class="col-sm-9">
+                        <div class="input-group">
+                            <select class="form-control" name="board" id="board">
+                                <option value=''>-- select --</option>
+                                @forelse ($boards as $item)
+                                    <option value="{{$item->id}}">{{$item->exam_board}}</option>
+                                @empty
+                                    <option>No boards to show</option>
+                                @endforelse
+                              </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-sm btn-primary" type="button">Search</button>
                             </div>
                         </div>
-                    </li>
-                    <li><input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search Course">
-                    </li> --}}
-                </ul>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-12 p-0">
                 <ul class="list-inline courses-list">
-                    @foreach ($publishCourse as $item)
-                    <li>
-                        <div class="course-pic"><img src="{{asset($item['course_pic'])}}" class="w100"></div>
-                        <div class="course-desc"><span class="icon-clock-09 clock-icon"></span><span>{{$item['duration']}}</span>
-                            <div class="block-ellipsis5"><h4 class="small-heading-black">{{$item['name']}}</h4></div>
-                            <span>₹{{$item['final_price']}}</span>
-                            <a href="{{route('website.course.details',['id'=>\Crypt::encrypt($item['id'])])}}"  class="enroll">Enroll Now</a>
+                    @forelse ($subjects as $item)
+                        <li>
+                            <div class="course-pic"><img src="{{asset($item->image)}}" class="w100" style="object-fit: cover; object-position:top;"></div>
+                            <div class="course-desc">
+                                <i class="fa fa-dashcube"></i>
+                                <span>{{$item->boards->exam_board}} Board</span>
+                                <div class="block-ellipsis5"><h4 class="small-heading-black">Class {{$item->assignClass->class}} {{$item->subject_name}}</h4></div>
+                                {{-- <span>₹{{$item['final_price']}}</span> --}}
+                                <a href="#"  class="enroll">Enroll Now</a>
+                            </div>
+                        </li>
+                    @empty
+                        <div class="text-center">
+                            No course to show
                         </div>
-                    </li>
-
-                    @endforeach
+                    @endforelse
                 </ul>
                 {{-- <div style="float:right;margin-top:10px;">
-                    {{$publishCourse->links()}}
+                    {{$subjects->links()}}
                 </div> --}}
             </div>
         </div>
@@ -69,26 +77,51 @@
 @section('scripts')
 
 <script>
-    const select = document.querySelectorAll('.selectBtn');
-    const option = document.querySelectorAll('.option');
-    let index = 1;
 
-    select.forEach(a => {
-        a.addEventListener('click', b => {
-            const next = b.target.nextElementSibling;
-            next.classList.toggle('toggle');
-            next.style.zIndex = index++;
-        })
-    })
-    option.forEach(a => {
-        a.addEventListener('click', b => {
-            b.target.parentElement.classList.remove('toggle');
+    $('#board').on('change', function(){
+        if($(this).val() == ''){
+            // toastr.error('Select board');
+        }else{
+            let board_id = $(this).val();
 
-            const parent = b.target.closest('.course-select').children[0];
-            parent.setAttribute('data-type', b.target.getAttribute('data-type'));
-            parent.innerText = b.target.getAttribute('data-type');
-        })
-    })
+            $.ajax({
+                url:"{{route('website.course')}}",
+                type:"get",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'board_id' : board_id
+                },
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+        }
+    });
+    // const select = document.querySelectorAll('.selectBtn');
+    // const option = document.querySelectorAll('.option');
+    // let index = 1;
+
+    // select.forEach(a => {
+    //     a.addEventListener('click', b => {
+    //         const next = b.target.nextElementSibling;
+    //         next.classList.toggle('toggle');
+    //         next.style.zIndex = index++;
+    //     })
+    // })
+    // option.forEach(a => {
+    //     a.addEventListener('click', b => {
+    //         b.target.parentElement.classList.remove('toggle');
+
+    //         const parent = b.target.closest('.course-select').children[0];
+    //         parent.setAttribute('data-type', b.target.getAttribute('data-type'));
+    //         parent.innerText = b.target.getAttribute('data-type');
+    //     })
+    // })
 </script>
 
 @endsection
