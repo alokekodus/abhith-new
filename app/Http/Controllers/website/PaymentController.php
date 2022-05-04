@@ -18,15 +18,13 @@ class PaymentController extends Controller
     public function checkout(Request $request){
         $cart = []; $countCartItem=0;  $price = [];
         if(Auth::check()){
-            $cart = Cart::where('user_id',Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart',0)->get();
-            $countCartItem = Cart::where('user_id',Auth::user()->id)->where('is_paid', 0)->count();
-            foreach($cart as $item){
-                $countPrice = Chapter::where('id', $item->chapter_id)->sum('price');
-               array_push($price, $countPrice);
-
-            }
-        }
-        $total_amount = array_sum($price);
+          $cart = Cart::with('board','assignClass')->where('user_id',Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
+          $countCartItem = Cart::where('user_id',Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->count();
+          $total_amount=0;
+          foreach($cart as $item){
+              $total_amount=$total_amount+$item->assignClass->subjects->sum('subject_amount');
+            
+          }
         
         if($total_amount == 0){
             return redirect()->route('website.dashboard');
@@ -62,8 +60,8 @@ class PaymentController extends Controller
             foreach($cart as $item){
                 Order::create([
                     'user_id' => Auth::user()->id,
-                    'chapter_id' => $item->chapter_id,
-                    'course_id' => $item->course_id,
+                    'board_id' => $item->board_id,
+                    'assign_class_id' => $item->assign_class_id,
                     'rzp_order_id' => $razorpayOrder['id'],
                     'payment_status' => 'pending',
                 ]);
@@ -72,6 +70,7 @@ class PaymentController extends Controller
 
             return view('website.cart.checkout')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
         }
+    }
         
     }
 

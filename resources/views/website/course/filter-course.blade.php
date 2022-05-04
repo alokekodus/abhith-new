@@ -1,112 +1,111 @@
 @extends('layout.website.website')
 
 @section('title','Courses')
+@section('head')
+<style>
+.course-price-custom {
+    position: absolute;
+    font-size: 16px;
+    left: 449px;
+    font-weight: 600;
+}
+.course-price2 {
+    position: absolute;
+    right: 56px;
+    top: 15%;
+    font-weight: 600;
+}
+</style>
+@endsection
 
 @section('content')
 <main>
-
-    <section class="subheader1">
+<section class="subheader1">
  <div class="container-fluid">
      <div class="row">
          <div class="col-lg-6 p0">
              <div class="subheader1-desc">
                  <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
-                         <li class="breadcrumb-item"><a href="course.html">Course</a></li>
-                         <li class="breadcrumb-item active" aria-current="page"><strong>Only Video</strong></li>
-                         <li class="breadcrumb-item active" aria-current="page">Subject&nbsp; <i class="fa fa-level-down" aria-hidden="true"></i></li>
+                         <li class="breadcrumb-item"><a href="course.html">{{$board->exam_board}}</a></li>
+                         <li class="breadcrumb-item active" aria-current="page">{{$assign_subject->subject_name}}&nbsp; <i class="fa fa-level-down" aria-hidden="true"></i></li>
                      </ol>
                  </nav>
                  <h2 class="heading-white"><span style="font-size:12px;"></span>Testing video course</h2>
                  <p></p>
                  <div class="text-box">
-                                                                                 <a data-toggle="modal" class="btn btn-default" data-target="#login-modal"
-                             style="cursor: pointer;border: 1px solid white;color: white !important;">MCQ Test</a>
-                                             </div>
+                     <a data-toggle="modal" class="btn btn-default" data-target="#login-modal"style="cursor: pointer;border: 1px solid white;color: white !important;">MCQ Test</a>
+                </div>
              </div>
          </div>
          <div class="col-lg-6 p0">
-             <div class="subheader1-img">
-                                             <img src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg" class="w100" style="opacity: 0.6">                            
+             <div class="subheader1-img"><img src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg" class="w100" style="opacity: 0.6">                            
                      <a href="https://abhith.dev-ekodus.com/files/course/courseVideo/08-12-2021-17-51-12_file_example_MP4_480_1_5MG.mp4" data-fancybox="images"
                          data-fancybox-group='image-gallery'>
                          <i class="fa fa-play-circle"></i>
                      </a> 
-                                     </div>
+            </div>
          </div>
      </div>
  </div>
 </section>
-
+<section class="course-describtion">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 p0">
+                <ul class="list-inline course-desc-list">
+                   <h4 data-brackets-id="12020" class="small-heading-black mb20">Description
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal"
+                                data-target="#sharePostModal" style="display:inline;font-size:12px;">
+                                <i class="fa fa-share" aria-hidden="true"></i> &nbsp; Share
+                            </a>
+                    </h4>   
+                </ul>
+            </div>
+        </div>
+    </div>
+ </section>
 
 <section class="course-describtion">
  <div class="container-fluid">
      <div class="row">
          <div class="col-lg-12 p0">
              <ul class="list-inline course-desc-list">
+                 <form action="{{route('website.add-to-cart')}}" method="post">
+                    @csrf
                  <li>
-                     <h4 data-brackets-id="12020" class="small-heading-black mb20">Description
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal"
-                             data-target="#sharePostModal" style="display:inline;font-size:12px;">
-                             <i class="fa fa-share" aria-hidden="true"></i> &nbsp; Share
-                         </a>
-                     </h4>
                      <p>
-                        <div class="course-desc-list1">
-                            <label class="box1 ">Custom Your Package
-                                <input type="radio" data-price="0.00" id="select-all"  name="package_type" value="2" data-selected="fullCourse">
-                                <span class="checkmark"></span>
-                            </label>
-                            <ul class="list-inline centered">
-                                        <li>
-                                        <div class="text-right">
-                                           @foreach($all_subjects as $key=>$subject)
-                                           <div class="form-check p-2">
-                                               <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" checked>
-                                               <label class="form-check-label" for="flexCheckDisabled">
-                                               {{$subject->subject_name}} <i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,2,'.','')}}  
-                                               </label>
-                                           </div>
-                                            @endforeach
-                                        </div>
-                                    </li>
-                           </ul>
-   
-                            <div class="total">
-                                <p class=""><b>Total</b></p>
-                                <span class=" course-price1 mr-2" id="total_price"><i class="fa fa-inr"
-                                        aria-hidden="true"></i>{{number_format($total_amount,2,'.','')}} </span>
-                            </div>
-                            <div class="total-cart">
-                                <ul class="list-inline total-car-list">
-                                    <li class="mr-md-3"><button class="add-cart form-control" id="add_cart">Add
-                                            to Cart</button></li>
-                                    
-                                </ul>
-                            </div>
+                        <div class="course-desc-list1 p4">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input full-course" type="radio" name="course_type" id="full_course" value="1" onclick="changeCourse(this.value)">
+                                <label class="form-check-label" for="full_course">Full Course</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input custom-package" type="radio" name="course_type" id="custom_package" value="2" onclick="changeCourse(this.value)">
+                                <label class="form-check-label" for="custom_package">Custom Package</label>
+                              </div>  
                         </div>
                      </p>
                  </li>
                  <li class="">
-                       <br><br><br>
+                       
                      <div class="course-desc-list1">
-                         <label class="box1 ">Full Course
-                             <input type="radio" data-price="0.00" id="select-all" name="package_type" value="1" data-selected="fullCourse">
-                             <span class="checkmark"></span>
-                         </label>
+                         <form action="{{route('website.add-to-cart')}}" method="post">
+                            @csrf
+                         <input type="hidden" name="is_full_course_selected" value="1">
+                         <input type="hidden" name="board_id" value="{{$data['board_id']}}">
+                         <input type="hidden" name="class_id" value="{{$data['class_id']}}">
+                         <label class="box1 ">Full Course</label>
+                         <hr>
                          <ul class="list-inline centered">
-                                                                     <li>
-                                     <div class="text-right">
-                                        @foreach($all_subjects as $key=>$subject)
-                                        <div class="form-check p-2">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" checked disabled>
-                                            <label class="form-check-label" for="flexCheckDisabled">
-                                            {{$subject->subject_name}} <i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,2,'.','')}}
-                                            </label>
-                                        </div>
-                                         @endforeach
-                                     </div>
-                                 </li>
+                            @foreach($all_subjects as $key=>$subject)
+                            <li>
+                                <input class="styled-checkbox item_price chapter-value" id="styled-checkbox-full-course-{{$key}}" data-id="{{$subject->id}}" data-name="{{$subject->subject_name}}" data-price="{{number_format($subject->subject_amount,2,'.','')}}" type="checkbox" value="{{$subject->id}}" name="subjects[]">
+                                    <label for="styled-checkbox-full-course-{{$key}}"> {{$subject->subject_name}}</label>
+                                    <span class="course-price mr-2"><i class="fa fa-inr" aria-hidden="true"></i>{{number_format($subject->subject_amount,2,'.','')}}</span>
+                            
+                            </li>
+                            @endforeach
                         </ul>
 
                          <div class="total">
@@ -116,20 +115,20 @@
                          </div>
                          <div class="total-cart">
                              <ul class="list-inline total-car-list">
-                                 <li class="mr-md-3"><button class="add-cart form-control" id="add_cart">Add
+                                 <li class="mr-md-3"><button  type="submit" class="add-cart form-control" id="add_cart">Add
                                          to Cart</button></li>
                                  
                              </ul>
                          </div>
+                         </form>
                      </div>
                  </li>
+                 </form>
              </ul>
          </div>
      </div>
  </div>
 </section>
-
-
 <!-- The Modal -->
 <div class="modal" id="add-test-modal" data-backdrop="static" data-keyboard="false">
  <div class="modal-dialog">
@@ -146,23 +145,21 @@
          <!-- Modal body -->
          <div class="modal-body" id="multipleChoiceModel">
              <form id="mcqForm">
-<input type="hidden" name="_token" value="kyPrVm8xICWm9lvLojUKnXdewTaUzhc6z97FBvJH">            <div class="text-center">
-     <div id="mcqResult">
-     </div>
-     <div class="text-center">
-         <button type="submit" class="btn btn-success" id="mcqSubmitBtn">Submit</button>
-     </div>
-     <script>
-         document.getElementById('saveOptions').style.display = "none";
-     </script>
- </div>
+            <input type="hidden" name="_token" value="kyPrVm8xICWm9lvLojUKnXdewTaUzhc6z97FBvJH"><div class="text-center">
+            <div id="mcqResult">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success" id="mcqSubmitBtn">Submit</button>
+            </div>
+            <script>
+                document.getElementById('saveOptions').style.display = "none";
+            </script>
+        </div>
 </form>
 
-<div class="mcq-page-link">
-
-
-</div>                    <div class="end-message"></div>
-         </div>
+<div class="mcq-page-link"></div>                    
+<div class="end-message"></div>
+</div>
      </div>
  </div>
 </div>
@@ -549,9 +546,27 @@
 @endsection
 
 @section('scripts')
-
 <script>
+    $(document).ready(function() {
+       
+        changeCourse(1);
+     });
+   function changeCourse(value){
+       console.log(value);
+        if(value==1){
+            $("#full_course").prop("checked", true);
+            $(".chapter-value").prop("checked", true);
+            $(".chapter-value").prop("disabled", true);
+            totalAmount();
+        }else{
+            $(".chapter-value").prop("checked", false);
+            $(".chapter-value").prop("disabled", false);
+            totalAmount();
+        }
+   }
+  
+</script>
 
-    
+
     
 @endsection

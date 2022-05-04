@@ -20,4 +20,11 @@ class Order extends Model
     public function chapter(){
         return $this->belongsTo('App\Models\Chapter');
     }
+    public function board(){
+        return $this->belongsTo('App\Models\Board');
+    }
+
+    public function assignClass(){
+        return $this->belongsTo('App\Models\AssignClass');
+    }
 }

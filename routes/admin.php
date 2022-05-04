@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
+use App\Http\Controllers\admin\LessonController;
 use App\Models\AssignSubject;
 
 /*
@@ -68,7 +69,9 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::get('all', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
         });
-        
+        Route::prefix('lesson')->group(function(){
+            Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
+        });
     });
 
     /* ------------------------------- CHAPTER ------------------------------------ */

@@ -40,6 +40,7 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '13906c19e3d8fcd1341b24ed4d51cf72' => __DIR__ . '/..' . '/razorpay/razorpay/Deprecated.php',
+        '101b35f72e0ccb1b5ef72aa86bba3ef9' => __DIR__ . '/..' . '/yoeunes/toastr/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -54,6 +55,10 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'Z' => 
         array (
             'ZipStream\\' => 10,
+        ),
+        'Y' => 
+        array (
+            'Yoeunes\\Toastr\\' => 15,
         ),
         'W' => 
         array (
@@ -217,6 +222,10 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
+        ),
+        'Yoeunes\\Toastr\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yoeunes/toastr/src',
         ),
         'WpOrg\\Requests\\' => 
         array (
@@ -637,6 +646,7 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'App\\Http\\Controllers\\admin\\EnquiryController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/EnquiryController.php',
         'App\\Http\\Controllers\\admin\\EnrolledController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/EnrolledController.php',
         'App\\Http\\Controllers\\admin\\GalleryController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/GalleryController.php',
+        'App\\Http\\Controllers\\admin\\LessonController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/LessonController.php',
         'App\\Http\\Controllers\\admin\\MultipleChoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/MultipleChoiceController.php',
         'App\\Http\\Controllers\\admin\\SubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/SubjectController.php',
         'App\\Http\\Controllers\\admin\\TimeTableController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/TimeTableController.php',
@@ -7029,6 +7039,9 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'WpOrg\\Requests\\Utility\\CaseInsensitiveDictionary' => __DIR__ . '/..' . '/rmccue/requests/src/Utility/CaseInsensitiveDictionary.php',
         'WpOrg\\Requests\\Utility\\FilteredIterator' => __DIR__ . '/..' . '/rmccue/requests/src/Utility/FilteredIterator.php',
         'WpOrg\\Requests\\Utility\\InputValidator' => __DIR__ . '/..' . '/rmccue/requests/src/Utility/InputValidator.php',
+        'Yoeunes\\Toastr\\Facades\\Toastr' => __DIR__ . '/..' . '/yoeunes/toastr/src/Facades/Toastr.php',
+        'Yoeunes\\Toastr\\Toastr' => __DIR__ . '/..' . '/yoeunes/toastr/src/Toastr.php',
+        'Yoeunes\\Toastr\\ToastrServiceProvider' => __DIR__ . '/..' . '/yoeunes/toastr/src/ToastrServiceProvider.php',
         'ZipStream\\Bigint' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/Bigint.php',
         'ZipStream\\DeflateStream' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/DeflateStream.php',
         'ZipStream\\Exception' => __DIR__ . '/..' . '/maennchen/zipstream-php/src/Exception.php',
