@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="#" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#assignClassModal" data-backdrop="static" data-keyboard="false">Add Lesson</a>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add Lesson</button>
                 </li>
             </ul>
         </nav>
@@ -38,40 +38,96 @@
             </div>
         </div>
     </div>
-    
+    <!-- Large modal -->
 
-    <div class="modal" id="assignClassModal">
-        <div class="modal-dialog">
-          <div class="modal-content" style="padding:1.5rem;background-color:#fff;">
-            <div class="modal-body">
-                <form id="assignClassForm">
-                    @csrf
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="padding:1.5rem;background-color:#fff;">
+        <div class="modal-body">
+            <form  action="{{route('admin.course.management.lesson.store')}}" enctype="multipart/form-data" method="post">
+                @csrf
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Select Board</label>
+                            <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
+                                <option value="">-- Select -- </option>
+                                @forelse ($boards as $item)                         
+                                <option value="{{$item->id}}">{{$item->exam_board}}</option>
+                                @empty
+                                <option>No boards to show</option>
+                                @endforelse
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Select Class</label>
+                            <select name="assign_class_id" id="board-class-dd" class="form-control">
+                                <option value="">-- Select -- </option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Select Subject</label>
+                            <select name="assign_subject_id" id="board-subject-dd" class="form-control">
+                                <option value="">-- Select -- </option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                   <div class="col-6">
                     <div class="form-group">
-                        <label for="">Select Class</label>
-                        <select name="assignedClass" id="assignedClass" class="form-control">
-                            <option value="">-- Select -- </option>
-                            
-                        </select>
+                        <label for="">Lesson Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" required>
                     </div>
+                   </div>
+                </div>
+                <div class="row">
+                   <div class="col-6">
                     <div class="form-group">
-                        <label for="">Upload Subject Cover Picture</label>
-                        <input type="file" class="filepond" name="subjectCoverPic" id="subjectCoverPic" data-max-file-size="50MB" data-max-files="1" />
+                        <label for="">Upload Lesson Image</label>
+                        <input type="file" class="filepond" name="lesson_image" id="lessonImage" data-max-file-size="50MB" data-max-files="1" />
                     </div>
-                    <div class="form-group assignedBoardDiv" style="display:none;">
-                        <label for="">Belongs to Board</label>
-                        <select name="board" id="board" class="form-control">
-                            
-                        </select>
+                   </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="">Upload Lesson Preview Video</label>
+                            <input type="file" class="filepond" name="lesson_video" id="lessonVideo" data-max-file-size="50MB" data-max-files="1" />
+                        </div>
                     </div>
-                    <div style="float: right;">
-                        <button type="button" class="btn btn-md btn-default" id="assignClassCancelBtn">Cancel</button>
-                        <button type="submit" class="btn btn-md btn-success" id="assignClassSubmitBtn">Submit</button>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <textarea class="ckeditor form-control" name="content"></textarea>
+                        </div>
+
                     </div>
-                </form>
-            </div>
-          </div>
+                </div>
+                
+                
+               
+              
+                <div class="form-group assignedBoardDiv" style="display:none;">
+                    <label for="">Belongs to Board</label>
+                    <select name="board" id="board" class="form-control">
+                        
+                    </select>
+                </div>
+                <div style="float: right;">
+                    <button type="button" class="btn btn-md btn-default" id="assignClassCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-md btn-success">Submit</button>
+                </div>
+            </form>
         </div>
-    </div>
+      </div>
+  </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -108,17 +164,30 @@
 
             // Select the file input and use create() to turn it into a pond
             pond = FilePond.create(
-                document.getElementById('subjectCoverPic'), {
+                
+                document.getElementById('lessonVideo'), {
                     allowMultiple: true,
                     maxFiles: 50,
                     instantUpload: false,
                     imagePreviewHeight: 135,
                     acceptedFileTypes: ['video/mp4'],
-                    labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
-                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
-                }
+                    labelFileTypeNotAllowed:'File of invalid type. Acepted types video/mp4.',
+                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
+                },
             );
 
+          pond = FilePond.create(
+                
+                document.getElementById('lessonImage'), {
+                    allowMultiple: true,
+                    maxFiles: 50,
+                    instantUpload: false,
+                    imagePreviewHeight: 135,
+                    acceptedFileTypes: ['image/png', 'image/jpeg'],
+                    labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
+                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
+                },
+            );
         //For hiding modal 
         $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');
@@ -126,5 +195,60 @@
             $('.assignedClassdDiv').css('display', 'none');
             pond.removeFiles();
         });
+    </script>
+    <script>
+    function changeBoard()
+      {
+        let board_id=$("#assignedBoard").val();
+          $.ajax({
+                url:"{{route('board.class')}}",
+                type:"get",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'board_id' : board_id
+                },
+                success:function(data){
+                    $('#board-class-dd').html('<option value="">Select Class</option>');
+                    data.forEach((boardClass) => {
+                        $("#board-class-dd").append('<option value="' + boardClass
+                                .id + '">'+'Class-' + boardClass.class + '</option>');  
+                    });
+                    $('#board-subject-dd').html('<option value="">Select Subject</option>');
+                   
+                      
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+      }
+      $('#board-class-dd').on('change', function () {
+                var classId = this.value;
+                var boardId=$("#assignedBoard").val();
+                $("#board-subject-dd").html('');
+                $.ajax({
+                    url: "{{route('board.class.subject')}}",
+                    type: "POST",
+                    data: {
+                         class_id: classId,
+                         board_id:boardId,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#board-subject-dd').html('<option value="">Select Subject</option>');
+                        data.forEach((subject) => {
+                        $("#board-subject-dd").append('<option value="' + subject
+                                .id + '">'+'Subject-' + subject.subject_name + '</option>');  
+                        });
+                      
+                    }
+                });
+            });
+    </script>
+    <script>
+        $('.ckeditor').ckeditor();
     </script>
 @endsection

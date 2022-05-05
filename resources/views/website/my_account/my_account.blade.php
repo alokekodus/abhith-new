@@ -65,6 +65,9 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#account" role="tab" aria-controls="account">Account</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#mycourses" role="tab" aria-controls="mycourses">My Courses</a>
+                        </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#payment" role="tab" aria-controls="payment">Payment</a>
                         </li>
@@ -206,6 +209,21 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
+                    <div class="tab-pane" id="mycourses" role="tabpanel">
+                        
+                            @forelse ($purses_subjects as $key =>  $item)
+                            <div class="col-lg-4">
+                                <li>
+                                    <div class="course-pic"><img src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg" class="w100"></div>
+                                    <div class="course-desc">
+                                        <div class="block-ellipsis5"><h4 class="small-heading-black">{{$item->boards->exam_board??''}}</h4></div>
+                                        <span><h4 class="small-heading-black">{{$item->assignClass->class??''}}</h4></span>
+                                        <a href="{{route('website.user.courses',$item->id)}}" class="enroll">view Details</a>
+                                    </div>
+                                </li>
+                            </div>
+                            @endforeach
                     </div>
                     {{-- <div class="tab-pane" id="payment" role="tabpanel">
                         <div class="row">

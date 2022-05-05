@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth'] ],function(){
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
+            Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
         });
     });
 

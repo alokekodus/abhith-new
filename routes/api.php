@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('get-course-details', [CourseController::class,'index']);
 Route::get('get-class', [CourseController::class,'findClass'])->name('board.class');
+Route::post('board-class-subject', [CourseController::class,'findBoardClassSubject'])->name('board.class.subject');

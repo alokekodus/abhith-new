@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\website;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignSubject;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Models\UserDetails;
 use App\Models\User;
@@ -17,8 +19,10 @@ class UserDetailsController extends Controller
         if(Auth::check()){
             $user_details = UserDetails::with('user')->where('email',Auth::user()->email)->first();
             $purchase_history = Order::with('board','assignClass')->where('user_id',Auth::user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
+            $purses_subjects=AssignSubject::where('assign_class_id',1)->where('board_id',1)->get();
+          
         }
-        return view('website.my_account.my_account')->with(['user_details' => $user_details, 'purchase_history' => $purchase_history]);
+        return view('website.my_account.my_account')->with(['user_details' => $user_details, 'purchase_history' => $purchase_history,'purses_subjects'=>$purses_subjects]);
     }
 
 
@@ -86,6 +90,15 @@ class UserDetailsController extends Controller
             return response()->json(['message' => 'Password updated' , 'status' => 1]);
         }else{
             return response()->json(['message' => 'Existing Password Not matched', 'status' => 2]);
+        }
+    }
+    public function myLesson($lesson_id){
+        try {
+           
+            $all_lessons=Lesson::where('assign_subject_id',$lesson_id)->get();
+           return view('website.my_account.my_lesson',compact('all_lessons'));
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 

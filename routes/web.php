@@ -79,6 +79,7 @@ Route::prefix('account')->group(function(){
     Route::post('user-details',[UserDetailsController::class,'userDetails'])->name('website.user.details');
     Route::post('user-photo',[UserDetailsController::class,'uploadPhoto'])->name('website.user.upload.photo');
     Route::post('update-password',[UserDetailsController::class,'updatePassword'])->name('website.update.password');
+    Route::get('my-courses/{subject_id}',[UserDetailsController::class,'myLesson'])->name('website.user.courses');
 });
 
 

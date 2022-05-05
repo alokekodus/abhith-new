@@ -37,7 +37,7 @@ class CartController extends Controller
 
     public function addToCart(Request $request){
         try {
-            
+                     
             if (!Auth::check()) {
                 return redirect()->route('website.login')->with('error','please login for add the package!');
               
@@ -49,9 +49,10 @@ class CartController extends Controller
             $check_item_exists_inside_cart = Cart::where('user_id', Auth::user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where([['is_paid','=', 0], ['is_remove_from_cart','=', 0]])->exists();
                        
                 if($check_item_exists_inside_cart == true){
+                   
                     return redirect()->route('website.course')->with('error','Package already in Cart!');
                 }else{
-                   
+                  
                     $create = Cart::create([
                         'user_id' => Auth::user()->id,
                         'board_id' => $board_id,//board_id
@@ -62,7 +63,7 @@ class CartController extends Controller
                 } 
            
     
-            return redirect()->back()->with('success','Item added to cart successfully.');
+            return redirect()->route('website.course')->with('success','Item added to cart successfully.');
         } catch (\Throwable $th) {
             dd($th);
         }
