@@ -22,72 +22,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                   <table id="boardsTable" class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <td>#</td>
-                                <td>Lesson</td>
-                                <td>Lesson Content</td>
-                                <td>Action</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                               @foreach($lessons as $key=>$lesson)
-                               <tr>
-                                   <td>{{$key + 1}}</td>
-                                    <td>{{$lesson->name}}</td>
-                                    <td>{{ substr(strip_tags($lesson->content), 0, 80) }}...</td>
-                                    <td><a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}">Add Topic</a></td>
-                              </tr>
-                                    @endforeach
-                        </tbody>
-                   </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Large modal -->
-
-
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content" style="padding:1.5rem;background-color:#fff;">
-        <div class="modal-body">
-            <form  action="{{route('admin.course.management.lesson.store')}}" enctype="multipart/form-data" method="post">
+                <form  action="{{route('admin.course.management.lesson.store')}}" enctype="multipart/form-data" method="post">
                 @csrf
-                <div class="row">
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Select Board</label>
-                            <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
-                                <option value="">-- Select -- </option>
-                                @forelse ($boards as $item)
-                                <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                                @empty
-                                <option>No boards to show</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Select Class</label>
-                            <select name="assign_class_id" id="board-class-dd" class="form-control">
-                                <option value="">-- Select -- </option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="">Select Subject</label>
-                            <select name="assign_subject_id" id="board-subject-dd" class="form-control">
-                                <option value="">-- Select -- </option>
-
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <input type="hidden" name="parent_id" value="{{$lesson->id}}">
                 <div class="row">
                    <div class="col-6">
                     <div class="form-group">
@@ -95,28 +32,25 @@
                         <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" required>
                     </div>
                    </div>
-                </div>
-                <div class="form-group assignedBoardDiv" style="display:none;">
-                    <label for="">Belongs to Board</label>
-                    <select name="board" id="board" class="form-control">
 
-                    </select>
-                </div>
                 <div class="col-12">
+                <label for="">Lesson content</label>
                         <div class="form-group">
                             <textarea class="ckeditor form-control" name="content"></textarea>
                         </div>
 
                     </div>
+                </div>
                 <div style="float: right;">
                     <button type="button" class="btn btn-md btn-default" id="assignClassCancelBtn">Cancel</button>
                     <button type="submit" class="btn btn-md btn-success">Submit</button>
                 </div>
             </form>
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
-</div>
+    </div>
+    <!-- Large modal -->
 
 @endsection
 

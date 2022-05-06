@@ -72,6 +72,9 @@ Route::group(['middleware' => ['auth'] ],function(){
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
             Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
+            Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');
+            Route::get('topic/{lesson_slug}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
+
         });
     });
 
@@ -135,7 +138,7 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::post('editing',[GalleryController::class,'edit'])->name('admin.editing.gallery');
         });
 
-        
+
     });
 
 

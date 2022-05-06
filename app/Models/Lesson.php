@@ -24,4 +24,8 @@ class Lesson extends Model
 public function boards(){
     return $this->belongsTo(AssignSubject::class);
 }
+public function topic()
+{
+  return $this->hasMany(Lesson::class, 'parent_id');
+}
 }
