@@ -28,14 +28,11 @@
                  <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
                          <li class="breadcrumb-item"><a href="course.html">{{$board->exam_board}}</a></li>
-                         <li class="breadcrumb-item active" aria-current="page">{{$assign_subject->subject_name}}&nbsp; <i class="fa fa-level-down" aria-hidden="true"></i></li>
+                         <li class="breadcrumb-item active" aria-current="page">Class-{{$assign_subject->assignClass->class}}&nbsp; <i class="fa fa-level-down" aria-hidden="true"></i></li>
                      </ol>
                  </nav>
-                 <h2 class="heading-white"><span style="font-size:12px;"></span>Testing video course</h2>
+                 <h2 class="heading-white"><span style="font-size:12px;"></span></h2>
                  <p></p>
-                 <div class="text-box">
-                     <a data-toggle="modal" class="btn btn-default" data-target="#login-modal"style="cursor: pointer;border: 1px solid white;color: white !important;">MCQ Test</a>
-                </div>
              </div>
          </div>
          <div class="col-lg-6 p0">

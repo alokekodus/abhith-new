@@ -29,29 +29,32 @@
 
 @section('content')
 @include('layout.website.include.forum_header')
+
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">{{$order->board->exam_board}}/class-{{$order->assignClass->class}}</a>
-  </nav>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 p-0">
-            <ul class="list-inline courses-list">
-                @foreach($subjects as $key=>$subject)
-                <li>
-                    <div class="course-desc"></span>
-                        <div class="block-ellipsis5"><h4 class="small-heading-black">{{$subject->subject_name}}</h4></div>
-                        <span></span>
-                        <a href="{{route('website.user.lesson',[$order->id,$subject->id])}}" class="enroll">View all lesson</a>
+</nav>
+<section class="account-section">
+    <div class="container-fluid">
+     
+        <div class="row">
+            @foreach($subjects as $key=>$subject)
+             <div class="col-sm-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">{{$subject->subject_name}}</h5>
+                      <p class="card-text"><img src="{{asset($subject->image)}}"></p>
+                      <a href="{{route('website.user.lesson',[$order->id,$subject->id])}}" class="btn btn-primary">View all lesson</a>
                     </div>
-                </li>
-                @endforeach
-                
+                  </div>
+            </div>
+          
+            @endforeach
+             
+          </div>
+     </div>
+    
+</section>
 
-            </ul>
-            
-        </div>
-    </div>
-</div>
 @endsection
 
 

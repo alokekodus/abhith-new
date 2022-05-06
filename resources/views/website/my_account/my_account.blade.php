@@ -211,7 +211,7 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="mycourses" role="tabpanel">
-                        
+                        <div class="row">
                             @forelse ($purchase_history as $key =>  $item)
                             <div class="col-lg-4">
                                
@@ -224,6 +224,7 @@
                                
                             </div>
                             @endforeach
+                        </div>
                     </div>
                     {{-- <div class="tab-pane" id="payment" role="tabpanel">
                         <div class="row">

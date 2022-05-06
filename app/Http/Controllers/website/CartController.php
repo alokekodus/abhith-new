@@ -9,6 +9,7 @@ use App\Models\Chapter;
 use App\Models\Order;
 use App\Models\AssignSubject;
 use Illuminate\Support\Facades\Auth;
+use Yoeunes\Toastr\Facades\Toastr;
 
 class CartController extends Controller
 {
@@ -39,7 +40,8 @@ class CartController extends Controller
         try {
                      
             if (!Auth::check()) {
-                return redirect()->route('website.login')->with('error','please login for add the package!');
+                Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->route('website.login');
               
             }
             

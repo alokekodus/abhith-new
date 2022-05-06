@@ -7,6 +7,25 @@
 <section class="subheader">
     <div class="container-fluid">
         <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-inline cart-course-list1">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>    
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>    
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                  
+                </ul>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-12 p0">
                 <div class="subheader-image"><img src="{{asset('asset_website/img/course/banner.png')}}" class="w100"></div>
                 <div class="subheader-image-desc">

@@ -124,7 +124,26 @@
       </div>
   </div>
 </div>
-
+{{-- lesson  content display --}}
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
@@ -179,7 +198,7 @@
                     labelFileTypeNotAllowed:'File of invalid type. Acepted types are mp4.',
                     labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
                 },
-);
+       );
         //For hiding modal
         $('#assignLessonCancelBtn').on('click', function(){
             $('#assignLessonModal').modal('hide');
@@ -297,7 +316,8 @@
 
                     }
                 });
-            });
+     });
+    
     </script>
     <script>
         $('.ckeditor').ckeditor();
