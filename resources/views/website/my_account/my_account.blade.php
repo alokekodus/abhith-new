@@ -212,16 +212,16 @@
                     </div>
                     <div class="tab-pane" id="mycourses" role="tabpanel">
                         
-                            @forelse ($purses_subjects as $key =>  $item)
+                            @forelse ($purchase_history as $key =>  $item)
                             <div class="col-lg-4">
-                                <li>
+                               
                                     <div class="course-pic"><img src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg" class="w100"></div>
                                     <div class="course-desc">
-                                        <div class="block-ellipsis5"><h4 class="small-heading-black">{{$item->boards->exam_board??''}}</h4></div>
-                                        <span><h4 class="small-heading-black">{{$item->assignClass->class??''}}</h4></span>
+                                        <div class="block-ellipsis5"><h4 class="small-heading-black">{{$item->board->exam_board}}</h4></div>
+                                        <span><h4 class="small-heading-black">Class - {{$item->assignClass->class??''}}</h4></span>
                                         <a href="{{route('website.user.courses',$item->id)}}" class="enroll">view Details</a>
                                     </div>
-                                </li>
+                               
                             </div>
                             @endforeach
                     </div>

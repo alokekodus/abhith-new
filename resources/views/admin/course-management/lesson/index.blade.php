@@ -49,11 +49,11 @@
     <!-- Large modal -->
 
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="assignLessonModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content" style="padding:1.5rem;background-color:#fff;">
         <div class="modal-body">
-            <form  action="{{route('admin.course.management.lesson.store')}}" enctype="multipart/form-data" method="post">
+            <form  id="assignLessonForm">
                 @csrf
                 <div class="row">
                     <div class="col-4">
@@ -89,28 +89,35 @@
                     </div>
                 </div>
                 <div class="row">
-                   <div class="col-6">
+                   <div class="col-4">
                     <div class="form-group">
                         <label for="">Lesson Name</label>
                         <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" required>
                     </div>
                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Upload Lesson Picture</label>
+                            <input type="file" class="filepond" name="lessonImage" id="lessonImage" data-max-file-size="1MB" data-max-files="1" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="">Upload Lesson Video</label>
+                            <input type="file" class="filepond" name="lessonVideo" id="lessonVideo" data-max-file-size="50MB" data-max-files="50" />
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group assignedBoardDiv" style="display:none;">
-                    <label for="">Belongs to Board</label>
-                    <select name="board" id="board" class="form-control">
-
-                    </select>
-                </div>
+               
                 <div class="col-12">
                         <div class="form-group">
-                            <textarea class="ckeditor form-control" name="content"></textarea>
+                            <textarea class="ckeditor form-control" name="Content" id="Content"></textarea>
                         </div>
 
                     </div>
                 <div style="float: right;">
-                    <button type="button" class="btn btn-md btn-default" id="assignClassCancelBtn">Cancel</button>
-                    <button type="submit" class="btn btn-md btn-success">Submit</button>
+                    <button type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn">Submit</button>
                 </div>
             </form>
         </div>
@@ -131,12 +138,8 @@
             });
         });
 
-         //For hiding modal
-         $('#assignClassCancelBtn').on('click', function(){
-            $('#assignClassModal').modal('hide');
-            $('#assignClassForm')[0].reset();
-            $('.assignedBoardDiv').css('display', 'none');
-        });
+        
+      
         FilePond.registerPlugin(
                 // encodes the file as base64 data
                 FilePondPluginFileEncode,
@@ -153,19 +156,9 @@
             );
 
             // Select the file input and use create() to turn it into a pond
-            pond = FilePond.create(
+            
 
-                document.getElementById('lessonVideo'), {
-                    allowMultiple: true,
-                    maxFiles: 50,
-                    imagePreviewHeight: 135,
-                    acceptedFileTypes: ['video/mp4'],
-                    labelFileTypeNotAllowed:'File of invalid type. Acepted types video/mp4.',
-                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
-                },
-            );
-
-          pond = FilePond.create(
+            pondImage = FilePond.create(
 
                 document.getElementById('lessonImage'), {
                     allowMultiple: true,
@@ -176,26 +169,82 @@
                     labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
                 },
             );
-            FilePond.setOptions({
-                server:{
-                   url:'{{route("admin.course.management.lesson.storefile")}}',
-                   headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            pondVideo = FilePond.create(
+
+                document.getElementById('lessonVideo'), {
+                    allowMultiple: true,
+                    maxFiles: 50,
+                    imagePreviewHeight: 135,
+                    acceptedFileTypes: ['mp4', 'video'],
+                    labelFileTypeNotAllowed:'File of invalid type. Acepted types are mp4.',
+                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
+                },
+);
+        //For hiding modal
+        $('#assignLessonCancelBtn').on('click', function(){
+            $('#assignLessonModal').modal('hide');
+            $('#assignLessonForm')[0].reset();
+            pondImage.removeFiles();
+            pondVideo.removeFiles();
+        });
+        $('#assignLessonForm').on('submit', function(e){
+            e.preventDefault();
+
+            $('#assignLessonSubmitBtn').attr('disabled', true);
+            $('#assignLessonSubmitBtn').text('Please wait...');
+            $('#assignLessonCancelBtn').attr('disabled', true);
+
+
+            let formData = new FormData(this);
+            pondImageFiles = pondImage.getFiles();
+            pondVideoFiles = pondVideo.getFiles();
+            for (var i = 0; i < pondImageFiles.length; i++) {
+                // append the blob file
+                formData.append('lessonImage', pondImageFiles[i].file);
+            }
+            for (var i = 0; i < pondVideoFiles.length; i++) {
+                // append the blob file
+                formData.append('lessonVideo', pondImageFiles[i].file);
+            }
+            var Content = CKEDITOR.instances['Content'].getData();
+            formData.append('Content', Content);
+            
+            $.ajax({
+                url:"{{route('admin.course.management.lesson.store')}}",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data:formData,
+                success:function(data){
+                    console.log(data);
+                    if(data.error != null){
+                        $.each(data.error, function(key, val){
+                            toastr.error(val[0]);
+                        });
+                        $('#assignLessonSubmitBtn').attr('disabled', false);
+                        $('#assignLessonSubmitBtn').text('Submit');
+                        $('#assignLessonCancelBtn').attr('disabled', false);
+                    }
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('#assignLessonSubmitBtn').attr('disabled', false);
+                        $('#assignLessonSubmitBtn').text('Submit');
+                        $('#assignLessonCancelBtn').attr('disabled', false);
+                    }
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong failed to assign lesson');
                     }
 
-                },
-                success:function(data){
-                  console.log(data);
-
-                },
-
+                    $('#assignSubjectSubmitBtn').attr('disabled', false);
+                    $('#assignSubjectSubmitBtn').text('Submit');
+                    $('#assignSubjectCancelBtn').attr('disabled', false);
+                }
             });
-        //For hiding modal
-        $('#assignSubjectCancelBtn').on('click', function(){
-            $('#assignSubjectModal').modal('hide');
-            $('#assignSubjectForm')[0].reset();
-            $('.assignedClassdDiv').css('display', 'none');
-            pond.removeFiles();
         });
     </script>
     <script>

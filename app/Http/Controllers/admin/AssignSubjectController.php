@@ -19,7 +19,7 @@ class AssignSubjectController extends Controller
     }
 
     public function assignSubject(Request $request){
-        
+       
         try {
             $validator = Validator::make($request->all(),[
                 'subjectName' => 'required',
