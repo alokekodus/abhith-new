@@ -15,8 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
-        "razorpay/razorpay": "2.*",
-        "yoeunes/toastr": "^1.2"
+        "razorpay/razorpay": "2.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

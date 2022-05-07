@@ -96,6 +96,6 @@ class DashboardController extends Controller
             }
         }
         // dd($publishCourse);
-        return view('website.home', \compact('banner', 'blogs', 'upComingCourse', 'publishCourse'));
+        return view('website.home',compact('banner', 'blogs', 'upComingCourse', 'publishCourse'));
     }
 }
