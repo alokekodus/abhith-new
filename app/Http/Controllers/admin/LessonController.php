@@ -72,6 +72,9 @@ class LessonController extends Controller
             }
 
                 $create=Lesson::create($data);
+                if($request->parent_is!=null){
+                    return redirect()->back()->with('success','topic added successfully.');   
+                }
                 if($create){
                     return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
                 }else{

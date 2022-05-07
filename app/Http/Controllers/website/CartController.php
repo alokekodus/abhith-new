@@ -67,7 +67,7 @@ class CartController extends Controller
     
             return redirect()->route('website.course')->with('success','Item added to cart successfully.');
         } catch (\Throwable $th) {
-            dd($th);
+            return redirect()->back();
         }
         
 

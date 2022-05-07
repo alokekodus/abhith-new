@@ -7,7 +7,7 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-bulletin-board"></i>
-            </span> All Lesson
+            </span> Add Topic
         </h3>
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
@@ -28,13 +28,13 @@
                 <div class="row">
                    <div class="col-6">
                     <div class="form-group">
-                        <label for="">Lesson Name</label>
+                        <label for="">Topic Name</label>
                         <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" required>
                     </div>
                    </div>
 
                 <div class="col-12">
-                <label for="">Lesson content</label>
+                <label for="">Topic content</label>
                         <div class="form-group">
                             <textarea class="ckeditor form-control" name="content"></textarea>
                         </div>

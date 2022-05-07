@@ -49,7 +49,12 @@
         
             <div id="collapse{{$lesson->id}}" class="collapse @if($key==0) show @endif" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
-                {{ substr(strip_tags($lesson->content), 0, 80) }}...
+                <ol>
+                  @foreach($lesson->topics as $key=>$topic)
+                  <li>{{substr(strip_tags($lesson->content), 0, 100)}}...</li>
+                  @endforeach
+                  
+                </ol>
               </div>
             </div>
           </div>
