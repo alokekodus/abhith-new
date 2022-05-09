@@ -36,6 +36,7 @@ Route::get('',[DashboardController::class,'index'])->name('website.dashboard');
 Route::prefix('course')->group(function(){
     Route::get('', [CourseController::class,'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class,'details'])->name('website.course.details');
+    Route::post('package', [CourseController::class,'coursePackage'])->name('website.course.package');
 });
 
 /* ------------------------------- Blog ------------------------------------ */
@@ -78,6 +79,8 @@ Route::prefix('account')->group(function(){
     Route::post('user-details',[UserDetailsController::class,'userDetails'])->name('website.user.details');
     Route::post('user-photo',[UserDetailsController::class,'uploadPhoto'])->name('website.user.upload.photo');
     Route::post('update-password',[UserDetailsController::class,'updatePassword'])->name('website.update.password');
+    Route::get('my-courses/{order_id}',[UserDetailsController::class,'mySubjects'])->name('website.user.courses');
+    Route::get('my-lesson/{order_id}/{subject_id}',[UserDetailsController::class,'myLesson'])->name('website.user.lesson');
 });
 
 

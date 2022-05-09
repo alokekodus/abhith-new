@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\website;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignSubject;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Models\UserDetails;
 use App\Models\User;
@@ -16,7 +18,8 @@ class UserDetailsController extends Controller
     public function myAccount(Request $request){
         if(Auth::check()){
             $user_details = UserDetails::with('user')->where('email',Auth::user()->email)->first();
-            $purchase_history = Order::with('course','chapter')->where('user_id',Auth::user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
+            $purchase_history = Order::with('board','assignClass')->where('user_id',Auth::user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
+          
         }
         return view('website.my_account.my_account')->with(['user_details' => $user_details, 'purchase_history' => $purchase_history]);
     }
@@ -86,6 +89,29 @@ class UserDetailsController extends Controller
             return response()->json(['message' => 'Password updated' , 'status' => 1]);
         }else{
             return response()->json(['message' => 'Existing Password Not matched', 'status' => 2]);
+        }
+    }
+    public function mySubjects($order_id){
+        try {
+           
+           $order=Order::find($order_id);
+           if($order->is_full_course_selected==1){
+              $subjects=AssignSubject::where('assign_class_id',$order->assign_class_id)->where('board_id',$order->board_id)->get();
+           }
+           return view('website.my_account.my_subject',compact('subjects','order'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function myLesson($order_id,$subject_id){
+        try {
+            
+               $order=Order::find($order_id);
+               $subject=AssignSubject::where('assign_class_id',$order->assign_class_id)->where('board_id',$order->board_id)->where('id',$subject_id)->first();
+               $all_lessons=Lesson::where('board_id',$order->board_id)->where('assign_class_id',$order->assign_class_id)->where('assign_subject_id',$subject_id)->where('parent_id',null)->get();
+               return view('website.my_account.my_lesson',compact('all_lessons','order','subject'));
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 

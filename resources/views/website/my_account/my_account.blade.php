@@ -65,6 +65,9 @@
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#account" role="tab" aria-controls="account">Account</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#mycourses" role="tab" aria-controls="mycourses">My Courses</a>
+                        </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#payment" role="tab" aria-controls="payment">Payment</a>
                         </li>
@@ -207,6 +210,22 @@
                             </form>
                         </div>
                     </div>
+                    <div class="tab-pane" id="mycourses" role="tabpanel">
+                        <div class="row">
+                            @forelse ($purchase_history as $key =>  $item)
+                            <div class="col-lg-4">
+                               
+                                    <div class="course-pic"><img src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg" class="w100"></div>
+                                    <div class="course-desc">
+                                        <div class="block-ellipsis5"><h4 class="small-heading-black">{{$item->board->exam_board}}</h4></div>
+                                        <span><h4 class="small-heading-black">Class - {{$item->assignClass->class??''}}</h4></span>
+                                        <a href="{{route('website.user.courses',$item->id)}}" class="enroll">view Details</a>
+                                    </div>
+                               
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
                     {{-- <div class="tab-pane" id="payment" role="tabpanel">
                         <div class="row">
                             <div class="col-lg-12 col-12">
@@ -343,9 +362,10 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>Sl No.</th>
-                                            <th>Course Name</th>
-                                            <th>Chapter Name</th>
-                                            <th>Price ( <i class="fa fa-inr" aria-hidden="true" style="color:green;"></i> )</th>
+                                            <th>Board Name</th>
+                                            <th>Class Name</th>
+                                            <th>Subjects</th>
+                                            <th>Total Price</th>
                                             <th>Purchase Date</th>
                                         </tr>
                                     </thead>
@@ -354,9 +374,17 @@
                                         @forelse ($purchase_history as $key =>  $item)
                                             <tr class="text-center">
                                                 <td>{{$key + 1}}</td>
-                                                <td>{{$item->course->name}}</td>
-                                                <td>{{$item->chapter->name}}</td>
-                                                <td>{{$item->chapter->price}}</td>
+                                                <td>{{$item->board->exam_board}}</td>
+                                                <td>{{$item->assignClass->class}}</td>
+                                                <td>
+                                                    @if($item->is_full_course_selected=='1')
+                                                     All Subjects
+                                                    @else
+                                                    Custom Package
+                                                    @endif
+                                                </td>
+                                               
+                                                <td>{{number_format($item->assignClass->subjects->sum('subject_amount')??'00',2,'.','')}}</td>
                                                 <td>{{$item->updated_at->format('d-M-Y') }}</td>
                                             </tr>
                                         @empty

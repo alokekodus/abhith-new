@@ -12,7 +12,7 @@ class Cart extends Model
     use SoftDeletes;
 
     protected $table = 'carts';
-    protected $fillable = ['user_id','chapter_id','course_id','is_full_course_selected','is_paid', 'is_remove_from_cart'];
+    protected $fillable = ['user_id','board_id','assign_class_id','chapter_id','course_id','is_full_course_selected','is_paid', 'is_remove_from_cart'];
 
     public function chapter(){
         return $this->belongsTo('App\Models\Chapter');
@@ -20,5 +20,12 @@ class Cart extends Model
 
     public function course(){
         return $this->belongsTo('App\Models\Course');
+    }
+    public function board(){
+        return $this->belongsTo('App\Models\Board');
+    }
+
+    public function assignClass(){
+        return $this->belongsTo('App\Models\AssignClass');
     }
 }

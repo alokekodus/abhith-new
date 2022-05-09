@@ -194,6 +194,7 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'B' => 
         array (
             'Brick\\Math\\' => 11,
+            'Brian2694\\Toastr\\' => 17,
             'Barryvdh\\Debugbar\\' => 18,
         ),
         'A' => 
@@ -588,6 +589,10 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
+        'Brian2694\\Toastr\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brian2694/laravel-toastr/src',
+        ),
         'Barryvdh\\Debugbar\\' => 
         array (
             0 => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src',
@@ -637,6 +642,7 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'App\\Http\\Controllers\\admin\\EnquiryController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/EnquiryController.php',
         'App\\Http\\Controllers\\admin\\EnrolledController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/EnrolledController.php',
         'App\\Http\\Controllers\\admin\\GalleryController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/GalleryController.php',
+        'App\\Http\\Controllers\\admin\\LessonController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/LessonController.php',
         'App\\Http\\Controllers\\admin\\MultipleChoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/MultipleChoiceController.php',
         'App\\Http\\Controllers\\admin\\SubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/SubjectController.php',
         'App\\Http\\Controllers\\admin\\TimeTableController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/TimeTableController.php',
@@ -679,6 +685,7 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'App\\Models\\Gallery' => __DIR__ . '/../..' . '/app/Models/Gallery.php',
         'App\\Models\\KnowledgeForumComment' => __DIR__ . '/../..' . '/app/Models/KnowledgeForumComment.php',
         'App\\Models\\KnowledgeForumPost' => __DIR__ . '/../..' . '/app/Models/KnowledgeForumPost.php',
+        'App\\Models\\Lesson' => __DIR__ . '/../..' . '/app/Models/Lesson.php',
         'App\\Models\\MultipleChoice' => __DIR__ . '/../..' . '/app/Models/MultipleChoice.php',
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\Question' => __DIR__ . '/../..' . '/app/Models/Question.php',
@@ -740,6 +747,9 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'Barryvdh\\Debugbar\\Twig\\Extension\\Stopwatch' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Twig/Extension/Stopwatch.php',
         'Barryvdh\\Debugbar\\Twig\\Node\\StopwatchNode' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Twig/Node/StopwatchNode.php',
         'Barryvdh\\Debugbar\\Twig\\TokenParser\\StopwatchTokenParser' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Twig/TokenParser/StopwatchTokenParser.php',
+        'Brian2694\\Toastr\\Facades\\Toastr' => __DIR__ . '/..' . '/brian2694/laravel-toastr/src/Facades/Toastr.php',
+        'Brian2694\\Toastr\\Toastr' => __DIR__ . '/..' . '/brian2694/laravel-toastr/src/Toastr.php',
+        'Brian2694\\Toastr\\ToastrServiceProvider' => __DIR__ . '/..' . '/brian2694/laravel-toastr/src/ToastrServiceProvider.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
         'Brick\\Math\\BigNumber' => __DIR__ . '/..' . '/brick/math/src/BigNumber.php',

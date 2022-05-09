@@ -20,4 +20,7 @@ class AssignSubject extends Model
     public function boards(){
         return $this->belongsTo(Board::class, 'board_id', 'id');
     }
+    public function lesson(){
+        return $this->hasMany(Lesson::class);
+    }
 }

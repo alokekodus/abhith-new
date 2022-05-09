@@ -9,6 +9,8 @@ use App\Models\Course;
 use App\Common\Activation;
 use App\Models\Subject;
 use App\Models\Chapter;
+use App\Models\AssignClass;
+use App\Models\AssignSubject;
 use Carbon\Carbon;
 
 class CourseController extends Controller
@@ -88,5 +90,14 @@ class CourseController extends Controller
         ];
         // dd($publishCourse);
         return response()->json(['response' => $response, 'message' => 'Data fetch successfully']);
+    }
+    public function findClass(Request $request){
+       
+       $board=AssignClass::where(['board_id'=>$request->board_id,'is_activate'=>1])->get();
+       return response()->json($board);
+    }
+    public function findBoardClassSubject(Request $request){
+        $subject=AssignSubject::where(['board_id'=>$request->board_id,'is_activate'=>1,'assign_class_id'=>$request->class_id])->get();
+       return response()->json($subject);
     }
 }

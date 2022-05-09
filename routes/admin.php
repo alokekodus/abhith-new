@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
+use App\Http\Controllers\admin\LessonController;
 use App\Models\AssignSubject;
 
 /*
@@ -68,7 +69,13 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::get('all', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
         });
-        
+        Route::prefix('lesson')->group(function(){
+            Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
+            Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
+            Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');
+            Route::get('topic/{lesson_slug}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
+
+        });
     });
 
     /* ------------------------------- CHAPTER ------------------------------------ */
@@ -131,7 +138,7 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::post('editing',[GalleryController::class,'edit'])->name('admin.editing.gallery');
         });
 
-        
+
     });
 
 

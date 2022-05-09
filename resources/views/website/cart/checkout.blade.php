@@ -19,15 +19,8 @@
                     <div style="margin-top:10px;">
                         <ul class="list-inline cart-course-list" style="border:none;">
                             @forelse ($cart as $item)
-                                <li>
-                                    <div class="cart-course-image1"><img src="{{asset($item->course->course_pic)}}" style="height:50px;width:70px;"></div>
-                                    <div class="cart-course-desc">
-                                        <h6 data-brackets-id="12020">Chapter: {{$item->chapter->name}}</h6>
-                                        <p>Course: {{$item->course->name}}</p>
-                                        <span class="course-price2" id="itemPrice"><i class="fa fa-inr" aria-hidden="true"></i>{{$item->chapter->price}}</span>
-                                    </div>
-                                
-                                </li>
+                            @include('website.cart.cart-items')
+                               
                             @empty
                                 <h4 class="text-center">Cart empty !</h4>
                             @endforelse
@@ -36,7 +29,7 @@
                     <div class="total1">
                         <p class=""><b>Total</b></p>
                         <span class=" course-price1">
-                            <i class="fa fa-inr" aria-hidden="true"></i>{{$countPrice}}.00</span>
+                            <i class="fa fa-inr" aria-hidden="true"></i>{{number_format($countPrice,2,'.','')}}</span>
                     </div>
                 </div>
                 <div class="col-md-5" style="border-left:2px solid #ddd;">

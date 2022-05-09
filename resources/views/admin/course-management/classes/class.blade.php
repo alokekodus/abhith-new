@@ -50,7 +50,7 @@
         <div class="modal-dialog">
           <div class="modal-content" style="padding:1.5rem;background-color:#fff;">
             <div class="modal-body">
-                <form id="assignClassForm">
+                <form id="assignClassForm" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="">Select Class</label>

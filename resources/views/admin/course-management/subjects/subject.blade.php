@@ -28,6 +28,7 @@
                                 <td>#</td>
                                 <td>Subject</td>
                                 <td>Assigned Class</td>
+                                <td>Amount</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,6 +37,7 @@
                                     <td>{{$key + 1}}</td>
                                     <td>{{$item->subject_name}}</td>
                                     <td>Class - {{$item->assignClass->class}} -- {{$item->boards->exam_board}} Board --</td>
+                                    <td>{{number_format($item->subject_amount,2,'.','')}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -73,6 +75,11 @@
                                 <option  disabled>No Class to show</option>
                             @endforelse
                         </select>
+                        <div class="form-group">
+                            <label for="">Amount</label>
+                            <input type="text" name="subjectAmount" class="form-control" id="subjectAmount" placeholder="e.g 3000.">
+                        </div>
+                        
                     </div>
                     <div style="float: right;">
                         <button type="button" class="btn btn-md btn-default" id="assignSubjectCancelBtn">Cancel</button>
@@ -167,6 +174,7 @@
                 contentType:false,
                 data:formData,
                 success:function(data){
+                    console.log(data);
                     if(data.error != null){
                         $.each(data.error, function(key, val){
                             toastr.error(val[0]);
