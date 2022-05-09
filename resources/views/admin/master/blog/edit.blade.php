@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label for="">Select Category</label>
                         <select name="blog_category" id="blog_category" class="form-control" required>
-                            <option value="{{$blog->name}}" selected disabled> {{$blog->category}} </option>
+                            <option value="{{$blog->category}}" selected> {{$blog->category}} </option>
                             <option value="Fashion">Fashion</option>
                             <option value="Food ">Food </option>
                             <option value="Travel">Travel</option>
@@ -62,7 +62,7 @@
                         <span class="text-danger" id="data_error"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                    <button type="submit" class="btn btn-gradient-primary mr-2  blog-form-submit">Submit</button>
                 </form>
             </div>
         </div>
@@ -148,6 +148,9 @@
             }else if(pondFiles[0].status != 2){
                 toastr.error('Not a valid image.');
             }else{
+
+                $('.blog-form-submit').text('Please wait...');
+                $('.blog-form-submit').attr('disabled',true);
                 $.ajax({
 
                     type: "POST",
@@ -166,14 +169,19 @@
 
                         },
                         200: function(data) {
+
                             // $('#bannerForm').trigger("reset");
                             toastr.success(data.message);
+                            $('.blog-form-submit').text('Submit');
+                            $('.blog-form-submit').attr('disabled',false);
                             location.reload();
 
                             // alert('200 status code! success');
                         },
                         500: function() {
                             toastr.error('Oops! Something went wrong');
+                            $('.blog-form-submit').text('Submit');
+                            $('.blog-form-submit').attr('disabled',false);
                         }
                     }
                 });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsAcivateToUsers extends Migration
+class AddColumnBoardIdToAssignSubjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class AddIsAcivateToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->boolean('is_activate')->after('password')->default(0);
+        Schema::table('assign_subjects', function (Blueprint $table) {
+            $table->unsignedBigInteger('board_id')->after('assign_class_id');
+
+            $table->foreign('board_id')->references('id')->on('boards')->onDelete('cascade');
         });
     }
 
@@ -26,10 +27,7 @@ class AddIsAcivateToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('is_activate');
+        Schema::table('assign_subjects', function (Blueprint $table) {
         });
     }
-
 }

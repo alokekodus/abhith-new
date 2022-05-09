@@ -68,6 +68,8 @@ Route::prefix('auth')->group(function(){
     Route::post('signup', [WebsiteAuthController::class,'signup'])->name('website.auth.signup');
     Route::post('login', [WebsiteAuthController::class,'login'])->name('website.auth.login');
     Route::post('logout', [WebsiteAuthController::class,'logout'])->name('website.auth.logout');
+    Route::post('verify-otp', [WebsiteAuthController::class,'verifyOtp'])->name('website.auth.verify.otp');
+    Route::post('complete-signup', [WebsiteAuthController::class,'completeSignup'])->name('website.auth.complete.signup');
 });
 
 /* ------------------------------- Account ------------------------------------ */

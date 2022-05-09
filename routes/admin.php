@@ -7,12 +7,15 @@ use App\Http\Controllers\admin\SubjectController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\ChapterController;
 use App\Http\Controllers\admin\BlogController;
+use App\Http\Controllers\admin\BoardController;
+use App\Http\Controllers\admin\AssignClassController;
+use App\Http\Controllers\admin\AssignSubjectController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
-
+use App\Models\AssignSubject;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,18 +38,37 @@ Route::group(['middleware' => ['auth'] ],function(){
     })->name('admin.dashboard');
 
     /* ------------------------------- COURSE ------------------------------------ */
-    Route::prefix('course')->group(function () {
+    // Route::prefix('course')->group(function () {
 
-        /* ------------------------------- COURSE ------------------------------------ */
-        Route::get('',[CourseController::class,'index'])->name('admin.get.course');
-        Route::view('create', 'admin.course.create')->name('admin.create.course');
-        Route::post('creating',[CourseController::class,'create'])->name('admin.creating.course');
-        Route::post('ckeditorImage',[CourseController::class,'ckeditorImage'])->name('admin.course.upload');
-        Route::get('edit/{id}',[CourseController::class,'editCourse'])->name('admin.edit.course');
-        Route::post('editing',[CourseController::class,'edit'])->name('admin.editing.course');
-        Route::post('active',[CourseController::class,'active'])->name('admin.active.course');
-        Route::get('price/{id}',[CourseController::class,'chapterPrice'])->name('admin.price.course');
+    //     /* ------------------------------- COURSE ------------------------------------ */
+    //     Route::get('',[CourseController::class,'index'])->name('admin.get.course');
+    //     Route::view('create', 'admin.course.create')->name('admin.create.course');
+    //     Route::post('creating',[CourseController::class,'create'])->name('admin.creating.course');
+    //     Route::post('ckeditorImage',[CourseController::class,'ckeditorImage'])->name('admin.course.upload');
+    //     Route::get('edit/{id}',[CourseController::class,'editCourse'])->name('admin.edit.course');
+    //     Route::post('editing',[CourseController::class,'edit'])->name('admin.editing.course');
+    //     Route::post('active',[CourseController::class,'active'])->name('admin.active.course');
+    //     Route::get('price/{id}',[CourseController::class,'chapterPrice'])->name('admin.price.course');
 
+    // });
+
+    Route::prefix('course-management')->group(function(){
+        Route::prefix('board')->group(function(){
+            Route::get('all', [BoardController::class, 'allBoard'])->name('admin.course.management.board.all');
+            Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
+            Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
+        });
+
+        Route::prefix('class')->group(function(){
+            Route::get('all', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
+            Route::post('assign', [AssignClassController::class, 'assignClass'])->name('admin.course.management.class.assign');
+        });
+
+        Route::prefix('subject')->group(function(){
+            Route::get('all', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
+            Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
+        });
+        
     });
 
     /* ------------------------------- CHAPTER ------------------------------------ */
@@ -64,16 +86,16 @@ Route::group(['middleware' => ['auth'] ],function(){
     /* ------------------------------- Master ------------------------------------ */
     Route::prefix('master')->group(function () {
 
-        /* ------------------------------- COURSE ------------------------------------ */
-        Route::prefix('subject')->group(function () {
-            Route::get('',[SubjectController::class,'index'])->name('admin.get.subject');
-            Route::view('create', 'admin.master.subjects.create')->name('admin.create.subject');
-            Route::post('creating',[SubjectController::class,'create'])->name('admin.creating.subject');
-            Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
-            Route::get('edit/{id}',[SubjectController::class,'editSubject'])->name('admin.edit.subject');
-            Route::post('editing',[SubjectController::class,'edit'])->name('admin.editing.subject');
+        // /* ------------------------------- COURSE ------------------------------------ */
+        // Route::prefix('subject')->group(function () {
+        //     Route::get('',[SubjectController::class,'index'])->name('admin.get.subject');
+        //     Route::view('create', 'admin.master.subjects.create')->name('admin.create.subject');
+        //     Route::post('creating',[SubjectController::class,'create'])->name('admin.creating.subject');
+        //     Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
+        //     Route::get('edit/{id}',[SubjectController::class,'editSubject'])->name('admin.edit.subject');
+        //     Route::post('editing',[SubjectController::class,'edit'])->name('admin.editing.subject');
 
-        });
+        // });
 
         /* ------------------------------- Banner ------------------------------------ */
         Route::prefix('banner')->group(function () {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsAcivateToUsers extends Migration
+class AddColumnOtpToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,9 @@ class AddIsAcivateToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
-            $table->boolean('is_activate')->after('password')->default(0);
+            $table->string('phone')->after('email');
+            $table->string('otp')->after('phone');
+            $table->boolean('verify_otp')->after('otp')->default(0);
         });
     }
 
@@ -28,8 +29,6 @@ class AddIsAcivateToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('is_activate');
         });
     }
-
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsAcivateToUsers extends Migration
+class CreateBoardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddIsAcivateToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->boolean('is_activate')->after('password')->default(0);
+        Schema::create('boards', function (Blueprint $table) {
+            $table->id();
+            $table->string('exam_board');
+            $table->boolean('is_activate')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -26,10 +28,6 @@ class AddIsAcivateToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('is_activate');
-        });
+        Schema::dropIfExists('boards');
     }
-
 }

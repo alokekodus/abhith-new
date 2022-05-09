@@ -50,41 +50,59 @@
                                                 class="text-center">Forgot Password</a></div>
                                     </form>
 
-                                    <div class="google-div"><a href="#" class="google-btn"><span
+                                    {{-- <div class="google-div"><a href="#" class="google-btn"><span
                                                 class="icon-google-30 google-icon"><span class="path1"></span><span
                                                     class="path2"></span><span class="path3"></span><span
                                                     class="path4"></span><span class="path5"></span><span
-                                                    class="path6"></span></span>Continue with Google</a></div>
+                                                    class="path6"></span></span>Continue with Google</a>
+                                    </div>
                                     <div class="facebook-div"><a href="#" class="facebook-btn"><span
                                                 class="icon-facebook-07 facebook-icon"></span>Continue with Facebook</a>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <form class="row" id="signupForm">
                                         @csrf
                                         <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="fname" placeholder="First Name" id="fname" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('fname')}}" required>
+                                            <input type="text" class="form-control" name="fname" placeholder="First Name" id="fname"  maxlength="20" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('fname')}}" required>
                                             <span class="text-danger">@error('fname'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="lname" placeholder="Last Name" id="lname" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('lname')}}" required>
+                                            <input type="text" class="form-control" name="lname" placeholder="Last Name" id="lname" maxlength="20"  pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('lname')}}" required>
                                             <span class="text-danger">@error('lname'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="email" name="email" class="form-control" placeholder="Email" id="p_number1" value="{{old('email')}}" required>
+                                            <input type="email" name="email" class="form-control" placeholder="Email" id="signupEmail" value="{{old('email')}}" required>
                                             <span class="text-danger">@error('email'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="password" name="password" class="form-control" placeholder="Password" id="pwd" required>
+                                            <div class="input-group">
+                                                <input type="text" name="phone" class="form-control" placeholder="e.g. 7895123572" id="phone"  pattern="(0|91)?[6-9][0-9]{9}" maxlength="10" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" required>
+                                                <div class="input-group-append">
+                                                  <button class="input-group-text" id="sendOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send OTP</button>
+                                                </div>
+                                            </div>
+                                            <span class="text-danger">@error('phone'){{$message}}@enderror</span>
+                                        </div>
+                                        <div class="form-group  verify-otp-div col-lg-12" style="display: none;">
+                                            <div class="input-group ">
+                                                <input type="text" name="otp" class="form-control" placeholder="Enter OTP e.g. 123456" id="enterOtp"  pattern="[0-9]+" title="Enter numbers only."  required>
+                                                <div class="input-group-append">
+                                                  <button class="btn input-group-text" id="verifyOtpBtn" style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify OTP</button>
+                                                </div>
+                                            </div>
+                                            <span class="text-danger">@error('otp'){{$message}}@enderror</span>
+                                        </div>
+                                        <div class="form-group col-lg-12">
+                                            <input type="password" name="password" class="form-control" placeholder="Password" id="pwd"  style="display:none;" required>
                                             <span class="text-danger">@error('password'){{$message}}@enderror</span>
                                         </div>
                                         <div class="form-group col-lg-12">
-                                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password"
-                                                id="confPwd" required>
+                                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" id="confPwd" style="display:none;"  required>
                                         </div>
                                         <div class="form-group mb0 col-lg-12">
-                                            <button type="submit" class="btn btn-block sign-btn" id="signupBtn">Sign up</button>
+                                            <button type="submit" class="btn btn-block sign-btn" disabled id="signupBtn">Sign up</button>
                                         </div>
                                     </form>
                                 </div>
@@ -100,48 +118,196 @@
 @section('script')
    
     <script>
-        $('#signupForm').on('submit',function(e){
+        $('#verifyOtpBtn').attr('disabled',true);
+
+        let interval = '';
+        let no_of_otp_sent = 0;
+        let nameRegex = /^([a-zA-Z]+)$/;
+        let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
+
+        $('#sendOtpBtn').on('click',function(e){
             e.preventDefault();
 
-            $('#signupBtn').text('Please wait...');
+            if($('#fname').val().length == 0){
+                toastr.error('Firstname is required');
+            }else if(!nameRegex.test($('#fname').val())){
+                toastr.error('Firstname should contain letters only.');
+            }else if($('#lname').val().length == 0){
+                toastr.error('Lastname is required');
+            }else if(!nameRegex.test($('#lname').val())){
+                toastr.error('Lastname should contain letters only.');
+            }else if($('#signupEmail').val().length == 0){
+                toastr.error('Email is required');
+            }else if(!emailRegex.test($('#signupEmail').val())){
+                toastr.error('Email is invalid');
+            }else if($('#phone').val().length < 10){
+                toastr.error('Phone number is required. Enter valid phone number');
+            }else if(!phoneRegex.test($('#phone').val())){
+                toastr.error('Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)');
+            }else{
+                
 
-            let pass = $('#pwd').val();
-            let confirm_pass = $('#confPwd').val();
 
-            if(pass != confirm_pass){
-                toastr.error('Oops! password not matched');
-                $('#signupBtn').text('Sign up');
-            }else if(pass.length < 5 ){
-                toastr.error('Oops! password must be 5 characters long');
-                $('#signupBtn').text('Sign up');
+                if(no_of_otp_sent < 2){
+                    no_of_otp_sent += 1;
+                    
+
+                    $.ajax({
+                        url:"{{route('website.auth.signup')}}",
+                        type:'POST',
+                        data:{
+                            '_token': '{{ csrf_token() }}',
+                            'firstname' : $('#fname').val(),
+                            'lastname' : $('#lname').val(),
+                            'email' : $('#signupEmail').val(),
+                            'phone' : $('#phone').val()
+                        },
+                        success:function(data){
+                            if(data.status == 1){
+                                $('#sendOtpBtn').attr('disabled',true); 
+                                $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
+                                $('#sendOtpBtn').text('OTP Sent');
+                                $('.verify-otp-div').css('display','block');
+                               
+                                interval = setInterval(updateTimer, 2000);
+                                toastr.success(data.message);
+                            }else{
+                                toastr.error(data.message);
+                            }
+                        },
+                        error:function(xhr, status, error){
+                            if(xhr.status == 500 || xhr.status == 422){
+                                toastr.error('Whoops! Something went wrong while sending OTP');
+                            }
+                        }
+                    });
+                }else{
+                    $('#sendOtpBtn').attr('disabled',true); 
+                    toastr.info('You have reached maximum attempts for sending otp. Please wait for 1 hour to resume the service. ');
+                }
+            }
+            
+            
+        });
+
+        $('#enterOtp').on('keyup',function(){
+            if($('#enterOtp').val().length == 0){
+                $('#verifyOtpBtn').attr('disabled',true);
+                $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
+            }else{
+                $('#verifyOtpBtn').css('background-image','linear-gradient(to right top, #63e0b9, #50cd9f, #3eba86, #2ca76c, #199453)');
+                $('#verifyOtpBtn').attr('disabled',false);
+            }
+            
+        });
+
+        $('#verifyOtpBtn').on('click',function(e){
+            e.preventDefault();
+            let otpRegex = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
+
+            if($('#enterOtp').val().length > 6){
+                toastr.error('Not a valid OTP');
+            }else if(!otpRegex.test($('#enterOtp').val())){
+                toastr.error('Enter numbers only');
             }else{
                 $.ajax({
-                    url:"{{route('website.auth.signup')}}",
-                    type:"POST",
-                    data:$('#signupForm').serialize(),
-                    success:function(data){
-                        if(data.status == '201'){
-                            toastr.success(data.message);
-                        }else if(data.status == '403'){
-                            toastr.error(data.message);
-                        }else{
-                            toastr.error('Oops! Something went wrong');
-                        }
-                        $('#signupForm')['0'].reset();
-                        $('#signupBtn').text('Sign up');
-                    
+                    url:"{{route('website.auth.verify.otp')}}",
+                    type:'POST',
+                    data:{
+                        '_token': '{{ csrf_token() }}',
+                        'email' : $('#signupEmail').val(),
+                        'phone' : $('#phone').val(),
+                        'otp' :  $('#enterOtp').val(),
                     },
-                    error: function(xhr, status, error) {
-                        if(xhr.status == 500 || xhr.status == 422){
-                            toastr.error('Oops! something went wrong');
-                        }
-                        $('#signupForm')['0'].reset();
-                        $('#signupBtn').text('Sign up');
-                    }
+                    success:function(data){
+                        if(data.status == 1){
+                            toastr.success(data.message);
+                            $('#phone').prop('readonly',true);
+                            $('#enterOtp').prop('readonly',true);
+                            $('#sendOtpBtn').attr('disabled',true);
+                            $('#verifyOtpBtn').attr('disabled',true);
+                            $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
+                            $('#pwd').css('display','block');
+                            $('#confPwd').css('display','block');
 
+                        }else{
+                            toastr.error(data.message);
+                        }
+                    },
+                    error:function(xhr, status, error){
+                        if(xhr.status == 500 || xhr.status == 422){
+                            toastr.error('Whoops! Something went wrong while sending OTP');
+                        }
+                    }
                 });
             }
-        })
+            
+        });
+
+         
+
+        const startingMinutes = 0.05;
+        let time = startingMinutes * 60;
+
+        function updateTimer() {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            // seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            $('#sendOtpBtn').text(` Resend in ${seconds} s`);
+            if (time == 0) {
+               
+                $('#sendOtpBtn').attr('disabled',false); 
+                $('#sendOtpBtn').text('Send OTP');
+                $('#sendOtpBtn').css('background-image','linear-gradient(to left, #076fef, #01b9f1)');
+                clearInterval(interval);
+            } else {
+                time--;
+            }
+        }
+
+        $('#confPwd').on('keyup',function(){
+            if( $('#confPwd').val().length == 0){
+               $('#signupBtn').attr('disabled',true);      
+            }else{
+                $('#signupBtn').attr('disabled',false); 
+            }
+        });
+
+        $('#signupBtn').on('click',function(e){
+            e.preventDefault();
+
+            if($('#pwd').val().length < 5){
+                toastr.error('Password must be 5 characters long');
+            }else if($('#pwd').val() != $('#confPwd').val()){
+                toastr.error('Whoops! Password not matched');
+            }else{
+                $.ajax({
+                    url:"{{route('website.auth.complete.signup')}}",
+                    type:'POST',
+                    data:{
+                        '_token': '{{ csrf_token() }}',
+                        'email' : $('#signupEmail').val(),
+                        'phone' : $('#phone').val(),
+                        'password': $('#pwd').val(),
+                    },
+                    success:function(data){
+                        if(data.status == 1){
+                            toastr.success(data.message);
+                        }else{
+                            toastr.error(data.message);
+                        }
+                        location.reload(true);
+                    },
+                    error:function(xhr, status, error){
+                        if(xhr.status == 500 || xhr.status == 422){
+                            toastr.error('Whoops! Something went wrong while sending OTP');
+                        }
+                    }
+                });
+            }
+        });
     </script>
 @endsection
 
