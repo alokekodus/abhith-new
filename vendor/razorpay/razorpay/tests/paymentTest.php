@@ -4,13 +4,18 @@ namespace Razorpay\Tests;
 
 use Razorpay\Api\Request;
 
-class paymentTest extends TestCase
+class PaymentTest extends TestCase
 {
-    private $orderId = 'order_IEcrUMyevZFuCS';
+    /**
+     * Specify unique order id & payment id d
+     * for example order_IEcrUMyevZFuCS & pay_IEczPDny6uzSnx
+     */
 
-    private $paymentId = 'pay_IEczPDny6uzSnx';
+    private $orderId = "order_IEcrUMyevZFuCS";
 
-    public function setUp()
+    private $paymentId = "pay_IEczPDny6uzSnx";
+
+    public function setUp(): void
     {
         parent::setUp();
     }    
@@ -26,16 +31,16 @@ class paymentTest extends TestCase
 
         $this->assertTrue(is_array($data['items']));
     }
-    
+
     /**
      * Fetch a payment
      */
     public function testFetchPayment()
     {
         $payment = $this->api->payment->all();
-        
+
         if($payment['count'] !== 0){
-             
+
             $data = $this->api->payment->fetch($payment['items'][0]['id']);
 
             $this->assertTrue(is_array($data->toArray()));
@@ -43,7 +48,7 @@ class paymentTest extends TestCase
             $this->assertTrue(in_array('payment',$data->toArray()));
         }
     } 
-    
+
     /**
      * Fetch a payment
      */
@@ -52,7 +57,7 @@ class paymentTest extends TestCase
         $data = $this->api->order->fetch($this->orderId)->payments();
 
         $this->assertTrue(is_array($data->toArray()));
-        
+
         $this->assertTrue(is_array($data['items']));
     }
 
@@ -64,7 +69,7 @@ class paymentTest extends TestCase
         $data = $this->api->payment->fetch($this->paymentId)->edit(array('notes'=> array('key_1'=> 'value1','key_2'=> 'value2')));
 
         $this->assertTrue(is_array($data->toArray()));
-        
+
         $this->assertTrue(in_array('payment',$data->toArray()));
     }
 
@@ -74,9 +79,9 @@ class paymentTest extends TestCase
     public function testFetchCardWithPaymentId()
     {
         $data = $this->api->payment->fetch($this->paymentId)->fetchCardDetails();
-        
+
         $this->assertTrue(is_array($data->toArray()));
-        
+
         $this->assertTrue(in_array('card',$data->toArray())); 
     }
 
@@ -88,8 +93,8 @@ class paymentTest extends TestCase
         $data = $this->api->payment->fetchPaymentDowntime();
 
         $this->assertTrue(is_array($data->toArray()));
-       
-        $this->assertTrue(in_array('count',$data->toArray())); 
+
+        $this->assertArrayHasKey('count',$data->toArray());
     }
 
     /**
@@ -98,11 +103,12 @@ class paymentTest extends TestCase
     public function testfetchPaymentDowntimeById()
     {
         $downtime = $this->api->payment->fetchPaymentDowntime();
- 
-        $data = $this->api->payment->fetchPaymentDowntimeById($downtime['items'][0]['id']);
-
-        $this->assertTrue(is_array($data->toArray()));
-        
+        if(count($downtime['items'])>0){
+          $data = $this->api->payment->fetchPaymentDowntimeById($downtime['items'][0]['id']);
+          $this->assertTrue(is_array($data->toArray()));
+        }else{
+          $this->assertArrayHasKey('count',$downtime->toArray());
+        }
     }
 
 }
