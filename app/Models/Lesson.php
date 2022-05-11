@@ -23,7 +23,7 @@ class Lesson extends Model
         'content'
 
     ];
-    public static function getRules($for, $type = null, $id = null)
+    public static function getRules($for)
     {
         $lesson_rules = [
             'name' => 'bailrequired|unique:lessons|max:255',
