@@ -38,12 +38,12 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false" aria-controls="course-management">
+            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
               <span class="menu-title">Course Management</span>
               <i class="menu-arrow"></i>
               <i class="mdi mdi-book menu-icon"></i>
             </a>
-            <div class="collapse" id="course-management" style="">
+            <div class="collapse" id="course-management">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
                 <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.class.all')}}">Classes</a></li>

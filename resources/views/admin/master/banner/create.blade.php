@@ -5,7 +5,7 @@ use App\Common\Activation;
 $course = Course::where('is_activate', Activation::Activate)->get();
 @endphp
 
-@extends('layout.admin.layoout.admin')
+@extends('layout.admin.layout.admin')
 
 @section('title','Banner')
 

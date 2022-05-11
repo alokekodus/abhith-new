@@ -5371,6 +5371,7 @@ return array(
     'Razorpay\\Tests\\TokenTest' => $vendorDir . '/razorpay/razorpay/tests/TokenTest.php',
     'Razorpay\\Tests\\TransferTest' => $vendorDir . '/razorpay/razorpay/tests/TransferTest.php',
     'Razorpay\\Tests\\UpiTest' => $vendorDir . '/razorpay/razorpay/tests/UpiTest.php',
+    'Razorpay\\Tests\\VirtualAccountTest' => $vendorDir . '/razorpay/razorpay/tests/VirtualAccountTest.php',
     'Requests' => $vendorDir . '/rmccue/requests/library/Requests.php',
     'ReturnTypeWillChange' => $vendorDir . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
     'SebastianBergmann\\CliParser\\AmbiguousOptionException' => $vendorDir . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',

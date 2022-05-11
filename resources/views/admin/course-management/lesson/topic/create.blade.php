@@ -1,62 +1,66 @@
-@extends('layout.admin.layoout.admin')
+@extends('layout.admin.layout.admin')
 @section('title', 'Course Management - Lesson')
-
+@section('form-label','Topic')
 @section('content')
-
-    <div class="page-header">
-        <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                <i class="mdi mdi-bulletin-board"></i>
-            </span> Add Topic
-        </h3>
-        <nav aria-label="breadcrumb">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add Lesson</button>
-                </li>
-            </ul>
-        </nav>
-    </div>
-
+<style>
+    .dyn-height {
+    width:100px;
+    max-height:692px;
+    overflow-y:auto;
+}
+</style>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-bulletin-board"></i>
+        </span> Add Topic
+    </h3>
+</div>
+<div class="card">
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                <form  action="{{route('admin.course.management.lesson.store')}}" enctype="multipart/form-data" method="post">
-                @csrf
-                <input type="hidden" name="parent_id" value="{{$lesson->id}}">
-                <div class="row">
-                   <div class="col-6">
-                    <div class="form-group">
-                        <label for="">Topic Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" required>
-                    </div>
-                   </div>
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    Lesson Name:{{$lesson->name}} <a href=""><i class="mdi mdi-pencil-outline"></i></a>
 
-                <div class="col-12">
-                <label for="">Topic content</label>
-                        <div class="form-group">
-                            <textarea class="ckeditor form-control" name="content"></textarea>
-                        </div>
+                    <div class="float-right"> All Lesson [Total lesson:
+                        {{$lesson->topics->count()}}]</div>
 
-                    </div>
-                </div>
-                <div style="float: right;">
-                    <button type="button" class="btn btn-md btn-default" id="assignClassCancelBtn">Cancel</button>
-                    <button type="submit" class="btn btn-md btn-success">Submit</button>
-                </div>
-            </form>
-                </div>
+                </h5>
             </div>
         </div>
     </div>
-    <!-- Large modal -->
+</div>
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            @include('admin.course-management.lesson.topic.form')
+        </div>
+    </div>
+    <div class="col-4 dyn-height">
+        <br>
+        @if($lesson->topics()->exists())
+        @include('admin.course-management.lesson.topic.all')
+        @else
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+
+                    Topic Not Added yet
+
+                </h5>
+            </div>
+        </div>
+        @endif
+    </div>
+</div>
+<!-- Large modal -->
 
 @endsection
 
 @section('scripts')
-    <script>
-        // For datatable
+<script>
+    // For datatable
         $(document).ready( function () {
             $('#boardsTable').DataTable({
                 "processing": true,
@@ -87,7 +91,7 @@
             );
 
             // Select the file input and use create() to turn it into a pond
-            pond = FilePond.create(
+            pondImage = FilePond.create(
 
                 document.getElementById('lessonVideo'), {
                     allowMultiple: true,
@@ -99,7 +103,7 @@
                 },
             );
 
-          pond = FilePond.create(
+          pondVideo = FilePond.create(
 
                 document.getElementById('lessonImage'), {
                     allowMultiple: true,
@@ -131,8 +135,68 @@
             $('.assignedClassdDiv').css('display', 'none');
             pond.removeFiles();
         });
-    </script>
-    <script>
+        //submit button 
+        $('#assignLessonForm').on('submit', function(e){
+            e.preventDefault();
+
+            $('#assignLessonSubmitBtn').attr('disabled', true);
+            $('#assignLessonSubmitBtn').text('Please wait...');
+           
+
+
+            let formData = new FormData(this);
+            pondImageFiles = pondImage.getFiles();
+            pondVideoFiles = pondVideo.getFiles();
+            for (var i = 0; i < pondImageFiles.length; i++) {
+                // append the blob file
+                formData.append('lessonImage', pondImageFiles[i].file);
+            }
+            for (var i = 0; i < pondVideoFiles.length; i++) {
+                // append the blob file
+                formData.append('lessonVideo', pondVideoFiles[i].file);
+            }
+            var Content = CKEDITOR.instances['Content'].getData();
+            formData.append('Content', Content);
+            
+            $.ajax({
+                url:"{{route('admin.course.management.lesson.store')}}",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data:formData,
+                success:function(data){
+                    console.log(data);
+                    if(data.error != null){
+                        $.each(data.error, function(key, val){
+                            toastr.error(val[0]);
+                        });
+                        $('#assignLessonSubmitBtn').attr('disabled', false);
+                        $('#assignLessonSubmitBtn').text('Submit');
+                        $('#assignLessonCancelBtn').attr('disabled', false);
+                    }
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('#assignLessonSubmitBtn').attr('disabled', false);
+                        $('#assignLessonSubmitBtn').text('Submit');
+                        $('#assignLessonCancelBtn').attr('disabled', false);
+                    }
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong failed to assign lesson');
+                    }
+
+                    $('#assignSubjectSubmitBtn').attr('disabled', false);
+                    $('#assignSubjectSubmitBtn').text('Submit');
+                    $('#assignSubjectCancelBtn').attr('disabled', false);
+                }
+            });
+        });
+</script>
+<script>
     function changeBoard()
       {
         let board_id=$("#assignedBoard").val();
@@ -183,8 +247,9 @@
                     }
                 });
             });
-    </script>
-    <script>
-        $('.ckeditor').ckeditor();
-    </script>
+</script>
+<script>
+    $('.ckeditor').ckeditor();
+</script>
+
 @endsection

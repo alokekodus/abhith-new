@@ -8,7 +8,7 @@ $subjects = Subject::where('is_activate', Activation::Activate)
 
 @endphp
 
-@extends('layout.admin.layoout.admin')
+@extends('layout.admin.layout.admin')
 
 @section('title','Course')
 
