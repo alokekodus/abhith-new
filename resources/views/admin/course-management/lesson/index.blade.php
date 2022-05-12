@@ -79,7 +79,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">Select Board</label>
-                                <select name="assignedBoard" id="assignedBoard" class="form-control"
+                                <select name="board_id" id="board_id" class="form-control"
                                     onchange="changeBoard()">
                                     <option value="">-- Select -- </option>
                                     @forelse ($boards as $item)
@@ -120,7 +120,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">Upload Lesson Picture</label>
-                                <input type="file" class="filepond" name="lessonImage" id="lessonImage"
+                                <input type="file" class="filepond" name="image_url" id="lessonImage"
                                     data-max-file-size="1MB" data-max-files="1" />
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">Upload Lesson Video</label>
-                                <input type="file" class="filepond" name="lessonVideo" id="lessonVideo"
+                                <input type="file" class="filepond" name="video_url" id="lessonVideo"
                                     data-max-file-size="50MB" data-max-files="50" />
                             </div>
                         </div>
@@ -351,11 +351,11 @@
             pondVideoFiles = pondVideo.getFiles();
             for (var i = 0; i < pondImageFiles.length; i++) {
                 // append the blob file
-                formData.append('lessonImage', pondImageFiles[i].file);
+                formData.append('image_url', pondImageFiles[i].file);
             }
             for (var i = 0; i < pondVideoFiles.length; i++) {
                 // append the blob file
-                formData.append('lessonVideo', pondVideoFiles[i].file);
+                formData.append('video_url', pondVideoFiles[i].file);
             }
             var Content = CKEDITOR.instances['content'].getData();
             

@@ -15,7 +15,7 @@
             <div class="col-6">
                 <div class="form-group">
                     <label for="">Upload @yield('form-label') Picture</label>
-                    <input type="file" class="filepond" name="topicImage" id="lessonImage"
+                    <input type="file" class="filepond" name="image_url" id="lessonImage"
                         data-max-file-size="1MB" data-max-files="1" />
                 </div>
             </div>
@@ -23,14 +23,14 @@
             <div class="col-6">
                 <div class="form-group">
                     <label for="">Upload @yield('form-label') Video</label>
-                    <input type="file" class="filepond" name="lessonVideo" id="lessonVideo"
+                    <input type="file" class="filepond" name="video_url" id="lessonVideo"
                         data-max-file-size="50MB" data-max-files="50" />
                 </div>
             </div>
             <div class="col-12">
                 <label for="">@yield('form-label') content</label>
                 <div class="form-group">
-                    <textarea class="ckeditor form-control" name="content" id="Content"></textarea>
+                    <textarea class="ckeditor form-control" name="content" id="content"></textarea>
                 </div>
 
             </div>
