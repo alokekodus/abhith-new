@@ -3,27 +3,8 @@
 @section('title', 'My Account')
 
 @section('head')
-<style>
-    .sidebar {
-        position: sticky;
-        top: 150px;
-    }
-    @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
-    table{
-        border: 1px solid #f3f3f3;
-        border-radius: 10px;
-        box-shadow: 0px 5px 5px #efecec;
-    }
-    th{
-        border-top:0px !important;
-    }
-    #purchase_history_table_filter{
-        margin-top:-40px;
-    }
-    #forum-search-bar{
-        display:none;
-    }
-</style>
+<link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
+
 
 @endsection
 
@@ -34,27 +15,54 @@
     <a class="navbar-brand" href="#">{{$order->board->exam_board}}/class-{{$order->assignClass->class}}</a>
 </nav>
 <section class="account-section">
-    <div class="container-fluid">
-     
+    <div class="container-fluid mt-2">
+
+        <!--   <div class="card card-block mb-2">
+                <h4 class="card-title">Card 1</h4>
+                <p class="card-text">Welcom to bootstrap card styles</p>
+                <a href="#" class="btn btn-primary">Submit</a>
+              </div>   -->
         <div class="row">
             @foreach($subjects as $key=>$subject)
-             <div class="col-sm-4">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">{{$subject->subject_name}}</h5>
-                      <p class="card-text"><img src="{{asset($subject->image)}}"></p>
-                      <a href="{{route('website.user.lesson',[$order->id,$subject->id])}}" class="btn btn-primary">View all lesson</a>
-                    </div>
-                  </div>
+            <div class="col-md-3 col-sm-6 item">
+                <div class="card item-card-box card-block">
+                    <h6 class="card-title text-right see-more">See More</h6>
+                    <img src="{{asset($subject->image)}}" alt="Photo of subject">
+                    <h4 class="item-card-title mt-3 mb-3 see-more">
+                        <a href="{{route('website.user.lesson',[$order->id,$subject->id])}}">
+                            {{$subject->subject_name}}</a>
+                    </h4>
+                    <p class="card-text">
+                        <span class="badge badge-primary my-badges" style="float:left;">Total Lesson:
+                            {{$subject->lesson->count()}}</span>
+                        <span class="badge badge-primary my-badges" style="float:right;">Total
+                            Topic:{{$subject->lesson->count()}}</span>
+                    </p>
+                </div>
             </div>
-          
             @endforeach
-             
-          </div>
-     </div>
-    
+        </div>
+
+
+
+        {{-- <div class="row">
+            @foreach($subjects as $key=>$subject)
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$subject->subject_name}}</h5>
+                        <p class="card-text"><img src="{{asset($subject->image)}}"></p>
+                        <a href="{{route('website.user.lesson',[$order->id,$subject->id])}}"
+                            class="btn btn-primary">View all lesson</a>
+                    </div>
+                </div>
+            </div>
+
+            @endforeach
+
+        </div> --}}
+    </div>
+
 </section>
 
 @endsection
-
-

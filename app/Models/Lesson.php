@@ -25,9 +25,9 @@ class Lesson extends Model
     ];
     public static function getRules($type)
     {
-        if ($type == "create-lesson") {
+        if ($type == "create-lesson" || $type =="update-lesson") {
             $lesson_rules = [
-                'board_id' => 'bail|required',
+                'board_id' => 'bail|integer|required',
                 'assign_class_id' => 'bail|integer|required',
                 'assign_subject_id' => 'bail|integer|required',
                 'name' => 'bail|required',
@@ -44,9 +44,18 @@ class Lesson extends Model
             ];
             return $lesson_rules;
         }
-        if($type="create-topic"){
+        if($type=="create-topic"){
             $lesson_rules_message = [
-                'parent_id' => 'bail|integer|required',
+                'parent_id' => 'bail|required|integer|required',
+                'content'=>'bail|required',
+                'image_url' => 'bail|mimes:png,jpeg',
+            ];
+            return $lesson_rules_message;
+        }
+        if($type=="create-sub-topic"){
+            $lesson_rules_message = [
+                'parent_id' => 'bail|required|integer|required',
+                'parent_lesson_id'=> 'bail|required|integer|required',
                 'content'=>'bail|required',
                 'image_url' => 'bail|mimes:png,jpeg',
             ];
@@ -56,14 +65,14 @@ class Lesson extends Model
     }
     public static function getRuleMessages($type)
     {
-        if ($type == "create-lesson") {
+        if ($type == "create-lesson" || $type=="update-lesson") {
             $lesson_rules_message = [
                 'board_id.required' => 'Please insert a valid Board',
                 'assign_class_id.required' => 'Please insert a valid Class',
                 'assign_subject_id.required' => 'Please insert a valid Subject',
                 'name.required' => 'Please insert a valid Lesson Title',
                 'image_url.required' => 'Image Is required and it should be on png,jpeg format',
-                'video_url.required' => 'Image Is required and it should be on mp4 format',
+                'video_url.required' => 'Video  should be on mp4 format',
             ];
             return $lesson_rules_message;
         }
@@ -74,9 +83,18 @@ class Lesson extends Model
             ];
             return $lesson_rules_message;
         }
-        if($type="create-topic"){
+        if($type=="create-topic"){
             $lesson_rules_message = [
                 'parent_id.required' => 'Lesson is not valid',
+                'content.required' => 'Please insert a valid Content',
+                'image_url.required' => 'Image should be on png,jpeg format',
+            ];
+            return $lesson_rules_message;
+        }
+        if($type=="create-sub-topic"){
+            $lesson_rules_message = [
+                'parent_id.required' => 'Lesson is not valid',
+                'parent_lesson_id.required'=>'Topic is not valid',
                 'content.required' => 'Please insert a valid Content',
                 'image_url.required' => 'Image should be on png,jpeg format',
             ];

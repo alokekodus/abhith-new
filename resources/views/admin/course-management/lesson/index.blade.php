@@ -42,7 +42,8 @@
                         @foreach($lessons as $key=>$lesson)
                         <tr>
                             <td>{{$key + 1}}</td>
-                            <td>{{$lesson->name}}</td>
+                            
+                            <td>{{$lesson->name}}  <span class="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-info">{{$lesson->topics->count()}}</span></td>
                             <td>{{ substr(strip_tags($lesson->content), 0, 30) }}...<i id="displayMoreLesson"
                                     class="mdi mdi-eye" data-toggle="modal" data-id="{{$lesson->id}}"
                                     data-value="{{$lesson->content}}" data-target="#displayMore"></i></td>
@@ -53,7 +54,7 @@
                                     data-id="{{$lesson->id}}" data-value="{{$lesson->video_url}}"
                                     data-target="#displayVideoModal">video</i></td>
                             </td>
-                            <td> <a href="{{route('admin.course.management.lesson.edit',$lesson->slug)}}" class="btn btn-gradient-primary p-2"><i class="mdi mdi-pencil"></i></a> <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}" class="btn btn-gradient-primary p-2"><i class="mdi mdi-plus"></i></a> <a href="{{route('admin.course.management.lesson.view',$lesson->slug)}}" class="btn btn-gradient-primary p-2"><i class="mdi mdi-eye"></i></a></td>
+                            <td> <a href="{{route('admin.course.management.lesson.edit',$lesson->slug)}}" class="btn btn-gradient-primary p-2" title="Edit Lesson"><i class="mdi mdi-pencil"></i></a> <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}" class="btn btn-gradient-primary p-2" title="Add New Topic"><i class="mdi mdi-plus"></i></a> <a href="{{route('admin.course.management.lesson.view',$lesson->slug)}}" class="btn btn-gradient-primary p-2" title="View Lesson Details"><i class="mdi mdi-eye"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -75,71 +76,7 @@
             <div class="modal-body">
                 <form id="assignLessonForm">
                     @csrf
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="">Select Board</label>
-                                <select name="board_id" id="board_id" class="form-control"
-                                    onchange="changeBoard()">
-                                    <option value="">-- Select -- </option>
-                                    @forelse ($boards as $item)
-                                    <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                                    @empty
-                                    <option>No boards to show</option>
-                                    @endforelse
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="">Select Class</label>
-                                <select name="assign_class_id" id="board-class-dd" class="form-control">
-                                    <option value="">-- Select -- </option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="">Select Subject</label>
-                                <select name="assign_subject_id" id="board-subject-dd" class="form-control">
-                                    <option value="">-- Select -- </option>
-
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="">Lesson Name</label>
-                                <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="">Upload Lesson Picture</label>
-                                <input type="file" class="filepond" name="image_url" id="lessonImage"
-                                    data-max-file-size="1MB" data-max-files="1" />
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label for="">Upload Lesson Video</label>
-                                <input type="file" class="filepond" name="video_url" id="lessonVideo"
-                                    data-max-file-size="50MB" data-max-files="50" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group">
-                            <textarea class="ckeditor form-control" name="content" id="content"></textarea>
-                        </div>
-
-                    </div>
+                    @include('admin.course-management.lesson.form')
                     <div style="float: right;">
                         <button type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</button>
                         <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type" value="lesson-create">Submit</button>
@@ -403,14 +340,16 @@
     function changeBoard()
       {
         let board_id=$("#assignedBoard").val();
+        console.log(board_id);
           $.ajax({
                 url:"{{route('board.class')}}",
-                type:"get",
+                type:"POST",
                 data:{
                     '_token' : "{{csrf_token()}}",
                     'board_id' : board_id
                 },
                 success:function(data){
+                   
                     $('#board-class-dd').html('<option value="">Select Class</option>');
                     data.forEach((boardClass) => {
                         $("#board-class-dd").append('<option value="' + boardClass

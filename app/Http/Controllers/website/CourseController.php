@@ -22,7 +22,8 @@ use Illuminate\Support\Facades\Crypt;
 
 class CourseController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $board_details = Board::where('is_activate', 1)->get();
         $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->get();
         return view('website.course.course')->with(['boards' => $board_details, 'subjects' => $subject_details]);
@@ -113,7 +114,7 @@ class CourseController extends Controller
     //     $course = Course::find($course_id);
     //     $chapters = Chapter::with('cart')->where([['course_id',$course_id],['is_activate',Activation::Activate]])->get();
     //     $multiChoice = Set::inRandomOrder()->where('subject_id', $course->subject->id)->where('is_activate', 1)->limit(1)->get();
-       
+
     //     $countMultiChoice = 0;
     //     $mcqRandom = [];
     //     foreach( $multiChoice as $item){
@@ -131,35 +132,73 @@ class CourseController extends Controller
     //         $order = Order::where('user_id', Auth::user()->id )->get();
     //     }
 
-        
+
     //     return view('website.course.courseDetails')->with(['course' => $course, 'chapters' => $chapters,'multiChoice' => $multiChoice, 'mcqRandom' => $mcqRandom,'countMultiChoice' => $countMultiChoice, 'cart' => $cart, 'order' => $order]);
 
     // }
-    public function coursePackage(Request $request){
-       try {
-         
-        $board_id=$request->assignedBoard;
-        $assign_class_id=$request->class_id;
-        $data=[
-            'board_id'=>$board_id,
-            'class_id'=>$assign_class_id,
-        ];
-        $board=Board::find($board_id);
-        $assign_subject =AssignSubject::find($assign_class_id);
-        if(($board_id==null)||($assign_class_id==null)){
-            return response()->back()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
-        }else{
-           
-            $all_subjects=AssignSubject::where(['board_id'=>$board_id,'assign_class_id'=>$assign_class_id,'is_activate'=>1])->get();
-            $total_amount=$all_subjects->sum('subject_amount');
-
-            return view('website.course.filter-course',compact('all_subjects','total_amount','data','board','assign_subject'));
-        
-        }
+    public function coursePackageFilter(Request $request)
+    {
+        try {
           
-         
+            $board_id = $request->assignedBoard;
+            $assign_class_id = $request->class_id;
+            $data = [
+                'board_id' => $board_id,
+                'class_id' => $assign_class_id,
+            ];
+            $board = Board::find($board_id);
+            $assign_subject = AssignSubject::find($assign_class_id);
+            if (($board_id == null) || ($assign_class_id == null)) {
+
+                $datas['code'] = 500;
+                $datas['message'] = 'Whoop! Something went wrong.';
+                return response()->back()->json(['datas' => $datas]);
+            } else {
+                
+                $all_subjects = AssignSubject::where(['board_id' => $board_id, 'assign_class_id' => $assign_class_id, 'is_activate' => 1])->get();
+               
+               
+                if ($all_subjects != null) {
+                    $total_amount = $all_subjects->sum('subject_amount');
+                    $datas=
+                    [
+                        'all_subjects'=>$all_subjects,
+                        'total_amount'=>$total_amount,
+                    ];
+                    $data=
+                    [
+                        'code'=>200,
+                        'message'=>'All filtering data are Display',
+                        'datas'=>$datas,
+                    ];
+                    return response()->json(['data'=>$data]);
+                } else {
+                    $data=
+                    [
+                        'code'=>500,
+                        'message'=>'Sorry! subject is not available for this time.',
+                        
+                    ];
+                    return response()->back()->json(['datas' => $data]);
+                }
+               
+                $data=
+                [
+                    'code'=>500,
+                    'message'=>'Sorry! subject is not available for this time.',
+                    
+                ];
+                return response()->back()->json(['datas' => $data]);
+            }
         } catch (\Throwable $th) {
-        return response()->back()->json(['message' => 'Whoops! Something went wrong. Failed to Find Packages.', 'status' => 2]);
-       }
+            return response()->back()->json(['message' => 'Whoops! Something went wrong. Failed to Find Packages.', 'status' => 2]);
+        }
+    }
+    public function coursePackageAll($board_id,$class_id){
+         $board=Board::find($board_id);
+         $class=AssignClass::with('boards','subjects')->where('id',$class_id)->first();
+         $subjects=$class->subjects;
+        
+        return view('website.course.filter-course',compact('board','class','subjects'));
     }
 }

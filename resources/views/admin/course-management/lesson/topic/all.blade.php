@@ -1,5 +1,5 @@
-<div class="card">
-    <div class="card-header" id="headingOne">
+<div class="card" id="headingOne">
+    <div class="card-header">
         <h5 class="mb-0">
             All Topics
         </h5>
@@ -9,10 +9,10 @@
 <div id="accordion">
 
     @foreach($lesson->topics as $key=>$topic)
-    <div class="card">
-        <div class="card-header" id="headingOne">
+    <div class="card" id="headingOne">
+        <div class="card-header">
             <h5 class="mb-0">
-                <button class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                <button class="" data-toggle="collapse" data-target="#collapseOne{{$key}}" aria-expanded="true"
                     aria-controls="collapseOne">
                     <li>{{$topic->name}}[Sub Topic:{{$topic->subTopics->count()}}]
                         <span style="float: right;"><a
@@ -25,10 +25,9 @@
             </h5>
         </div>
 
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="collapseOne{{$key}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
-                @if($topic->content!=null) <h5><u>Content:</u></h5> {{ substr(strip_tags($topic->content), 0, 100)
-                }}...@endif<br>
+                @if($topic->content!=null) <h5></h5> {!!$topic->content!!}@endif<br>
                 @if($topic->image_url!=null)
                 <i id="displayImage" class="mdi mdi-file-image" data-toggle="modal" data-id="{{$topic->id}}"
                     data-value="{{$topic->image_url}}" data-target="#displayImageModal"></i>

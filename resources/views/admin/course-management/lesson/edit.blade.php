@@ -23,8 +23,8 @@
                 <h5 class="mb-0">
                     Lesson Name:{{$lesson->name}} <a href=""><i class="mdi mdi-pencil-outline"></i></a>
 
-                    <div class="float-right"> All Lesson 
-                        [Total lesson:{{$lesson->topics->count()}}]</div>
+                    <div class="float-right"> All Topic 
+                        [Total Topic:{{$lesson->topics->count()}}]</div>
                 </h5>
             </div>
         </div>
@@ -38,42 +38,14 @@
                 <form id="assignLessonForm" enctype="multipart/form-data" method="post">
                     @csrf
                     <input type="hidden" name="lesson_id" value="{{$lesson->id}}">
+                    @if(!$lesson_edit_status)
                     <input type="hidden" name="parent_id" value="{{$lesson->parent_id}}">
                     <input type="hidden" name="parent_lesson_id" value="{{$lesson->parent_lesson_id}}">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="">@yield('form-label') Name</label>
-                                <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="{{$lesson->name}}"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="">Upload @yield('form-label') Picture</label>
-                                <input type="file" class="filepond" name="topicImage" id="lessonImage"
-                                    data-max-file-size="1MB" data-max-files="1" />
-                            </div>
-                        </div>
-
-                        <div class="col-6">
-                            <div class="form-group">
-                                <label for="">Upload @yield('form-label') Video</label>
-                                <input type="file" class="filepond" name="lessonVideo" id="lessonVideo"
-                                    data-max-file-size="50MB" data-max-files="50" />
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <label for="">@yield('form-label') content</label>
-                            <div class="form-group">
-                                <textarea class="ckeditor form-control" name="content" id="Content">{{$lesson->content??''}}</textarea>
-                            </div>
-
-                        </div>
-                    </div>
+                    @endif
+                    @include('admin.course-management.lesson.form')
                     <div style="float: right;">
                         <button type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</button>
-                        <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn">Submit</button>
+                        <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn">Update</button>
                     </div>
                 </form>
             </div>
@@ -93,6 +65,8 @@
                 "searching" : true,
                 "ordering" : false
             });
+
+            
         });
 
          //For hiding modal
@@ -126,9 +100,7 @@
                     acceptedFileTypes: ['video/mp4'],
                     labelFileTypeNotAllowed:'File of invalid type. Acepted types video/mp4.',
                     labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
-                    files: [{
-                    source: "{{ asset($lesson->video_url) }}",
-                 }]
+                   
                 },
             );
 
@@ -141,25 +113,10 @@
                     acceptedFileTypes: ['image/png', 'image/jpeg'],
                     labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
                     labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
-                    files: [{
-                    source: "{{ asset($lesson->image_url) }}",
-                 }]
+                   
                 },
             );
-            FilePond.setOptions({
-                server:{
-                   url:'{{route("admin.course.management.lesson.storefile")}}',
-                   headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-
-                },
-                success:function(data){
-                  console.log(data);
-
-                },
-
-            });
+           
         //For hiding modal
         $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');
@@ -181,14 +138,15 @@
             pondVideoFiles = pondVideo.getFiles();
             for (var i = 0; i < pondImageFiles.length; i++) {
                 // append the blob file
-                formData.append('lessonImage', pondImageFiles[i].file);
+                formData.append('image_url', pondImageFiles[i].file);
             }
             for (var i = 0; i < pondVideoFiles.length; i++) {
                 // append the blob file
-                formData.append('lessonVideo', pondVideoFiles[i].file);
+                formData.append('video_url', pondVideoFiles[i].file);
             }
-            var Content = CKEDITOR.instances['Content'].getData();
-            formData.append('Content', Content);
+            var Content = CKEDITOR.instances['content'].getData();
+            
+            formData.append('content', Content);
             
             $.ajax({
                 url:"{{route('admin.course.management.lesson.store')}}",
@@ -232,14 +190,16 @@
     function changeBoard()
       {
         let board_id=$("#assignedBoard").val();
+        console.log(board_id);
           $.ajax({
                 url:"{{route('board.class')}}",
-                type:"get",
+                type:"POST",
                 data:{
                     '_token' : "{{csrf_token()}}",
                     'board_id' : board_id
                 },
                 success:function(data){
+                   
                     $('#board-class-dd').html('<option value="">Select Class</option>');
                     data.forEach((boardClass) => {
                         $("#board-class-dd").append('<option value="' + boardClass
@@ -278,7 +238,8 @@
 
                     }
                 });
-            });
+     });
+    
 </script>
 <script>
     $('.ckeditor').ckeditor();

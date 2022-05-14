@@ -8,75 +8,148 @@
         position: sticky;
         top: 150px;
     }
+
     @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
-    table{
+
+    table {
         border: 1px solid #f3f3f3;
         border-radius: 10px;
         box-shadow: 0px 5px 5px #efecec;
     }
-    th{
-        border-top:0px !important;
+
+    th {
+        border-top: 0px !important;
     }
-    #purchase_history_table_filter{
-        margin-top:-40px;
+
+    #purchase_history_table_filter {
+        margin-top: -40px;
     }
-    #forum-search-bar{
-        display:none;
+
+    #forum-search-bar {
+        display: none;
     }
+    img{
+  height:150px;
+  width:100%;
+}
+
+.item{
+  padding-left:5px;
+  padding-right:5px;
+}
+.item-card{
+  transition:0.5s;
+  cursor:pointer;
+}
+.item-card-title{  
+  font-size:15px;
+  transition:1s;
+  cursor:pointer;
+}
+.item-card-title i{  
+  font-size:15px;
+  transition:1s;
+  cursor:pointer;
+  color:#ffa710
+}
+.card-title i:hover{
+  transform: scale(1.25) rotate(100deg); 
+  color:#18d4ca;
+  
+}
+.card:hover{
+  transform: scale(1.05);
+  box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
+}
+.card-text{
+  height:80px;  
+}
+
+.card::before, .card::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: scale3d(0, 0, 1);
+  transition: transform .3s ease-out 0s;
+  background: rgba(255, 255, 255, 0.1);
+  content: '';
+  pointer-events: none;
+}
+.card::before {
+  transform-origin: left top;
+}
+.card::after {
+  transform-origin: right bottom;
+}
+.card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
+  transform: scale3d(1, 1, 1);
+}
 </style>
 
 @endsection
 
 @section('content')
 @include('layout.website.include.forum_header')
-
 <section class="account-section">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4 col-12">
                 <div class="knowledge-forum-right1 sidebar">
-                    <div class="knowledge-forum-profile-top"><img src="{{asset('asset_website/img/knowladge-forum/bg.png')}}" class="w100"></div>
+                    <div class="knowledge-forum-profile-top"><img
+                            src="{{asset('asset_website/img/knowladge-forum/bg.png')}}" class="w100"></div>
                     <div class="knowledge-forum-profile-bottom1">
                         <div class="knowledge-pic">
                             @if($user_details != null)
-                                <img src="{{asset('/files/profile/'.$user_details->image)}}" onerror="this.onerror=null;this.src='{{asset('asset_website/img/noimage.png')}}';" style="border:3px solid white;"  height="110px" width="110px" class="rounded-circle">
-                                
+                            <img src="{{asset('/files/profile/'.$user_details->image)}}"
+                                onerror="this.onerror=null;this.src='{{asset('asset_website/img/noimage.png')}}';"
+                                style="border:3px solid white;" height="110px" width="110px" class="rounded-circle">
+
                             @else
-                                <img src="{{asset('asset_website/img/knowladge-forum/image1.png')}}" class="w100">
+                            <img src="{{asset('asset_website/img/knowladge-forum/image1.png')}}" class="w100">
                             @endif
                         </div>
                         <div class="knowledge-desc mt-2">
-                            <h4 class="small-heading-black text-center mb0">{{Auth::user()->firstname}} {{Auth::user()->lastname}}</h4>
+                            <h4 class="small-heading-black text-center mb0">{{Auth::user()->firstname}}
+                                {{Auth::user()->lastname}}</h4>
                             @if($user_details != null)
-                                <p class="text-center">{{$user_details->education}}</p>
+                            <p class="text-center">{{$user_details->education}}</p>
                             @else
-                                <p class="text-center">Msc</p>
+                            <p class="text-center">Msc</p>
                             @endif
                         </div>
                     </div>
 
                     <ul class="nav nav-tabs flex-column profile-tab" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#profile" role="tab" aria-controls="profile">Profile</a>
+                            <a class="nav-link active" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#photo" role="tab" aria-controls="photo">Photo</a>
+                            <a class="nav-link" data-toggle="tab" href="#photo" role="tab"
+                                aria-controls="photo">Photo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#account" role="tab" aria-controls="account">Account</a>
+                            <a class="nav-link" data-toggle="tab" href="#account" role="tab"
+                                aria-controls="account">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#mycourses" role="tab" aria-controls="mycourses">My Courses</a>
+                            <a class="nav-link" data-toggle="tab" href="#mycourses" role="tab"
+                                aria-controls="mycourses">My Courses</a>
                         </li>
                         {{-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#payment" role="tab" aria-controls="payment">Payment</a>
+                            <a class="nav-link" data-toggle="tab" href="#payment" role="tab"
+                                aria-controls="payment">Payment</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#notification" role="tab" aria-controls="notification">Notification <span class="notification-badge">4</span></a>
+                            <a class="nav-link" data-toggle="tab" href="#notification" role="tab"
+                                aria-controls="notification">Notification <span class="notification-badge">4</span></a>
 
                         </li> --}}
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#purchase" role="tab" aria-controls="purchase">Purchase History</a>
+                            <a class="nav-link" data-toggle="tab" href="#purchase" role="tab"
+                                aria-controls="purchase">Purchase History</a>
                         </li>
                     </ul>
                 </div>
@@ -96,67 +169,87 @@
                                     <a class="btn btn-warning cancel-edit-btn" href="#">Cancel Edit</a>
                                 </div>
                                 @if($user_details != null)
-                                    <div class="form-group col-lg-6 pr10">
-                                        <label>First Name</label>
-                                        <input type="text" class="form-control" name="fname" placeholder="Enter First Name" id="firstname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)" title="Please Enter Letters only." value="{{Auth::user()->firstname}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pl10">
-                                        <label>Last Name</label>
-                                        <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" id="lastname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)" title="Please Enter Letters only." value="{{Auth::user()->lastname}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pr10">
-                                        <label>Email ID</label>
-                                        <input type="email" class="form-control" name="email" placeholder="Enter Email" id="email" value="{{Auth::user()->email}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pr10">
-                                        <label>Mobile number</label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Enter Phone" id="phone" pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)" value="{{$user_details->phone}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pl10">
-                                        <label>Education</label>
-                                        <input type="text" class="form-control" name="education" placeholder="Enter Education" id="education" value="{{$user_details->education}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pl10">
-                                        <label>Gender</label>
-                                        <select name="gender" id="gender" class="form-control" required>
-                                            <option value="{{$user_details->gender}}">{{$user_details->gender}}</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group col-lg-6 pr10">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" name="fname" placeholder="Enter First Name"
+                                        id="firstname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
+                                        title="Please Enter Letters only." value="{{Auth::user()->firstname}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pl10">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" name="lname" placeholder="Enter Last Name"
+                                        id="lastname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
+                                        title="Please Enter Letters only." value="{{Auth::user()->lastname}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pr10">
+                                    <label>Email ID</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter Email"
+                                        id="email" value="{{Auth::user()->email}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pr10">
+                                    <label>Mobile number</label>
+                                    <input type="text" class="form-control" name="phone" placeholder="Enter Phone"
+                                        id="phone" pattern="(0|91)?[6-9][0-9]{9}"
+                                        title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)"
+                                        value="{{$user_details->phone}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pl10">
+                                    <label>Education</label>
+                                    <input type="text" class="form-control" name="education"
+                                        placeholder="Enter Education" id="education"
+                                        value="{{$user_details->education}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pl10">
+                                    <label>Gender</label>
+                                    <select name="gender" id="gender" class="form-control" required>
+                                        <option value="{{$user_details->gender}}">{{$user_details->gender}}</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                                 @else
-                                    <div class="form-group col-lg-6 pr10">
-                                        <label>First Name</label>
-                                        <input type="text" class="form-control" name="fname" placeholder="Enter First Name" id="firstname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)" title="Please Enter Letters only." value="{{Auth::user()->firstname}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pl10">
-                                        <label>Last Name</label>
-                                        <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" id="lastname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)" title="Please Enter Letters only." value="{{Auth::user()->lastname}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pr10">
-                                        <label>Email ID</label>
-                                        <input type="email" class="form-control" name="email" placeholder="Enter Email" id="email" value="{{Auth::user()->email}}" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pr10">
-                                        <label>Mobile number</label>
-                                        <input type="text" class="form-control" name="phone" placeholder="Enter Phone" id="phone" pattern="(0|91)?[6-9][0-9]{9}" title="Phone number should start with 6 or 7 or 8 or 9  and 10 chars long.( e.g 7896845214)" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pl10">
-                                        <label>Education</label>
-                                        <input type="text" class="form-control" name="education" placeholder="Enter Education" id="education" required>
-                                    </div>
-                                    <div class="form-group col-lg-6 pl10">
-                                        <label>Gender</label>
-                                        <select name="gender" id="gender" class="form-control" required>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group col-lg-6 pr10">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" name="fname" placeholder="Enter First Name"
+                                        id="firstname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
+                                        title="Please Enter Letters only." value="{{Auth::user()->firstname}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pl10">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" name="lname" placeholder="Enter Last Name"
+                                        id="lastname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
+                                        title="Please Enter Letters only." value="{{Auth::user()->lastname}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pr10">
+                                    <label>Email ID</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter Email"
+                                        id="email" value="{{Auth::user()->email}}" required>
+                                </div>
+                                <div class="form-group col-lg-6 pr10">
+                                    <label>Mobile number</label>
+                                    <input type="text" class="form-control" name="phone" placeholder="Enter Phone"
+                                        id="phone" pattern="(0|91)?[6-9][0-9]{9}"
+                                        title="Phone number should start with 6 or 7 or 8 or 9  and 10 chars long.( e.g 7896845214)"
+                                        required>
+                                </div>
+                                <div class="form-group col-lg-6 pl10">
+                                    <label>Education</label>
+                                    <input type="text" class="form-control" name="education"
+                                        placeholder="Enter Education" id="education" required>
+                                </div>
+                                <div class="form-group col-lg-6 pl10">
+                                    <label>Gender</label>
+                                    <select name="gender" id="gender" class="form-control" required>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                                 @endif
                                 <div class="form-group col-lg-12">
-                                    <div class="button-div"><button type="submit" class="btn btn-block knowledge-link profile-save-btn">Save</button></div>
+                                    <div class="button-div"><button type="submit"
+                                            class="btn btn-block knowledge-link profile-save-btn">Save</button></div>
                                 </div>
                             </form>
                         </div>
@@ -171,16 +264,20 @@
                                 <div class="avatar-upload">
                                     <div class="avatar-edit">
                                         <p class="heading-form">Add / Change Image</p>
-                                        <input type='file' id="imageUpload" name="image" accept=".png, .jpg, .jpeg" onchange="previewImage(event)" required>
+                                        <input type='file' id="imageUpload" name="image" accept=".png, .jpg, .jpeg"
+                                            onchange="previewImage(event)" required>
                                         <label for="imageUpload"></label>
-                                        <div class="btn-div2"><button type="submit" class="btn btn-md knowledge-link upload-photo-btn">Save</button></div>
+                                        <div class="btn-div2"><button type="submit"
+                                                class="btn btn-md knowledge-link upload-photo-btn">Save</button></div>
                                         @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
+                                        <li>{{ $error }}</li>
                                         @endforeach
                                     </div>
                                     <div class="avatar-preview">
-                                        <img id="outputImage" src="{{asset('/asset_website/img/imgPreview.png')}}" alt="" >
-                                        {{-- <div id="outputImage" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                        <img id="outputImage" src="{{asset('/asset_website/img/imgPreview.png')}}"
+                                            alt="">
+                                        {{-- <div id="outputImage"
+                                            style="background-image: url(http://i.pravatar.cc/500?img=7);">
                                         </div> --}}
                                     </div>
                                 </div>
@@ -196,33 +293,46 @@
                                 </div>
 
                                 <div class="form-group col-lg-12">
-                                    <input type="password" class="form-control" name="currentPassword"  placeholder="Enter Current Password" id="currentPassword" required>
+                                    <input type="password" class="form-control" name="currentPassword"
+                                        placeholder="Enter Current Password" id="currentPassword" required>
                                 </div>
                                 <div class="form-group col-lg-12">
-                                    <input type="password" class="form-control" name="newPassword" placeholder="Enter New Password" id="newPassword" required>
+                                    <input type="password" class="form-control" name="newPassword"
+                                        placeholder="Enter New Password" id="newPassword" required>
                                 </div>
                                 <div class="form-group col-lg-12">
-                                    <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" id="confirmPassword" required>
+                                    <input type="password" class="form-control" name="confirmPassword"
+                                        placeholder="Confirm Password" id="confirmPassword" required>
                                 </div>
                                 <div class="form-group col-lg-12">
-                                    <div class="button-div1"><button type="submit" class="btn btn-block knowledge-link change-password-btn">Change Password</button></div>
+                                    <div class="button-div1"><button type="submit"
+                                            class="btn btn-block knowledge-link change-password-btn">Change
+                                            Password</button></div>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="tab-pane" id="mycourses" role="tabpanel">
                         <div class="row">
-                            @forelse ($purchase_history as $key =>  $item)
+                            @forelse ($purchase_history as $key => $item)
                             <div class="col-lg-4">
-                               
-                                    <div class="course-pic"><img src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg" class="w100"></div>
-                                    <div class="course-desc">
-                                        <div class="block-ellipsis5"><h4 class="small-heading-black">{{$item->board->exam_board}}</h4></div>
-                                        <span><h4 class="small-heading-black">Class - {{$item->assignClass->class??''}}</h4></span>
-                                        <a href="{{route('website.user.courses',$item->id)}}" class="enroll">view Details</a>
+
+                                <div class="course-pic"><img
+                                        src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg"
+                                        class="w100"></div>
+                                <div class="course-desc">
+                                    <div class="block-ellipsis5">
+                                        <h4 class="small-heading-black">{{$item->board->exam_board}}</h4>
                                     </div>
-                               
+                                    <span>
+                                        <h4 class="small-heading-black">Class - {{$item->assignClass->class??''}}</h4>
+                                    </span>
+                                    <a href="{{route('website.user.courses',$item->id)}}" class="enroll">view
+                                        Details</a>
+                                </div>
+
                             </div>
+                            
                             @endforeach
                         </div>
                     </div>
@@ -235,7 +345,9 @@
                                 <ul class="list-inline card2-list">
                                     <li>
                                         <div>
-                                            <div class="card-img"><img src="{{asset('asset_website/img/cart/visa.png')}}" class="w100"></div>
+                                            <div class="card-img"><img
+                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                            </div>
                                             <div class="card-desc">
                                                 <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
                                                     <span class="f12">XXXXXXXX-3499 </span><br />
@@ -249,7 +361,9 @@
                                     </li>
                                     <li>
                                         <div>
-                                            <div class="card-img"><img src="{{asset('asset_website/img/cart/visa.png')}}" class="w100"></div>
+                                            <div class="card-img"><img
+                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                            </div>
                                             <div class="card-desc">
                                                 <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
                                                     <span class="f12">XXXXXXXX-3499 </span><br />
@@ -263,7 +377,9 @@
                                     </li>
                                     <li>
                                         <div>
-                                            <div class="card-img"><img src="{{asset('asset_website/img/cart/visa.png')}}" class="w100"></div>
+                                            <div class="card-img"><img
+                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                            </div>
                                             <div class="card-desc">
                                                 <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
                                                     <span class="f12">XXXXXXXX-3499 </span><br />
@@ -277,7 +393,9 @@
                                     </li>
                                     <li>
                                         <div>
-                                            <div class="card-img"><img src="{{asset('asset_website/img/cart/visa.png')}}" class="w100"></div>
+                                            <div class="card-img"><img
+                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                            </div>
                                             <div class="card-desc">
                                                 <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
                                                     <span class="f12">XXXXXXXX-3499 </span><br />
@@ -291,7 +409,9 @@
                                     </li>
                                     <li>
                                         <div>
-                                            <div class="card-img"><img src="{{asset('asset_website/img/cart/visa.png')}}" class="w100"></div>
+                                            <div class="card-img"><img
+                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                            </div>
                                             <div class="card-desc">
                                                 <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
                                                     <span class="f12">XXXXXXXX-3499 </span><br />
@@ -305,7 +425,9 @@
                                     </li>
                                     <li>
                                         <div>
-                                            <div class="card-img"><img src="{{asset('asset_website/img/cart/visa.png')}}" class="w100"></div>
+                                            <div class="card-img"><img
+                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                            </div>
                                             <div class="card-desc">
                                                 <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
                                                     <span class="f12">XXXXXXXX-3499 </span><br />
@@ -332,19 +454,22 @@
                                     <li>
                                         <div>
                                             <h4 class="small-heading-black mb0">New Course Add. please Check it .</h4>
-                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,</p>
+                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error
+                                                sit voluptatem accusantium doloremque laudantium,</p>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
                                             <h4 class="small-heading-black mb0">New Course Add. please Check it .</h4>
-                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,</p>
+                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error
+                                                sit voluptatem accusantium doloremque laudantium,</p>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
                                             <h4 class="small-heading-black mb0">New Course Add. please Check it .</h4>
-                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,</p>
+                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error
+                                                sit voluptatem accusantium doloremque laudantium,</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -371,29 +496,32 @@
                                     </thead>
                                     @endif
                                     <tbody>
-                                        @forelse ($purchase_history as $key =>  $item)
-                                            <tr class="text-center">
-                                                <td>{{$key + 1}}</td>
-                                                <td>{{$item->board->exam_board}}</td>
-                                                <td>{{$item->assignClass->class}}</td>
-                                                <td>
-                                                    @if($item->is_full_course_selected=='1')
-                                                     All Subjects
-                                                    @else
-                                                    Custom Package
-                                                    @endif
-                                                </td>
-                                               
-                                                <td>{{number_format($item->assignClass->subjects->sum('subject_amount')??'00',2,'.','')}}</td>
-                                                <td>{{$item->updated_at->format('d-M-Y') }}</td>
-                                            </tr>
+                                        @forelse ($purchase_history as $key => $item)
+                                        <tr class="text-center">
+                                            <td>{{$key + 1}}</td>
+                                            <td>{{$item->board->exam_board}}</td>
+                                            <td>{{$item->assignClass->class}}</td>
+                                            <td>
+                                                @if($item->is_full_course_selected=='1')
+                                                All Subjects
+                                                @else
+                                                Custom Package
+                                                @endif
+                                            </td>
+
+                                            <td>{{number_format($item->assignClass->subjects->sum('subject_amount')??'00',2,'.','')}}
+                                            </td>
+                                            <td>{{$item->updated_at->format('d-M-Y') }}</td>
+                                        </tr>
                                         @empty
-                                            <tr>
-                                                <div class="text-center">
-                                                    <p>Oops! No items purchased yet.</p>
-                                                    <div class="shipping-div text-center"><a href="{{route('website.course')}}" class="shipping-btn">Continue shoping</a></div>
-                                                </div>
-                                            </tr>
+                                        <tr>
+                                            <div class="text-center">
+                                                <p>Oops! No items purchased yet.</p>
+                                                <div class="shipping-div text-center"><a
+                                                        href="{{route('website.course')}}" class="shipping-btn">Continue
+                                                        shoping</a></div>
+                                            </div>
+                                        </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
@@ -411,10 +539,9 @@
 @endsection
 
 @section('scripts')
-    @include('layout.website.include.modal_scripts')
-    <script>
-
-        function previewImage(event){
+@include('layout.website.include.modal_scripts')
+<script>
+    function previewImage(event){
             let reader = new FileReader();
             reader.onload = function(){
                 let output = document.getElementById('outputImage');
@@ -608,5 +735,5 @@
                 ]
             });
         });
-    </script>
+</script>
 @endsection

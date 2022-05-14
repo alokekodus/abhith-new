@@ -164,6 +164,7 @@
                             'phone' : $('#phone').val()
                         },
                         success:function(data){
+                           
                             if(data.status == 1){
                                 $('#sendOtpBtn').attr('disabled',true); 
                                 $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 

@@ -28,7 +28,7 @@
                  <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
                          <li class="breadcrumb-item"><a href="course.html">{{$board->exam_board}}</a></li>
-                         <li class="breadcrumb-item active" aria-current="page">Class-{{$assign_subject->assignClass->class}}&nbsp; <i class="fa fa-level-down" aria-hidden="true"></i></li>
+                         <li class="breadcrumb-item active" aria-current="page">Class-{{$class->name}}&nbsp; <i class="fa fa-level-down" aria-hidden="true"></i></li>
                      </ol>
                  </nav>
                  <h2 class="heading-white"><span style="font-size:12px;"></span></h2>
@@ -90,12 +90,12 @@
                          <form action="{{route('website.add-to-cart')}}" method="post">
                             @csrf
                          <input type="hidden" name="is_full_course_selected" value="1">
-                         <input type="hidden" name="board_id" value="{{$data['board_id']}}">
-                         <input type="hidden" name="class_id" value="{{$data['class_id']}}">
+                         <input type="hidden" name="board_id" value="">
+                         <input type="hidden" name="class_id" value="">
                          <label class="box1 ">Full Course</label>
                          <hr>
                          <ul class="list-inline centered">
-                            @foreach($all_subjects as $key=>$subject)
+                            @foreach($subjects as $key=>$subject)
                             <li>
                                 <input class="styled-checkbox item_price chapter-value" id="styled-checkbox-full-course-{{$key}}" data-id="{{$subject->id}}" data-name="{{$subject->subject_name}}" data-price="{{number_format($subject->subject_amount,2,'.','')}}" type="checkbox" value="{{$subject->id}}" name="subjects[]">
                                     <label for="styled-checkbox-full-course-{{$key}}"> {{$subject->subject_name}}</label>
@@ -108,7 +108,7 @@
                          <div class="total">
                              <p class=""><b>Total</b></p>
                              <span class=" course-price1 mr-2" id="total_price"><i class="fa fa-inr"
-                                     aria-hidden="true"></i> {{number_format($total_amount,2,'.','')}}</span>
+                                     aria-hidden="true"></i> </span>
                          </div>
                          <div class="total-cart">
                              <ul class="list-inline total-car-list">

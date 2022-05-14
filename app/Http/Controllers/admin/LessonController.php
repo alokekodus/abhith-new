@@ -21,41 +21,31 @@ class LessonController extends Controller
     }
     public function store(Request $request)
     {
-      
         try {
-           return response()->json($data);
-            if($request->assign_class_id!=null){
-                $type = "create-lesson";
-            }
-          
-            if ($request->parent_id != null &&  $request->parent_lesson_id == null) {
-                $type = "create-topic";
-            }
-            if ($request->parent_id != null &&  $request->parent_lesson_id != null) {
-                $type = "create-sub-topic";
-            }
+            //function for finding form type
+            $type=$this->findFormType($request);
+            
             //validate all request according to it's type
-            $validator = Validator::make($request->all(), Lesson::getRules($request->type), Lesson::getRuleMessages($type));
+            $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
 
             if ($validator->fails()) {
                 return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
             } else {
+                $file = null;
+                $video_url = null;
                 $document = $request->file('image_url');
+                $lessonVideo = $request->file('video_url');
+
                 if (isset($document) && !empty($document)) {
                     $file = Lesson::storeLessonFile($document, "image"); //lesson image store
-                } else {
-                    $file = null;
                 }
-                $lessonVideo = $request->file('video_url');
                 if (isset($lessonVideo) && !empty($lessonVideo)) {
 
                     $video_url = Lesson::storeLessonFile($lessonVideo, "video"); //lesson file store
 
-                } else {
-                    $video_url = null;
                 }
-                if ($type == "create-lesson") {
-
+                if ($type == "create-lesson" || $type == "update-lesson") {
+                  
                     $data = [
                         'name' => ucfirst($request->name),
                         'slug' => Str::slug($request->name),
@@ -66,8 +56,10 @@ class LessonController extends Controller
                         'image_url' => $file,
                         'video_url' => $video_url,
                     ];
+                    
                 }
-                if($type="create-topic"){
+                if($type=="create-topic" || $type="create-sub-topic"){
+                   
                     $lesson = Lesson::find($request->parent_id);
                     $data = [
                         'name' => ucfirst($request->name),
@@ -81,22 +73,22 @@ class LessonController extends Controller
                         'video_url' => $video_url,
                         'content' => $request->content,
                     ];
+                    
                 }
+                if($type=="create-lesson" || $type=="create-topic" || $type=="create-sub-topic"){
+                    
+                    $create = Lesson::create($data);
+                }
+                if($type=="update-lesson"){
+                    $lesson=Lesson::find($request->lesson_id);
+                  
+                    $create=$lesson->update($data);
+                }
+               $this->lessonFunctionResponse($type);
                 
-                $create = Lesson::create($data);
-                if ($request->parent_is != null) {
-                    if ($request->parent_lesson_id != null) {
-                        return redirect()->back()->with('success', 'topic added successfully.');
-                    }
-                    return redirect()->back()->with('success', 'sub topic added successfully.');
-                }
-                if ($create) {
-                    return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
-                } else {
-                    return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
-                }
             }
         } catch (\Throwable $th) {
+            
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
         }
     }
@@ -137,12 +129,42 @@ class LessonController extends Controller
     public function edit($lesson_slug)
     {
         try {
-
-            $lesson = Lesson::with('boards', 'topics', 'subTopics')->where('slug', $lesson_slug)->first();
-
-            return view('admin.course-management.lesson.edit', compact('lesson'));
+            
+            $lesson_edit_status=true;
+            $board_details = Board::where('is_activate', 1)->get();
+            $lesson = Lesson::with('boards','topics', 'subTopics')->where('slug', $lesson_slug)->first();
+            return view('admin.course-management.lesson.edit')->with(['boards' => $board_details, 'lesson' => $lesson,'lesson_edit_status'=>$lesson_edit_status]);
         } catch (\Throwable $th) {
             //throw $th;
+        }
+    }
+    public function lessonFunctionResponse($type){
+        if ($type=="create-lesson") {
+            return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
+        }elseif($type=="create-topic"){
+            return response()->json(['message' => 'Topic Added Successfully', 'status' => 1]);
+        }elseif($type=="create-sub-topic"){
+            return response()->json(['message' => 'Sub Topic Added Successfully', 'status' => 1]);
+        }
+        elseif($type=="update-lesson"){
+            return response()->json(['message' => 'Lesson Update Successfully', 'status' => 1]);
+        }else {
+            return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
+        }
+    }
+    public function findFormType(Request $request){
+        if($request->assign_class_id!=null){
+           return "create-lesson";
+        }
+      
+        if ($request->parent_id != null &&  $request->parent_lesson_id == null) {
+           return "create-topic";
+        }
+        if ($request->parent_id != null &&  $request->parent_lesson_id != null) {
+           return "create-sub-topic";
+        }
+        if ($request->lesson_id!=null && $request->parent_id == null &&  $request->parent_lesson_id == null) {
+           return "update-lesson";
         }
     }
 }

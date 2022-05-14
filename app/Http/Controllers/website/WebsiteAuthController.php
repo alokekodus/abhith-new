@@ -15,21 +15,18 @@ use App\Common\Activation;
 class WebsiteAuthController extends Controller
 {
     public function signup(Request $request){
-
+         
         $fname = $request->firstname;
         $lname = $request->lastname;
         $email = $request->email;
         $phone = $request->phone;
-       
-
-      
-
+    
 
         $check_user_active = User::where([['email',$email],['role_id',Role::User],['phone',$phone],['verify_otp',1],['is_activate',1]])->exists();
         if($check_user_active){
             return response()->json(['message' => 'Oops! User already exists', 'status' => 2]);
         }else{
-
+           
             $otp = rand(100000,999999);
 
             $check_otp_sent_but_user_not_verified = User::where([['email',$email],['role_id',Role::User],['phone',$phone],['verify_otp',0],['is_activate',0]])->exists();
@@ -54,7 +51,7 @@ class WebsiteAuthController extends Controller
                     'is_activate' => 0
                 ]);
 
-                
+              
     
                 $user = User::where('email',$email)->first();
     
@@ -175,6 +172,8 @@ class WebsiteAuthController extends Controller
        
         if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'role_id' => Role::User, 'is_activate'=> Activation::Activate ])) {
             if( $request->current_route == null ){
+                
+                Auth::LogoutOtherDevices($password); 
                 return redirect()->route('website.dashboard');
             }else{
                 return redirect($request->current_route);

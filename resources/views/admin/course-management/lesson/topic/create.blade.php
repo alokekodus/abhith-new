@@ -116,20 +116,7 @@
                     labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
                 },
             );
-            FilePond.setOptions({
-                server:{
-                   url:'{{route("admin.course.management.lesson.storefile")}}',
-                   headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-
-                },
-                success:function(data){
-                  console.log(data);
-
-                },
-
-            });
+           
         //For hiding modal
         $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');

@@ -1,0 +1,201 @@
+.logo{
+    height: 62%;
+    width: 270%;
+   
+}
+.sidebar {
+    position: sticky;
+    top: 150px;
+}
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
+
+table {
+    border: 1px solid #f3f3f3;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px #efecec;
+}
+
+th {
+    border-top: 0px !important;
+}
+
+#purchase_history_table_filter {
+    margin-top: -40px;
+}
+
+#forum-search-bar {
+    display: none;
+}
+
+img {
+    height: 150px;
+    width: 100%;
+}
+
+.item {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.item-card-box {
+    transition: 0.5s;
+    cursor: pointer;
+    padding: 28px;
+    background-color: #fff;
+    border: 2px solid rgba(238, 232, 232, 0.842);
+    box-shadow: 0 0 0 2px rgb(209, 203, 203);
+    background-clip: padding-box;
+}
+
+.item-card-title {
+    font-size: 15px;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.item-card-title i {
+    font-size: 15px;
+    transition: 1s;
+    cursor: pointer;
+    color: #ffa710
+}
+
+.card-title i:hover {
+    transform: scale(1.25) rotate(100deg);
+    color: #18d4ca;
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-text {
+    height: 80px;
+}
+
+.card::before,
+.card::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: scale3d(0, 0, 1);
+    transition: transform .3s ease-out 0s;
+    background: rgba(255, 255, 255, 0.1);
+    content: '';
+    pointer-events: none;
+}
+
+.card::before {
+    transform-origin: left top;
+}
+
+.card::after {
+    transform-origin: right bottom;
+}
+
+.card:hover::before,
+.card:hover::after,
+.card:focus::before,
+.card:focus::after {
+    transform: scale3d(1, 1, 1);
+}
+
+.see-more {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: capitalize;
+    color: #076fef;
+    white-space: nowrap;
+}
+
+.my-badges {
+    color: #f3f3f3;
+}
+.sidebar {
+    position: sticky;
+    top: 150px;
+  }
+
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
+
+  table {
+    border: 1px solid #f3f3f3;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px #efecec;
+  }
+
+  th {
+    border-top: 0px !important;
+  }
+
+  #purchase_history_table_filter {
+    margin-top: -40px;
+  }
+
+  #forum-search-bar {
+    display: none;
+  }
+
+  body {
+    position: relative;
+  }
+  <style>
+  .sidebar {
+    position: sticky;
+    top: 150px;
+  }
+
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
+
+  table {
+    border: 1px solid #f3f3f3;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px #efecec;
+  }
+
+  th {
+    border-top: 0px !important;
+  }
+
+  #purchase_history_table_filter {
+    margin-top: -40px;
+  }
+
+  #forum-search-bar {
+    display: none;
+  }
+
+  .affix {
+    top: 20px;
+  }
+
+  div.col-sm-9 div {
+    height: 150px;
+    font-size: 28px;
+  }
+
+  .active-tab-button {
+    width: 100%;
+    background: rgb(220, 224, 236);
+    padding: 16px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: #076fef;
+    border-left: 6px solid #076fef;
+  }
+  .chip{
+    background: #fff1ea;
+    border-radius: 100px;
+    padding: 2px 8px;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 13px;
+    text-transform: uppercase;
+    color: #076fef;
+  }

@@ -15,11 +15,11 @@
         <div class="col-12">
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
-                    Lesson Name:{{$lesson->name}} 
-                  
-                    <div class="float-right">  [Total Topic:
+                    Lesson Name:{{$lesson->name}}
+
+                    <div class="float-right"> [Total Topic:
                         {{$lesson->topics->count()}}]</div>
-                        
+
                 </h5>
             </div>
         </div>
@@ -30,8 +30,8 @@
         <div class="col-12">
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
-                    Topic Name:{{$topic->name}} 
-                        
+                    Topic Name:{{$topic->name}}
+
                 </h5>
             </div>
         </div>
@@ -40,10 +40,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-              @include('admin.course-management.lesson.topic.form')
+            @include('admin.course-management.lesson.topic.form')
         </div>
     </div>
-  
+
 </div>
 <!-- Large modal -->
 
@@ -85,41 +85,30 @@
             // Select the file input and use create() to turn it into a pond
             pondImage = FilePond.create(
 
-                document.getElementById('lessonVideo'), {
+                    document.getElementById('lessonImage'), {
+
+                        allowMultiple: true,
+                        maxFiles: 50,
+                        imagePreviewHeight: 135,
+                        acceptedFileTypes: ['image/png', 'image/jpeg'],
+                        labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
+                        labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
+
+                    },
+                    );
+
+                    pondVideo = FilePond.create(
+
+                    document.getElementById('lessonVideo'), {
                     allowMultiple: true,
-                    maxFiles: 50,
-                    imagePreviewHeight: 135,
-                    acceptedFileTypes: ['video/mp4'],
-                    labelFileTypeNotAllowed:'File of invalid type. Acepted types video/mp4.',
-                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
-                },
-            );
-
-          pondVideo = FilePond.create(
-
-                document.getElementById('lessonImage'), {
-                    allowMultiple: true,
-                    maxFiles: 50,
-                    imagePreviewHeight: 135,
-                    acceptedFileTypes: ['image/png', 'image/jpeg'],
-                    labelFileTypeNotAllowed:'File of invalid type. Acepted types are png and jpeg/jpg.',
-                    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
-                },
-            );
-            FilePond.setOptions({
-                server:{
-                   url:'{{route("admin.course.management.lesson.storefile")}}',
-                   headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-
-                },
-                success:function(data){
-                  console.log(data);
-
-                },
-
-            });
+                        maxFiles: 50,
+                        imagePreviewHeight: 135,
+                        acceptedFileTypes: ['video/mp4'],
+                        labelFileTypeNotAllowed:'File of invalid type. Acepted types video/mp4.',
+                        labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
+                    },
+                    );
+           
         //For hiding modal
         $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');
@@ -141,14 +130,14 @@
             pondVideoFiles = pondVideo.getFiles();
             for (var i = 0; i < pondImageFiles.length; i++) {
                 // append the blob file
-                formData.append('lessonImage', pondImageFiles[i].file);
+                formData.append('image_url', pondImageFiles[i].file);
             }
             for (var i = 0; i < pondVideoFiles.length; i++) {
                 // append the blob file
-                formData.append('lessonVideo', pondVideoFiles[i].file);
+                formData.append('video_url', pondVideoFiles[i].file);
             }
-            var Content = CKEDITOR.instances['Content'].getData();
-            formData.append('Content', Content);
+            var Content = CKEDITOR.instances['content'].getData();
+            formData.append('content', Content);
             
             $.ajax({
                 url:"{{route('admin.course.management.lesson.store')}}",
