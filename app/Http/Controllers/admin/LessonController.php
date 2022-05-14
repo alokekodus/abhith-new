@@ -152,6 +152,7 @@ class LessonController extends Controller
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
         }
     }
+    
     public function findFormType(Request $request){
         if($request->assign_class_id!=null){
            return "create-lesson";
