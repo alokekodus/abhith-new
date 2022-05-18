@@ -29,12 +29,18 @@
             <div class="card-body">
                 @if($topic->content!=null) <h5></h5> {!!$topic->content!!}@endif<br>
                 @if($topic->image_url!=null)
-                <i id="displayImage" class="mdi mdi-file-image" data-toggle="modal" data-id="{{$topic->id}}"
-                    data-value="{{$topic->image_url}}" data-target="#displayImageModal"></i>
+                <a
+                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($topic->id),Crypt::Encrypt(1)])}}">
+                    <i id="displayImage" class="mdi mdi-file-image" data-id="{{$topic->id}}"
+                        data-value="{{$topic->image_url}}" data-target="#displayImageModal"></i>
+                </a>
                 @endif
                 @if($topic->video_url!=null)
-                <i id="displayVideo" class="mdi mdi-video" data-toggle="modal" data-id="{{$topic->id}}"
-                    data-value="{{$topic->video_url}}" data-target="#displayVideoModal"></i>
+                <a
+                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($topic->id),Crypt::Encrypt(2)])}}">
+                    <i id="displayVideo" class="mdi mdi-video" data-toggle="modal" data-id="{{$topic->id}}"
+                        data-value="{{$topic->video_url}}" data-target="#displayVideoModal"></i>
+                </a>
                 @endif
                 <hr>
                 @if($topic->subTopics()->exists())

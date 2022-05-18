@@ -82,6 +82,7 @@ Route::prefix('account')->group(function(){
     Route::post('update-password',[UserDetailsController::class,'updatePassword'])->name('website.update.password');
     Route::get('my-courses/{order_id}',[UserDetailsController::class,'mySubjects'])->name('website.user.courses');
     Route::get('my-lesson/{order_id}/{subject_id}',[UserDetailsController::class,'myLesson'])->name('website.user.lesson');
+    Route::get('my-lesson/{topic_id}',[UserDetailsController::class,'myLessonDetails'])->name('website.user.lesson.details');
 });
 
 

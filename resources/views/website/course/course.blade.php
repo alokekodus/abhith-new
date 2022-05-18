@@ -71,10 +71,8 @@
                             class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
                     </div>
 
+                </form>
             </div>
-
-            </form>
-
 
 
         </div>

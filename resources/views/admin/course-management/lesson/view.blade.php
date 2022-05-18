@@ -64,7 +64,10 @@
         <br>
         <div class="card">
             <div class="card-header">
-                <h4 style="text-align: center;">All Topics</h4>
+                <h4 style="text-align: center;">All Topics
+                    <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}"
+                        class="btn btn-gradient-primary p-2" title="Add New Topic" style="float: right;"><i class="mdi mdi-plus"></i></a>
+                </h4>
             </div>
             <div class="card-body">
                 @if($lesson->topics()->exists())

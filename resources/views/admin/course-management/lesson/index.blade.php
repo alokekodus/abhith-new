@@ -6,6 +6,23 @@
         height: 200px;
         width: 150px;
     }
+
+  div.scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
+    }
+
+    div.scrollmenu a {
+        display: inline-block;
+        color: white;
+        text-align: center;
+        padding: 14px;
+        text-decoration: none;
+    }
+
+    div.scrollmenu a:hover {
+        background-color: #777;
+    }
 </style>
 <div class="page-header">
     <h3 class="page-title">
@@ -16,7 +33,8 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="addLesson">Add
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"
+                    id="addLesson">Add
                     Lesson</button>
             </li>
         </ul>
@@ -27,38 +45,47 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div class="scrollmenu">
                 <table id="boardsTable" class="table table-bordered">
                     <thead class="thead-light">
                         <tr>
                             <td>#</td>
+                            <td>Board</td>
+                            <td>Class</td>
+                            <td>Subject</td>
                             <td>Lesson</td>
                             <td>Lesson Content</td>
-                            <td>Lesson Image</td>
-                            <td>Lesson Video</td>
                             <td>Action</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($lessons as $key=>$lesson)
+                        @foreach($all_lessons as $key=>$all_lesson)
                         <tr>
                             <td>{{$key + 1}}</td>
-                            
-                            <td>{{$lesson->name}}  <span class="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-info">{{$lesson->topics->count()}}</span></td>
-                            <td>{{ substr(strip_tags($lesson->content), 0, 30) }}...<i id="displayMoreLesson"
-                                    class="mdi mdi-eye" data-toggle="modal" data-id="{{$lesson->id}}"
-                                    data-value="{{$lesson->content}}" data-target="#displayMore"></i></td>
-                            <td><i id="displayImage" class="mdi mdi-file-image" data-toggle="modal"
-                                    data-id="{{$lesson->id}}" data-value="{{$lesson->image_url}}"
-                                    data-target="#displayImageModal">image</i></td>
-                            <td><i id="displayVideo" class="mdi mdi-video" data-toggle="modal"
-                                    data-id="{{$lesson->id}}" data-value="{{$lesson->video_url}}"
-                                    data-target="#displayVideoModal">video</i></td>
+                            <td>{{$all_lesson->board->exam_board}}</td>
+                            <td>{{$all_lesson->assignClass->class}}</td>
+                            <td>{{$all_lesson->assignSubject->subject_name}}</td>
+                            <td>{{$all_lesson->name}} <span
+                                    class="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-info">{{$all_lesson->topics->count()}}</span>
                             </td>
-                            <td> <a href="{{route('admin.course.management.lesson.edit',$lesson->slug)}}" class="btn btn-gradient-primary p-2" title="Edit Lesson"><i class="mdi mdi-pencil"></i></a> <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}" class="btn btn-gradient-primary p-2" title="Add New Topic"><i class="mdi mdi-plus"></i></a> <a href="{{route('admin.course.management.lesson.view',$lesson->slug)}}" class="btn btn-gradient-primary p-2" title="View Lesson Details"><i class="mdi mdi-eye"></i></a></td>
+                            <td>{{ substr(strip_tags($all_lesson->content), 0, 30) }}...<i id="displayMoreLesson"
+                                    class="mdi mdi-eye" data-toggle="modal" data-id="{{$all_lesson->id}}"
+                                    data-value="{{$all_lesson->content}}" data-target="#displayMore"></i></td>
+                            
+                            <td> <a href="{{route('admin.course.management.lesson.edit',$all_lesson->slug)}}"
+                                    class="btn btn-gradient-primary p-2" title="Edit Lesson"><i
+                                        class="mdi mdi-pencil"></i></a> <a
+                                    href="{{route('admin.course.management.lesson.topic.create',$all_lesson->slug)}}"
+                                    class="btn btn-gradient-primary p-2" title="Add New Topic"><i
+                                        class="mdi mdi-plus"></i></a> <a
+                                    href="{{route('admin.course.management.lesson.view',$all_lesson->slug)}}"
+                                    class="btn btn-gradient-primary p-2" title="View Lesson Details"><i
+                                        class="mdi mdi-eye"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -79,7 +106,8 @@
                     @include('admin.course-management.lesson.form')
                     <div style="float: right;">
                         <button type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</button>
-                        <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type" value="lesson-create">Submit</button>
+                        <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type"
+                            value="lesson-create">Submit</button>
                     </div>
                 </form>
             </div>

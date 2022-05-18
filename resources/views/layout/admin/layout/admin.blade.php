@@ -23,7 +23,7 @@
     <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css' rel='stylesheet'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <style>
-        .ui-datepicker .ui-datepicker-header{
+        .ui-datepicker .ui-datepicker-header {
             background: linear-gradient(to right, #da8cff, #9a55ff);
         }
     </style>
@@ -36,9 +36,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css">
 
-    <link rel="stylesheet"  href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
+    <link rel="stylesheet"
+        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
     <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
-    
+    <link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet" />
     @yield('head')
 </head>
 
@@ -82,7 +84,7 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('asset_admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('asset_admin/js/todolist.js') }}"></script>
-    
+   
     <!-- End custom js for this page -->
     <script>
         $(function () {
@@ -124,10 +126,12 @@
     <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
     </script>
-    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
+    <script
+        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
     </script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js">
+    </script>
     <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
@@ -143,7 +147,7 @@
     <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-
+    <script src="https://vjs.zencdn.net/7.18.1/video.min.js"></script>
 
     @yield('scripts')
 </body>

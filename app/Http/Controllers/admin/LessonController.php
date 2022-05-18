@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Lesson;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Str;
 
@@ -15,9 +16,9 @@ class LessonController extends Controller
     {
 
         $board_details = Board::where('is_activate', 1)->get();
-        $lessons = Lesson::where('parent_id', null)->get();
-
-        return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'lessons' => $lessons]);
+        $all_lessons = Lesson::with('assignClass','board','topics','subTopics','assignSubject')->where('parent_id', null)->get();
+       
+        return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'all_lessons' => $all_lessons]);
     }
     public function store(Request $request)
     {
@@ -35,14 +36,15 @@ class LessonController extends Controller
                 $video_url = null;
                 $document = $request->file('image_url');
                 $lessonVideo = $request->file('video_url');
-
-                if (isset($document) && !empty($document)) {
+               
+                if (!empty($document)) {
                     $file = Lesson::storeLessonFile($document, "image"); //lesson image store
+                   
                 }
-                if (isset($lessonVideo) && !empty($lessonVideo)) {
+                if (!empty($lessonVideo)) {
 
                     $video_url = Lesson::storeLessonFile($lessonVideo, "video"); //lesson file store
-
+                  
                 }
                 if ($type == "create-lesson" || $type == "update-lesson") {
                   
@@ -56,7 +58,9 @@ class LessonController extends Controller
                         'image_url' => $file,
                         'video_url' => $video_url,
                     ];
-                    
+                   
+                    $create = Lesson::create($data);
+                    return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
                 }
                 if($type=="create-topic" || $type="create-sub-topic"){
                    
@@ -118,9 +122,10 @@ class LessonController extends Controller
         }
     }
     public function topicView($slug)
-    {
+    { 
         try {
-            $lesson = Lesson::with('boards', 'topics', 'subTopics')->where('slug', $slug)->first();
+            $lesson = Lesson::where('slug',$slug)->first();
+            
             return view('admin.course-management.lesson.view', compact('lesson'));
         } catch (\Throwable $th) {
             //throw $th;
@@ -167,5 +172,26 @@ class LessonController extends Controller
         if ($request->lesson_id!=null && $request->parent_id == null &&  $request->parent_lesson_id == null) {
            return "update-lesson";
         }
+    }
+    public function displayAttachment($lesson_id,$url_type){
+              try {
+               
+                  $lesson=Lesson::find(Crypt::decrypt($lesson_id));
+                  $url_type=Crypt::decrypt($url_type);
+                  if($url_type==1){
+                      $attachment=$lesson->image_url;
+                  }
+                  if($url_type==2){
+                    $attachment=$lesson->video_url;
+                  }
+                  $attachment_path = pathinfo(storage_path().$attachment);
+                  $attachment_extension = $attachment_path['extension'];
+                  
+                return view('admin.course-management.lesson.attachment',compact('lesson','attachment','attachment_extension'));
+              } catch (\Throwable $th) {
+                  dd($th);
+                  //throw $th;
+              }
+  
     }
 }

@@ -20,8 +20,9 @@
     <div class="row">
         <div class="col-12">
             <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                    Lesson Name:{{$lesson->name}} <a href=""><i class="mdi mdi-pencil-outline"></i></a>
+                <h5 class="mb-0"><a href="{{route('admin.course.management.lesson.view',$lesson->slug)}}"
+                    class="btn btn-gradient-primary p-2" title="View Lesson Details">  Lesson Name:{{$lesson->name}}</a>
+                   
 
                     <div class="float-right"> All Lesson [Total lesson:
                         {{$lesson->topics->count()}}]</div>

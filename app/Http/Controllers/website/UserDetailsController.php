@@ -10,6 +10,7 @@ use App\Models\UserDetails;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class UserDetailsController extends Controller
@@ -110,6 +111,15 @@ class UserDetailsController extends Controller
                $subject=AssignSubject::where('assign_class_id',$order->assign_class_id)->where('board_id',$order->board_id)->where('id',$subject_id)->first();
                $all_lessons=Lesson::where('board_id',$order->board_id)->where('assign_class_id',$order->assign_class_id)->where('assign_subject_id',$subject_id)->where('parent_id',null)->get();
                return view('website.my_account.my_lesson',compact('all_lessons','order','subject'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function myLessonDetails($lesson_id){
+        try {
+            $lesson_id=Crypt::decrypt($lesson_id);
+            $lesson=Lesson::with('topics','subTopics')->where('id',$lesson_id)->first();
+            return view('website.my_account.my_lesson_details',compact('lesson'));
         } catch (\Throwable $th) {
             //throw $th;
         }

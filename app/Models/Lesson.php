@@ -25,7 +25,7 @@ class Lesson extends Model
     ];
     public static function getRules($type)
     {
-        if ($type == "create-lesson" || $type =="update-lesson") {
+        if ($type == "create-lesson" || $type == "update-lesson") {
             $lesson_rules = [
                 'board_id' => 'bail|integer|required',
                 'assign_class_id' => 'bail|integer|required',
@@ -33,39 +33,38 @@ class Lesson extends Model
                 'name' => 'bail|required',
                 'image_url' => 'bail|required|mimes:png,jpeg',
                 'video_url' => 'bail|mimes:mp4',
-                'content'=>'bail|required',
+                'content' => 'bail|required',
             ];
             return $lesson_rules;
         }
-        if($type=="content-update"){
+        if ($type == "content-update") {
             $lesson_rules = [
                 'parent_id' => 'bail|integer|required',
-                 'content'=>'bail|required'
+                'content' => 'bail|required'
             ];
             return $lesson_rules;
         }
-        if($type=="create-topic"){
+        if ($type == "create-topic") {
             $lesson_rules_message = [
                 'parent_id' => 'bail|required|integer|required',
-                'content'=>'bail|required',
+                'content' => 'bail|required',
                 'image_url' => 'bail|mimes:png,jpeg',
             ];
             return $lesson_rules_message;
         }
-        if($type=="create-sub-topic"){
+        if ($type == "create-sub-topic") {
             $lesson_rules_message = [
                 'parent_id' => 'bail|required|integer|required',
-                'parent_lesson_id'=> 'bail|required|integer|required',
-                'content'=>'bail|required',
+                'parent_lesson_id' => 'bail|required|integer|required',
+                'content' => 'bail|required',
                 'image_url' => 'bail|mimes:png,jpeg',
             ];
             return $lesson_rules_message;
         }
-        
     }
     public static function getRuleMessages($type)
     {
-        if ($type == "create-lesson" || $type=="update-lesson") {
+        if ($type == "create-lesson" || $type == "update-lesson") {
             $lesson_rules_message = [
                 'board_id.required' => 'Please insert a valid Board',
                 'assign_class_id.required' => 'Please insert a valid Class',
@@ -83,7 +82,7 @@ class Lesson extends Model
             ];
             return $lesson_rules_message;
         }
-        if($type=="create-topic"){
+        if ($type == "create-topic") {
             $lesson_rules_message = [
                 'parent_id.required' => 'Lesson is not valid',
                 'content.required' => 'Please insert a valid Content',
@@ -91,37 +90,44 @@ class Lesson extends Model
             ];
             return $lesson_rules_message;
         }
-        if($type=="create-sub-topic"){
+        if ($type == "create-sub-topic") {
             $lesson_rules_message = [
                 'parent_id.required' => 'Lesson is not valid',
-                'parent_lesson_id.required'=>'Topic is not valid',
+                'parent_lesson_id.required' => 'Topic is not valid',
                 'content.required' => 'Please insert a valid Content',
                 'image_url.required' => 'Image should be on png,jpeg format',
             ];
             return $lesson_rules_message;
         }
     }
-    public static function storeLessonFile($document,$document_type){
-        $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
-        if($document_type=="image"){
-            if($document_type=="image"){
-                $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
-                $document->move(public_path('/files/course/subject/lesson'), $new_name);
-                $file = '/files/course/subject/lesson/' . $new_name;
-                return $file;
-            }
-            if($document_type=="video"){
-                $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
-                $document->move(public_path('/files/course/subject/lesson'), $new_name);
-                $video_url = '/files/course/subject/lesson/' . $new_name;
-                return $video_url;
-            }
-           
-        }
-    }
-    public function boards()
+    public static function storeLessonFile($document, $document_type)
     {
-        return $this->belongsTo(AssignSubject::class);
+        $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
+
+        if ($document_type == "image") {
+            $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
+            $document->move(public_path('/files/course/subject/lesson'), $new_name);
+            $file = '/files/course/subject/lesson/' . $new_name;
+            return $file;
+        }
+        if ($document_type == "video") {
+            $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
+            $document->move(public_path('/files/course/subject/lesson'), $new_name);
+            $video_url = '/files/course/subject/lesson/' . $new_name;
+            return $video_url;
+        }
+    }
+    public function board()
+    {
+        return $this->belongsTo(Board::class);
+    }
+    public function assignClass()
+    {
+        return $this->belongsTo(assignClass::class);
+    }
+    public function assignSubject()
+    {
+        return $this->belongsTo(assignSubject::class);
     }
     public function topics()
     {
