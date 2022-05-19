@@ -176,7 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         ConsoleTVs\Profanity\ProfanityServiceProvider::class,
-
+        ProtoneMedia\LaravelFFMpeg\Support\ServiceProvider::class,
     ],
 
     /*
@@ -231,7 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Profanity' => ConsoleTVs\Profanity\Facades\Profanity::class,
-
+        'FFMpeg' => ProtoneMedia\LaravelFFMpeg\Support\FFMpeg::class
 
     ],
 

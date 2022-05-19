@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ConvertVideoForResolution;
+use App\Jobs\ConvertVideoForStreaming;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Lesson;
+use App\Models\LessonAttachment;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Str;
@@ -16,16 +19,16 @@ class LessonController extends Controller
     {
 
         $board_details = Board::where('is_activate', 1)->get();
-        $all_lessons = Lesson::with('assignClass','board','topics','subTopics','assignSubject')->where('parent_id', null)->get();
-       
+        $all_lessons = Lesson::with('assignClass', 'board', 'topics', 'subTopics', 'assignSubject')->where('parent_id', null)->get();
+
         return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'all_lessons' => $all_lessons]);
     }
     public function store(Request $request)
     {
         try {
             //function for finding form type
-            $type=$this->findFormType($request);
-            
+            $type = $this->findFormType($request);
+
             //validate all request according to it's type
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
 
@@ -37,17 +40,18 @@ class LessonController extends Controller
                 $document = $request->file('image_url');
                 $lessonVideo = $request->file('video_url');
                
+              
                 if (!empty($document)) {
                     $file = Lesson::storeLessonFile($document, "image"); //lesson image store
-                   
+
                 }
                 if (!empty($lessonVideo)) {
 
                     $video_url = Lesson::storeLessonFile($lessonVideo, "video"); //lesson file store
-                  
+
                 }
                 if ($type == "create-lesson" || $type == "update-lesson") {
-                  
+
                     $data = [
                         'name' => ucfirst($request->name),
                         'slug' => Str::slug($request->name),
@@ -58,12 +62,25 @@ class LessonController extends Controller
                         'image_url' => $file,
                         'video_url' => $video_url,
                     ];
+
+                    $lesson = Lesson::create($data);
                    
-                    $create = Lesson::create($data);
+                    $data_attachment = [
+                        'lesson_id' =>  $lesson->id,
+                        'disk'          => 'videos_disk',
+                        'original_name' => $request->video_url->getClientOriginalName(),
+                        'path'          => $file,
+                        'type'          =>2,
+                    ];
+                   
+                    $lesson_attachment=LessonAttachment::create($data_attachment);
+                    
+                    $this->dispatch(new ConvertVideoForResolution($lesson_attachment));
+                    // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
                     return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
                 }
-                if($type=="create-topic" || $type="create-sub-topic"){
-                   
+                if ($type == "create-topic" || $type = "create-sub-topic") {
+
                     $lesson = Lesson::find($request->parent_id);
                     $data = [
                         'name' => ucfirst($request->name),
@@ -77,22 +94,20 @@ class LessonController extends Controller
                         'video_url' => $video_url,
                         'content' => $request->content,
                     ];
-                    
                 }
-                if($type=="create-lesson" || $type=="create-topic" || $type=="create-sub-topic"){
-                    
+                if ($type == "create-lesson" || $type == "create-topic" || $type == "create-sub-topic") {
+
                     $create = Lesson::create($data);
                 }
-                if($type=="update-lesson"){
-                    $lesson=Lesson::find($request->lesson_id);
-                  
-                    $create=$lesson->update($data);
+                if ($type == "update-lesson") {
+                    $lesson = Lesson::find($request->lesson_id);
+
+                    $create = $lesson->update($data);
                 }
-               $this->lessonFunctionResponse($type);
-                
+                $this->lessonFunctionResponse($type);
             }
         } catch (\Throwable $th) {
-            
+             dd($th);
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
         }
     }
@@ -122,10 +137,10 @@ class LessonController extends Controller
         }
     }
     public function topicView($slug)
-    { 
+    {
         try {
-            $lesson = Lesson::where('slug',$slug)->first();
-            
+            $lesson = Lesson::where('slug', $slug)->first();
+
             return view('admin.course-management.lesson.view', compact('lesson'));
         } catch (\Throwable $th) {
             //throw $th;
@@ -134,64 +149,65 @@ class LessonController extends Controller
     public function edit($lesson_slug)
     {
         try {
-            
-            $lesson_edit_status=true;
+
+            $lesson_edit_status = true;
             $board_details = Board::where('is_activate', 1)->get();
-            $lesson = Lesson::with('boards','topics', 'subTopics')->where('slug', $lesson_slug)->first();
-            return view('admin.course-management.lesson.edit')->with(['boards' => $board_details, 'lesson' => $lesson,'lesson_edit_status'=>$lesson_edit_status]);
+            $lesson = Lesson::with('boards', 'topics', 'subTopics')->where('slug', $lesson_slug)->first();
+            return view('admin.course-management.lesson.edit')->with(['boards' => $board_details, 'lesson' => $lesson, 'lesson_edit_status' => $lesson_edit_status]);
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-    public function lessonFunctionResponse($type){
-        if ($type=="create-lesson") {
+    public function lessonFunctionResponse($type)
+    {
+        if ($type == "create-lesson") {
             return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
-        }elseif($type=="create-topic"){
+        } elseif ($type == "create-topic") {
             return response()->json(['message' => 'Topic Added Successfully', 'status' => 1]);
-        }elseif($type=="create-sub-topic"){
+        } elseif ($type == "create-sub-topic") {
             return response()->json(['message' => 'Sub Topic Added Successfully', 'status' => 1]);
-        }
-        elseif($type=="update-lesson"){
+        } elseif ($type == "update-lesson") {
             return response()->json(['message' => 'Lesson Update Successfully', 'status' => 1]);
-        }else {
+        } else {
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
         }
     }
-    
-    public function findFormType(Request $request){
-        if($request->assign_class_id!=null){
-           return "create-lesson";
+
+    public function findFormType(Request $request)
+    {
+        if ($request->assign_class_id != null) {
+            return "create-lesson";
         }
-      
+
         if ($request->parent_id != null &&  $request->parent_lesson_id == null) {
-           return "create-topic";
+            return "create-topic";
         }
         if ($request->parent_id != null &&  $request->parent_lesson_id != null) {
-           return "create-sub-topic";
+            return "create-sub-topic";
         }
-        if ($request->lesson_id!=null && $request->parent_id == null &&  $request->parent_lesson_id == null) {
-           return "update-lesson";
+        if ($request->lesson_id != null && $request->parent_id == null &&  $request->parent_lesson_id == null) {
+            return "update-lesson";
         }
     }
-    public function displayAttachment($lesson_id,$url_type){
-              try {
-               
-                  $lesson=Lesson::find(Crypt::decrypt($lesson_id));
-                  $url_type=Crypt::decrypt($url_type);
-                  if($url_type==1){
-                      $attachment=$lesson->image_url;
-                  }
-                  if($url_type==2){
-                    $attachment=$lesson->video_url;
-                  }
-                  $attachment_path = pathinfo(storage_path().$attachment);
-                  $attachment_extension = $attachment_path['extension'];
-                  
-                return view('admin.course-management.lesson.attachment',compact('lesson','attachment','attachment_extension'));
-              } catch (\Throwable $th) {
-                  dd($th);
-                  //throw $th;
-              }
-  
+    public function displayAttachment($lesson_id, $url_type)
+    {
+        try {
+
+            $lesson = Lesson::find(Crypt::decrypt($lesson_id));
+            $url_type = Crypt::decrypt($url_type);
+            if ($url_type == 1) {
+                $attachment = $lesson->image_url;
+            }
+            if ($url_type == 2) {
+                $attachment = $lesson->video_url;
+            }
+            $attachment_path = pathinfo(storage_path() . $attachment);
+            $attachment_extension = $attachment_path['extension'];
+
+            return view('admin.course-management.lesson.attachment', compact('lesson', 'attachment', 'attachment_extension'));
+        } catch (\Throwable $th) {
+            dd($th);
+            //throw $th;
+        }
     }
 }

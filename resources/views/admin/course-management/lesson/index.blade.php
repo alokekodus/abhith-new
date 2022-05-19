@@ -346,6 +346,7 @@
                         toastr.success(data.message);
                         location.reload(true);
                     }else{
+                        
                         toastr.error(data.message);
                         $('#assignLessonSubmitBtn').attr('disabled', false);
                         $('#assignLessonSubmitBtn').text('Submit');

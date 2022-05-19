@@ -1,6 +1,13 @@
 @extends('layout.admin.layout.admin')
 @section('title', 'Lesson - Attachment')
-
+@section('head')
+<style>
+    .attachment-video-dimensions {
+        width: 938px;
+        height: 525px;
+    }
+</style>
+@endsection
 @section('content')
 <div class="page-header">
     <h3 class="page-title">
@@ -14,9 +21,10 @@
         <div class="card">
             <div class="card-body">
                 @if($attachment_extension=="mp4")
-                <video autoplay  id="attachment-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640"
-                    height="264" poster="{{asset($lesson->image_url)}}" data-setup="{}">
-                    <source src="{{asset($lesson->video_url)}}" type="video/mp4" class="video-js vjs-theme-city" />
+                <video autoplay id="attachment-video" class="video-js vjs-big-play-centered" controls preload="auto"
+                    width="640" height="264" poster="{{asset($lesson->image_url)}}" data-setup="{}" muted="muted">
+                    <source autoplay src="{{asset($lesson->video_url)}}" type="video/mp4"
+                        class="video-js vjs-theme-city" />
 
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a
@@ -35,6 +43,9 @@
 @endsection
 
 @section('scripts')
+<script>
+    document.getElementById('attachment-video').play();
+</script>
 <script>
     var player = videojs('attachment-video', {
     fluid: false,

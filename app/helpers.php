@@ -1,4 +1,4 @@
 <?php
-function LessonContentById($lesson_id){
-    
+function attachmenetPath($path){
+return base_path().$path;
 }

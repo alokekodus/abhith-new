@@ -28,34 +28,83 @@
         <div id="collapseOne{{$key}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
                 @if($topic->content!=null) <h5></h5> {!!$topic->content!!}@endif<br>
-                @if($topic->image_url!=null)
-                <a
-                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($topic->id),Crypt::Encrypt(1)])}}">
-                    <i id="displayImage" class="mdi mdi-file-image" data-id="{{$topic->id}}"
-                        data-value="{{$topic->image_url}}" data-target="#displayImageModal"></i>
-                </a>
-                @endif
-                @if($topic->video_url!=null)
-                <a
-                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($topic->id),Crypt::Encrypt(2)])}}">
-                    <i id="displayVideo" class="mdi mdi-video" data-toggle="modal" data-id="{{$topic->id}}"
-                        data-value="{{$topic->video_url}}" data-target="#displayVideoModal"></i>
-                </a>
-                @endif
+                <div class="row">
+                    @if($topic->image_url!=null)
+                    <div class="video-gallery">
+                        <figure class="gallery-item">
+                            <img src="{{asset($topic->image_url)}}" alt="image" />
+                            <figcaption>
+                                <div>
+                                    <h6>{{$topic->name}}</h6>
+
+                                </div>
+                                <a class="vimeo-popup"
+                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($topic->id),Crypt::Encrypt(1)])}}">View
+                                    more</a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    @endif
+                    @if($topic->video_url!=null)
+                    <div class="video-gallery">
+                        <figure class="gallery-item">
+                            <img src="{{asset($topic->image_url)}}" alt="Editor Reel" />
+                            <figcaption>
+                                <div>
+                                    <h6>{{$topic->name}}</h6>
+
+                                </div>
+                                <a class="vimeo-popup"
+                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($topic->id),Crypt::Encrypt(2)])}}">View
+                                    more</a>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    
+                    @endif
+                </div>
                 <hr>
                 @if($topic->subTopics()->exists())
                 <h4><u>Sub Topics:</u></h4>
                 <ol>
                     @foreach($topic->subTopics as $key=>$sub_topics)
                     <li>{{$sub_topics->name}}</li>
-                    @if($sub_topics->image_url!=null)
-                    <i id="displayImage" class="mdi mdi-file-image" data-toggle="modal" data-id="{{$sub_topics->id}}"
-                        data-value="{{$sub_topics->image_url}}" data-target="#displayImageModal"></i>
-                    @endif
-                    @if($sub_topics->video_url!=null)
-                    <i id="displayVideo" class="mdi mdi-video" data-toggle="modal" data-id="{{$sub_topics->id}}"
-                        data-value="{{$sub_topics->video_url}}" data-target="#displayVideoModal"></i>
-                    @endif
+                    <div class="row">
+                        @if($sub_topics->image_url!=null)
+                        <div class="video-gallery">
+                            <figure class="gallery-item">
+                                <img src="{{asset($sub_topics->image_url)}}" alt="image" />
+                                <figcaption>
+                                    <div>
+                                        <h6>{{$sub_topics->name}}</h6>
+    
+                                    </div>
+                                    <a class="vimeo-popup"
+                                        href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($sub_topics->id),Crypt::Encrypt(1)])}}">View
+                                        more</a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <hr>
+                        @endif
+                        @if($sub_topics->video_url!=null)
+                        <div class="video-gallery">
+                            <figure class="gallery-item">
+                                <img src="{{asset($sub_topics->image_url)}}" alt="Editor Reel" />
+                                <figcaption>
+                                    <div>
+                                        <h6>{{$sub_topics->name}}</h6>
+    
+                                    </div>
+                                    <a class="vimeo-popup"
+                                        href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($sub_topics->id),Crypt::Encrypt(2)])}}">View
+                                        more</a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <hr>
+                        @endif
+                    </div>
                     <hr>
                     @endforeach
                 </ol>
