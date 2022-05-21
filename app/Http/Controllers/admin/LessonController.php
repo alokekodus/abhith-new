@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\ConvertVideoForResolution;
-use App\Jobs\ConvertVideoForStreaming;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Lesson;
-use App\Models\LessonAttachment;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Validator;
+Use App\Traits\LessonAttachmentTrait;
 use Str;
 
 class LessonController extends Controller
@@ -27,14 +25,16 @@ class LessonController extends Controller
     {
         try {
             //function for finding form type
+           
             $type = $this->findFormType($request);
-
+            
             //validate all request according to it's type
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
-
+           
             if ($validator->fails()) {
                 return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
             } else {
+              
                 $file = null;
                 $video_url = null;
                 $document = $request->file('image_url');
@@ -42,16 +42,16 @@ class LessonController extends Controller
                
               
                 if (!empty($document)) {
-                    $file = Lesson::storeLessonFile($document, "image"); //lesson image store
+                    $file=$this->LessonAttachmentTrait($document, "image"); //lesson image store
 
                 }
                 if (!empty($lessonVideo)) {
 
-                    $video_url = Lesson::storeLessonFile($lessonVideo, "video"); //lesson file store
+                    $file=$this->LessonAttachmentTrait($document, "video"); //lesson file store
 
                 }
-                if ($type == "create-lesson" || $type == "update-lesson") {
-
+                if ($type =="create-lesson" || $type == "update-lesson") {
+                   
                     $data = [
                         'name' => ucfirst($request->name),
                         'slug' => Str::slug($request->name),
@@ -64,20 +64,22 @@ class LessonController extends Controller
                     ];
 
                     $lesson = Lesson::create($data);
+                    // $path =  $request->video_url->getClientOriginalExtension();
+                    // return response()->json($path);
+                    // $request->video_url->storeAs('public', $path);
+                    // $data_attachment = [
+                    //     'lesson_id' =>  $lesson->id,
+                    //     'disk'          => 'public',
+                    //     'original_name' => $request->video_url->getClientOriginalName(),
+                    //     'path'          => $path,
+                    //     'type'          =>2,
+                    // ];
                    
-                    $data_attachment = [
-                        'lesson_id' =>  $lesson->id,
-                        'disk'          => 'videos_disk',
-                        'original_name' => $request->video_url->getClientOriginalName(),
-                        'path'          => $file,
-                        'type'          =>2,
-                    ];
-                   
-                    $lesson_attachment=LessonAttachment::create($data_attachment);
+                    // $lesson_attachment=LessonAttachment::create($data_attachment);
                     
-                    $this->dispatch(new ConvertVideoForResolution($lesson_attachment));
+                    // $this->dispatch(new ConvertVideoForResolution($lesson_attachment));
                     // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
-                    return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
+                    return response()->json(['message' => 'Lesson Added Successfully','status' => 1]);
                 }
                 if ($type == "create-topic" || $type = "create-sub-topic") {
 
@@ -107,7 +109,7 @@ class LessonController extends Controller
                 $this->lessonFunctionResponse($type);
             }
         } catch (\Throwable $th) {
-             dd($th);
+         
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
         }
     }

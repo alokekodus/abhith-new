@@ -343,6 +343,7 @@
                         $('#assignLessonCancelBtn').attr('disabled', false);
                     }
                     if(data.status == 1){
+                        console.log(data);
                         toastr.success(data.message);
                         location.reload(true);
                     }else{
@@ -354,6 +355,7 @@
                     }
                 },
                 error:function(xhr, status, error){
+                  
                     if(xhr.status == 500 || xhr.status == 422){
                         toastr.error('Whoops! Something went wrong failed to assign lesson');
                     }
@@ -419,9 +421,6 @@
                 });
      });
     
-</script>
-<script>
-    $('.ckeditor').ckeditor();
 </script>
 <script>
     $("#displayMoreLesson").click(function(){

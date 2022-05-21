@@ -37,7 +37,7 @@
         <div class="form-group">
             <label for="">Lesson Name</label>
             <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="@isset($lesson){{$lesson->name}}@endisset"
-                required>
+                >
         </div>
     </div>
     <div class="col-4">
