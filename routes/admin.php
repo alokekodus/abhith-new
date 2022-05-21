@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\admin\LessonController;
+use App\Http\Middleware\IsAdmin;
 use App\Models\AssignSubject;
 
 /*
@@ -31,12 +32,12 @@ use App\Models\AssignSubject;
 
 
 
-Route::group(['middleware' => ['auth'] ],function(){
+Route::group(['middleware' => ['admin'] ],function(){
     Route::get('logout',[AuthController::class,'logout'])->name('log.out');
 
     Route::get('dashboard', function () {
         return view('admin.dashboard.dashboard');
-    })->name('admin.dashboard');
+    })->name('admin.dashboard')->middleware('admin');
 
     /* ------------------------------- COURSE ------------------------------------ */
     // Route::prefix('course')->group(function () {
