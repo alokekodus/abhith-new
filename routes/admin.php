@@ -32,7 +32,7 @@ use App\Models\AssignSubject;
 
 
 
-Route::group(['middleware' => ['admin'] ],function(){
+Route::group(['middleware' => ['auth'] ],function(){
     Route::get('logout',[AuthController::class,'logout'])->name('log.out');
 
     Route::get('dashboard', function () {
@@ -72,13 +72,14 @@ Route::group(['middleware' => ['admin'] ],function(){
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
+            Route::get('create', [LessonController::class,'create'])->name('admin.course.management.lesson.create');
             Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
-            Route::get('edit/{lesson_slug}', [LessonController::class,'edit'])->name('admin.course.management.lesson.edit');
-            Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');
-            Route::get('{lesson_slug}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
-            Route::get('topic/{lesson_slug}', [LessonController::class,'topicView'])->name('admin.course.management.lesson.view');
-            Route::get('subtopic/{lesson_slug}/{topic_slug}', [LessonController::class,'subTopicCreate'])->name('admin.course.management.lesson.subtopic.create');
-            Route::get('attachment/{lesson_id}/{url_type}', [LessonController::class,'displayAttachment'])->name('admin.course.management.lesson.attachment');
+            // Route::get('edit/{lesson_slug}', [LessonController::class,'edit'])->name('admin.course.management.lesson.edit');
+            // Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');
+            // Route::get('{lesson_slug}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
+            // Route::get('topic/{lesson_slug}', [LessonController::class,'topicView'])->name('admin.course.management.lesson.view');
+            // Route::get('subtopic/{lesson_slug}/{topic_slug}', [LessonController::class,'subTopicCreate'])->name('admin.course.management.lesson.subtopic.create');
+            // Route::get('attachment/{lesson_id}/{url_type}', [LessonController::class,'displayAttachment'])->name('admin.course.management.lesson.attachment');
         });
     });
 

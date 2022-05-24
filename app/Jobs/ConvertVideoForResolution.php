@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Jobs;
+
+use App\Models\Lesson;
 use FFMpeg;
 use App\Models\LessonAttachment;
 use Illuminate\Bus\Queueable;
@@ -19,7 +21,7 @@ class ConvertVideoForResolution implements ShouldQueue
 
   
     public $lesson_attachment;
-    public function __construct(LessonAttachment $lesson_attachment)
+    public function __construct(Lesson $lesson)
     {
        $this->lesson_attachment=$lesson_attachment;
     }
@@ -40,7 +42,7 @@ class ConvertVideoForResolution implements ShouldQueue
 
             // add the 'resize' filter...
             ->addFilter(function ($filters) {
-                $filters->resize(new Dimension(960, 540));
+                $filters->resize(new Dimension(640, 480));
             })
 
             // call the 'export' method...
@@ -59,7 +61,7 @@ class ConvertVideoForResolution implements ShouldQueue
 
             // add the 'resize' filter...
             ->addFilter(function ($filters) {
-                $filters->resize(new Dimension(3840, 2160));
+                $filters->resize(new Dimension(1920, 1080));
             })
 
             // call the 'export' method...

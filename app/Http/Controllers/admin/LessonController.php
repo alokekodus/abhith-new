@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ConvertVideoForResolution;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Lesson;
+use App\Models\LessonAttachment;
 Use App\Traits\LessonAttachmentTrait;
 use Str;
 
@@ -21,16 +23,21 @@ class LessonController extends Controller
 
         return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'all_lessons' => $all_lessons]);
     }
+    public function create(){
+        $board_details = Board::where('is_activate', 1)->get();
+        return view('admin.course-management.lesson.create')->with(['boards' => $board_details]);
+    }
     public function store(Request $request)
     {
         try {
+         
             //function for finding form type
            
             $type = $this->findFormType($request);
             
             //validate all request according to it's type
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
-           
+          
             if ($validator->fails()) {
                 return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
             } else {
@@ -42,16 +49,16 @@ class LessonController extends Controller
                
               
                 if (!empty($document)) {
-                    $file=$this->LessonAttachmentTrait($document, "image"); //lesson image store
+                    $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
 
                 }
                 if (!empty($lessonVideo)) {
 
-                    $file=$this->LessonAttachmentTrait($document, "video"); //lesson file store
+                    $video_path=LessonAttachmentTrait::uploadAttachment($lessonVideo, "video"); //lesson file store
 
                 }
                 if ($type =="create-lesson" || $type == "update-lesson") {
-                   
+                 
                     $data = [
                         'name' => ucfirst($request->name),
                         'slug' => Str::slug($request->name),
@@ -59,25 +66,27 @@ class LessonController extends Controller
                         'assign_class_id' => $request->assign_class_id,
                         'assign_subject_id' => $request->assign_subject_id,
                         'content' => $request->content,
-                        'image_url' => $file,
-                        'video_url' => $video_url,
+                        'image_url' => $image_path,
+                        'video_url' => $video_path,
                     ];
 
                     $lesson = Lesson::create($data);
-                    // $path =  $request->video_url->getClientOriginalExtension();
-                    // return response()->json($path);
-                    // $request->video_url->storeAs('public', $path);
-                    // $data_attachment = [
-                    //     'lesson_id' =>  $lesson->id,
-                    //     'disk'          => 'public',
-                    //     'original_name' => $request->video_url->getClientOriginalName(),
-                    //     'path'          => $path,
-                    //     'type'          =>2,
-                    // ];
                    
+                    $path = $request->file('video_url')->getClientOriginalExtension();
+                    $request->video_url->storeAs('public',$path);
+        
+                    $data_attachment = [
+                        'lesson_id' =>  $lesson->id,
+                        'disk'          => 'public',
+                        'original_name' => $request->video_url->getClientOriginalName(),
+                        'path'          => $path,
+                        'type'          =>2,
+                    ];
+                    
+                     $lesson_attachment=LessonAttachment::create($data_attachment);
                     // $lesson_attachment=LessonAttachment::create($data_attachment);
                     
-                    // $this->dispatch(new ConvertVideoForResolution($lesson_attachment));
+                    //  $this->dispatch(new ConvertVideoForResolution($lesson));
                     // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
                     return response()->json(['message' => 'Lesson Added Successfully','status' => 1]);
                 }
@@ -109,8 +118,8 @@ class LessonController extends Controller
                 $this->lessonFunctionResponse($type);
             }
         } catch (\Throwable $th) {
-         
-            return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
+              dd($th);
+            // return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
         }
     }
     public function storeFile(Request $request)

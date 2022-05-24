@@ -33,9 +33,8 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"
-                    id="addLesson">Add
-                    Lesson</button>
+                <a type="button" class="btn btn-primary" href="{{route('admin.course.management.lesson.create')}}">Add
+                    Lesson</a>
             </li>
         </ul>
     </nav>
@@ -318,53 +317,53 @@
                 // append the blob file
                 formData.append('image_url', pondImageFiles[i].file);
             }
-            for (var i = 0; i < pondVideoFiles.length; i++) {
-                // append the blob file
-                formData.append('video_url', pondVideoFiles[i].file);
-            }
-            var Content = CKEDITOR.instances['content'].getData();
+            // for (var i = 0; i < pondVideoFiles.length; i++) {
+            //     // append the blob file
+            //     formData.append('video_url', pondVideoFiles[i].file);
+            // }
+            // var Content = CKEDITOR.instances['content'].getData();
             
-            formData.append('content', Content);
+            // formData.append('content', Content);
             
-            $.ajax({
-                url:"{{route('admin.course.management.lesson.store')}}",
-                type:"POST",
-                processData:false,
-                contentType:false,
-                data:formData,
-                success:function(data){
-                    console.log(data);
-                    if(data.error != null){
-                        $.each(data.error, function(key, val){
-                            toastr.error(val[0]);
-                        });
-                        $('#assignLessonSubmitBtn').attr('disabled', false);
-                        $('#assignLessonSubmitBtn').text('Submit');
-                        $('#assignLessonCancelBtn').attr('disabled', false);
-                    }
-                    if(data.status == 1){
-                        console.log(data);
-                        toastr.success(data.message);
-                        location.reload(true);
-                    }else{
+            // $.ajax({
+            //     url:"{{route('admin.course.management.lesson.store')}}",
+            //     type:"POST",
+            //     processData:false,
+            //     contentType:false,
+            //     data:formData,
+            //     success:function(data){
+            //         console.log(data);
+            //         if(data.error != null){
+            //             $.each(data.error, function(key, val){
+            //                 toastr.error(val[0]);
+            //             });
+            //             $('#assignLessonSubmitBtn').attr('disabled', false);
+            //             $('#assignLessonSubmitBtn').text('Submit');
+            //             $('#assignLessonCancelBtn').attr('disabled', false);
+            //         }
+            //         if(data.status == 1){
+            //             console.log(data);
+            //             toastr.success(data.message);
+            //             location.reload(true);
+            //         }else{
                         
-                        toastr.error(data.message);
-                        $('#assignLessonSubmitBtn').attr('disabled', false);
-                        $('#assignLessonSubmitBtn').text('Submit');
-                        $('#assignLessonCancelBtn').attr('disabled', false);
-                    }
-                },
-                error:function(xhr, status, error){
+            //             toastr.error(data.message);
+            //             $('#assignLessonSubmitBtn').attr('disabled', false);
+            //             $('#assignLessonSubmitBtn').text('Submit');
+            //             $('#assignLessonCancelBtn').attr('disabled', false);
+            //         }
+            //     },
+            //     error:function(xhr, status, error){
                   
-                    if(xhr.status == 500 || xhr.status == 422){
-                        toastr.error('Whoops! Something went wrong failed to assign lesson');
-                    }
+            //         if(xhr.status == 500 || xhr.status == 422){
+            //             toastr.error('Whoops! Something went wrong failed to assign lesson');
+            //         }
 
-                    $('#assignSubjectSubmitBtn').attr('disabled', false);
-                    $('#assignSubjectSubmitBtn').text('Submit');
-                    $('#assignSubjectCancelBtn').attr('disabled', false);
-                }
-            });
+            //         $('#assignSubjectSubmitBtn').attr('disabled', false);
+            //         $('#assignSubjectSubmitBtn').text('Submit');
+            //         $('#assignSubjectCancelBtn').attr('disabled', false);
+            //     }
+            // });
         });
 </script>
 <script>

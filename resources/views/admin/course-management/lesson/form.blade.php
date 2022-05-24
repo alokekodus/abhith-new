@@ -2,11 +2,11 @@
     <div class="col-4">
         <div class="form-group">
             <label for="">Select Board</label>
-            <select name="board_id" id="assignedBoard" class="form-control"
-                onchange="changeBoard()">
+            <select name="board_id" id="assignedBoard" class="form-control" onchange="changeBoard()">
                 <option value="">-- Select -- </option>
                 @forelse ($boards as $item)
-                <option value="{{$item->id}}"@isset($lesson)@if($lesson->board_id==$item->id) selected @endif @endisset>{{$item->exam_board}}</option>
+                <option value="{{$item->id}}" @isset($lesson)@if($lesson->board_id==$item->id) selected @endif
+                    @endisset>{{$item->exam_board}}</option>
                 @empty
                 <option>No boards to show</option>
                 @endforelse
@@ -33,35 +33,65 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-4">
+    <div class="col-12">
         <div class="form-group">
             <label for="">Lesson Name</label>
-            <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="@isset($lesson){{$lesson->name}}@endisset"
-                >
+            <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area"
+                value="@isset($lesson){{$lesson->name}}@endisset">
         </div>
     </div>
-    <div class="col-4">
+</div>
+<div class="row">
+    <div class="col-6">
         <div class="form-group">
             <label for="">Upload Lesson Picture</label>
-            <input type="file" class="filepond" name="image_url" id="lessonImage"
-                data-max-file-size="1MB" data-max-files="1" />
+            <div class="file-upload">
+                <div class="file-select">
+                    <div class="file-select-button" id="fileName">Choose File</div>
+                    <div class="file-select-name" id="noImageFile">No file chosen...</div>
+                    <input type="file" id='imageUpload' name="image_url">
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="col-4">
+    <div class="col-6">
+        <img id="blah" src="#" alt="your image" height="200" controls style="display: none;"/>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-12">
         <div class="form-group">
             <label for="">Upload Lesson Video</label>
-            <input type="file" class="filepond" name="video_url" id="lessonVideo"
-                data-max-file-size="50MB" data-max-files="50" />
+            <div class="file-upload">
+                <div class="file-select">
+                    <div class="file-select-button" id="fileName">Choose File</div>
+                    <div class="file-select-name" id="noFile">No file chosen...</div>
+                    <input type="file" id='videoUpload' name="video_url" accept="video/mp4,video/x-m4v,video/*">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <video width="937" height="250" id='videoPriview' controls style="display: none;">
+               
+            </video>
         </div>
     </div>
 </div>
 
-<div class="col-12">
-    <div class="form-group">
-        <textarea class="ckeditor form-control" name="content" id="content">
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <label for="">Lesson Content</label>
+            <textarea class="ckeditor form-control" name="content" id="content">
             @isset($lesson){!!$lesson->content!!}@endisset
         </textarea>
-    </div>
+        </div>
 
+    </div>
 </div>

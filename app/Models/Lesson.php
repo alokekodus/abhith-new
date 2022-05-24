@@ -31,7 +31,7 @@ class Lesson extends Model
                 'assign_class_id' => 'bail|integer|required',
                 'assign_subject_id' => 'bail|integer|required',
                 'name' => 'bail|required',
-                'image_url' => 'bail|required|mimes:png,jpeg',
+                'image_url' => 'bail|required|mimes:png,jpg,jpeg',
                 'video_url' => 'bail|mimes:mp4',
                 'content' => 'bail|required',
             ];
