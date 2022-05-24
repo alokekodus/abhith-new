@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="col-6">
-        <img id="blah" src="#" alt="your image" height="200" controls style="display: none;"/>
+        <img id="blah" src="#" alt="your image" height="200" controls style="display: none;" />
     </div>
 </div>
 <hr>
@@ -78,8 +78,20 @@
     <div class="col-12">
         <div class="form-group">
             <video width="937" height="250" id='videoPriview' controls style="display: none;">
-               
+
             </video>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <label for="">Video Resize To</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="resize" name="resizes[]" value="480">480px&nbsp;
+                <input class="form-check-input" type="checkbox" id="resize" name="resizes[]" value="720">720px&nbsp;
+                <input class="form-check-input" type="checkbox" id="resize" name="resizes[]" value="1080">1080px
+            </div>
         </div>
     </div>
 </div>

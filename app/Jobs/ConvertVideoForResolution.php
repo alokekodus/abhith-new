@@ -21,9 +21,11 @@ class ConvertVideoForResolution implements ShouldQueue
 
   
     public $lesson_attachment;
-    public function __construct(Lesson $lesson)
+    public function __construct(LessonAttachment $lesson_attachment,$x_dimension,$y_dimension)
     {
        $this->lesson_attachment=$lesson_attachment;
+       $this->x_dimension=$x_dimension;
+       $this->y_dimension=$y_dimension;
     }
 
     /**
@@ -37,12 +39,11 @@ class ConvertVideoForResolution implements ShouldQueue
         $lowBitrateFormat = (new X264())->setKiloBitrate(500);
 
         // open the uploaded video from the right disk...
-        FFMpeg::fromDisk($this->lesson_attachment->disk)
-            ->open($this->lesson_attachment->path)
+        FFMpeg::open($this->lesson_attachment->path)
 
             // add the 'resize' filter...
             ->addFilter(function ($filters) {
-                $filters->resize(new Dimension(640, 480));
+                $filters->resize(new Dimension($this->x_dimension, $this->y_dimension));
             })
 
             // call the 'export' method...
@@ -53,42 +54,8 @@ class ConvertVideoForResolution implements ShouldQueue
             ->inFormat($lowBitrateFormat)
 
             // call the 'save' method with a filename...
-            ->save($this->lesson_attachment->id . '.mp4');
+            ->save($this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4');
 
-        // update the database so we know the convertion is done!
-        FFMpeg::fromDisk($this->lesson_attachment->disk)
-            ->open($this->lesson_attachment->path)
-
-            // add the 'resize' filter...
-            ->addFilter(function ($filters) {
-                $filters->resize(new Dimension(1920, 1080));
-            })
-
-            // call the 'export' method...
-            ->export()
-
-            // tell the MediaExporter to which disk and in which format we want to export...
-            ->toDisk('public')
-            ->inFormat($lowBitrateFormat)
-
-            // call the 'save' method with a filename...
-            ->save($this->video->id . '_2160' . '.mp4');
-               FFMpeg::fromDisk($this->lesson_attachment->disk)
-            ->open($this->lesson_attachment->path)
-
-            // add the 'resize' filter...
-            ->addFilter(function ($filters) {
-                $filters->resize(new Dimension(1280, 720));
-            })
-
-            // call the 'export' method...
-            ->export()
-
-            // tell the MediaExporter to which disk and in which format we want to export...
-            ->toDisk('public')
-            ->inFormat($lowBitrateFormat)
-
-            // call the 'save' method with a filename...
-            ->save($this->lesson_attachment->id . '_720' . '.mp4');
+        
     }
 }

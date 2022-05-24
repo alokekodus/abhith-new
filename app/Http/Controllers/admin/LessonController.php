@@ -11,6 +11,7 @@ use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 Use App\Traits\LessonAttachmentTrait;
+use Illuminate\Support\Facades\Storage;
 use Str;
 
 class LessonController extends Controller
@@ -30,9 +31,7 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         try {
-         
-            //function for finding form type
-           
+          
             $type = $this->findFormType($request);
             
             //validate all request according to it's type
@@ -71,10 +70,10 @@ class LessonController extends Controller
                     ];
 
                     $lesson = Lesson::create($data);
-                   
-                    $path = $request->file('video_url')->getClientOriginalExtension();
-                    $request->video_url->storeAs('public',$path);
-        
+                    
+                   $path= $video_path;
+                  
+                    
                     $data_attachment = [
                         'lesson_id' =>  $lesson->id,
                         'disk'          => 'public',
@@ -85,8 +84,25 @@ class LessonController extends Controller
                     
                      $lesson_attachment=LessonAttachment::create($data_attachment);
                     // $lesson_attachment=LessonAttachment::create($data_attachment);
-                    
-                    //  $this->dispatch(new ConvertVideoForResolution($lesson));
+                    if($request->has('resizes')){
+                        foreach($request->resizes as $key=>$resize){
+                            if($resize==480){
+                                $x_dime=640;
+                                $y_dime =480;  
+                            }
+                            if($resize==720){
+                                $x_dime=1280;
+                                $y_dime =720;  
+                            }
+                            if($resize==1080){
+                                $x_dime=1920;
+                                $y_dime =1080;  
+                            }
+                            $this->dispatch(new ConvertVideoForResolution($lesson_attachment,$x_dime,$y_dime));
+                        }
+
+                    }
+                     
                     // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
                     return response()->json(['message' => 'Lesson Added Successfully','status' => 1]);
                 }
