@@ -42,12 +42,6 @@
     /**, 
 *:after, *:before { -webkit-box-sizing: border-box; box-sizing: border-box; } 
 // required */
-
-
-
-
-
-
     .video-gallery figure {
         position: relative;
         float: left;
@@ -219,39 +213,42 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    @if($lesson->image_url!=null)
+                    @if($lesson->lessonAttachment->exists())
+                    @if($lesson->lessonAttachment->img_url!=null)
                     <div class="video-gallery">
                         <figure class="gallery-item">
-                            <img src="{{asset($lesson->image_url)}}" alt="image" />
+                            <img src="{{asset($lesson->lessonAttachment->img_url)}}" alt="image" />
                             <figcaption>
                                 <div>
                                     <h6>{{$lesson->name}}</h6>
 
                                 </div>
                                 <a class="vimeo-popup"
-                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($lesson->id),Crypt::Encrypt(1)])}}">View
+                                    href="">View
                                     more</a>
                             </figcaption>
                         </figure>
                     </div>
                     <hr>
                     @endif
-                    @if($lesson->video_url!=null)
+                    @if($lesson->lessonAttachment->origin_video_url!=null)
                     <div class="video-gallery">
                         <figure class="gallery-item">
-                            <img src="{{asset($lesson->video_url)}}" alt="Editor Reel" />
+                           
+                            <img src="" alt="Lesson Video" />
                             <figcaption>
                                 <div>
                                     <h6>Editor <span>Reel</span></h6>
 
                                 </div>
                                 <a class="vimeo-popup"
-                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($lesson->id),Crypt::Encrypt(2)])}}">View
+                                    href="">View
                                     more</a>
                             </figcaption>
                         </figure>
                     </div>
                     <hr>
+                    @endif
                     @endif
                 </div>
 

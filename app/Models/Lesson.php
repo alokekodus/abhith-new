@@ -136,8 +136,9 @@ class Lesson extends Model
     {
         return $this->hasMany(Lesson::class, 'parent_lesson_id');
     }
-    public function lessonAttachment(): BelongsTo
+    public function lessonAttachment()
     {
-        return $this->belongsTo(LessonAttachment::class);
+        return $this->hasOne(LessonAttachment::class);
     }
+    
 }
