@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lesson extends Model
@@ -18,8 +19,6 @@ class Lesson extends Model
         'board_id',
         'assign_class_id',
         'assign_subject_id',
-        'image_url',
-        'video_url',
         'content'
 
     ];
@@ -136,5 +135,9 @@ class Lesson extends Model
     public function subTopics()
     {
         return $this->hasMany(Lesson::class, 'parent_lesson_id');
+    }
+    public function lessonAttachment(): BelongsTo
+    {
+        return $this->belongsTo(LessonAttachment::class);
     }
 }

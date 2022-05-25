@@ -31,7 +31,7 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         try {
-          
+           
             $type = $this->findFormType($request);
             
             //validate all request according to it's type
@@ -41,22 +41,12 @@ class LessonController extends Controller
                 return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
             } else {
               
-                $file = null;
-                $video_url = null;
+                $image_path = null;
+                $video_path = null;
                 $document = $request->file('image_url');
                 $lessonVideo = $request->file('video_url');
                
-              
-                if (!empty($document)) {
-                    $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
-
-                }
-                if (!empty($lessonVideo)) {
-
-                    $video_path=LessonAttachmentTrait::uploadAttachment($lessonVideo, "video"); //lesson file store
-
-                }
-                if ($type =="create-lesson" || $type == "update-lesson") {
+              if ($type =="create-lesson" || $type == "update-lesson") {
                  
                     $data = [
                         'name' => ucfirst($request->name),
@@ -65,21 +55,23 @@ class LessonController extends Controller
                         'assign_class_id' => $request->assign_class_id,
                         'assign_subject_id' => $request->assign_subject_id,
                         'content' => $request->content,
-                        'image_url' => $image_path,
-                        'video_url' => $video_path,
                     ];
 
                     $lesson = Lesson::create($data);
+                    if (!empty($document)) {
+                        $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
                     
-                   $path= $video_path;
+                    }
+                   
+                    if (!empty($lessonVideo)) {
+                    $video_path=$request->video_url->store('public');
+                    }
                   
-                    
                     $data_attachment = [
                         'lesson_id' =>  $lesson->id,
-                        'disk'          => 'public',
-                        'original_name' => $request->video_url->getClientOriginalName(),
-                        'path'          => $path,
-                        'type'          =>2,
+                        'img_url'=>$image_path,
+                        'origin_video_url'=> $video_path,
+                       
                     ];
                     
                      $lesson_attachment=LessonAttachment::create($data_attachment);
@@ -87,18 +79,18 @@ class LessonController extends Controller
                     if($request->has('resizes')){
                         foreach($request->resizes as $key=>$resize){
                             if($resize==480){
-                                $x_dime=640;
-                                $y_dime =480;  
+                                $x_dimension=640;
+                                $y_dimension =480;  
                             }
                             if($resize==720){
-                                $x_dime=1280;
-                                $y_dime =720;  
+                                $x_dimension=1280;
+                                $y_dimension =720;  
                             }
-                            if($resize==1080){
-                                $x_dime=1920;
-                                $y_dime =1080;  
-                            }
-                            $this->dispatch(new ConvertVideoForResolution($lesson_attachment,$x_dime,$y_dime));
+                            // if($resize==1080){
+                            //     $x_dimension=1920;
+                            //     $y_dimension =1080;  
+                            // }
+                            $this->dispatch(new ConvertVideoForResolution($lesson_attachment,$x_dimension,$y_dimension));
                         }
 
                     }
@@ -117,8 +109,6 @@ class LessonController extends Controller
                         'board_id' => $lesson->board_id,
                         'assign_class_id' => $lesson->assign_class_id,
                         'assign_subject_id' => $lesson->assign_subject_id,
-                        'image_url' => $file,
-                        'video_url' => $video_url,
                         'content' => $request->content,
                     ];
                 }

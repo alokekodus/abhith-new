@@ -147,7 +147,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a type="button" class="btn btn-primary" href="{{route('admin.course.management.lesson.create')}}">view
+                <a type="button" class="btn btn-primary" href="{{route('admin.course.management.lesson.all')}}">All
                     Lesson</a>
             </li>
         </ul>
@@ -158,8 +158,8 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="scrollmenu">
-                    <form id="assignLessonForm" action="{{route('admin.course.management.lesson.store')}}" enctype="multipart/form-data" method="post">
+                <div>
+                    <form id="assignLessonForm" enctype="multipart/form-data" method="post">
                         @csrf
                         @include('admin.course-management.lesson.form')
                         <div class="form-group">
@@ -233,70 +233,64 @@
         $('#assignLessonCancelBtn').on('click', function(){
             $('#assignLessonModal').modal('hide');
             $('#assignLessonForm')[0].reset();
-            pondImage.removeFiles();
-            pondVideo.removeFiles();
+         
 
         });
-        // $('#assignLessonForm').on('submit', function(e){
-        //     e.preventDefault();
+        $('#assignLessonForm').on('submit', function(e){
+            e.preventDefault();
 
-        //     $('#assignLessonSubmitBtn').attr('disabled', true);
-        //     $('#assignLessonSubmitBtn').text('Please wait...');
-        //     $('#assignLessonCancelBtn').attr('disabled', true);
+            $('#assignLessonSubmitBtn').attr('disabled', true);
+            $('#assignLessonSubmitBtn').text('Please wait...');
+            $('#assignLessonCancelBtn').attr('disabled', true);
 
 
-        //     // let formData = new FormData(this);
-        //     // pondImageFiles = pondImage.getFiles();
-        //     // pondVideoFiles = pondVideo.getFiles();
-        //     // for (var i = 0; i < pondImageFiles.length; i++) {
-        //     //     // append the blob file
-        //     //     formData.append('image_url', pondImageFiles[i].file);
-        //     // }
-           
-        //     // var Content = CKEDITOR.instances['content'].getData();
+            let formData = new FormData(this);
+          
+            var Content = CKEDITOR.instances['content'].getData();
             
-        //     // formData.append('content', Content);
+            formData.append('content', Content);
             
-        //     // $.ajax({
-        //     //     url:"{{route('admin.course.management.lesson.store')}}",
-        //     //     type:"POST",
-        //     //     processData:false,
-        //     //     contentType:false,
-        //     //     data:formData,
-        //     //     success:function(data){
-        //     //         console.log(data);
-        //     //         if(data.error != null){
-        //     //             $.each(data.error, function(key, val){
-        //     //                 toastr.error(val[0]);
-        //     //             });
-        //     //             $('#assignLessonSubmitBtn').attr('disabled', false);
-        //     //             $('#assignLessonSubmitBtn').text('Submit');
-        //     //             $('#assignLessonCancelBtn').attr('disabled', false);
-        //     //         }
-        //     //         if(data.status == 1){
-        //     //             console.log(data);
-        //     //             toastr.success(data.message);
-        //     //             location.reload(true);
-        //     //         }else{
+            $.ajax({
+                url:"{{route('admin.course.management.lesson.store')}}",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data:formData,
+              
+                success:function(data){
+                    console.log(data);
+                    if(data.error != null){
+                        $.each(data.error, function(key, val){
+                            toastr.error(val[0]);
+                        });
+                        $('#assignLessonSubmitBtn').attr('disabled', false);
+                        $('#assignLessonSubmitBtn').text('Submit');
+                        $('#assignLessonCancelBtn').attr('disabled', false);
+                    }
+                    if(data.status == 1){
+                        console.log(data);
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
                         
-        //     //             toastr.error(data.message);
-        //     //             $('#assignLessonSubmitBtn').attr('disabled', false);
-        //     //             $('#assignLessonSubmitBtn').text('Submit');
-        //     //             $('#assignLessonCancelBtn').attr('disabled', false);
-        //     //         }
-        //     //     },
-        //     //     error:function(xhr, status, error){
+                        toastr.error(data.message);
+                        $('#assignLessonSubmitBtn').attr('disabled', false);
+                        $('#assignLessonSubmitBtn').text('Submit');
+                        $('#assignLessonCancelBtn').attr('disabled', false);
+                    }
+                },
+                error:function(xhr, status, error){
                   
-        //     //         if(xhr.status == 500 || xhr.status == 422){
-        //     //             toastr.error('Whoops! Something went wrong failed to assign lesson');
-        //     //         }
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong failed to assign lesson');
+                    }
 
-        //     //         $('#assignSubjectSubmitBtn').attr('disabled', false);
-        //     //         $('#assignSubjectSubmitBtn').text('Submit');
-        //     //         $('#assignSubjectCancelBtn').attr('disabled', false);
-        //     //     }
-        //     // });
-        // });
+                    $('#assignSubjectSubmitBtn').attr('disabled', false);
+                    $('#assignSubjectSubmitBtn').text('Submit');
+                    $('#assignSubjectCancelBtn').attr('disabled', false);
+                }
+            });
+        });
 </script>
 <script>
     function changeBoard()
