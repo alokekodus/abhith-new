@@ -210,13 +210,13 @@ class LessonController extends Controller
     {
         try {
 
-            $lesson = Lesson::find(Crypt::decrypt($lesson_id));
+            $lesson = Lesson::with('lessonAttachment')->where('id',Crypt::decrypt($lesson_id))->first();
             $url_type = Crypt::decrypt($url_type);
             if ($url_type == 1) {
-                $attachment = $lesson->image_url;
+                $attachment = $lesson->lessonAttachment->img_url;
             }
             if ($url_type == 2) {
-                $attachment = $lesson->video_url;
+                $attachment = $lesson->lessonAttachment->origin_video_url;
             }
             $attachment_path = pathinfo(storage_path() . $attachment);
             $attachment_extension = $attachment_path['extension'];

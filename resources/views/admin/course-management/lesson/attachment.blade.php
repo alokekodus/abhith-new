@@ -16,24 +16,30 @@
         </span>
     </h3>
 </div>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 @if($attachment_extension=="mp4")
-                <video autoplay id="attachment-video" class="video-js vjs-big-play-centered" controls preload="auto"
-                    width="640" height="264" poster="{{asset($lesson->image_url)}}" data-setup="{}" muted="muted">
-                    <source autoplay src="{{asset($lesson->video_url)}}" type="video/mp4"
-                        class="video-js vjs-theme-city" />
+                {{-- <video autoplay id="attachment-video" class="video-js vjs-big-play-centered" controls
+                    preload="auto" width="640" height="264" poster="{{asset($lesson->lessonAttachment->img_url)}}"
+                    data-setup='{
+                        "fluid": true
+                    }' muted="muted">
+                    <source autoplay src="{{asset('storage/'.$lesson->lessonAttachment->origin_video_url)}}"
+                        type="video/mp4" class="video-js vjs-theme-city" />
 
                     <p class="vjs-no-js">
-                        To view this video please enable JavaScript, and consider upgrading to a
-                        web browser that
-                        <a href="{{asset($lesson->video_url)}}" target="_blank">supports HTML5 video</a>
+                        <a href="{{asset('storage/'.$lesson->lessonAttachment->origin_video_url)}}"
+                            target="_blank">supports HTML5 video</a>
                     </p>
+                </video> --}}
+                <video id="player" class="video-js vjs-default-skin" controls preload="none" autoplay loop muted
+                    width="640" height="264" poster="{{asset($lesson->lessonAttachment->img_url)}}">
                 </video>
                 @else
-                <img src="{{asset($lesson->image_url)}}" class="img-fluid" alt="Responsive image">
+                <img src="{{asset($lesson->lessonAttachment->img_url)}}" class="img-fluid" alt="Responsive image">
                 @endif
             </div>
         </div>
@@ -43,13 +49,45 @@
 @endsection
 
 @section('scripts')
+
+<script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
+
 <script>
-    document.getElementById('attachment-video').play();
+        var lesson=@json($lesson);
+        var lesson_attachment=lesson['lesson_attachment'];
+        var storagePath = "{!! storage_path() !!}";
+        var FULLHD= lesson_attachment['origin_video_url'] ;
+        var SD= lesson_attachment['video_resize_480'] ;
+        var HD= lesson_attachment['video_resize_720'] ;
+        var player = videojs('player', {
+        fluid: true,
+        plugins: {
+            videoJsResolutionSwitcher: {
+            default: 'low',
+            dynamicLabel: true
+            }
+        }
+        });
+        player.updateSrc([
+        {
+            src: 'http://localhost/abhith-new/public/storage/'+SD,
+            type: 'video/mp4',
+            res: 480,
+            label: 'SD'
+        },
+        {
+            src: 'http://localhost/abhith-new/public/storage/'+HD,
+            type: 'video/mp4',
+            res: 720,
+            label: 'HD'
+        },
+            {
+            src: 'http://localhost/abhith-new/public/storage/'+FULLHD,
+            type: 'video/mp4',
+            res: 1080,
+            label: 'FULLHD'
+        },
+        ])
 </script>
-<script>
-    var player = videojs('attachment-video', {
-    fluid: false,
-    autoplay: true,
-  });
-</script>
+
 @endsection

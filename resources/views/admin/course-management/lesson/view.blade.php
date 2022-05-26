@@ -224,7 +224,7 @@
 
                                 </div>
                                 <a class="vimeo-popup"
-                                    href="">View
+                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(1)])}}">View
                                     more</a>
                             </figcaption>
                         </figure>
@@ -235,14 +235,14 @@
                     <div class="video-gallery">
                         <figure class="gallery-item">
                            
-                            <img src="" alt="Lesson Video" />
+                            <img src="{{asset($lesson->lessonAttachment->img_url)}}" alt="Lesson Video" />
                             <figcaption>
                                 <div>
-                                    <h6>Editor <span>Reel</span></h6>
+                                    <h6>Video</h6>
 
                                 </div>
                                 <a class="vimeo-popup"
-                                    href="">View
+                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(2)])}}">View
                                     more</a>
                             </figcaption>
                         </figure>
