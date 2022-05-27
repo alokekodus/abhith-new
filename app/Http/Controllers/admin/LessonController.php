@@ -45,6 +45,7 @@ class LessonController extends Controller
                 $video_path = null;
                 $document = $request->file('image_url');
                 $lessonVideo = $request->file('video_url');
+                $videoThumbnailImageUrl=$request->file('video_thumbnail_image_url');
                
               if ($type =="create-lesson" || $type == "update-lesson") {
                  
@@ -62,22 +63,26 @@ class LessonController extends Controller
                         $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
                     
                     }
-                   
+                    if (!empty($document)) {
+                        $video_thumbnail_image_url=LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image"); //lesson image store
+                    
+                    }
                     if (!empty($lessonVideo)) {
-                    $video_path=$request->video_url->store('public');
+                    $video_path=$request->video_url->store();
                     }
                   
                     $data_attachment = [
                         'lesson_id' =>  $lesson->id,
                         'img_url'=>$image_path,
                         'origin_video_url'=> $video_path,
+                        'video_thumbnail_image'=>$video_thumbnail_image_url,
                        
                     ];
                     
                      $lesson_attachment=LessonAttachment::create($data_attachment);
                     // $lesson_attachment=LessonAttachment::create($data_attachment);
-                    if($request->has('resizes')){
-                        foreach($request->resizes as $key=>$resize){
+                    $resizes=[480,720,1080];
+                        foreach($resizes as $key=>$resize){
                             if($resize==480){
                                 $x_dimension=640;
                                 $y_dimension =480;  
@@ -91,9 +96,7 @@ class LessonController extends Controller
                             //     $y_dimension =1080;  
                             // }
                             $this->dispatch(new ConvertVideoForResolution($lesson_attachment,$x_dimension,$y_dimension));
-                        }
-
-                    }
+                         }
                      
                     // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
                     return response()->json(['message' => 'Lesson Added Successfully','status' => 1]);

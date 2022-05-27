@@ -1,3 +1,170 @@
+
+$(document).ready(function () {
+    // jQuery.validator.addMethod('name_rule', function (value, element) {
+    //     if (/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     };
+    // });
+    // jQuery.validator.addMethod("img_extension", function (value, element, param) {
+    //     param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
+    //     return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+    // });
+    // jQuery.validator.addMethod('maxfilesize', function (value, element, param) {
+    //     var length = (element.files.length);
+
+    //     var fileSize = 0;
+
+    //     if (length > 0) {
+    //         for (var i = 0; i < length; i++) {
+    //             fileSize = element.files[i].size;
+
+
+    //             fileSize = fileSize / 1024; //file size in Kb
+    //             fileSize = fileSize / 1024; //file size in Mb
+
+    //             return this.optional(element) || fileSize <= param;
+    //         }
+
+    //     }
+    //     else {
+    //         return this.optional(element) || fileSize <= param;
+
+    //     }
+    // });
+    $("#assignLessonForm").validate({
+        rules: {
+            board_id: {
+                required: true,
+            },
+            assign_class_id: {
+                required: true,
+            },
+            assign_subject_id: {
+                required: true,
+            },
+            name: {
+                required: true,
+                // name_rule: true,
+                minlength: 10,
+            },
+            image_url: {
+                required: true,
+                // img_extension: true,
+                // img_maxfilesize: 2,
+
+            },
+            video_url: {
+                required: true,
+            },
+            content: {
+                required: true,
+            },
+
+        },
+        messages: {
+            board_id: {
+                required: "Board name is required",
+            },
+            assign_class_id: {
+                required: "Class name is required",
+                // maxlength: "Last name cannot be more than 20 characters"
+            },
+            assign_subject_id: {
+                required: "Subject is required",
+            },
+            name: {
+                required: "Lesson Name is required",
+                name_rule: "Please insert a valid name",
+                minlength: "The name should greater than or equal to 50 characters"
+            },
+            image_url: {
+                required: "Image is required",
+                img_extension: "The Image should be in jpg|jpeg|png|gif format",
+                maxfilesize: "File size must not be more than 1 MB."
+            },
+            video_url: {
+                required: "Video is required",
+
+            },
+            content: {
+                required: "Content is required",
+            },
+
+        },
+        errorPlacement: function (error, element) {
+           
+            if (element.attr("name") == "image_url") {
+                error.appendTo("#imageUrlError");
+            } else if (element.attr("name") == "video_url") {
+                error.appendTo("#videoUrlError");
+            } else {
+                error.insertAfter(element)
+            }
+
+
+        },
+        submitHandler: function(form,e) {
+             e.preventDefault();
+
+                $('#assignLessonSubmitBtn').attr('disabled', true);
+                $('#assignLessonSubmitBtn').text('Please wait...');
+                $('#assignLessonCancelBtn').attr('disabled', true);
+
+
+                let formData = new FormData(this);
+
+                var Content = CKEDITOR.instances['content'].getData();
+
+                formData.append('content', Content);
+                const url='../../../admin/course-management/lesson/store'
+                $.ajax({
+                    url: "{{route('admin.course.management.lesson.store')}}",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+
+                    success: function (data) {
+                        console.log(data);
+                        if (data.error != null) {
+                            $.each(data.error, function (key, val) {
+                                toastr.error(val[0]);
+                            });
+                            $('#assignLessonSubmitBtn').attr('disabled', false);
+                            $('#assignLessonSubmitBtn').text('Submit');
+                            $('#assignLessonCancelBtn').attr('disabled', false);
+                        }
+                        if (data.status == 1) {
+                            console.log(data);
+                            toastr.success(data.message);
+                            location.reload(true);
+                        } else {
+
+                            toastr.error(data.message);
+                            $('#assignLessonSubmitBtn').attr('disabled', false);
+                            $('#assignLessonSubmitBtn').text('Submit');
+                            $('#assignLessonCancelBtn').attr('disabled', false);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+
+                        if (xhr.status == 500 || xhr.status == 422) {
+                            toastr.error('Whoops! Something went wrong failed to assign lesson');
+                        }
+
+                        $('#assignSubjectSubmitBtn').attr('disabled', false);
+                        $('#assignSubjectSubmitBtn').text('Submit');
+                        $('#assignSubjectCancelBtn').attr('disabled', false);
+                    }
+                });
+           }
+    });
+});
+
+
+// For datatable
 $(document).ready(function () {
     $('#boardsTable').DataTable({
         "processing": true,
@@ -23,54 +190,28 @@ FilePond.registerPlugin(
     FilePondPluginFileValidateType
 );
 
-// Select the file input and use create() to turn it into a pond
+imageUpload.onchange = evt => {
+    const [file] = imageUpload.files
+    if (file) {
+        blah.style.display = "block";
+        blah.src = URL.createObjectURL(file)
 
+    }
+}
+videoThumbnailImageUpload.onchange = evt => {
+    const [file] = videoThumbnailImageUpload.files
+    if (file) {
+        videothumbnailimagepreview.style.display = "block";
+        videothumbnailimagepreview.src = URL.createObjectURL(file)
 
-pondImage = FilePond.create(
-
-    document.getElementById('lessonImage'), {
-    allowMultiple: true,
-    maxFiles: 1,
-    imagePreviewHeight: 135,
-    acceptedFileTypes: ['image/png', 'image/jpeg'],
-    labelFileTypeNotAllowed: 'File of invalid type. Acepted types are png and jpeg/jpg.',
-    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
-},
-);
-pondImageUpdate = FilePond.create(
-
-    document.getElementById('lessonImageUpdate'), {
-    allowMultiple: true,
-    maxFiles: 1,
-    imagePreviewHeight: 135,
-    acceptedFileTypes: ['image/png', 'image/jpeg'],
-    labelFileTypeNotAllowed: 'File of invalid type. Acepted types are png and jpeg/jpg.',
-    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
-},
-);
-pondVideo = FilePond.create(
-
-    document.getElementById('lessonVideo'), {
-    allowMultiple: true,
-    maxFiles: 50,
-    imagePreviewHeight: 135,
-    acceptedFileTypes: ['video/mp4'],
-    labelFileTypeNotAllowed: 'File of invalid type. Acepted types are mp4.',
-    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
-},
-);
-pondVideoUpdate = FilePond.create(
-
-    document.getElementById('lessonVideoUpdate'), {
-    allowMultiple: true,
-    maxFiles: 50,
-    imagePreviewHeight: 135,
-    acceptedFileTypes: ['video/mp4'],
-    labelFileTypeNotAllowed: 'File of invalid type. Acepted types are mp4.',
-    labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of video is 1 :</p> </div>',
-},
-);
-//
+    }
+}
+videoUpload.onchange = function (event) {
+    videoPriview.style.display = "block";
+    let file = event.target.files[0];
+    let blobURL = URL.createObjectURL(file);
+    document.querySelector("video").src = blobURL;
+}
 $("#addLesson").on('click', function () {
     $('#assignLessonModal').modal({ backdrop: 'static', keyboard: false });
 })
@@ -78,8 +219,7 @@ $("#addLesson").on('click', function () {
 $('#assignLessonCancelBtn').on('click', function () {
     $('#assignLessonModal').modal('hide');
     $('#assignLessonForm')[0].reset();
-    pondImage.removeFiles();
-    pondVideo.removeFiles();
+
 
 });
 $('#assignLessonForm').on('submit', function (e) {
@@ -91,26 +231,18 @@ $('#assignLessonForm').on('submit', function (e) {
 
 
     let formData = new FormData(this);
-    pondImageFiles = pondImage.getFiles();
-    pondVideoFiles = pondVideo.getFiles();
-    for (var i = 0; i < pondImageFiles.length; i++) {
-        // append the blob file
-        formData.append('image_url', pondImageFiles[i].file);
-    }
-    for (var i = 0; i < pondVideoFiles.length; i++) {
-        // append the blob file
-        formData.append('video_url', pondVideoFiles[i].file);
-    }
+
     var Content = CKEDITOR.instances['content'].getData();
 
     formData.append('content', Content);
-
+    const url='../../../admin/course-management/lesson/store';
     $.ajax({
-        url: "{{route('admin.course.management.lesson.store')}}",
+        url: url,
         type: "POST",
         processData: false,
         contentType: false,
         data: formData,
+
         success: function (data) {
             console.log(data);
             if (data.error != null) {
@@ -145,11 +277,13 @@ $('#assignLessonForm').on('submit', function (e) {
         }
     });
 });
+
+//find class according to board
 function changeBoard() {
+    const url='../../../api/get-class';
     let board_id = $("#assignedBoard").val();
-    console.log(board_id);
     $.ajax({
-        url: "{{route('board.class')}}",
+        url: url,
         type: "POST",
         data: {
             '_token': "{{csrf_token()}}",
@@ -173,12 +307,14 @@ function changeBoard() {
         }
     });
 }
+//find subject according to class
 $('#board-class-dd').on('change', function () {
+    const url='../../../api/board-class-subject'
     var classId = this.value;
     var boardId = $("#assignedBoard").val();
     $("#board-subject-dd").html('');
     $.ajax({
-        url: "{{route('board.class.subject')}}",
+        url: url,
         type: "POST",
         data: {
             class_id: classId,
@@ -196,34 +332,27 @@ $('#board-class-dd').on('change', function () {
         }
     });
 });
-$("#displayMoreLesson").click(function () {
-    let id = $(this).attr("data-id");
-    let content = $(this).attr("data-value");
-    $("#modal-name").html("Lesson Content");
-    CKEDITOR.instances["Content"].setData(content);
 
+
+$('#videoUpload').bind('change', function () {
+    var filename = $("#videoUpload").val();
+    if (/^\s*$/.test(filename)) {
+        $(".file-upload").removeClass('active');
+        $("#noFile").text("No file chosen...");
+    }
+    else {
+        $(".file-upload").addClass('active');
+        $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+    }
 });
-$("#displayImage").click(function () {
-    let id = $(this).attr("data-id");
-    let image = $(this).attr("data-value");
-    var displayImage = `<img src="{{asset('${image}')}}" class="lesson-image"></img>`
-
-    $("#displayLessonImage").html(displayImage);
-
-    $("#document-modal-name").html("Lesson Image");
-
-
-});
-$("#displayVideo").click(function () {
-    let id = $(this).attr("data-id");
-    let video = $(this).attr("data-value");
-    var displayVideo = `<div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="{{asset('${video}')}}" allowfullscreen></iframe>
-                      </div>`;
-
-    $("#displayLessonVideo").html(displayVideo);
-
-    $("#document-modal-name").html("Lesson Video");
-
-
+$('#imageUpload').bind('change', function () {
+    var filename = $("#imageUpload").val();
+    if (/^\s*$/.test(filename)) {
+        $(".file-upload").removeClass('active');
+        $("#noImageFile").text("No file chosen...");
+    }
+    else {
+        $(".file-upload").addClass('active');
+        $("#noImageFile").text(filename.replace("C:\\fakepath\\", ""));
+    }
 });

@@ -2,6 +2,10 @@
 @section('title', 'Course Management - Lesson')
 @section('content')
 <style>
+    .error {
+        color: #FF0000;
+    }
+
     .lesson-image {
         height: 200px;
         width: 150px;
@@ -162,11 +166,7 @@
                     <form id="assignLessonForm" enctype="multipart/form-data" method="post">
                         @csrf
                         @include('admin.course-management.lesson.form')
-                        <div class="form-group">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-                            </div>
-                        </div>
+
                         <div style="float: right;">
                             <button type="button" class="btn btn-md btn-default"
                                 id="assignLessonCancelBtn">Cancel</button>
@@ -184,7 +184,119 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js">
+</script>
+<script>
+    $(document).ready(function() {
+        jQuery.validator.addMethod('name_rule', function (value, element) {
+		if (/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
+			return true;
+		} else {
+			return false;
+		};
+	 });
+     jQuery.validator.addMethod("img_extension", function(value, element, param) {
+                param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
+                return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+        });
+        jQuery.validator.addMethod('maxfilesize', function(value, element, param) {
+   var length = ( element.files.length );
 
+    var fileSize = 0;
+
+           if (length > 0) {
+               for (var i = 0; i < length; i++) {
+                   fileSize = element.files[i].size; 
+                  
+
+                        fileSize = fileSize / 1024; //file size in Kb
+                        fileSize = fileSize / 1024; //file size in Mb
+
+                     return this.optional( element ) || fileSize <= param;
+               }
+
+            }
+            else
+            {
+                return this.optional( element ) || fileSize <= param;
+                   
+            }
+       });
+            $("#assignLessonForm").validate({
+                rules: {
+                    board_id: {
+                        required: true,
+                    },
+                    assign_class_id:{
+                        required: true,
+                    },
+                    assign_subject_id: {
+                        required: true,
+                    },
+                    name: {
+                        required: true,
+                        name_rule:true,
+                        minlength: 10,
+                    },
+                    image_url: {
+                        required: true,
+                        img_extension:true,
+                        img_maxfilesize:2,
+                       
+                    },
+                    video_url: {
+                        required: true,
+                    },
+                    content: {
+                        required: true,
+                    },
+                    
+                },
+                messages: {
+                    board_id: {
+                        required: "Board name is required",
+                    },
+                    assign_class_id: {
+                        required: "Class name is required",
+                        // maxlength: "Last name cannot be more than 20 characters"
+                    },
+                    assign_subject_id: {
+                        required: "Subject is required",
+                    },
+                    name: {
+                        required: "Lesson Name is required",
+                        name_rule: "Please insert a valid name",
+                        minlength:"The name should greater than or equal to 50 characters"
+                    },
+                    image_url: {
+                        required: "Image is required",
+                        img_extension:"The Image should be in jpg|jpeg|png|gif format",
+                        maxfilesize:"File size must not be more than 1 MB."
+                    },
+                    video_url: {
+                        required:  "Video is required",
+                       
+                    },
+                    content: {
+                        required:  "Content is required",
+                    },
+                  
+                },
+                errorPlacement: function (error,element) { 
+                    console.log(element.attr("name")); 
+                    if (element.attr("name") == "image_url") {
+                        error.appendTo("#imageUrlError");
+                    }else if(element.attr("name") == "video_url"){
+                        error.appendTo("#videoUrlError");
+                    }else {
+                        error.insertAfter(element)
+                    }          
+                               
+                    
+                }
+            });
+    });
+</script>
 <script>
     // For datatable
         $(document).ready( function () {
@@ -212,14 +324,22 @@
                 FilePondPluginFileValidateType
             );
 
-        imageUpload.onchange = evt => {
-            const [file] = imageUpload.files
-            if (file) {
-                blah.style.display = "block";
-                blah.src = URL.createObjectURL(file)
-              
+                imageUpload.onchange = evt => {
+                const [file] = imageUpload.files
+                if (file) {
+                    blah.style.display = "block";
+                    blah.src = URL.createObjectURL(file)
+
+                }
             }
-            }   
+            videoThumbnailImageUpload.onchange = evt => {
+                const [file] = videoThumbnailImageUpload.files
+                if (file) {
+                    videothumbnailimagepreview.style.display = "block";
+                    videothumbnailimagepreview.src = URL.createObjectURL(file)
+
+                }
+            } 
             videoUpload.onchange = function(event) {
                 videoPriview.style.display="block";
                     let file = event.target.files[0];

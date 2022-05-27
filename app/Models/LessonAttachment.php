@@ -14,6 +14,7 @@ class LessonAttachment extends Model
     protected $fillable=[
     'lesson_id',
     'img_url',
+    'video_thumbnail_image',
     'origin_video_url',
     'video_resize_480',
     'video_resize_720',
