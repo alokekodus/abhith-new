@@ -42,7 +42,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css">
-
+    <link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet" />
 
     @yield('head')
 

@@ -26,13 +26,14 @@ class LessonController extends Controller
     }
     public function create(){
         $board_details = Board::where('is_activate', 1)->get();
-        return view('admin.course-management.lesson.create')->with(['boards' => $board_details]);
+        $form_type="Lesson";
+        return view('admin.course-management.lesson.create')->with(['boards' => $board_details,'form_type'=>$form_type]);
     }
     public function store(Request $request)
     {
         try {
-           
-            $type = $this->findFormType($request);
+            //form type eg:add lesson
+            $type = $this->findFormType($request); 
             
             //validate all request according to it's type
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
@@ -48,7 +49,7 @@ class LessonController extends Controller
                 $videoThumbnailImageUrl=$request->file('video_thumbnail_image_url');
                
               if ($type =="create-lesson" || $type == "update-lesson") {
-                 
+                    
                     $data = [
                         'name' => ucfirst($request->name),
                         'slug' => Str::slug($request->name),
@@ -64,24 +65,24 @@ class LessonController extends Controller
                     
                     }
                     if (!empty($document)) {
-                        $video_thumbnail_image_url=LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image"); //lesson image store
+                        $video_thumbnail_image_url_path=LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image"); //lesson image store
                     
                     }
                     if (!empty($lessonVideo)) {
-                    $video_path=$request->video_url->store();
+                    $video_path=$request->video_url->store('public');
                     }
                   
                     $data_attachment = [
                         'lesson_id' =>  $lesson->id,
                         'img_url'=>$image_path,
                         'origin_video_url'=> $video_path,
-                        'video_thumbnail_image'=>$video_thumbnail_image_url,
+                        'video_thumbnail_image'=>$video_thumbnail_image_url_path,
                        
                     ];
                     
                      $lesson_attachment=LessonAttachment::create($data_attachment);
                     // $lesson_attachment=LessonAttachment::create($data_attachment);
-                    $resizes=[480,720,1080];
+                    $resizes=["480","720","1080"];
                         foreach($resizes as $key=>$resize){
                             if($resize==480){
                                 $x_dimension=640;
@@ -159,8 +160,7 @@ class LessonController extends Controller
     public function topicView($slug)
     {
         try {
-            $lesson = Lesson::where('slug', $slug)->first();
-
+            $lesson = Lesson::with('lessonAttachment')->where('slug', $slug)->first();
             return view('admin.course-management.lesson.view', compact('lesson'));
         } catch (\Throwable $th) {
             //throw $th;

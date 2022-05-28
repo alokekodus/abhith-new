@@ -118,7 +118,8 @@ class UserDetailsController extends Controller
     public function myLessonDetails($lesson_id){
         try {
             $lesson_id=Crypt::decrypt($lesson_id);
-            $lesson=Lesson::with('topics','subTopics')->where('id',$lesson_id)->first();
+            $lesson=Lesson::with(['topics','subTopics'])->where('id',$lesson_id)->first();
+        
             return view('website.my_account.my_lesson_details',compact('lesson'));
         } catch (\Throwable $th) {
             //throw $th;

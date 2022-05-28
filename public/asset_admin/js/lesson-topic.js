@@ -56,9 +56,7 @@ jQuery(function ($) {
                     img_maxfilesize: 2,
 
                 },
-                video_url: {
-                    required: true,
-                },
+               
                 content: {
                     required: true,
                 },
@@ -84,10 +82,6 @@ jQuery(function ($) {
                     required: "Image is required",
                     img_extension: "The Image should be in jpg|jpeg|png|gif format",
                     maxfilesize: "File size must not be more than 1 MB."
-                },
-                video_url: {
-                    required: "Video is required",
-
                 },
                 content: {
                     required: "Content is required",

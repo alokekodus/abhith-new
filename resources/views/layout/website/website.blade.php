@@ -18,7 +18,7 @@
 
         @yield('content')
 
-        @include('layout.website.include.footer')
+        {{-- @include('layout.website.include.footer') --}}
 
 
     </main>

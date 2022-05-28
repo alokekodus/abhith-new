@@ -29,9 +29,9 @@ class Lesson extends Model
                 'board_id' => 'bail|integer|required',
                 'assign_class_id' => 'bail|integer|required',
                 'assign_subject_id' => 'bail|integer|required',
-                'name' => 'bail|required',
+                'name' => 'bail|unique:lessons|required',
                 'image_url' => 'bail|required|mimes:png,jpg,jpeg',
-                'video_url' => 'bail|mimes:mp4',
+                'video_url' => 'bail|required|mimes:mp4',
                 'content' => 'bail|required',
             ];
             return $lesson_rules;
@@ -69,6 +69,7 @@ class Lesson extends Model
                 'assign_class_id.required' => 'Please insert a valid Class',
                 'assign_subject_id.required' => 'Please insert a valid Subject',
                 'name.required' => 'Please insert a valid Lesson Title',
+                'name.unique'=>'This lesson name is already in used',
                 'image_url.required' => 'Image Is required and it should be on png,jpeg format',
                 'video_url.required' => 'Video  should be on mp4 format',
             ];

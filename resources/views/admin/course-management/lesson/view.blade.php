@@ -204,95 +204,113 @@
         </span> Lesson Details
     </h3>
 </div>
-
-<div class="row p-2">
-    <div class="col-12 p-2 scroll">
+<div class="card">
+    <div class="accordion" id="accordionExample">
         <div class="card">
-            <div class="card-header">
-                <h4 style="text-align: center;">Lesson Name: {{$lesson->name}}</h4>
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{$lesson->name}}
+                    </button>
+                </h2>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    @if($lesson->lessonAttachment->exists())
-                    @if($lesson->lessonAttachment->img_url!=null)
-                    <div class="video-gallery">
-                        <figure class="gallery-item">
-                            <img src="{{asset($lesson->lessonAttachment->img_url)}}" alt="image" />
-                            <figcaption>
-                                <div>
-                                    <h6>{{$lesson->name}}</h6>
 
-                                </div>
-                                <a class="vimeo-popup"
-                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(1)])}}">View
-                                    more</a>
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <hr>
-                    @endif
-                    @if($lesson->lessonAttachment->origin_video_url!=null)
-                    <div class="video-gallery">
-                        <figure class="gallery-item">
-                           
-                            <img src="{{asset($lesson->lessonAttachment->img_url)}}" alt="Lesson Video" />
-                            <figcaption>
-                                <div>
-                                    <h6>Video</h6>
-
-                                </div>
-                                <a class="vimeo-popup"
-                                    href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(2)])}}">View
-                                    more</a>
-                            </figcaption>
-                        </figure>
-                    </div>
-                    <hr>
-                    @endif
-                    @endif
-                </div>
-
-
-                <br>
-                {!!$lesson->content!!}
-                <br>
-
-
-
-            </div>
-        </div>
-    </div>
-
-</div>
-<div class="row p-2">
-    <div class="col-12  scroll">
-        <br>
-        <div class="card">
-            <div class="card-header">
-                <h4 style="text-align: center;">All Topics
-                    <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}"
-                        class="btn btn-gradient-primary p-2" title="Add New Topic" style="float: right;"><i
-                            class="mdi mdi-plus"></i></a>
-                </h4>
-            </div>
-            <div class="card-body">
-                @if($lesson->topics()->exists())
-                @include('admin.course-management.lesson.topic.all')
-                @else
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
+                    <div class="card-body">
+                        <div class="label"><u>Lesson Attachments</u></div>
+                        <div class="row">
 
-                            Topic Not Added yet
+                            @if($lesson->lessonAttachment->exists())
+                            @if($lesson->lessonAttachment->img_url!=null)
+                            <div class="video-gallery">
+                                <figure class="gallery-item">
+                                    <img src="{{asset($lesson->lessonAttachment->img_url)}}" alt="image" />
+                                    <figcaption>
+                                        <div>
+                                            <h6>{{$lesson->name}}</h6>
 
-                        </h5>
+                                        </div>
+                                        <a class="vimeo-popup"
+                                            href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(1)])}}">View
+                                            more</a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            @endif
+                            @if($lesson->lessonAttachment->origin_video_url!=null)
+                            <div class="video-gallery">
+                                <figure class="gallery-item">
+
+                                    <img src="{{asset($lesson->lessonAttachment->video_thumbnail_image)}}"
+                                        alt="Lesson Video" />
+                                    <figcaption>
+                                        <div>
+                                            <h6>Video</h6>
+
+                                        </div>
+                                        <a class="vimeo-popup"
+                                            href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(2)])}}">View
+                                            more</a>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <hr>
+                            @endif
+                            @endif
+                        </div>
+
+
+                        <br>
+                        {!!$lesson->content!!}
+                        <br>
                     </div>
                 </div>
-                @endif
             </div>
         </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        All Topics
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="text-align: center;">All Topics
+                                <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}"
+                                    class="btn btn-gradient-primary p-2" title="Add New Topic" style="float: right;"><i
+                                        class="mdi mdi-plus"></i></a>
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            @if($lesson->topics()->exists())
+                            @include('admin.course-management.lesson.topic.all')
+                            @else
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+
+                                        Topic Not Added yet
+
+                                    </h5>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
 @endsection
 
 @section('scripts')

@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-@include('layout.website.include.forum_header')
+{{-- @include('layout.website.include.forum_header') --}}
 <br>
 <section class="account-section">
   <div class="container-fluid">
@@ -56,7 +56,7 @@
 
   </div>
 </section>
-<br><br><br><br><br>
+
 {{-- <div class="container p-5">
   <div class="row">
     <div class="col-8">
