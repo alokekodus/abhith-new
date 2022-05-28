@@ -1,13 +1,13 @@
 jQuery(function ($) {
 
     $(document).ready(function () {
-        jQuery.validator.addMethod('name_rule', function (value, element) {
-            if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
-                return true;
-            } else {
-                return false;
-            };
-        });
+        // jQuery.validator.addMethod('name_rule', function (value, element) {
+        //     if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     };
+        // });
         jQuery.validator.addMethod("img_extension", function (value, element, param) {
             param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
             return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
@@ -34,7 +34,7 @@ jQuery(function ($) {
 
             }
         });
-        $("#assignLessonForm").validate({
+        $("#assignTopicForm").validate({
             rules: {
                 board_id: {
                     required: true,
@@ -47,7 +47,7 @@ jQuery(function ($) {
                 },
                 name: {
                     required: true,
-                    name_rule: true,
+                    // name_rule: true,
                     minlength: 10,
                 },
                 image_url: {
@@ -151,22 +151,20 @@ jQuery(function ($) {
         let blobURL = URL.createObjectURL(file);
         document.querySelector("video").src = blobURL;
     }
-    $("#addLesson").on('click', function () {
-        $('#assignLessonModal').modal({ backdrop: 'static', keyboard: false });
-    })
+    
     //For hiding modal
-    $('#assignLessonCancelBtn').on('click', function () {
+    $('#assignTopicCancelBtn').on('click', function () {
         $('#assignLessonModal').modal('hide');
-        $('#assignLessonForm')[0].reset();
+        $('#assignTopicForm')[0].reset();
 
 
     });
-    $('#assignLessonForm').on('submit', function (e) {
+    $('#assignTopicForm').on('submit', function (e) {
         e.preventDefault();
 
-        $('#assignLessonSubmitBtn').attr('disabled', true);
-        $('#assignLessonSubmitBtn').text('Please wait...');
-        $('#assignLessonCancelBtn').attr('disabled', true);
+        $('#assignTopicSubmitBtn').attr('disabled', true);
+        $('#assignTopicSubmitBtn').text('Please wait...');
+        $('#assignTopicCancelBtn').attr('disabled', true);
 
 
         let formData = new FormData(this);
@@ -188,9 +186,9 @@ jQuery(function ($) {
                     $.each(data.error, function (key, val) {
                         toastr.error(val[0]);
                     });
-                    $('#assignLessonSubmitBtn').attr('disabled', false);
-                    $('#assignLessonSubmitBtn').text('Submit');
-                    $('#assignLessonCancelBtn').attr('disabled', false);
+                    $('#assignTopicSubmitBtn').attr('disabled', false);
+                    $('#assignTopicSubmitBtn').text('Submit');
+                    $('#assignTopicCancelBtn').attr('disabled', false);
                 }
                 if (data.status == 1) {
                     console.log(data);
@@ -199,9 +197,9 @@ jQuery(function ($) {
                 } else {
 
                     toastr.error(data.message);
-                    $('#assignLessonSubmitBtn').attr('disabled', false);
-                    $('#assignLessonSubmitBtn').text('Submit');
-                    $('#assignLessonCancelBtn').attr('disabled', false);
+                    $('#assignTopicSubmitBtn').attr('disabled', false);
+                    $('#assignTopicSubmitBtn').text('Submit');
+                    $('#assignTopicCancelBtn').attr('disabled', false);
                 }
             },
             error: function (xhr, status, error) {
@@ -210,65 +208,14 @@ jQuery(function ($) {
                     toastr.error('Whoops! Something went wrong failed to assign lesson');
                 }
 
-                $('#assignSubjectSubmitBtn').attr('disabled', false);
-                $('#assignSubjectSubmitBtn').text('Submit');
-                $('#assignSubjectCancelBtn').attr('disabled', false);
+                $('#assignTopicSubmitBtn').attr('disabled', false);
+                $('#assignTopicSubmitBtn').text('Submit');
+                $('#assignTopicCancelBtn').attr('disabled', false);
             }
         });
     });
 
-    $('#assignedBoard').on('change', function () {
-        let board_id = $("#assignedBoard").val();
-        const url="../../../api/get-class";
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                '_token': "{{csrf_token()}}",
-                'board_id': board_id
-            },
-            success: function (data) {
-
-                $('#board-class-dd').html('<option value="">Select Class</option>');
-                data.forEach((boardClass) => {
-                    $("#board-class-dd").append('<option value="' + boardClass
-                        .id + '">' + 'Class-' + boardClass.class + '</option>');
-                });
-                $('#board-subject-dd').html('<option value="">Select Subject</option>');
-
-
-            },
-            error: function (xhr, status, error) {
-                if (xhr.status == 500 || xhr.status == 422) {
-                    toastr.error('Whoops! Something went wrong. Failed to fetch course');
-                }
-            }
-        });
-    });
-    $('#board-class-dd').on('change', function () {
-        var classId = this.value;
-        var boardId = $("#assignedBoard").val();
-        const url="../../../api/board-class-subject";
-        $("#board-subject-dd").html('');
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                class_id: classId,
-                board_id: boardId,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function (data) {
-                $('#board-subject-dd').html('<option value="">Select Subject</option>');
-                data.forEach((subject) => {
-                    $("#board-subject-dd").append('<option value="' + subject
-                        .id + '">' + 'Subject-' + subject.subject_name + '</option>');
-                });
-
-            }
-        });
-    });
+   
 
 
     $('#videoUpload').bind('change', function () {

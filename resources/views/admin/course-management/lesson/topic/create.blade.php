@@ -32,12 +32,22 @@
             </h5>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-8 p-4">
                 <div class="card">
-                    @include('admin.course-management.lesson.common.form')
+                    <form id="assignTopicForm" enctype="multipart/form-data" method="post">
+                        @csrf
+                        <input type="hidden" name="parent_id" value="{{$lesson->id}}">
+                        @include('admin.course-management.lesson.common.form')
+                        <div style="float: right;">
+                            <button type="button" class="btn btn-md btn-default"
+                                id="assignTopicCancelBtn">Cancel</button>
+                            <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn" name="type"
+                                value="create-topic">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col-4 dyn-height">
+            <div class="col-4 p-4 dyn-height">
                 <br>
                 @if($lesson->topics()->exists())
                 @include('admin.course-management.lesson.topic.all')
@@ -63,6 +73,6 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript" src="{{ asset('asset_admin/js/lesson_topic.js') }}">
+<script type="text/javascript" src="{{ asset('asset_admin/js/lesson-topic.js') }}">
 </script>
 @endsection

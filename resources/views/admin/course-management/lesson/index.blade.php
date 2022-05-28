@@ -53,7 +53,6 @@
                             <td>Class</td>
                             <td>Subject</td>
                             <td>Lesson</td>
-                            <td>Lesson Content</td>
                             <td>Action</td>
                         </tr>
                     </thead>
@@ -64,13 +63,7 @@
                             <td>{{$all_lesson->board->exam_board}}</td>
                             <td>{{$all_lesson->assignClass->class}}</td>
                             <td>{{$all_lesson->assignSubject->subject_name}}</td>
-                            <td>{{$all_lesson->name}} <span
-                                    class="position-absolute top-2 start-100 translate-middle badge rounded-pill bg-info">{{$all_lesson->topics->count()}}</span>
-                            </td>
-                            <td>{{ substr(strip_tags($all_lesson->content), 0, 30) }}...<i id="displayMoreLesson"
-                                    class="mdi mdi-eye" data-toggle="modal" data-id="{{$all_lesson->id}}"
-                                    data-value="{{$all_lesson->content}}" data-target="#displayMore"></i></td>
-                            
+                            <td>{{$all_lesson->name}}</td>
                             <td> <a href="{{route('admin.course.management.lesson.edit',$all_lesson->slug)}}"
                                     class="btn btn-gradient-primary p-2" title="Edit Lesson"><i
                                         class="mdi mdi-pencil"></i></a> <a

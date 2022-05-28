@@ -38,10 +38,10 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <img id="blah" src="#" alt="your image" height="200" controls style="display: none;" />
+        <img id="blah" src="#" alt="your image" height="150" width="250" controls style="display: none;" />
     </div>
     <div class="col-6">
-        <img id="videothumbnailimagepreview" src="#" alt="your image" height="200" controls style="display: none;" />
+        <img id="videothumbnailimagepreview" src="#" alt="your image" height="150" width="250" controls style="display: none;" />
     </div>
 </div>
 <hr>
@@ -64,7 +64,7 @@
 <div class="row">
     <div class="col-12">
         <div class="form-group">
-            <video width="937" height="250" id='videoPriview' controls style="display: none;">
+            <video width="600" height="250" id='videoPriview' controls style="display: none;">
 
             </video>
         </div>

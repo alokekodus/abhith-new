@@ -39,7 +39,7 @@
 
     /* Change background color of buttons on hover */
     .tab button:hover {
-        background-color: #ddd;
+        background-color: #076fef;
     }
 
     /* Create an active/current "tab button" class */
@@ -50,20 +50,35 @@
     /* Style the tab content */
     .tabcontent {
         float: left;
-        border: 1px solid #ccc;
+        border: 1px solid #0770EF;
         width: 75%;
         border-left: none;
         height: 440px;
     }
 
     .subheader1-img img {
-       
+
         width: 100%;
         object-fit: cover;
     }
+
     .topic-details-section {
-    margin: 0px 21px;
-    /* padding: 20px 0px; */
+        margin: 0px 67px;
+        /* padding: 20px 0px; */
+    }
+
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 9px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 14px;
     }
 </style>
 
@@ -73,57 +88,108 @@
 @include('layout.website.include.forum_header')
 <br><br><br>
 <section class="subheader1">
-   
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="subheader1-desc">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="">{{$lesson->board->exam_board}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Class{{$lesson->assignClass->class}}-&nbsp; <i
-                                    class="fa fa-level-down" aria-hidden="true"></i></li>
-                        </ol>
-                    </nav>
-                    <h2 class="heading-white"><span style="font-size:12px;">
-                    {{$lesson->assignSubject->subject_name}}:  {{$lesson->name}}</span></h2>
-                    <p></p>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="subheader1-img"><img
-                        src="{{asset($lesson->lessonAttachment->img_url)}}"
-                        class="w100" style="opacity: 0.6">
-                    <a href="{{asset('/storage/'.$lesson->lessonAttachment->origin_video_url)}}"
-                        data-fancybox="images" data-fancybox-group="image-gallery">
-                        <i class="fa fa-play-circle"></i>
-                    </a>
-                </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="subheader1-desc">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">{{$lesson->board->exam_board}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Class{{$lesson->assignClass->class}}-&nbsp; <i class="fa fa-level-down"
+                                aria-hidden="true"></i></li>
+                    </ol>
+                </nav>
+                <h2 class="heading-white"><span style="font-size:12px;">
+                        {{$lesson->assignSubject->subject_name}}: {{$lesson->name}}</span></h2>
+                <p></p>
             </div>
         </div>
-        
-    
+        <div class="col-lg-6">
+            <div class="subheader1-img"><img src="{{asset($lesson->lessonAttachment->img_url)}}" class="w100"
+                    style="opacity: 0.6">
+                <a href="{{asset('/storage/'.$lesson->lessonAttachment->origin_video_url)}}" data-fancybox="images"
+                    data-fancybox-group="image-gallery">
+                    <i class="fa fa-play-circle"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
 </section>
 <section class="course-describtion">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <ul class="list-inline course-desc-list">
-                   <h4 data-brackets-id="12020" class="small-heading-black mb20"><h5>{!!$lesson->content!!}</h5>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#sharePostModal" style="display:inline;font-size:12px;">
-                                <i class="fa fa-share" aria-hidden="true"></i> &nbsp; Share
-                            </a>
-                    </h4>   
+                    <h4 data-brackets-id="12020" class="small-heading-black mb20">
+                        <h5>{!!$lesson->content!!}</h5>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal"
+                            data-target="#sharePostModal" style="display:inline;font-size:12px;">
+                            <i class="fa fa-share" aria-hidden="true"></i> &nbsp; Share
+                        </a>
+                    </h4>
                 </ul>
             </div>
         </div>
     </div>
- </section>
+</section>
 <section class="topic-details-section">
     <div class="container-fluid">
         <div class="tab">
-            @foreach($lesson->topics as $topic)
+            {{-- @foreach($lesson->topics as $topic)
             <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">{{$topic->name}}</button>
-            @endforeach
+            @endforeach --}}
+            <div class="accordion" id="accordionExample">
+                @foreach($lesson->topics as $key=>$topic)
+                <div class="card">
+                    <div class="card-header p-1" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left lesson-topic" type="button" data-toggle="collapse"
+                                data-target="#collapseOne{{$key}}" aria-expanded="false" aria-controls="collapseOne">
+                                {{$key+1}}.{{$topic->name}}
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne{{$key}}" class="collapse" aria-labelledby="headingOne"
+                        data-parent="#accordionExample">
+                        <div class="card-body p-1">
+                            <button class="btn btn-primary">{{$topic->name}}</button>
+                            @if($topic->lessonAttachment!=null)
+                            @if($topic->lessonAttachment->img_url!=null)
+                            <button class="btn btn-primary"><i class="fa fa-picture-o"
+                                    style="font-size:18px;color:#0770EF"></i> {{$topic->name}}</button>
+                            @endif
+                            @if($topic->lessonAttachment->origin_video_url!=null)
+                            <button class="btn btn-primary"><i class="fa fa-play-circle"
+                                    style="font-size:20px;color:#0770EF"></i> {{$topic->name}}</button>
+                            @endif
+                            @endif
+
+                            @foreach($topic->subTopics as $key=>$sub_topic)
+                            <button class="btn btn-primary">{{$key+1}}. {{$sub_topic->name}}</button>
+                            @if($sub_topic->lessonAttachment!=null)
+                            @if($sub_topic->lessonAttachment->img_url!=null)
+                            <button class="btn btn-primary"><i class="fa fa-picture-o"
+                                    style="font-size:18px;color:#0770EF"></i>
+                                {{$sub_topic->name}}</button>
+                            @endif
+                            @if($sub_topic->lessonAttachment->origin_video_url!=null)
+                            <button class="btn btn-primary"><i class="fa fa-play-circle"
+                                    style="font-size:20px;color:#0770EF"></i>
+                                {{$sub_topic->name}}</button>
+                            @endif
+                            @endif
+                            @endforeach
+
+
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
 
         <div id="London" class="tabcontent">
@@ -136,16 +202,16 @@
 
         </div>
 
-        <div id="Paris" class="tabcontent">
+        {{-- <div id="Paris" class="tabcontent">
             <img src="{{asset($lesson->lessonAttachment->img_url)}}" class="img-fluid" alt="Responsive image"
-                style="height:438px;weight:73%!important; ">
+                style="height:438px;weight:73%!important;" loading="lazy">
         </div>
 
         <div id="Tokyo" class="tabcontent">
             <video id="player" class="video-js" controls preload="auto" autoplay loop muted
-                poster="{{asset($lesson->lessonAttachment->img_url)}}">
+                poster="{{asset($lesson->lessonAttachment->img_url)}}" loading="lazy">
             </video>
-        </div>
+        </div> --}}
 
     </div>
 </section>

@@ -32,10 +32,9 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         try {
-            //form type eg:add lesson
-            $type = $this->findFormType($request); 
             
-            //validate all request according to it's type
+            //form type eg:add lesson
+            $type = $request->get('type'); 
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
           
             if ($validator->fails()) {
@@ -60,45 +59,7 @@ class LessonController extends Controller
                     ];
 
                     $lesson = Lesson::create($data);
-                    if (!empty($document)) {
-                        $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
                     
-                    }
-                    if (!empty($document)) {
-                        $video_thumbnail_image_url_path=LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image"); //lesson image store
-                    
-                    }
-                    if (!empty($lessonVideo)) {
-                    $video_path=$request->video_url->store('public');
-                    }
-                  
-                    $data_attachment = [
-                        'lesson_id' =>  $lesson->id,
-                        'img_url'=>$image_path,
-                        'origin_video_url'=> $video_path,
-                        'video_thumbnail_image'=>$video_thumbnail_image_url_path,
-                       
-                    ];
-                    
-                     $lesson_attachment=LessonAttachment::create($data_attachment);
-                    // $lesson_attachment=LessonAttachment::create($data_attachment);
-                    $resizes=["480","720","1080"];
-                        foreach($resizes as $key=>$resize){
-                            if($resize==480){
-                                $x_dimension=640;
-                                $y_dimension =480;  
-                            }
-                            if($resize==720){
-                                $x_dimension=1280;
-                                $y_dimension =720;  
-                            }
-                            // if($resize==1080){
-                            //     $x_dimension=1920;
-                            //     $y_dimension =1080;  
-                            // }
-                            $this->dispatch(new ConvertVideoForResolution($lesson_attachment,$x_dimension,$y_dimension));
-                         }
-                     
                     // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
                     return response()->json(['message' => 'Lesson Added Successfully','status' => 1]);
                 }
@@ -118,13 +79,52 @@ class LessonController extends Controller
                 }
                 if ($type == "create-lesson" || $type == "create-topic" || $type == "create-sub-topic") {
 
-                    $create = Lesson::create($data);
+                    $lesson = Lesson::create($data);
                 }
                 if ($type == "update-lesson") {
                     $lesson = Lesson::find($request->lesson_id);
 
-                    $create = $lesson->update($data);
+                    $lesson = $lesson->update($data);
                 }
+                if (!empty($document)) {
+                    $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
+                
+                }
+                if (!empty($document)) {
+                    $video_thumbnail_image_url_path=LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image"); //lesson image store
+                
+                }
+                if (!empty($lessonVideo)) {
+                $video_path=$request->video_url->store('public');
+                }
+                $video_path=str_replace("public/", "",$video_path);
+                $data_attachment = [
+                    'lesson_id' =>  $lesson->id,
+                    'img_url'=>$image_path,
+                    'origin_video_url'=> $video_path,
+                    'video_thumbnail_image'=>$video_thumbnail_image_url_path,
+                   
+                ];
+                
+                 $lesson_attachment=LessonAttachment::create($data_attachment);
+                // $lesson_attachment=LessonAttachment::create($data_attachment);
+                $resizes=["480","720","1080"];
+                    foreach($resizes as $key=>$resize){
+                        if($resize==480){
+                            $x_dimension=640;
+                            $y_dimension =480;  
+                        }
+                        if($resize==720){
+                            $x_dimension=1280;
+                            $y_dimension =720;  
+                        }
+                        // if($resize==1080){
+                        //     $x_dimension=1920;
+                        //     $y_dimension =1080;  
+                        // }
+                        $this->dispatch(new ConvertVideoForResolution($lesson_attachment,$x_dimension,$y_dimension));
+                     }
+
                 $this->lessonFunctionResponse($type);
             }
         } catch (\Throwable $th) {
