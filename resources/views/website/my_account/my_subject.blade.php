@@ -4,7 +4,12 @@
 
 @section('head')
 <link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
-
+<style>
+.subjectimg{
+    height: 150px;
+    width: 100%;
+}
+</style>
 
 @endsection
 
@@ -27,7 +32,7 @@
             <div class="col-md-3 col-sm-6 item">
                 <div class="card item-card-box card-block">
                     <h6 class="card-title text-right see-more">See More</h6>
-                    <img src="{{asset($subject->image)}}" alt="Photo of subject">
+                    <img src="{{asset($subject->image)}}" alt="Photo of subject" class="subjectimg">
                     <h4 class="item-card-title mt-3 mb-3 see-more">
                         <a href="{{route('website.user.lesson',[$order->id,$subject->id])}}">
                             {{$subject->subject_name}}</a>

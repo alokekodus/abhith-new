@@ -125,5 +125,13 @@ class UserDetailsController extends Controller
             //throw $th;
         }
     }
+    public function displayAttachment(Request $request){
+        try {
+           $lesson=Lesson::with('lessonAttachment')->where('id',$request->lesson_id)->first();
+           return response()->json($lesson);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 
 }

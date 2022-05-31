@@ -1,13 +1,13 @@
 jQuery(function ($) {
 
     $(document).ready(function () {
-        jQuery.validator.addMethod('name_rule', function (value, element) {
-            if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
-                return true;
-            } else {
-                return false;
-            };
-        });
+        // jQuery.validator.addMethod('name_rule', function (value, element) {
+        //     if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     };
+        // });
         jQuery.validator.addMethod("img_extension", function (value, element, param) {
             param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
             return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
@@ -47,7 +47,7 @@ jQuery(function ($) {
                 },
                 name: {
                     required: true,
-                    name_rule: true,
+                    // name_rule: true,
                     minlength: 10,
                 },
                 image_url: {
@@ -180,9 +180,9 @@ jQuery(function ($) {
         var Content = CKEDITOR.instances['content'].getData();
 
         formData.append('content', Content);
-
+        const url="../../../admin/course-management/lesson/store";
         $.ajax({
-            url: "{{route('admin.course.management.lesson.store')}}",
+            url: url,
             type: "POST",
             processData: false,
             contentType: false,

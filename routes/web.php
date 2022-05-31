@@ -41,6 +41,7 @@ Route::prefix('course')->group(function(){
     Route::get('details/{id}', [CourseController::class,'details'])->name('website.course.details');
     Route::post('package', [CourseController::class,'coursePackageFilter'])->name('website.course.package.filter');
     Route::get('all/{board_id}/{class_id}', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
+    
 });
 
 /* ------------------------------- Blog ------------------------------------ */
@@ -86,6 +87,7 @@ Route::prefix('account')->group(function(){
     Route::get('my-courses/{order_id}',[UserDetailsController::class,'mySubjects'])->name('website.user.courses');
     Route::get('my-lesson/{order_id}/{subject_id}',[UserDetailsController::class,'myLesson'])->name('website.user.lesson');
     Route::get('my-lesson/{topic_id}',[UserDetailsController::class,'myLessonDetails'])->name('website.user.lesson.details');
+    Route::post('attachment', [UserDetailsController::class,'displayAttachment'])->name('website.user.lesson.attachment');
 });
 
 

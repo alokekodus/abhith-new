@@ -138,9 +138,6 @@
 <section class="topic-details-section">
     <div class="container-fluid">
         <div class="tab">
-            {{-- @foreach($lesson->topics as $topic)
-            <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">{{$topic->name}}</button>
-            @endforeach --}}
             <div class="accordion" id="accordionExample">
                 @foreach($lesson->topics as $key=>$topic)
                 <div class="card">
@@ -156,28 +153,33 @@
                     <div id="collapseOne{{$key}}" class="collapse" aria-labelledby="headingOne"
                         data-parent="#accordionExample">
                         <div class="card-body p-1">
-                            <button class="btn btn-primary">{{$topic->name}}</button>
+                            <button class="btn btn-primary"  onclick="displayAttachment('content')" value="{{$topic->id}}">{{$topic->name}}</button>
                             @if($topic->lessonAttachment!=null)
                             @if($topic->lessonAttachment->img_url!=null)
-                            <button class="btn btn-primary"><i class="fa fa-picture-o"
-                                    style="font-size:18px;color:#0770EF"></i> {{$topic->name}}</button>
+                            <button class="btn btn-primary" id="displayAttachment"
+                                onclick="displayAttachment('imageAttach')" value="{{$topic->id}}"><i
+                                    class="fa fa-picture-o" style="font-size:18px;color:#0770EF"></i>
+                                {{$topic->name}}</button>
                             @endif
                             @if($topic->lessonAttachment->origin_video_url!=null)
-                            <button class="btn btn-primary"><i class="fa fa-play-circle"
+                            <button class="btn btn-primary" onclick="displayAttachment('videoAttach')"
+                                value="{{$topic->id}}"><i class="fa fa-play-circle"
                                     style="font-size:20px;color:#0770EF"></i> {{$topic->name}}</button>
                             @endif
                             @endif
 
                             @foreach($topic->subTopics as $key=>$sub_topic)
-                            <button class="btn btn-primary">{{$key+1}}. {{$sub_topic->name}}</button>
+                            <button class="btn btn-primary" onclick="displayAttachment('Content')" value="{{$sub_topic->id}}">{{$key+1}}. {{$sub_topic->name}}</button>
                             @if($sub_topic->lessonAttachment!=null)
                             @if($sub_topic->lessonAttachment->img_url!=null)
-                            <button class="btn btn-primary"><i class="fa fa-picture-o"
+                            <button class="btn btn-primary" onclick="displayAttachment('imageAttach')"
+                                value="{{$sub_topic->id}}"><i class="fa fa-picture-o"
                                     style="font-size:18px;color:#0770EF"></i>
                                 {{$sub_topic->name}}</button>
                             @endif
                             @if($sub_topic->lessonAttachment->origin_video_url!=null)
-                            <button class="btn btn-primary"><i class="fa fa-play-circle"
+                            <button class="btn btn-primary" onclick="displayAttachment('videoAttach')"
+                                value="{{$sub_topic->id}}"><i class="fa fa-play-circle"
                                     style="font-size:20px;color:#0770EF"></i>
                                 {{$sub_topic->name}}</button>
                             @endif
@@ -192,26 +194,20 @@
             </div>
         </div>
 
-        <div id="London" class="tabcontent">
-            <div class="card">
-                <div class="card-body">
-                    {!!$lesson->content!!}
-                </div>
-
-            </div>
+        <div id="Content" class="tabcontent">
+            <span id="displayContent"></span>
 
         </div>
 
-        {{-- <div id="Paris" class="tabcontent">
-            <img src="{{asset($lesson->lessonAttachment->img_url)}}" class="img-fluid" alt="Responsive image"
-                style="height:438px;weight:73%!important;" loading="lazy">
+        <div id="imageAttach" class="tabcontent">
+            <span id="displayImage"></span>
         </div>
 
-        <div id="Tokyo" class="tabcontent">
+        <div id="videoAttach" class="tabcontent">
             <video id="player" class="video-js" controls preload="auto" autoplay loop muted
-                poster="{{asset($lesson->lessonAttachment->img_url)}}" loading="lazy">
+                poster="{{asset($lesson->lessonAttachment->video_thumbnail_image)}}" loading="lazy">
             </video>
-        </div> --}}
+        </div>
 
     </div>
 </section>
@@ -220,6 +216,57 @@
 @endsection
 @section('scripts')
 <script>
+    $(document).ready(function(){
+            var i, tabcontent, tablinks;
+           tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+        });
+    function displayAttachment(type){
+      
+      if(type=='content'){
+        document.getElementById("Content").style.display = "block";
+        document.getElementById("imageAttach").style.display = "none";
+        document.getElementById("videoAttach").style.display = "none";
+      }else if(type=='imageAttach'){
+        document.getElementById("imageAttach").style.display = "block"; 
+        document.getElementById("Content").style.display = "none";
+        document.getElementById("videoAttach").style.display = "none";
+      }else if(type=='videoAttach'){
+        document.getElementById("videoAttach").style.display = "block"; 
+        document.getElementById("Content").style.display = "none";
+        document.getElementById("imageAttach").style.display = "none";
+      }
+        var lesson_id=  $("#displayAttachment").attr('value');
+    
+
+        $.ajax({
+            type:'POST',
+            url:"{{ route('website.user.lesson.attachment') }}",
+            data:{lesson_id:lesson_id,_token: '{{csrf_token()}}'},
+            success:function(data){
+               var content=`<div class="card"><div class="card-body">
+                ${data.content}
+                </div>
+
+                </div>`;
+              $("#displayContent").html(content,type);
+
+              var Image=`<img src="{{ URL::asset('${data.lesson_attachment.img_url}') }}" class="img-fluid" alt="Responsive image"
+                style="height:438px;weight:73%!important;" loading="lazy">`;
+                $("#displayImage").html(Image);
+                 if(type=="videoAttach"){
+                    videoRationWiseDisplay(data);
+                 }
+               
+            
+            
+            }
+        });
+    }
+</script>
+{{-- <script>
     function openCity(evt, cityName) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabcontent");
@@ -236,12 +283,14 @@
     
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
-</script>
-<script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
+</script> --}}
 
+<script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
-    var lesson=@json($lesson);
-        var lesson_attachment=lesson['lesson_attachment'];
+    function videoRationWiseDisplay(data){
+       
+        var lesson=data;
+        var lesson_attachment=data.lesson_attachment;
         var storagePath = "{!! storage_path() !!}";
         var FULLHD= lesson_attachment['origin_video_url'] ;
         var SD= lesson_attachment['video_resize_480'] ;
@@ -275,6 +324,8 @@
             label: '1080px'
         },
         
-        ])
+        ]);
+    }
+  
 </script>
 @endsection
