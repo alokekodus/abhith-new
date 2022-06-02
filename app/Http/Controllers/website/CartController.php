@@ -8,8 +8,10 @@ use App\Models\Cart;
 use App\Models\Chapter;
 use App\Models\Order;
 use App\Models\AssignSubject;
+use App\Models\CartOrOrderAssignSubject;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Auth;
-use Yoeunes\Toastr\Facades\Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 
 class CartController extends Controller
 {
@@ -38,35 +40,56 @@ class CartController extends Controller
 
     public function addToCart(Request $request){
         try {
-                     
+                  
             if (!Auth::check()) {
+               
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->route('website.login');
               
             }
-            
+         
             $board_id = $request->board_id;
             $class_id = $request->class_id;
-            $is_full_course_selected = $request->is_full_course_selected;
+            $course_type=$request->course_type;
+            if($course_type==1){
+               $all_subjects= AssignSubject::where(['board_id' => $board_id, 'assign_class_id' => $class_id, 'is_activate' => 1])->get();
+            }
+            else{
+                $all_subjects=$request->subjects;
+            }
+          
             $check_item_exists_inside_cart = Cart::where('user_id', Auth::user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where([['is_paid','=', 0], ['is_remove_from_cart','=', 0]])->exists();
-                       
+                if($all_subjects==null){
+                    Toastr::success('Please select subject for proccess !', '', ["positionClass" => "toast-top-right"]); 
+                    return redirect()->back();
+                }          
                 if($check_item_exists_inside_cart == true){
-                   
-                    return redirect()->route('website.course')->with('error','Package already in Cart!');
+                    Toastr::error('Package already in Cart!', '', ["positionClass" => "toast-top-right"]); 
+                    return redirect()->back();
                 }else{
                   
-                    $create = Cart::create([
-                        'user_id' => Auth::user()->id,
+                    $cart = Cart::create([
+                        'user_id' => auth()->user()->id,
                         'board_id' => $board_id,//board_id
                         'assign_class_id' => $class_id,//class_id
-                        'is_full_course_selected' => $is_full_course_selected
+                        'is_full_course_selected' => $course_type
                     ]);
-                    
+                   
+                    foreach($all_subjects as $key=>$subject){
+                        $subject=AssignSubject::find($subject->id);
+                        $data=[
+                            'cart_id'=>$cart->id,
+                            'assign_subject_id'=>$subject->id,
+                            'amount'=>$subject->subject_amount,
+                            'type'=>1,
+                        ];
+                        $assign_subject=CartOrOrderAssignSubject::create($data);
+                    }
                 } 
-           
-    
-            return redirect()->route('website.course')->with('success','Item added to cart successfully.');
+                Toastr::success('Item added to cart successfully.', '', ["positionClass" => "toast-top-right"]); 
+                return redirect()->route('website.course');
         } catch (\Throwable $th) {
+               dd($th);
             return redirect()->back();
         }
         

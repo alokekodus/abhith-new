@@ -48,7 +48,7 @@
             </div>
 
             <div class="col-lg-12 p-4">
-                <form id="websiteFilterCourseForm" class="row justify-content-center" method="post">
+                <form action="{{route('website.course.package.filter.all')}}" class="row justify-content-center" method="post">
                     @csrf
                     <div class="col-4">
                         <label>Select Board</label>
@@ -110,45 +110,45 @@
                 }
             });
 };
-$('#websiteFilterCourseForm').on('submit', function(e){
-    e.preventDefault();
-    $('#submitWebsiteFilterCourseForm').attr('disabled', true);
-    $('#submitWebsiteFilterCourseForm').text('Please wait...');
-    let formData = new FormData(this);
-    $.ajax({
-                url:"{{route('website.course.package.filter')}}",
-                type:"POST",
-                processData:false,
-                contentType:false,
-                data:formData,
-                success:function(data){
-                    var data=data.data;
-                    if(data.code==200){
-                        var assignedBoard=$("#assignedBoard").val();
-                        var boardclassid=$("#board-class-dd").val();
+// $('#websiteFilterCourseForm').on('submit', function(e){
+//     e.preventDefault();
+//     $('#submitWebsiteFilterCourseForm').attr('disabled', true);
+//     $('#submitWebsiteFilterCourseForm').text('Please wait...');
+//     let formData = new FormData(this);
+//     $.ajax({
+//                 url:"{{route('website.course.package.filter')}}",
+//                 type:"POST",
+//                 processData:false,
+//                 contentType:false,
+//                 data:formData,
+//                 success:function(data){
+//                     var data=data.data;
+//                     if(data.code==200){
+//                         var assignedBoard=$("#assignedBoard").val();
+//                         var boardclassid=$("#board-class-dd").val();
                         
-                        let url = "{{ route('website.course.package.filter.all',[':board_id',':class_id']) }}";
-                            url = url.replace(':board_id',assignedBoard).replace(':class_id',boardclassid);
+//                         let url = "{{ route('website.course.package.filter.all',[':board_id',':class_id']) }}";
+//                             url = url.replace(':board_id',assignedBoard).replace(':class_id',boardclassid);
                            
-                            window.location.href = url;
-                    }else{
+//                             window.location.href = url;
+//                     }else{
                          
-                        toastr.error('Whoops! Something went wrong failed to find packages');
-                    }
+//                         toastr.error('Whoops! Something went wrong failed to find packages');
+//                     }
                    
                     
-                },
-                error:function(xhr, status, error){
-                    if(xhr.status == 500 || xhr.status == 422){
-                        toastr.error('Whoops! Something went wrong failed to find packages');
-                    }
+//                 },
+//                 error:function(xhr, status, error){
+//                     if(xhr.status == 500 || xhr.status == 422){
+//                         toastr.error('Whoops! Something went wrong failed to find packages');
+//                     }
 
-                    $('#submitWebsiteFilterCourseForm').attr('disabled', false);
-                    $('#submitWebsiteFilterCourseForm').text('Submit');
+//                     $('#submitWebsiteFilterCourseForm').attr('disabled', false);
+//                     $('#submitWebsiteFilterCourseForm').text('Submit');
                    
-                }
-            });
-});
+//                 }
+//             });
+// });
 </script>
 
 @endsection

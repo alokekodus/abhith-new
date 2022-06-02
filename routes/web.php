@@ -40,7 +40,7 @@ Route::prefix('course')->group(function(){
     Route::get('', [CourseController::class,'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class,'details'])->name('website.course.details');
     Route::post('package', [CourseController::class,'coursePackageFilter'])->name('website.course.package.filter');
-    Route::get('all/{board_id}/{class_id}', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
+    Route::post('all', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
     
 });
 

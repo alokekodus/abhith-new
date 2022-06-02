@@ -194,11 +194,15 @@ class CourseController extends Controller
             return response()->back()->json(['message' => 'Whoops! Something went wrong. Failed to Find Packages.', 'status' => 2]);
         }
     }
-    public function coursePackageAll($board_id,$class_id){
-         $board=Board::find($board_id);
-         $class=AssignClass::with('boards','subjects')->where('id',$class_id)->first();
+    public function coursePackageAll(Request $request){
+       
+          
+        $board=Board::find($request->assignedBoard);
+         $class=AssignClass::with('boards','subjects')->where('id',$request->class_id)->first();
          $subjects=$class->subjects;
+         $total_amount=$subjects->sum('subject_amount');
+       
         
-        return view('website.course.filter-course',compact('board','class','subjects'));
+        return view('website.course.filter-course',compact('board','class','subjects','total_amount'));
     }
 }

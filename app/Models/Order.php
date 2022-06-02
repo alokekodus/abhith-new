@@ -27,4 +27,7 @@ class Order extends Model
     public function assignClass(){
         return $this->belongsTo('App\Models\AssignClass');
     }
+    public function assignSubject(){
+        return $this->hasMany(CartOrOrderAssignSubject::class,'order_id','id')->where('type',2);
+    }
 }

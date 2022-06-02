@@ -28,4 +28,7 @@ class Cart extends Model
     public function assignClass(){
         return $this->belongsTo('App\Models\AssignClass');
     }
+    public function assignSubject(){
+        return $this->hasMany(CartOrOrderAssignSubject::class,'cart_id','id')->where('type',1);
+    }
 }

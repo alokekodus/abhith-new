@@ -76,7 +76,7 @@ class PaymentController extends Controller
 
 
     public function verifyPayment(Request $request){
-
+        dump($request->all());
         if ( !empty( $request->input('razorpay_payment_id') ) ){
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
             $order_id = Order::where('rzp_order_id', $request->razorpay_order_id)->first();
@@ -88,21 +88,26 @@ class PaymentController extends Controller
                     'razorpay_payment_id' => $request->razorpay_payment_id,
                     'razorpay_signature' => $request->razorpay_signature
                 ];
-                $api->utility->verifyPaymentSignature($attributes);
-
-                Order::where('rzp_order_id', $request->razorpay_order_id)->update([
-                    'rzp_payment_id' =>  $request->razorpay_payment_id,
-                    'payment_status' => 'paid',
-                ]);
-
-               foreach($order as $item){
-                    Cart::where('user_id', Auth::user()->id)->where('chapter_id', $item->chapter_id)->update([
-                            'is_paid' => 1,
+            //    $varify_signature=$api->utility->verifyPaymentSignature($attributes);
+                $payload = $request->razorpay_order_id . '|' . $request->razorpay_payment_id;
+                $generated_signature = hash_hmac('sha256',$payload,env('RAZORPAY_SECRET'));
+                dd($generated_signature);
+                if($generated_signature==$generated_signature){
+                    Order::where('rzp_order_id', $request->razorpay_order_id)->update([
+                        'rzp_payment_id' =>  $request->razorpay_payment_id,
+                        'payment_status' => 'paid',
                     ]);
-               }
-
-
-               return redirect()->route('website.cart')->with('success','Payment Successfull!');
+    
+                   foreach($order as $item){
+                        Cart::where('user_id', Auth::user()->id)->where('chapter_id', $item->chapter_id)->update([
+                                'is_paid' => 1,
+                        ]);
+                   }
+    
+    
+                   return redirect()->route('website.cart')->with('success','Payment Successfull!');
+                }
+               
 
             return response( $attributes);
 
