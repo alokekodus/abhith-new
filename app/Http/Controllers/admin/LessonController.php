@@ -25,7 +25,7 @@ class LessonController extends Controller
         return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'all_lessons' => $all_lessons]);
     }
     public function create(){
-        $board_details = Board::where('is_activate', 1)->get();
+        $board_details = Board::where('is_activate',1)->get();
         $form_type="Lesson";
         return view('admin.course-management.lesson.create')->with(['boards' => $board_details,'form_type'=>$form_type]);
     }
@@ -33,8 +33,7 @@ class LessonController extends Controller
     {
         try {
             
-            //form type eg:add lesson
-            $type = $request->get('type'); 
+            $type = $request->type; 
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
           
             if ($validator->fails()) {
@@ -46,8 +45,8 @@ class LessonController extends Controller
                 $document = $request->file('image_url');
                 $lessonVideo = $request->file('video_url');
                 $videoThumbnailImageUrl=$request->file('video_thumbnail_image_url');
-               
-              if ($type =="create-lesson" || $type == "update-lesson") {
+            
+              if ($type =="lesson-create" || $type == "update-lesson") {
                     
                     $data = [
                         'name' => ucfirst($request->name),
@@ -61,9 +60,9 @@ class LessonController extends Controller
                     $lesson = Lesson::create($data);
                     
                     // $this->dispatch(new ConvertVideoForStreaming($lesson_attachment));
-                    return response()->json(['message' => 'Lesson Added Successfully','status' => 1]);
+                  
                 }
-                if ($type == "create-topic" || $type = "create-sub-topic") {
+                if ($type == "create-topic" || $type == "create-sub-topic") {
 
                     $lesson = Lesson::find($request->parent_id);
                     $data = [
@@ -97,7 +96,7 @@ class LessonController extends Controller
                 if (!empty($lessonVideo)) {
                 $video_path=$request->video_url->store('public');
                 }
-                $video_path=str_replace("public/", "",$video_path);
+                // $video_path=str_replace("public/", "",$video_path);
                 $data_attachment = [
                     'lesson_id' =>  $lesson->id,
                     'img_url'=>$image_path,

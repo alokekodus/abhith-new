@@ -37,6 +37,7 @@
                     <form id="assignTopicForm" enctype="multipart/form-data" method="post">
                         @csrf
                         <input type="hidden" name="parent_id" value="{{$lesson->id}}">
+                        <input type="hidden" name="type" value="create-topic">
                         @include('admin.course-management.lesson.common.form')
                         <div style="float: right;">
                             <button type="button" class="btn btn-md btn-default"

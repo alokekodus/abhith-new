@@ -76,7 +76,7 @@ class PaymentController extends Controller
 
 
     public function verifyPayment(Request $request){
-        dump($request->all());
+        
         if ( !empty( $request->input('razorpay_payment_id') ) ){
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
             $order_id = Order::where('rzp_order_id', $request->razorpay_order_id)->first();
@@ -91,7 +91,7 @@ class PaymentController extends Controller
             //    $varify_signature=$api->utility->verifyPaymentSignature($attributes);
                 $payload = $request->razorpay_order_id . '|' . $request->razorpay_payment_id;
                 $generated_signature = hash_hmac('sha256',$payload,env('RAZORPAY_SECRET'));
-                dd($generated_signature);
+               
                 if($generated_signature==$generated_signature){
                     Order::where('rzp_order_id', $request->razorpay_order_id)->update([
                         'rzp_payment_id' =>  $request->razorpay_payment_id,

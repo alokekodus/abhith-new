@@ -327,7 +327,7 @@
                                     <span>
                                         <h4 class="small-heading-black">Class - {{$item->assignClass->class??''}}</h4>
                                     </span>
-                                    <a href="{{route('website.user.courses',$item->id)}}" class="enroll">view
+                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}" class="enroll">view
                                         Details</a>
                                 </div>
 

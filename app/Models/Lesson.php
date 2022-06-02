@@ -24,7 +24,7 @@ class Lesson extends Model
     ];
     public static function getRules($type)
     {
-        if ($type == "create-lesson" || $type == "update-lesson") {
+        if ($type == "lesson-create" || $type == "update-lesson") {
             $lesson_rules = [
                 'board_id' => 'bail|integer|required',
                 'assign_class_id' => 'bail|integer|required',
@@ -63,7 +63,7 @@ class Lesson extends Model
     }
     public static function getRuleMessages($type)
     {
-        if ($type == "create-lesson" || $type == "update-lesson") {
+        if ($type == "lesson-create" || $type == "update-lesson") {
             $lesson_rules_message = [
                 'board_id.required' => 'Please insert a valid Board',
                 'assign_class_id.required' => 'Please insert a valid Class',

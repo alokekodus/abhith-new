@@ -61,11 +61,11 @@ class CartController extends Controller
             $check_item_exists_inside_cart = Cart::where('user_id', Auth::user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where([['is_paid','=', 0], ['is_remove_from_cart','=', 0]])->exists();
                 if($all_subjects==null){
                     Toastr::success('Please select subject for proccess !', '', ["positionClass" => "toast-top-right"]); 
-                    return redirect()->back();
+                    return redirect()->route('website.course');
                 }          
                 if($check_item_exists_inside_cart == true){
                     Toastr::error('Package already in Cart!', '', ["positionClass" => "toast-top-right"]); 
-                    return redirect()->back();
+                    return redirect()->route('website.course');
                 }else{
                   
                     $cart = Cart::create([
@@ -87,10 +87,11 @@ class CartController extends Controller
                     }
                 } 
                 Toastr::success('Item added to cart successfully.', '', ["positionClass" => "toast-top-right"]); 
-                return redirect()->route('website.course');
+                return redirect()->route('website.cart');
         } catch (\Throwable $th) {
-               dd($th);
-            return redirect()->back();
+              
+            Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]); 
+                return redirect()->route('website.course');
         }
         
 

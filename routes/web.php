@@ -18,6 +18,7 @@ use App\Http\Controllers\website\CartController;
 use App\Http\Controllers\website\RazorpayPaymentController;
 use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\admin\TimeTableController;
+use App\Http\Controllers\website\UserCourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,7 @@ Route::prefix('account')->group(function(){
     Route::post('user-photo',[UserDetailsController::class,'uploadPhoto'])->name('website.user.upload.photo');
     Route::post('update-password',[UserDetailsController::class,'updatePassword'])->name('website.update.password');
     Route::get('my-courses/{order_id}',[UserDetailsController::class,'mySubjects'])->name('website.user.courses');
+    Route::get('my-courses/{order_id}',[UserCourseController::class,'displayUserSubjects'])->name('website.user.courses');
     Route::get('my-lesson/{order_id}/{subject_id}',[UserDetailsController::class,'myLesson'])->name('website.user.lesson');
     Route::get('my-lesson/{topic_id}',[UserDetailsController::class,'myLessonDetails'])->name('website.user.lesson.details');
     Route::post('attachment', [UserDetailsController::class,'displayAttachment'])->name('website.user.lesson.attachment');
