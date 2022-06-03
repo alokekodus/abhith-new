@@ -315,7 +315,7 @@
                     <div class="tab-pane" id="mycourses" role="tabpanel">
                         <div class="row">
                             @forelse ($purchase_history as $key => $item)
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
 
                                 <div class="course-pic"><img
                                         src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg"
