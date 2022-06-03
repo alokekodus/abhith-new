@@ -229,5 +229,14 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    
+    public function lessonDetails($lesson_id){
+        $lesson=Lesson::with(['assignClass','board','assignSubject','topics'=>function($query){
+            $query->with('subTopics');
+        }])->where('id',$lesson_id)->first();
+        $data=[
+            'filter_data'=>$lesson,
+        ];
+        return response()->json($data);
+
+    }
 }

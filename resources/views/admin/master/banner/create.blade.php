@@ -46,7 +46,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                         <span class="text-danger" id="description_error"></span>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="exampleSelectGender">Related to Course</label>
                         <select class="form-control" id="related_course" required>
                             <option value="" disabled selected>-- Select --</option>
@@ -63,7 +63,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
                 </form>

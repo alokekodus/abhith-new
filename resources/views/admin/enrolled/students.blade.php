@@ -54,8 +54,8 @@
                                     <td>{{$key + 1}}</td>
                                     <td>{{$item->user->firstname}} {{$item->user->lastname}}</td>
                                     <td>{{$item->user->email}}</td>
-                                    <td>{{$item->course->name}}</td>
-                                    <td>{{$item->chapter->name}}</td>
+                                    <td>{{$item->course->name??''}}</td>
+                                    <td>{{$item->chapter->name??''}}</td>
                                     <td>
                                         @if ($item->payment_status == 'paid')
                                             <span style="color: green;">Enrolled</span>
