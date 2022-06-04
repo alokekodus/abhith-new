@@ -19,6 +19,7 @@ use App\Http\Controllers\website\CartController;
 use App\Http\Controllers\website\RazorpayPaymentController;
 use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\admin\TimeTableController;
+use App\Http\Controllers\website\SubjectController;
 use App\Http\Controllers\website\UserCourseController;
 
 /*
@@ -42,8 +43,14 @@ Route::prefix('course')->group(function(){
     Route::get('', [CourseController::class,'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class,'details'])->name('website.course.details');
     Route::post('package', [CourseController::class,'coursePackageFilter'])->name('website.course.package.filter');
-    Route::post('all', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
+    Route::any('all', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
+    Route::get('start/{subject_id}', [CourseController::class,'subjectDetails'])->name('website.course.package.subject.detatils');
     
+    
+});
+Route::prefix('subject')->group(function(){
+    Route::get('/{subject_id}', [SubjectController::class,'subjectDetails'])->name('website.subject.detatils');
+         
 });
 
 /* ------------------------------- Blog ------------------------------------ */

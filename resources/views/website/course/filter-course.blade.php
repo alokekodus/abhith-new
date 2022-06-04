@@ -109,7 +109,7 @@
                                                     type="checkbox" value="{{$subject->id}}" name="subjects[]"
                                                     onclick="checkedSubject()">
                                                 <label for="styled-checkbox-full-course-{{$key}}">
-                                                    {{$subject->subject_name}}</label>
+                                                   <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}"> {{$subject->subject_name}}</a></label>
                                                 <span class="course-price mr-2"><i class="fa fa-inr" aria-hidden="true"></i>  {{number_format($subject->subject_amount,2,'.','')}}</span>
 
                                             </li>

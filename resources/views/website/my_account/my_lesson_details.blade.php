@@ -154,6 +154,7 @@
                         data-parent="#accordionExample">
                         <div class="card-body p-1">
                             <button class="btn btn-primary"  onclick="displayAttachment('content')" value="{{$topic->id}}">{{$topic->name}}</button>
+                            
                             @if($topic->lessonAttachment!=null)
                             @if($topic->lessonAttachment->img_url!=null)
                             <button class="btn btn-primary" id="displayAttachment"
@@ -170,6 +171,7 @@
 
                             @foreach($topic->subTopics as $key=>$sub_topic)
                             <button class="btn btn-primary" onclick="displayAttachment('Content')" value="{{$sub_topic->id}}">{{$key+1}}. {{$sub_topic->name}}</button>
+                            
                             @if($sub_topic->lessonAttachment!=null)
                             @if($sub_topic->lessonAttachment->img_url!=null)
                             <button class="btn btn-primary" onclick="displayAttachment('imageAttach')"

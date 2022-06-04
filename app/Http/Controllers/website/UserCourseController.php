@@ -34,9 +34,9 @@ class UserCourseController extends Controller
             $subject_id = Crypt::decrypt($subject_id);
             $order = Order::find($order_id);
             $subject = AssignSubject::where('assign_class_id', $order->assign_class_id)->where('board_id', $order->board_id)->where('id', $subject_id)->first();
-            $lesson = Lesson::where('board_id', $order->board_id)->where('assign_class_id', $order->assign_class_id)->where('assign_subject_id', $subject_id)->where('parent_id', null)->first();
-            dd($lesson);
-            return view('website.user.lesson', compact('lesson', 'order', 'subject'));
+            $lessons = Lesson::where('board_id', $order->board_id)->where('assign_class_id', $order->assign_class_id)->where('assign_subject_id', $subject_id)->where('parent_id', null)->get();
+          
+            return view('website.user.lesson', compact('lessons', 'order', 'subject'));
         } catch (\Throwable $th) {
             return redirect()->back();
             //throw $th;
