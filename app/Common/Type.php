@@ -2,7 +2,8 @@
 
 namespace App\Common;
 
-class Role {
+class Type {
     const Admin = 1;
     const User = 2;
+    const Teacher = 3;
 }
