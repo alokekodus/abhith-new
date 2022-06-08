@@ -19,8 +19,8 @@ class AuthController extends Controller
         ]);
        
         if (Auth::attempt(['email' => $request->email,  'password' => $request->password])) {
-            
-          if(Auth::user()->type_id==2 || Auth::user()->type_id==3 ){
+           
+          if(Auth::user()->type_id==1 || Auth::user()->type_id==3 ){
             return redirect()->route('admin.dashboard')
             ->withSuccess('Signed in');
           }else{

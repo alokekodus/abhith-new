@@ -80,6 +80,11 @@
         transition: 0.3s;
         font-size: 14px;
     }
+    .vjs-watermark{
+        position: absolute !important; 
+        top: 9px !important; 
+        left: 0px !important;
+    }
 </style>
 
 @endsection
@@ -153,8 +158,9 @@
                     <div id="collapseOne{{$key}}" class="collapse" aria-labelledby="headingOne"
                         data-parent="#accordionExample">
                         <div class="card-body p-1">
-                            <button class="btn btn-primary"  onclick="displayAttachment('content')" value="{{$topic->id}}">{{$topic->name}}</button>
-                            
+                            <button class="btn btn-primary" onclick="displayAttachment('content')"
+                                value="{{$topic->id}}">{{$topic->name}}</button>
+
                             @if($topic->lessonAttachment!=null)
                             @if($topic->lessonAttachment->img_url!=null)
                             <button class="btn btn-primary" id="displayAttachment"
@@ -170,8 +176,9 @@
                             @endif
 
                             @foreach($topic->subTopics as $key=>$sub_topic)
-                            <button class="btn btn-primary" onclick="displayAttachment('Content')" value="{{$sub_topic->id}}">{{$key+1}}. {{$sub_topic->name}}</button>
-                            
+                            <button class="btn btn-primary" onclick="displayAttachment('Content')"
+                                value="{{$sub_topic->id}}">{{$key+1}}. {{$sub_topic->name}}</button>
+
                             @if($sub_topic->lessonAttachment!=null)
                             @if($sub_topic->lessonAttachment->img_url!=null)
                             <button class="btn btn-primary" onclick="displayAttachment('imageAttach')"
@@ -286,7 +293,7 @@
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
 </script> --}}
-
+<script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
     function videoRationWiseDisplay(data){
@@ -327,6 +334,10 @@
         },
         
         ]);
+        player.watermark({
+            file: 'watermarks.png',
+           
+        });
     }
   
 </script>

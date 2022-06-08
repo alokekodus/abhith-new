@@ -67,7 +67,9 @@ Route::group(['middleware' => ['auth'] ],function(){
         });
 
         Route::prefix('subject')->group(function(){
-            Route::get('all', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
+            Route::get('/', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
+            Route::get('create', [AssignSubjectController::class, 'create'])->name('admin.course.management.subject.create');
+            Route::post('store', [AssignSubjectController::class, 'store'])->name('admin.course.management.subject.store');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
         });
         Route::prefix('lesson')->group(function(){

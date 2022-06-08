@@ -232,6 +232,16 @@
     border: 8px ridge black;
     padding: 5px;
   }
+
+  .vjs-watermark {
+    bottom: 0px;
+    right: 0px;
+    opacity: 100;
+    position: absolute;
+    top: 9px;
+    background-color: #999999;
+    height: 60px;
+  }
 </style>
 @endsection
 
@@ -470,7 +480,7 @@
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
 </script> --}}
-
+<script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
   function videoRationWiseDisplay(data) {
@@ -510,6 +520,13 @@
             },
 
         ]);
+        player.watermark({
+            file: 'http://localhost/abhith-new/public/asset_website/img/home/logo.png',
+            xpos: 100,
+            ypos: 100,
+            xrepeat: 0,
+            opacity: 0.5,
+        });
     }
 </script>
 @endsection

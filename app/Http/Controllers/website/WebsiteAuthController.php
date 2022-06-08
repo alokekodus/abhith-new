@@ -9,8 +9,8 @@ use App\Models\UserDetails;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-use App\Common\Role;
 use App\Common\Activation;
+use App\Common\Type;
 
 class WebsiteAuthController extends Controller
 {
@@ -170,7 +170,7 @@ class WebsiteAuthController extends Controller
             'password' => 'required'
         ]);
        
-        if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'role_id' => Role::User, 'is_activate'=> Activation::Activate ])) {
+        if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'type_id' => Type::User, 'is_activate'=> Activation::Activate ])) {
             if( $request->current_route == null ){
                 
                 Auth::LogoutOtherDevices($password); 
