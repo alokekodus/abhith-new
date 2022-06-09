@@ -12,7 +12,7 @@ class AssignSubject extends Model
     protected $table = "assign_subjects";
 
     protected $guarded = [];
-
+    
     public function assignClass(){
         return $this->belongsTo(AssignClass::class, 'assign_class_id', 'id');
     }
@@ -23,4 +23,12 @@ class AssignSubject extends Model
     public function lesson(){
         return $this->hasMany(Lesson::class)->where('parent_id',null);
     }
+    public function assignTeacher(){
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
+    public function subjectAttachment()
+    {
+        return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',1);
+    }
+    
 }

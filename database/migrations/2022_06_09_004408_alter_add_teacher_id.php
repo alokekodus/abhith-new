@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterLessonAttachmentAddType extends Migration
+class AlterAddTeacherId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AlterLessonAttachmentAddType extends Migration
      */
     public function up()
     {
-        Schema::table('lesson_attachments', function (Blueprint $table) {
-            $table->rename('assign_subject_id','lesson_id',);
-            $table->tinyInteger('type')->comment("1:subject,2:lesson")->after('video_resize_1080');
+        Schema::table('assign_subjects', function (Blueprint $table) {
+            $table->integer('teacher_id')->after('image');
         });
     }
 
@@ -26,8 +25,8 @@ class AlterLessonAttachmentAddType extends Migration
      */
     public function down()
     {
-        Schema::table('lesson_attachments', function (Blueprint $table) {
-            //
+        Schema::table('assign_subjects', function (Blueprint $table) {
+            $table->dropColumn('teacher_id');
         });
     }
 }

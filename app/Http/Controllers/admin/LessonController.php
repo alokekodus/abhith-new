@@ -89,7 +89,7 @@ class LessonController extends Controller
                     $image_path=LessonAttachmentTrait::uploadAttachment($document,"image"); //lesson image store
                 
                 }
-                if (!empty($document)) {
+                if (!empty($videoThumbnailImageUrl)) {
                     $video_thumbnail_image_url_path=LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image"); //lesson image store
                 
                 }
@@ -98,10 +98,11 @@ class LessonController extends Controller
                 }
                 // $video_path=str_replace("public/", "",$video_path);
                 $data_attachment = [
-                    'lesson_id' =>  $lesson->id,
+                    'subject_lesson_id' =>  $lesson->id,
                     'img_url'=>$image_path,
                     'origin_video_url'=> $video_path,
                     'video_thumbnail_image'=>$video_thumbnail_image_url_path,
+                    'type'=>2,
                    
                 ];
                 

@@ -152,15 +152,18 @@
 {{-- @include('layout.website.include.forum_header') --}}
 <br>
 <section class="account-section">
-  @if($lessons->count()!=0)
+
   <div class="row">
     <div class="col-8">
       <p class="cross-line">
-        <span>{{$subject->subject_name}}</span>
+        <h2 class="heading-black">{{$subject->subject_name}}</h2>
+        
       </p>
-      <h2 class="heading-black">{{$lessons[0]->name}}</h2>
-      <p>
-      <h6>{!!$lessons[0]->content!!}</h6>
+      <p class="cross-line">
+        <span>Description</span>
+      </p>
+      <p class="cross-line">
+      <h6>{!!$subject->description!!}</h6>
       </p>
 
       <p class="cross-line">
@@ -178,99 +181,18 @@
             </h4>
           </div>
 
-          <div id="collapseOne{{$key}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-              @foreach($lesson->topics as $topickey=>$topic)
-              <div class="panel-group" id="accordionTopic" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                  <div class="topic-panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
 
-                      <a role="button" data-toggle="collapse" data-parent="#accordionTopic"
-                        href="#collapseOneTopic{{$topickey}}" aria-expanded="true" aria-controls="collapseOne">
-                        <span class="small-heading-black">{{$topickey+1}} .{{$topic->name}}</span>
-                      </a>
-                    </h4>
-                  </div>
-                  <div id="collapseOneTopic{{$topickey}}" class="panel-collapse collapse in" role="tabpanel"
-                    aria-labelledby="headingOne">
-                    <div class="panel-body">
-                      @if($topic->lessonAttachment!=null)
-                      @if($topic->lessonAttachment->img_url!=null)
-                      <div style="position: absolute;left:70px;"><i class="fa fa-picture-o"
-                          style="font-size:18px;color:#0770EF"></i>
-                      </div><br>
-                      @endif
-                      @if($topic->lessonAttachment->origin_video_url!=null)
-                      <div style="position:absolute;left:70px;"><i class="fa fa-play-circle"
-                          style="font-size:20px;color:#0770EF"></i>
-                      </div><br>
-                      @endif
-                      @endif
-                      @foreach($topic->subTopics as $subtopickey=>$subtopic)
-                      <div class="panel-group" id="accordionSubtopic" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                          <div class="subtopic-panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                              <a role="button" data-toggle="collapse" data-parent="#accordionSubtopic"
-                                href="#collapseOneSubtopic{{$subtopic}}" aria-expanded="true"
-                                aria-controls="collapseOne">
-                                <span class="small-heading-black">{{$subtopickey+1}} .{{$subtopic->name}}</span>
-                              </a>
-                            </h4>
-                          </div>
-                          <div id="collapseOneSubtopic{{$subtopic}}" class="panel-collapse collapse in" role="tabpanel"
-                            aria-labelledby="headingOne">
-                            <div class="panel-body">
-                              @if($subtopic->lessonAttachment!=null)
-                              @if($subtopic->lessonAttachment->img_url!=null)
-                              <div style="position: absolute;left:70px;"><i class="fa fa-picture-o"
-                                  style="font-size:18px;color:#0770EF"></i>
-                              </div><br>
-                              @endif
-                              @if($subtopic->lessonAttachment->origin_video_url!=null)
-                              <div style="position:absolute;left:70px;"><i class="fa fa-play-circle"
-                                  style="font-size:20px;color:#0770EF"></i>
-                              </div><br>
-                              @endif
-                              @endif
-                              @if($subtopic->lessonAttachment!=null)
-                              @if($subtopic->lessonAttachment->img_url!=null)
-                              <div style="left:70px;"><i class="fa fa-picture-o"
-                                  style="font-size:18px;color:#0770EF"></i>
-                              </div>
-                              @endif
-                              @if($subtopic->lessonAttachment->origin_video_url!=null)
-                              <div><i class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
-                              </div>
-                              @endif
-                              @endif
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                      @endforeach
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              @endforeach
-            </div>
-          </div>
         </div>
         @endforeach
 
       </div>
+      <hr>
     </div>
     <div class="col-4">
-
-
       <div class="course-pic">
         <div class="embed-responsive embed-responsive-16by9">
           <iframe class="embed-responsive-item"
-            src="{{asset('/storage/'.$lessons[0]->lessonAttachment->origin_video_url)}}"></iframe>
+            src="{{asset('/storage/'.$subject->subjectAttachment->video_resize_480)}}"></iframe>
         </div>
       </div>
       <div class="course-desc">
@@ -282,14 +204,41 @@
           class="enroll">View Details</a> --}}
       </div>
       @if(auth()->check())
-      <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}" class="btn btn-primary btn-lg btn-block">Start Your Course</a>
+      <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+        class="btn btn-primary btn-lg btn-block">Start Your Course</a>
       @else
-      <a  class="btn btn-primary btn-lg btn-block">Go to Package</a>
+      <a class="btn btn-primary btn-lg btn-block">Go to Package</a>
       @endif
     </div>
   </div>
-  @endif
+
+  <div class="row">
+    <div class="col-8">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#teacher"> <h4 class="small-heading-black">Teacher</h4></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#whylearn"> <h4 class="small-heading-black">What you'll learn</h4></a>
+        </li>
+
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane container active" id="teacher">
+         <h6>
+          <p>Name:{{$subject->assignTeacher->getFullName()}}</p>
+         </h6>
+
+        </div>
+        <div class="tab-pane container fade" id="whylearn">
+          <h6> {!!$subject->why_learn!!} </h6> </div>
+
+      </div>
+    </div>
   </div>
+
 
 </section>
 @endsection
