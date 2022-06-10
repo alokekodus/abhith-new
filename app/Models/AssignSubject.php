@@ -30,5 +30,5 @@ class AssignSubject extends Model
     {
         return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',1);
     }
-    
+   
 }

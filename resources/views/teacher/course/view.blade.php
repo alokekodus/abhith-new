@@ -12,7 +12,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{route('teacher.course.create')}}" class="btn btn-gradient-primary btn-fw"
+                <a href="{{route('teacher.course.preview',Crypt::encrypt($subject->id))}}" class="btn btn-gradient-primary btn-fw"
                     data-backdrop="static" data-keyboard="false">Preview</a>
             </li>
         </ul>

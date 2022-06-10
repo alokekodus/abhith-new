@@ -30,7 +30,7 @@
             <div class="collapse" id="course-management">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="{{route('teacher.course')}}">Subjects</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{route('admin.course.management.lesson.all')}}">Lesson</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('teacher.lesson')}}">Lesson</a></li>
               </ul>
             </div>
         </li>

@@ -29,4 +29,11 @@ class CourseController extends Controller
             //throw $th;
         }
     }
+    public function preview($subject_id){
+        $subject_id=Crypt::decrypt($subject_id);
+        $subject = AssignSubject::with('lesson','subjectAttachment')->where('id',$subject_id)->first();
+        $lessons=$subject->lesson;
+        $type=auth()->user()->type_id;
+        return view('website.user.lesson', compact('lessons','subject','type'));
+    }
 }

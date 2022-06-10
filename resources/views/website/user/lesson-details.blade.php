@@ -272,6 +272,10 @@
             <div id="collapseLesson{{$key}}" class="panel-collapse collapse in" role="tabpanel"
               aria-labelledby="headingOne">
               <div class="panel-body" style="background-color: white;">
+
+                <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('content')"
+                  value="{{$lesson->id}}"><span>{{$lesson->name}}</span></a><br>
+
                 @if($lesson->lessonAttachment!=null)
                 @if($lesson->lessonAttachment->img_url!=null)
                 <span class="topic-small-heading-black lesson-attach"><a id="displayAttachment"
