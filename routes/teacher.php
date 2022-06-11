@@ -11,6 +11,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::prefix('lesson')->group(function () {
         Route::get('/', [LessonController::class, 'index'])->name('teacher.lesson');
+        Route::get('/{lesson_id}',[LessonController::class,'view'])->name('teacher.lesson.view');
     });
    
 });
