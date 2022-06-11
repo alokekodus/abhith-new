@@ -729,6 +729,7 @@ class ComposerStaticInitcbe4f8f7a4bbc40a7f66eba41ce040f4
         'App\\Http\\Controllers\\admin\\TimeTableController' => __DIR__ . '/../..' . '/app/Http/Controllers/admin/TimeTableController.php',
         'App\\Http\\Controllers\\api\\CourseController' => __DIR__ . '/../..' . '/app/Http/Controllers/api/CourseController.php',
         'App\\Http\\Controllers\\teacher\\CourseController' => __DIR__ . '/../..' . '/app/Http/Controllers/teacher/CourseController.php',
+        'App\\Http\\Controllers\\teacher\\LessonController' => __DIR__ . '/../..' . '/app/Http/Controllers/teacher/LessonController.php',
         'App\\Http\\Controllers\\website\\BlogController' => __DIR__ . '/../..' . '/app/Http/Controllers/website/BlogController.php',
         'App\\Http\\Controllers\\website\\CartController' => __DIR__ . '/../..' . '/app/Http/Controllers/website/CartController.php',
         'App\\Http\\Controllers\\website\\CourseController' => __DIR__ . '/../..' . '/app/Http/Controllers/website/CourseController.php',

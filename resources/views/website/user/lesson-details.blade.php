@@ -273,19 +273,19 @@
               aria-labelledby="headingOne">
               <div class="panel-body" style="background-color: white;">
 
-                <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('content')"
+                <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('content',{{$lesson->id}})"
                   value="{{$lesson->id}}"><span>{{$lesson->name}}</span></a><br>
 
                 @if($lesson->lessonAttachment!=null)
                 @if($lesson->lessonAttachment->img_url!=null)
                 <span class="topic-small-heading-black lesson-attach"><a id="displayAttachment"
-                    onclick="displayAttachment('imageAttach')" value="{{$lesson->id}}"><i class="fa fa-picture-o"
+                    onclick="displayAttachment('imageAttach',{{$lesson->id}})"><i class="fa fa-picture-o"
                       style="font-size:18px;color:#0770EF"></i>
                     {{$lesson->name}}</a></span><br>
                 @endif
                 @if($lesson->lessonAttachment->origin_video_url!=null)
-                <span class="topic-small-heading-black lesson-attach"><a onclick="displayAttachment('videoAttach')"
-                    value="{{$lesson->id}}"><i class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
+                <span class="topic-small-heading-black lesson-attach"><a onclick="displayAttachment('videoAttach',{{$lesson->id}})"
+                  ><i class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
                     {{$lesson->name}}</span></a>
                 @endif
                 @endif
@@ -295,10 +295,10 @@
                     <div class="panel-heading" role="tab" id="headingOne">
                       <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-                          aria-controls="collapseOne" onclick="displayAttachment('content')" value="{{$topic->id}}">
+                          aria-controls="collapseOne" onclick="displayAttachment('Content',{{$topic->id}})" value="{{$topic->id}}">
                           <span class="topic-small-heading-black">{{$topickey+1}} .Topic: {{$topic->name}} </span>
-                          <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('content')"
-                            value="{{$topic->id}}"><span>{{$topic->name}}</span></a>
+                          <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('Content',{{$topic->id}})"
+                         ><span>{{$topic->name}}</span></a>
                         </a>
                       </h4>
                     </div>
@@ -307,14 +307,13 @@
                       <div class="panel-body">
                         @if($topic->lessonAttachment!=null)
                         @if($topic->lessonAttachment->img_url!=null)
-                        <a class="topic-small-heading-black lesson-attach" id="displayAttachment"
-                          onclick="displayAttachment('imageAttach')" value="{{$topic->id}}"><i class="fa fa-picture-o"
+                        <a class="topic-small-heading-black lesson-attach" id="displayAttachment" onclick="displayAttachment('imageAttach',{{$topic->id}})"
+                          value="{{$topic->id}}"><i class="fa fa-picture-o"
                             style="font-size:18px;color:#0770EF"></i>
                           {{$topic->name}}</a><br>
                         @endif
                         @if($topic->lessonAttachment->origin_video_url!=null)
-                        <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('videoAttach')"
-                          value="{{$topic->id}}"><i class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
+                        <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('videoAttach',{{$topic->id}})"><i class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
                           {{$topic->name}}</a>
                         @endif
                         @endif
@@ -332,20 +331,17 @@
                             <div id="collapseSubTopic{{$key}}" class="panel-collapse collapse in" role="tabpanel"
                               aria-labelledby="headingOne">
                               <div class="panel-body">
-                                <a class="topic-small-heading-black lesson-attach"
-                                  onclick="displayAttachment('Content')" value="{{$subtopic->id}}">{{$key+1}}.
+                                <a class="topic-small-heading-black lesson-attach"  onclick="displayAttachment('Content',{{$subtopic->id}}">{{$key+1}}.
                                   {{$subtopic->name}}</a><br>
 
                                 @if($subtopic->lessonAttachment!=null)
                                 @if($subtopic->lessonAttachment->img_url!=null)
-                                <a class="topic-small-heading-black lesson-attach"
-                                  onclick="displayAttachment('imageAttach')" value="{{$subtopic->id}}"><i
+                                <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('imageAttach',{{$subtopic->id}})"><i
                                     class="fa fa-picture-o" style="font-size:18px;color:#0770EF"></i>
                                   {{$subtopic->name}}</a><br>
                                 @endif
                                 @if($subtopic->lessonAttachment->origin_video_url!=null)
-                                <a class="topic-small-heading-black lesson-attach"
-                                  onclick="displayAttachment('videoAttach')" value="{{$subtopic->id}}"><i
+                                <a class="topic-small-heading-black lesson-attach" onclick="displayAttachment('videoAttach',{{$subtopic->id}}"><i
                                     class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
                                   {{$subtopic->name}}</a><br>
                                 @endif
@@ -420,7 +416,7 @@
         
     });
 
-    function displayAttachment(type) {
+    function displayAttachment(type,lessonId) {
 
         if (type == 'content') {
             document.getElementById("Content").style.display = "block";
@@ -435,9 +431,10 @@
             document.getElementById("Content").style.display = "none";
             document.getElementById("imageAttach").style.display = "none";
         }
-        var lesson_id = $("#displayAttachment").attr('value');
 
+        var lesson_id = lessonId;
 
+         
         $.ajax({
             type: 'POST',
             url: "{{ route('website.user.lesson.attachment') }}",
@@ -446,6 +443,7 @@
                 _token: '{{csrf_token()}}'
             },
             success: function(data) {
+              
                 var content = `<div class="card"><div class="card-body">
                 ${data.content}
                 </div>

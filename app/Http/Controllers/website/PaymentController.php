@@ -65,6 +65,7 @@ class PaymentController extends Controller
                     'rzp_order_id' => $razorpayOrder['id'],
                     'payment_status' => 'pending',
                 ]);
+              
             }
             
 
@@ -76,7 +77,7 @@ class PaymentController extends Controller
 
 
     public function verifyPayment(Request $request){
-        
+      
         if ( !empty( $request->input('razorpay_payment_id') ) ){
             $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
             $order_id = Order::where('rzp_order_id', $request->razorpay_order_id)->first();
@@ -99,9 +100,17 @@ class PaymentController extends Controller
                     ]);
     
                    foreach($order as $item){
-                        Cart::where('user_id', Auth::user()->id)->where('chapter_id', $item->chapter_id)->update([
-                                'is_paid' => 1,
-                        ]);
+                        $cart=Cart::where('user_id', Auth::user()->id)->where('board_id', $item->board_id)->where('assign_class_id',$item->assign_class_id)->where('course_id',$item->course_id)->first();
+                        
+                        $cart_update=$cart->update(['is_paid'=>1]);
+                       
+                        $cart_assign_subjects=$cart->assignSubject;
+                        foreach($cart_assign_subjects as $key=>$cart_assign_subject){
+                           
+                            $cart_assign_subject_update=$cart_assign_subject->update(['order_id'=> $item->id]);
+                          
+                        }
+                        
                    }
     
     

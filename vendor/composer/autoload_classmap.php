@@ -49,6 +49,7 @@ return array(
     'App\\Http\\Controllers\\admin\\TimeTableController' => $baseDir . '/app/Http/Controllers/admin/TimeTableController.php',
     'App\\Http\\Controllers\\api\\CourseController' => $baseDir . '/app/Http/Controllers/api/CourseController.php',
     'App\\Http\\Controllers\\teacher\\CourseController' => $baseDir . '/app/Http/Controllers/teacher/CourseController.php',
+    'App\\Http\\Controllers\\teacher\\LessonController' => $baseDir . '/app/Http/Controllers/teacher/LessonController.php',
     'App\\Http\\Controllers\\website\\BlogController' => $baseDir . '/app/Http/Controllers/website/BlogController.php',
     'App\\Http\\Controllers\\website\\CartController' => $baseDir . '/app/Http/Controllers/website/CartController.php',
     'App\\Http\\Controllers\\website\\CourseController' => $baseDir . '/app/Http/Controllers/website/CourseController.php',
