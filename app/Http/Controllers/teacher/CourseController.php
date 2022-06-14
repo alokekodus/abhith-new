@@ -22,9 +22,11 @@ class CourseController extends Controller
     }
     public function view($subject_id){
         try {
+           
             $subject_id=Crypt::decrypt($subject_id);
-            $subject=AssignSubject::with('subjectAttachment')->where('id',$subject_id)->first();
-        return view('teacher.course.view',compact('subject'));
+            $subject = AssignSubject::with('lesson','subjectAttachment')->where('id',$subject_id)->first();
+            $lessons=$subject->lesson;
+        return view('teacher.course.view',compact('subject','lessons'));
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -35,5 +37,15 @@ class CourseController extends Controller
         $lessons=$subject->lesson;
         $type=auth()->user()->type_id;
         return view('website.user.lesson', compact('lessons','subject','type'));
+    }
+    public function details($subject_id){
+        $subject_id=Crypt::decrypt($subject_id);
+      
+        $subject = AssignSubject::with(['lesson'=>function ($query) {
+           $query->with('lessonAttachment');
+        },'subjectAttachment'])->where('id',$subject_id)->first();
+        $lessons=$subject->lesson;
+       
+        return view('teacher.lesson.lesson-details', compact('lessons','subject'));
     }
 }

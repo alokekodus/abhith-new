@@ -21,8 +21,17 @@ class LessonController extends Controller
     public function view($lesson_id){
         try {
             $lesson_id=Crypt::decrypt($lesson_id);
-            $lesson=Lesson::with('topics')->get();
-            dd($lesson);
+            $lesson=Lesson::with('topics')->where('id',$lesson_id)->first();
+           return view('teacher.lesson.view')->with(['lesson'=>$lesson]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function topicView($topic_id){
+        try {
+            $topic_id=Crypt::decrypt($topic_id);
+            $topic=Lesson::with('subTopics')->where('id',$topic_id)->first();
+            return view('teacher.lesson.topic.view')->with(['topic'=>$topic]);
         } catch (\Throwable $th) {
             //throw $th;
         }

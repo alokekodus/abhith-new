@@ -14,8 +14,8 @@
             <h4 class="card-title text-info">SUBJECT:{{$item->subject_name}} &nbsp;&nbsp; ASSIGN CLASS: Class -
                 {{$item->assignClass->class}} -- {{$item->boards->exam_board}} Board </h4><span style="float:right;">
                 <h4 class="card-title text-info">TOTAL LESSON:{{$item->lesson()->count()}}</h4>
-                <h4><mark class="bg-success text-white">
-                        TOTAL STUDENTS:{{$item->lesson()->count()}}</mark></h4><br>
+                <h4><a href="{{route('teacher.subject.student',Crypt::encrypt($item->id))}}"><mark class="bg-success text-white">
+                        TOTAL STUDENTS:{{$item->lesson()->count()}}</mark></a></h4><br>
             </span></p>
             <p>
             <h4 class="card-title text-info">AMOUNT: {{number_format($item->subject_amount,2,'.','')}} </h4>
