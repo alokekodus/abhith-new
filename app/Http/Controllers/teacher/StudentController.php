@@ -10,20 +10,20 @@ use Illuminate\Support\Facades\Crypt;
 
 class StudentController extends Controller
 {
-  public function index($subject_id)
+  public function index()
   {
     $assign_subjects = AssignSubject::with(['assignOrder' => function ($query) {
       $query->with(['order' => function ($q) {
         $q->with('user');
       }]);
-    }])->where('teacher_id', auth()->user()->id)->where('id', Crypt::decrypt($subject_id))->get();
+    }])->where('teacher_id', auth()->user()->id)->get();
     // $orders=Order::with(['user','assignSubject'=>function($query){
     //     $query->with(['subject'=>function($q){
     //         $q->where('teacher_id',auth()->user()->id);
     //     }]);
     // }])->get();
-    dd($assign_subjects);
-    return view('teacher.student.index', compact('orders'));
+   
+    return view('teacher.student.index', compact('assign_subjects'));
   }
   public function subjectWiseStudent($subject_id)
   {
@@ -31,9 +31,9 @@ class StudentController extends Controller
       $query->with(['order' => function ($q) {
         $q->with('user');
       }]);
-    }])->where('teacher_id', auth()->user()->id)->where('id', Crypt::decrypt($subject_id))->first();
+    }])->where('id', Crypt::decrypt($subject_id))->first();
+    $assign_orders=$assign_subjects->assignOrder;
    
-    dd($assign_subjects);
-    return view('teacher.student.index', compact('orders'));
+      return view('teacher.student.index', compact('assign_orders'));
   }
 }

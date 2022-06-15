@@ -49,7 +49,7 @@ class PaymentController extends Controller
                 "prefill"           => [
                 "name"              => Auth::user()->name . Auth::user()->lastname,
                 "email"             => Auth::user()->email,
-                "contact"           => $user_detail->phone,
+                "contact"           => auth()->user()->phone,
                 ],
                 "theme"             => [
                 "color"             => "#528FF0"

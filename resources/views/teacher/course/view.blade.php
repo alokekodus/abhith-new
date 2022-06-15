@@ -140,6 +140,12 @@
         transform: rotate(90deg);
     }
 
+    .subject-dropdown {
+        position: absolute;
+        top: -38px;
+        right: 0px;
+    }
+    
 </style>
 @endsection
 @section('content')
@@ -147,12 +153,13 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> All Subject
+        </span> All Subject/{{$subject->subject_name}}
     </h3>
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{route('teacher.course.details',Crypt::encrypt($subject->id))}}" class="btn btn-gradient-primary btn-fw" data-backdrop="static" data-keyboard="false">
+                <a href="{{route('teacher.course.details',Crypt::encrypt($subject->id))}}"
+                    class="btn btn-gradient-primary btn-fw" data-backdrop="static" data-keyboard="false">
                     View Subject Details</a>
             </li>
         </ul>
@@ -160,8 +167,94 @@
 </div>
 <div class="card">
     <div class="card-body">
-        @include('common.subject.details')
+        <div class="row m-2">
+            <div class="col-md-3 offset-md-3"></div>
+            <div class="col-md-3 offset-md-3">
+                <div class="dropdown subject-dropdown">
+                    <button class="btn btn-gradient-primary btn-lg btn-icon-text dropdown-toggle" type="button"
+                        id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{$subject->subject_name}}
+                    </button>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item text-info" type="button">Total Content
+                            {{subjectTotalResource($subject->id,"content")}}</button>
+                        <button class="dropdown-item text-info" type="button">Total Images
+                            {{subjectTotalResource($subject->id,"image")}}</button>
+                        <button class="dropdown-item text-info" type="button">Total Videos
+                            {{subjectTotalResource($subject->id,"video")}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <blockquote class="blockquote blockquote-primary m-2">
+            <h4 class="card-title text-primary">All Content</h4>
+            <div class="row">
+                <div class="container demo">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        @foreach($subject->lesson as $key=>$lesson)
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseLesson{{$key}}" aria-expanded="true"
+                                        aria-controls="collapseLesson{{$key}}">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        {{$key+1}}. Lesson : {{$lesson->name}}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseLesson{{$key}}" class="panel-collapse collapse show" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body">
+
+                                    {{-- All topic --}}
+                                    @foreach($lesson->topics as $topickey=>$topic)
+                                    <div class="container demo">
+
+
+                                        <div class="panel-group" id="accordion" role="tablist"
+                                            aria-multiselectable="true">
+
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="headingOne">
+                                                    <h4 class="panel-title">
+                                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                                            href="#collapseTopic{{$topickey}}" aria-expanded="true"
+                                                            aria-controls="collapseTopic{{$topickey}}">
+                                                            <i class="more-less glyphicon glyphicon-plus"></i>
+                                                            {{$topickey+1}} . Topic Name : {{$topic->name}}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTopic{{$topickey}}" class="panel-collapse collapse"
+                                                    role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="panel-body">
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div><!-- panel-group -->
+
+
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div><!-- panel-group -->
+
+
+                </div>
+            </div>
+
+        </blockquote>
     </div>
+
 </div>
 
 @endsection

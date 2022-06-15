@@ -22,11 +22,9 @@ class CourseController extends Controller
     }
     public function view($subject_id){
         try {
-           
             $subject_id=Crypt::decrypt($subject_id);
             $subject = AssignSubject::with('lesson','subjectAttachment')->where('id',$subject_id)->first();
-            $lessons=$subject->lesson;
-        return view('teacher.course.view',compact('subject','lessons'));
+         return view('teacher.course.view',compact('subject'));
         } catch (\Throwable $th) {
             //throw $th;
         }

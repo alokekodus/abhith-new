@@ -25,7 +25,7 @@ class LessonAttachment extends Model
 
     public function lesson()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(Lesson::class,'subject_lesson_id');
     }
     public function assignSubject()
     {
