@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +18,16 @@ class AssignSubjectController extends Controller
         $assign_subject = AssignSubject::with('assignClass','boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         return view('admin.course-management.subjects.subject')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
-
+   public function store(Request $request){
+       try {
+           dd($request->all());
+        //    $data=[
+        //        'subjectName'=>$request->subjectName,
+        //    ]
+       } catch (\Throwable $th) {
+           //throw $th;
+       }
+   }
     public function assignSubject(Request $request){
        
         try {
@@ -68,5 +78,16 @@ class AssignSubjectController extends Controller
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to assign subject.', 'status' => 2]);
         }
        
+    }
+    public function create(){
+        $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $assign_subject = AssignSubject::with('assignClass','boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $teachers=$students = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'Teacher');
+            }
+        )->get();
+ 
+        return view('admin.course-management.subjects.create')->with(['subjects' => $assign_subject, 'classes' => $class_details,'teachers'=>$teachers]);
     }
 }

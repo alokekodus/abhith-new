@@ -16,7 +16,7 @@ class SubjectController extends Controller
     }
 
     protected function create(Request $request){
-
+         
         $validate = Validator::make($request->all(),[
             'name' => 'required',
         ],['name.required'=>'Subject Name is required']);

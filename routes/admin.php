@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth'] ],function(){
     //     Route::get('',[CourseController::class,'index'])->name('admin.get.course');
     //     Route::view('create', 'admin.course.create')->name('admin.create.course');
     //     Route::post('creating',[CourseController::class,'create'])->name('admin.creating.course');
-    //     Route::post('ckeditorImage',[CourseController::class,'ckeditorImage'])->name('admin.course.upload');
+        Route::post('ckeditorImage',[CourseController::class,'ckeditorImage'])->name('admin.course.upload');
     //     Route::get('edit/{id}',[CourseController::class,'editCourse'])->name('admin.edit.course');
     //     Route::post('editing',[CourseController::class,'edit'])->name('admin.editing.course');
     //     Route::post('active',[CourseController::class,'active'])->name('admin.active.course');
@@ -67,7 +67,9 @@ Route::group(['middleware' => ['auth'] ],function(){
         });
 
         Route::prefix('subject')->group(function(){
-            Route::get('all', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
+            Route::get('/', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
+            Route::get('create', [AssignSubjectController::class, 'create'])->name('admin.course.management.subject.create');
+            Route::post('store', [AssignSubjectController::class, 'store'])->name('admin.course.management.subject.store');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
         });
         Route::prefix('lesson')->group(function(){
@@ -101,8 +103,8 @@ Route::group(['middleware' => ['auth'] ],function(){
         // /* ------------------------------- COURSE ------------------------------------ */
         // Route::prefix('subject')->group(function () {
         //     Route::get('',[SubjectController::class,'index'])->name('admin.get.subject');
-        //     Route::view('create', 'admin.master.subjects.create')->name('admin.create.subject');
-        //     Route::post('creating',[SubjectController::class,'create'])->name('admin.creating.subject');
+            Route::view('create', 'admin.master.subjects.create')->name('admin.create.subject');
+            Route::post('creating',[SubjectController::class,'create'])->name('admin.creating.subject');
         //     Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
         //     Route::get('edit/{id}',[SubjectController::class,'editSubject'])->name('admin.edit.subject');
         //     Route::post('editing',[SubjectController::class,'edit'])->name('admin.editing.subject');

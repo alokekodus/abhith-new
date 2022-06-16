@@ -29,7 +29,7 @@
 
     <link href="{{asset('asset_website/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('asset_website/svg/icomoon/style.css')}}" rel="stylesheet">
-
+    <link src="{{asset('asset_website/css/videojs.watermark.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet"
         href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">

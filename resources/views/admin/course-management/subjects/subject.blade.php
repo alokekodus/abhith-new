@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item active" aria-current="page">
-                    <a href="#" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#assignSubjectModal" data-backdrop="static" data-keyboard="false">Add Subject</a>
+                    <a href="{{route('admin.course.management.subject.create')}}" class="btn btn-gradient-primary btn-fw"  data-backdrop="static" data-keyboard="false">Add Subject</a>
                 </li>
             </ul>
         </nav>

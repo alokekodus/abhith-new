@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\LessonController;
 use App\Http\Controllers\website\DashboardController;
 use App\Http\Controllers\website\BlogController;
 use App\Http\Controllers\website\GalleryController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\website\CartController;
 use App\Http\Controllers\website\RazorpayPaymentController;
 use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\admin\TimeTableController;
+use App\Http\Controllers\website\SubjectController;
 use App\Http\Controllers\website\UserCourseController;
 
 /*
@@ -41,8 +43,14 @@ Route::prefix('course')->group(function(){
     Route::get('', [CourseController::class,'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class,'details'])->name('website.course.details');
     Route::post('package', [CourseController::class,'coursePackageFilter'])->name('website.course.package.filter');
-    Route::post('all', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
+    Route::any('all', [CourseController::class,'coursePackageAll'])->name('website.course.package.filter.all');
+    Route::get('start/{subject_id}', [CourseController::class,'subjectDetails'])->name('website.course.package.subject.detatils');
     
+    
+});
+Route::prefix('subject')->group(function(){
+    Route::get('/{subject_id}', [SubjectController::class,'subjectDetails'])->name('website.subject.detatils');
+         
 });
 
 /* ------------------------------- Blog ------------------------------------ */
@@ -85,11 +93,11 @@ Route::prefix('account')->group(function(){
     Route::post('user-details',[UserDetailsController::class,'userDetails'])->name('website.user.details');
     Route::post('user-photo',[UserDetailsController::class,'uploadPhoto'])->name('website.user.upload.photo');
     Route::post('update-password',[UserDetailsController::class,'updatePassword'])->name('website.update.password');
-    Route::get('my-courses/{order_id}',[UserDetailsController::class,'mySubjects'])->name('website.user.courses');
     Route::get('my-courses/{order_id}',[UserCourseController::class,'displayUserSubjects'])->name('website.user.courses');
-    Route::get('my-lesson/{order_id}/{subject_id}',[UserDetailsController::class,'myLesson'])->name('website.user.lesson');
+    Route::get('my-lesson/{order_id}/{subject_id}',[UserCourseController::class,'myLesson'])->name('website.user.lesson');
     Route::get('my-lesson/{topic_id}',[UserDetailsController::class,'myLessonDetails'])->name('website.user.lesson.details');
     Route::post('attachment', [UserDetailsController::class,'displayAttachment'])->name('website.user.lesson.attachment');
+    Route::get('lesson/{id',[LessonController::class,'LessonDetails'])->name('website.user.lessonbyid');
 });
 
 

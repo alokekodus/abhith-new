@@ -21,6 +21,6 @@ class AssignSubject extends Model
         return $this->belongsTo(Board::class, 'board_id', 'id');
     }
     public function lesson(){
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class)->where('parent_id',null);
     }
 }

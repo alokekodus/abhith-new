@@ -205,4 +205,11 @@ class CourseController extends Controller
         
         return view('website.course.filter-course',compact('board','class','subjects','total_amount'));
     }
+    public function  subjectDetails($subject_id){
+        $subject_id=Crypt::decrypt($subject_id);
+        $subject = AssignSubject::find($subject_id);
+        $lessons=$subject->lesson;
+      
+        return view('website.user.lesson-details', compact('lessons','subject'));
+    }
 }
