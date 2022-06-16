@@ -16,35 +16,35 @@ class QuestionImport implements ToCollection, WithHeadingRow
 
     private $setId;
 
-    public function __construct($setName, $subject_id) 
+    public function __construct($setName, $subject_id, $board_id, $assign_class_id)
     {
         $this->setName = $setName;
         $this->subject_id = $subject_id;
-       
+        $this->board_id = $board_id;
+        $this->assign_class_id = $assign_class_id;
     }
 
     public function collection(Collection $rows)
     {
         Validator::make($rows->toArray(), [
-            '*.question' =>'required',
-            '*.option_1' =>'required',
-            '*.option_2' =>'required',
-            '*.option_3' =>'required',
-            '*.option_4' =>'required',
-            '*.correct_answer' =>'required',
+            '*.question' => 'required',
+            '*.option_1' => 'required',
+            '*.option_2' => 'required',
+            '*.option_3' => 'required',
+            '*.option_4' => 'required',
+            '*.correct_answer' => 'required',
         ])->validate();
 
 
 
-        Set::create([
+        $set=Set::create([
             'set_name' =>  $this->setName,
-            'subject_id' => $this->subject_id
+            'assign_subject_id' => $this->subject_id,
+            'board_id' => $this->board_id,
+            'assign_class_id' => $this->assign_class_id,
         ]);
 
-        $get_set_id = Set::where('subject_id',$this->subject_id)->where('set_name',$this->setName)->where('is_activate',1)->first();
-
-        foreach ($rows as $row) 
-        {
+        foreach ($rows as $row) {
             Question::create([
                 'question' => $row['question'],
                 'option_1' => $row['option_1'],
@@ -52,7 +52,7 @@ class QuestionImport implements ToCollection, WithHeadingRow
                 'option_3' => $row['option_3'],
                 'option_4' => $row['option_4'],
                 'correct_answer' => $row['correct_answer'],
-                'set_id' => (int) $get_set_id->id
+                'set_id' => (int) $set->id
             ]);
         }
     }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\UserDetails;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\SubjectLessonVisitor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -130,6 +131,7 @@ class UserDetailsController extends Controller
     public function displayAttachment(Request $request){
         try {
            $lesson=Lesson::with('lessonAttachment')->where('id',$request->lesson_id)->first();
+           visitorRecord($lesson->id,2);
            return response()->json($lesson);
         } catch (\Throwable $th) {
             //throw $th;

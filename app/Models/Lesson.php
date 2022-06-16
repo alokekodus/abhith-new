@@ -137,9 +137,11 @@ class Lesson extends Model
     {
         return $this->hasMany(Lesson::class, 'parent_lesson_id');
     }
+   
     public function lessonAttachment()
     {
-        return $this->hasOne(LessonAttachment::class);
+        return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',2);
     }
+    
     
 }

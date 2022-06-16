@@ -67,7 +67,7 @@ class CartController extends Controller
                     Toastr::error('Package already in Cart!', '', ["positionClass" => "toast-top-right"]); 
                     return redirect()->route('website.course');
                 }else{
-                  
+                
                     $cart = Cart::create([
                         'user_id' => auth()->user()->id,
                         'board_id' => $board_id,//board_id
@@ -76,7 +76,12 @@ class CartController extends Controller
                     ]);
                    
                     foreach($all_subjects as $key=>$subject){
-                        $subject=AssignSubject::find($subject->id);
+                        if($course_type==1){
+                            $subject=AssignSubject::find($subject->id);
+                        }else{
+                            $subject = AssignSubject::find($subject[$key]);  
+                        }
+                      
                         $data=[
                             'cart_id'=>$cart->id,
                             'assign_subject_id'=>$subject->id,
@@ -89,7 +94,7 @@ class CartController extends Controller
                 Toastr::success('Item added to cart successfully.', '', ["positionClass" => "toast-top-right"]); 
                 return redirect()->route('website.cart');
         } catch (\Throwable $th) {
-              
+              dd($th);
             Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]); 
                 return redirect()->route('website.course');
         }

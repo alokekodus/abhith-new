@@ -14,7 +14,7 @@ class AlterLessonAttachmentAddType extends Migration
     public function up()
     {
         Schema::table('lesson_attachments', function (Blueprint $table) {
-            $table->rename('lesson_id','assign_subject_id');
+            $table->rename('assign_subject_id','lesson_id',);
             $table->tinyInteger('type')->comment("1:subject,2:lesson")->after('video_resize_1080');
         });
     }

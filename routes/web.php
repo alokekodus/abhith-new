@@ -50,7 +50,7 @@ Route::prefix('course')->group(function(){
 });
 Route::prefix('subject')->group(function(){
     Route::get('/{subject_id}', [SubjectController::class,'subjectDetails'])->name('website.subject.detatils');
-         
+    Route::get('mcq/{set_id}', [SubjectController::class,'subjectMCQ'])->name('website.subject.mcq');
 });
 
 /* ------------------------------- Blog ------------------------------------ */

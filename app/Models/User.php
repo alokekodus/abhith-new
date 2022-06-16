@@ -48,10 +48,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    public function getFullName()
+    {
+        return "{$this->firstname}   {$this->lastname}";
+    }
 
     public function knowledgeForumPost(){
         return $this->hasMany('App\Models\KnowledgeForumPost');

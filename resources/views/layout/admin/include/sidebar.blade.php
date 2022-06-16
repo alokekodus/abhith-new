@@ -22,11 +22,20 @@
         </li>
         @if(auth()->user()->hasRole('Teacher'))
         <li class="nav-item">
-            <a class="nav-link" href="{{route('teacher.course')}}">
-                <span class="menu-title">Courses</span>
-                <i class="mdi mdi-book menu-icon"></i>
+            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
+              <span class="menu-title">Course Management</span>
+              <i class="menu-arrow"></i>
+              <i class="mdi mdi-book menu-icon"></i>
             </a>
+            <div class="collapse" id="course-management">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('teacher.course')}}">Subjects</a></li>
+              </ul>
+            </div>
         </li>
+      
+
+        @yield('subjectdetails')
         @else
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"

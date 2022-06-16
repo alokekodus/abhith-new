@@ -11,12 +11,19 @@ class Set extends Model
 
     protected $table = "sets";
     protected $guarded = [];
-
-    public function subject(){
-        return $this->belongsTo('App\Models\Subject');
+    public function board()
+    {
+        return $this->belongsTo(Board::class);
     }
-
+    public function assignClass()
+    {
+        return $this->belongsTo(assignClass::class);
+    }
+    public function assignSubject()
+    {
+        return $this->belongsTo(assignSubject::class);
+    }
     public function question(){
-        return $this->hasMany('App\Models\Question');
+        return $this->hasMany(Question::class);
     }
 }

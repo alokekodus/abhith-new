@@ -16,6 +16,7 @@ class AlterAssignSubjectTableAddPromoImageVideo extends Migration
         Schema::table('assign_subjects', function (Blueprint $table) {
             $table->longText('description')->after('is_activate')->nullable();
             $table->longText('why_learn')->after('description')->nullable();
+            $table->softDeletes();
         });
     }
 

@@ -29,7 +29,9 @@
                         <tr>
                             <th> # </th>
                             <th>Set Name</th>
-                            <th> Subject Name </th>
+                            <th>Board</th>
+                            <th>Class</th>
+                            <th> Subject </th>
                             <th> Active Status </th>
                             <th>View</th>
                         </tr>
@@ -39,7 +41,9 @@
                             <tr>
                                 <td>{{$key + 1}}</td>
                                 <td>{{$mcq->set_name}}</td>
-                                <td>{{$mcq->subject->name}}</td>
+                                <td>{{$mcq->board->exam_board}}</td>
+                                <td>{{$mcq->assignClass->class}}</td>
+                                <td>{{$mcq->assignSubject->subject_name}}</td>
                                 <td>
                                     @if ($mcq->is_activate == 1)
                                         <label class="switch">

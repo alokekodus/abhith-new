@@ -62,7 +62,8 @@
                 @auth   
                     <div class="cart-checkout">
                         <label class="bold-600">Total:</label>
-                        <h2 class="heading-black mb20"><i class="fa fa-inr" aria-hidden="true"></i>{{number_format($countPrice,2,'.','')}}</h2>
+                        <h2 class="heading-black mb20"><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($countPrice,2,'.','')}}</h2>
+                        {{-- <label class="bold-600">Apply Promo Code If Any Available:</label> --}}
                         @if ($countPrice == 0)
                             <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a>
                         @else

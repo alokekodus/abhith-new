@@ -207,9 +207,12 @@ class CourseController extends Controller
     }
     public function  subjectDetails($subject_id){
         $subject_id=Crypt::decrypt($subject_id);
-        $subject = AssignSubject::find($subject_id);
-        $lessons=$subject->lesson;
       
+        $subject = AssignSubject::with(['lesson'=>function ($query) {
+           $query->with('lessonAttachment');
+        },'subjectAttachment'])->where('id',$subject_id)->first();
+        $lessons=$subject->lesson;
+       
         return view('website.user.lesson-details', compact('lessons','subject'));
     }
 }

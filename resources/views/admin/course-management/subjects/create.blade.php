@@ -52,7 +52,7 @@
             <div class="col-6">
                 <div class="form-group">
                     <label for="">Assign Teacher</label>
-                    <select name="assignedClass" id="assignedClass" class="form-control">
+                    <select name="teacher_id" id="teache_id" class="form-control">
                         <option value="">-- Select -- </option>
                         @forelse ($teachers as $key => $teacher)
 
@@ -74,7 +74,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
-                    <label for="">Upload @yield('lesson-type') Picture<span class="text-danger">*</span></label>
+                    <label for="">Upload Subject Picture<span class="text-danger">*</span></label>
                     <div class="file-upload">
                         <div class="file-select">
                             <div class="file-select-button" id="fileName">Choose File</div>
@@ -87,7 +87,7 @@
             </div>
             <div class="col-6">
                 <div class="form-group">
-                    <label for="">Upload @yield('lesson-type') Video Thumbnail Image<span
+                    <label for="">Upload Subject Video Thumbnail Image<span
                             class="text-danger">*</span></label>
                     <div class="file-upload">
                         <div class="file-select">
@@ -113,7 +113,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="form-group">
-                    <label for="">Upload Lesson Video<span class="text-danger">*</span></label>
+                    <label for="">Upload Subject Promo Video<span class="text-danger">*</span></label>
                     <div class="file-upload">
                         <div class="file-select">
                             <div class="file-select-button" id="fileName">Choose File</div>

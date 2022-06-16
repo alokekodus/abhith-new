@@ -3,7 +3,7 @@
         <div class="form-group">
             <label for="">@yield('lesson-type') Name<span class="text-danger">*</span></label>
             <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area"
-                value="@isset($lesson){{$lesson->name}}@endisset">
+                value="">
             <span class="text-danger">{{ $errors->first('board_id') }}</span>
         </div>
     </div>
