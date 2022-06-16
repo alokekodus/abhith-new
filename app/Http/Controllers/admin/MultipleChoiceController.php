@@ -9,66 +9,82 @@ use App\Models\Set;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Imports\QuestionImport;
+use App\Models\AssignSubject;
+use App\Models\Board;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 
 
 class MultipleChoiceController extends Controller
 {
-    public function index(Request $request){
-        $getMultipleChoice = Set::with('subject')->paginate(10);
+    public function index(Request $request)
+    {
+        $getMultipleChoice = Set::with('assignSubject')->paginate(10);
+
         return view('admin.multiple-choice.multiple-choice')->with('getMultipleChoice', $getMultipleChoice);
     }
 
-    public function addMultipleChoice(Request $request){
-        return view('admin.multiple-choice.add-multiple-choice');
+    public function addMultipleChoice(Request $request)
+    {
+        $boards = Board::where('is_activate', 1)->get();
+        return view('admin.multiple-choice.add-multiple-choice', compact('boards'));
     }
 
-    public function insertQuestions(Request $request){
-        $setName = $request->setName;
-        $subject_id = $request->subject_id;
-        $questionFile = $request->questionExcel;
+    public function insertQuestions(Request $request)
+    {
+        try {
+            $setName = $request->setName;
+            $board_id = $request->subject_id;
+            $assign_class_id = $request->assign_class_id;
+            $assign_subject_id = $request->assign_subject_id;
+            $questionFile = $request->questionExcel;
 
-        $checkIfSetExists = Set::where('subject_id',$subject_id)->where('set_name',$setName)->where('is_activate',1)->exists();
+            $checkIfSetExists = Set::where('board_id', $board_id)->where('assign_class_id', $assign_class_id)->where('assign_subject_id', $assign_subject_id)->where('set_name', $setName)->where('is_activate', 1)->exists();
 
-        $subject = Subject::where('id', $subject_id)->first();
+            $subject = AssignSubject::where('id',$assign_subject_id)->first();
 
-        if($checkIfSetExists == true){
-            return back()->with(['error' => $setName.' '.'already active with subject '.$subject->name.'. Please select another subject or deactive the currently active Set']);
-        }else{
+            if ($checkIfSetExists == true) {
+                return back()->with(['error' => $setName . ' ' . 'already active with subject ' . $subject->name . '. Please select another subject or deactive the currently active Set']);
+            } else {
 
 
-            if( $request->hasFile('questionExcel') ){
-                $new_excel_name = date('d-m-Y-H-i-s') . '_' . $questionFile->getClientOriginalName();
-                $questionFileExtension = $questionFile->getClientOriginalExtension();
+                if ($request->hasFile('questionExcel')) {
+                   
+                    $subject_id = $subject->id;
+                    $board_id = $subject->board_id;
+                    $assign_class_id = $subject->assign_class_id;
+                    $new_excel_name = date('d-m-Y-H-i-s') . '_' . $questionFile->getClientOriginalName();
+                    $questionFileExtension = $questionFile->getClientOriginalExtension();
 
-                if($questionFileExtension != 'xlsx'){
-                    return back()->with(['error' => 'Not a valid excel file.']);
-                }else{
-                    $questionFile = $request->file('questionExcel');
-            
-                    $questionFile = $request->file('questionExcel')->store('imports');
-                    $import = new QuestionImport($setName, $subject_id);
-                    $import->import($questionFile);
-        
-                    return back()->withStatus('File uploaded successfully');
+                    if ($questionFileExtension != 'xlsx') {
+                        return back()->with(['error' => 'Not a valid excel file.']);
+                    } else {
+                        $questionFile = $request->file('questionExcel');
+
+                        $questionFile = $request->file('questionExcel')->store('imports');
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id);
+                        $import->import($questionFile);
+
+                        return back()->withStatus('File uploaded successfully');
+                    }
+                } else {
+                    return back()->with(['error' => $setName . ' ' . 'already exists with subject ' . $subject->name . '. Please select another subject.']);
                 }
-            
-            }else{
-                return back()->with(['error' => $setName.' '.'already exists with subject '.$subject->name.'. Please select another subject.']);
             }
+        } catch (\Throwable $th) {
+           dd($th);
         }
-
     }
 
 
-    public function viewMcq(Request $request,$id){
+    public function viewMcq(Request $request, $id)
+    {
 
         $mcq_set_id = Crypt::decrypt($id);
 
-        $details = Question::with('set')->where('set_id',$mcq_set_id)->get();
+        $details = Question::with('set')->where('set_id', $mcq_set_id)->get();
 
-        return view('admin.multiple-choice.edit-multiple-choice')->with('details' , $details);
+        return view('admin.multiple-choice.edit-multiple-choice')->with('details', $details);
     }
 
 
@@ -146,29 +162,32 @@ class MultipleChoiceController extends Controller
     // }
 
 
-    public function isActivateMultipleChoice(Request $request){
-        Set::where('id' ,$request->mcq_id)->update([ 'is_activate' => $request->active, ]);
-        Question::where('set_id' ,$request->mcq_id)->update([ 'is_activate' => $request->active, ]);
+    public function isActivateMultipleChoice(Request $request)
+    {
+        Set::where('id', $request->mcq_id)->update(['is_activate' => $request->active,]);
+        Question::where('set_id', $request->mcq_id)->update(['is_activate' => $request->active,]);
         return response()->json(['message' => 'MCQ visibility status updated successfully']);
     }
 
 
-    public function startMcq(Request $request, $id){
+    public function startMcq(Request $request, $id)
+    {
         $startMcq = MultipleChoice::where('subject_id', $id)->simplePaginate(5);
         return back()->with('startMcq',  $startMcq);
     }
 
 
-    public function checkIsCorrectMcq(Request $request){
+    public function checkIsCorrectMcq(Request $request)
+    {
         $subject_id = $request->subject_id;
         $setId = $request->setId;
 
         $checkMcq = Question::where('set_id',  $setId)->get();
         $correctAnswer = [];
         $selectedAnswer = $request->mcArray;
-        
+
         // return response( $selectedAnswer);
-       
+
         // $correctAnswerArray = [];
         // foreach( $checkMcq as $item){
         //     array_push($correctAnswerArray, $item->correct_answer);

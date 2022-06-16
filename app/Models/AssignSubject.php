@@ -23,6 +23,9 @@ class AssignSubject extends Model
     public function lesson(){
         return $this->hasMany(Lesson::class)->where('parent_id',null);
     }
+    public function sets(){
+        return $this->hasMany(Set::class);
+    }
     public function assignTeacher(){
         return $this->belongsTo(User::class, 'teacher_id', 'id');
     }

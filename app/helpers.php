@@ -69,3 +69,7 @@ function subjectTotalResource($subject_id, $type)
         return LessonAttachment::whereHas('lesson')->where('origin_video_url','!=',null)->get()->count();  
     }
 }
+function lessonTotalVisite($lesson_id){
+    $total_visit=SubjectLessonVisitor::where('lesson_subject_id',$lesson_id)->where('visitor_id',auth()->user()->id)->where('type',2)->first();
+    return $total_visit->total_visit;
+}

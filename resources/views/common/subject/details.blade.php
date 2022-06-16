@@ -14,23 +14,40 @@
         <p class="cross-line">
             <span>{{$subject->subject_name}} All Content</span>
         </p>
-        <div class="panel-group" id="accordionLesson" role="tablist" aria-multiselectable="true">
-            @foreach($lessons as $key=>$lesson)
-            <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                    <h4 class="panel-title">
-                        <a role="button" data-toggle="collapse" data-parent="#accordionLesson"
-                            href="#collapseOne{{$key}}" aria-expanded="true" aria-controls="collapseOne{{$key}}">
-                            <span class="small-heading-black">Lesson Name: {{$key+1}} .{{$lesson->name}}</span>
-                        </a>
-                    </h4>
-                </div>
+        <div class="row">
+            <div class="container demo">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h5 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseLesson"
+                                    aria-expanded="true" aria-controls="collapseLesson">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    ALL MCQ'S QUESTION SET
+                                </a>
+
+                            </h5>
+                        </div>
+                        <div id="collapseLesson" class="panel-collapse collapse show" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                @foreach($subject->sets as $key=>$set)
+                                <h5 class="panel-title">
+                                    <a class="btn btn-info" style="width:100%;" href="{{route('website.subject.mcq',Crypt::encrypt($set->id))}}">{{$set->set_name}}</a>
+                                </h5>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- panel-group -->
 
 
             </div>
-            @endforeach
-
         </div>
+
+        @include('common.lesson.content')
         <hr>
     </div>
     <div class="col-4">
@@ -48,8 +65,9 @@
             {{-- <a href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                 class="enroll">View Details</a> --}}
         </div>
-        @if(auth()->user()->hasRole('Student'))
+
         @if(auth()->check())
+        @if(auth()->user()->hasRole('Student'))
         <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
             class="btn btn-primary btn-lg btn-block">Start Your Course</a>
         @else

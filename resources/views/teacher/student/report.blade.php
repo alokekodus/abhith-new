@@ -1,5 +1,5 @@
 @extends('layout.admin.layout.admin')
-@section('title', 'Course Management - Subjects-create')
+@section('title', 'Student Management')
 @section('head')
 <style>
     <style>.panel-default>.panel-heading {
@@ -145,7 +145,6 @@
         top: -38px;
         right: 0px;
     }
-    
 </style>
 @endsection
 @section('content')
@@ -153,46 +152,36 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> All Subject/{{$subject->subject_name}}
+        </span> Student Report
     </h3>
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{route('teacher.course.details',Crypt::encrypt($subject->id))}}"
-                    class="btn btn-gradient-primary btn-fw" data-backdrop="static" data-keyboard="false">
-                    View Subject Details</a>
-            </li>
-        </ul>
-    </nav>
-</div>
-<div class="card">
-    <div class="card-body">
-        <div class="row m-2">
-            <div class="col-md-3 offset-md-3"></div>
-            <div class="col-md-3 offset-md-3">
-                <div class="dropdown subject-dropdown">
-                    <button class="btn btn-gradient-primary btn-lg btn-icon-text dropdown-toggle" type="button"
-                        id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{$subject->subject_name}}
-                    </button>
 
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item text-info" type="button">Total Content
-                            {{subjectTotalResource($subject->id,"content")}}</button>
-                        <button class="dropdown-item text-info" type="button">Total Images
-                            {{subjectTotalResource($subject->id,"image")}}</button>
-                        <button class="dropdown-item text-info" type="button">Total Videos
-                            {{subjectTotalResource($subject->id,"video")}}</button>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <blockquote class="blockquote blockquote-primary">
+
+                            <h4 class="card-title"> SUBJECT : {{$assign_orders[0]->subject->subject_name}} <span
+                                    style="float: right">STUDENT NAME: {{strtoupper($student->getFullName())}}</span>
+                            </h4>
+                            <hr>
+                            <h4 class="card-title text-primary">All Content</h4>
+                            @include('common.lesson.content')
+
+
+                        </blockquote>
+
                     </div>
                 </div>
             </div>
         </div>
-        <blockquote class="blockquote blockquote-primary m-2">
-           @include('common.lesson.content')
-        </blockquote>
     </div>
-
 </div>
+
+
 
 @endsection
 

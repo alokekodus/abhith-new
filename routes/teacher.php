@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('student')->group(function () {
         Route::get('/', [StudentController::class, 'index'])->name('teacher.student.index');
         Route::get('/{subject_id}', [StudentController::class, 'subjectWiseStudent'])->name('teacher.subject.student');
-       
+        Route::get('/report/{subject_id}/{student_id}', [StudentController::class, 'subjectWiseStudentReport'])->name('teacher.subject.student.report');
      
     });
    

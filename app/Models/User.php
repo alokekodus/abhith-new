@@ -54,7 +54,7 @@ class User extends Authenticatable
     ];
     public function getFullName()
     {
-        return "{$this->firstname}{$this->lastname}";
+        return "{$this->firstname}   {$this->lastname}";
     }
 
     public function knowledgeForumPost(){
