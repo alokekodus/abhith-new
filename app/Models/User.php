@@ -27,8 +27,9 @@ class User extends Authenticatable
         'phone',
         'otp',
         'verify_otp',
-        'role_id',
+        'type_id',
         'password',
+        'is_activate',
     ];
 
     protected $guarded = [];

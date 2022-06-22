@@ -9,7 +9,7 @@
             <i class="mdi mdi-bulletin-board"></i>
         </span> @if(auth()->user()->hasRole('Teacher')) All Assigned Subject @else All Subjects @endif
     </h3>
-    @if(!auth()->user()->hasRole('Teacher')){
+    @if(!auth()->user()->hasRole('Teacher'))
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">

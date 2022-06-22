@@ -21,7 +21,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h5 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseLesson"
+                                <a  href="{{route('website.subject.mcq',Crypt::encrypt($subject->id))}}" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseLesson"
                                     aria-expanded="true" aria-controls="collapseLesson">
                                     <i class="more-less glyphicon glyphicon-plus"></i>
                                     ALL MCQ'S QUESTION SET
@@ -29,16 +29,7 @@
 
                             </h5>
                         </div>
-                        <div id="collapseLesson" class="panel-collapse collapse show" role="tabpanel"
-                            aria-labelledby="headingOne">
-                            <div class="panel-body">
-                                @foreach($subject->sets as $key=>$set)
-                                <h5 class="panel-title">
-                                    <a class="btn btn-info" style="width:100%;" href="{{route('website.subject.mcq',Crypt::encrypt($set->id))}}">{{$set->set_name}}</a>
-                                </h5>
-                                @endforeach
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div><!-- panel-group -->
@@ -51,12 +42,15 @@
         <hr>
     </div>
     <div class="col-4">
-        <div class="course-pic">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item"
-                    src="{{asset('/storage/'.$subject->subjectAttachment->video_resize_480)}}"></iframe>
-            </div>
-        </div>
+
+
+        <video id="player" class="video-js" controls preload="auto" autoplay loop muted
+            poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" loading="lazy">
+        </video>
+
+
+
+
         <div class="course-desc">
             <h4 class="small-heading-black">{{$subject->subject_name}}</h4>
             <span>Created by : Demo Teacher</span><br>
@@ -67,13 +61,13 @@
         </div>
 
         @if(auth()->check())
-        @if(auth()->user()->hasRole('Student'))
+       
         <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
             class="btn btn-primary btn-lg btn-block">Start Your Course</a>
         @else
         <a class="btn btn-primary btn-lg btn-block">Go to Package</a>
         @endif
-        @endif
+      
     </div>
 </div>
 
