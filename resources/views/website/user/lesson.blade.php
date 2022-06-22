@@ -1,4 +1,7 @@
 @extends('layout.website.website')
+@php
+$prefix = Request::route()->getPrefix();
+@endphp
 
 @section('title', 'My Account')
 
@@ -149,16 +152,64 @@
 @endsection
 
 @section('content')
-{{-- @include('layout.website.include.forum_header') --}}
-<br>
+@if($prefix=='/account')
+@include('layout.website.include.forum_header')
+@endif
 <section class="account-section">
 
-@include('common.subject.details')
+  @include('common.subject.details')
 
 
 </section>
 @endsection
 @section('scripts')
-
+<script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
+<script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
+<script>
+  $(document).ready(function() {
+    var Subject=@json($subject);
+        var subject_attachment=Subject.subject_attachment;
+        var storagePath = "{!! storage_path() !!}";
+        var FULLHD= subject_attachment['origin_video_url'] ;
+        var SD= subject_attachment['video_resize_480'] ;
+        var HD= subject_attachment['video_resize_720'] ;
+        var player = videojs('player', {
+        fluid: true,
+        plugins: {
+            videoJsResolutionSwitcher: {
+            default: '480px',
+            dynamicLabel: true
+            }
+        }
+        });
+        player.updateSrc([
+        {
+            src: 'http://localhost/abhith-new/public/storage/'+SD,
+            type: 'video/mp4',
+            res: 480,
+            label: '480px'
+        },
+        {
+            src: 'http://localhost/abhith-new/public/storage/'+HD,
+            type: 'video/mp4',
+            res: 720,
+            label: '720px'
+        },
+            {
+            src: 'http://localhost/abhith-new/public/storage/'+FULLHD,
+            type: 'video/mp4',
+            res: 1080,
+            label: '1080px'
+        },
+        
+        ]);
+        player.watermark({
+            file: 'watermarks.png',
+           
+        });
+   });
+   
+  
+</script>
 
 @endsection

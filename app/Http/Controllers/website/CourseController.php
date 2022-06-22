@@ -19,6 +19,7 @@ use App\Models\MultipleChoice;
 use App\Models\Set;
 use App\Models\Question;
 use Illuminate\Support\Facades\Crypt;
+use PhpParser\Node\Expr\Assign;
 
 class CourseController extends Controller
 {
@@ -26,6 +27,8 @@ class CourseController extends Controller
     {
         $board_details = Board::where('is_activate', 1)->get();
         $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->get();
+        
+        
         return view('website.course.course')->with(['boards' => $board_details, 'subjects' => $subject_details]);
     }
     //

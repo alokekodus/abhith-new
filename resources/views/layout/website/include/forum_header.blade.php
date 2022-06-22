@@ -1,7 +1,7 @@
-{{-- <header id="header" class="fixed-top">
+<header id="header" class="fixed-top">
     <div class="container-fluid d-flex align-items-center p0">
         
-        <nav class="nav-menu d-none d-lg-block">
+        <nav class="nav-menu d-none d-lg-block header-position">
             @guest
 
             <ul>
@@ -29,4 +29,4 @@
 
 
     </div>
-</header> --}}
+</header>

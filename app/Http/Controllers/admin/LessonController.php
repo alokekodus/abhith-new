@@ -180,7 +180,7 @@ class LessonController extends Controller
     }
     public function lessonFunctionResponse($type)
     {
-        if ($type == "create-lesson") {
+        if ($type == "lesson-create") {
             return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
         } elseif ($type == "create-topic") {
             return response()->json(['message' => 'Topic Added Successfully', 'status' => 1]);

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{-- head --}}
+{{-- head --}}
 @include('layout.website.include.head')
+@php
+$prefix = Request::route()->getPrefix();
+@endphp
 
 <body>
 
     <!-- ======= Header ======= -->
     @include('layout.website.include.header')
-
-
+    
+    @if($prefix!='/account')
     @include('layout.website.include.navbar')
-
+    @endif
     <!-- End Header -->
 
 
@@ -23,10 +26,10 @@
 
     </main>
 
-      {{-- script --}}
+    {{-- script --}}
     @include('layout.website.include.script')
 
-   
+
 
     @yield('scripts')
 

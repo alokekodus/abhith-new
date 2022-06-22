@@ -2,27 +2,33 @@
     <div class="col-12">
         <div class="form-group">
             <label for="">@yield('lesson-type') Name<span class="text-danger">*</span></label>
-            <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area"
-                value="">
+            <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="">
             <span class="text-danger">{{ $errors->first('board_id') }}</span>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
         <div class="form-group">
-            <label for="">Upload @yield('lesson-type') Picture<span class="text-danger">*</span></label>
+            <label for="">Upload @yield('lesson-type') Attachment <span class="text-danger">*</span></label>
             <div class="file-upload">
                 <div class="file-select">
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noImageFile">No file chosen...</div>
                     <input type="file" id='imageUpload' name="image_url">
-                    </div>
+                </div>
             </div>
             <span id="imageUrlError"></span>
         </div>
     </div>
-    <div class="col-6">
+</div>
+<div class="row">
+    <div class="col-12">
+        <img id="blah" src="#" alt="your image" height="150" width="250" controls style="display: none;" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
         <div class="form-group">
             <label for="">Upload @yield('lesson-type') Video Thumbnail Image<span class="text-danger">*</span></label>
             <div class="file-upload">
@@ -30,18 +36,18 @@
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noImageFile">No file chosen...</div>
                     <input type="file" id='videoThumbnailImageUpload' name="video_thumbnail_image_url">
-                    </div>
+                </div>
             </div>
             <span id="imageUrlError"></span>
         </div>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-6">
-        <img id="blah" src="#" alt="your image" height="150" width="250" controls style="display: none;" />
-    </div>
-    <div class="col-6">
-        <img id="videothumbnailimagepreview" src="#" alt="your image" height="150" width="250" controls style="display: none;" />
+
+    <div class="col-12">
+        <img id="videothumbnailimagepreview" src="#" alt="your image" height="150" width="250" controls
+            style="display: none;" />
     </div>
 </div>
 <hr>
@@ -82,4 +88,4 @@
         </div>
 
     </div>
-</div>             
+</div>
