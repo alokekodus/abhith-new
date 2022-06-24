@@ -16,97 +16,102 @@ class WebsiteAuthController extends Controller
 {
     public function signup(Request $request)
     {
-        if (getPrefix($request) == "api") {
-            $validator = Validator::make($request->all(), [
-
-                'name' => 'required',
-                'email' => 'required|email',
-                'phone' => 'required|numeric',
-
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['status' => 0, 'message' => $validator->errors()]);
-            }
-        } else {
-            $validator = Validator::make($request->all(), [
-
-                'firstname' => 'required',
-                'lastname' => 'required',
-                'email' => 'required|email',
-                'phone' => 'required|numeric',
-
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['status' => 0, 'message' => $validator->errors()]);
-            }
-        }
-        if (getPrefix($request) == "api") {
-            $words = explode(" ", $request->name);
-
-            $fname = $words[0];
-            $lname = $words[1];
-        } else {
-            $fname = $request->firstname;
-            $lname = $request->lastname;
-        }
-
-        $email = $request->email;
-        $phone = $request->phone;
-
-        
-
-        $check_user_active = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 1]])->exists();
-        if ($check_user_active) {
-            return response()->json(['message' => 'Oops! User already exists', 'status' => 0]);
-        } else {
-
-            $otp = rand(100000, 999999);
-
-            $check_otp_sent_but_user_not_verified = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->exists();
-            $check_otp_verified_but_user_not_activate = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 0]])->exists();
-            if ($check_otp_sent_but_user_not_verified) {
-                User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->update([
-                    'otp' => $otp
+        try {
+            if (getPrefix($request) == "api") {
+                $validator = Validator::make($request->all(), [
+    
+                    'name' => 'required',
+                    'email' => 'required|email',
+                    'phone' => 'required|numeric',
+    
                 ]);
-
-                $this->otpSend($phone, $otp);
-                return response()->json(['message' => 'OTP sent successfully', 'status' => 1]);
-            } else if ($check_otp_verified_but_user_not_activate) {
-                return response()->json(['message' => 'Oops! User already exists', 'status' => 0]);
+    
+                if ($validator->fails()) {
+                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
+                }
             } else {
-
-                $create = User::create([
-                    'firstname' => $fname,
-                    'lastname' => $lname,
-                    'email' => $email,
-                    'phone' => $phone,
-                    'otp' => $otp,
-                    'type_id' => Type::User,
-                    'is_activate' => 0
+                $validator = Validator::make($request->all(), [
+    
+                    'firstname' => 'required',
+                    'lastname' => 'required',
+                    'email' => 'required|email',
+                    'phone' => 'required|numeric',
+    
                 ]);
-
-
-                $user = User::where('email', $email)->first();
-
-                $userDetails = UserDetails::create([
-                    'firstname' => $fname,
-                    'lastname' => $lname,
-                    'email' => $email,
-                    'phone' => $phone,
-                    'user_id' => $user->id,
-                ]);
-
-                $this->otpSend($phone, $otp);
-
-                if ($create && $userDetails) {
-                    return response()->json(['message' => 'OTP sent successfully', 'status' => 1]);
-                } else {
-                    return response()->json(['message' => 'Oops! Something went wrong', 'status' => 0]);
+    
+                if ($validator->fails()) {
+                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
                 }
             }
+            if (getPrefix($request) == "api") {
+                $words = explode(" ", $request->name);
+    
+                $fname = $words[0];
+                $lname = $words[1];
+            } else {
+                $fname = $request->firstname;
+                $lname = $request->lastname;
+            }
+    
+            $email = $request->email;
+            $phone = $request->phone;
+    
+            
+    
+            $check_user_active = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 1]])->exists();
+            if ($check_user_active) {
+                return response()->json(['message' => 'Oops! User already exists', 'status' => 0]);
+            } else {
+    
+                $otp = rand(100000, 999999);
+    
+                $check_otp_sent_but_user_not_verified = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->exists();
+                $check_otp_verified_but_user_not_activate = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 0]])->exists();
+                if ($check_otp_sent_but_user_not_verified) {
+                    User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->update([
+                        'otp' => $otp
+                    ]);
+    
+                    $this->otpSend($phone, $otp);
+                    return response()->json(['message' => 'OTP sent successfully', 'status' => 1]);
+                } else if ($check_otp_verified_but_user_not_activate) {
+                    return response()->json(['message' => 'Oops! User already exists', 'status' => 0]);
+                } else {
+    
+                    $create = User::create([
+                        'firstname' => $fname,
+                        'lastname' => $lname,
+                        'email' => $email,
+                        'phone' => $phone,
+                        'otp' => $otp,
+                        'type_id' => Type::User,
+                        'is_activate' => 0
+                    ]);
+    
+    
+                    $user = User::where('email', $email)->first();
+    
+                    $userDetails = UserDetails::create([
+                        'firstname' => $fname,
+                        'lastname' => $lname,
+                        'email' => $email,
+                        'phone' => $phone,
+                        'user_id' => $user->id,
+                    ]);
+    
+                    $this->otpSend($phone, $otp);
+    
+                    if ($create && $userDetails) {
+                        return response()->json(['message' => 'OTP sent successfully', 'status' => 1]);
+                    } else {
+                        return response()->json(['message' => 'Oops! Something went wrong', 'status' => 0]);
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Oops! Something went wrong', 'status' => 0]);
         }
+       
     }
 
 
