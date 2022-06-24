@@ -100,12 +100,13 @@ class CourseController extends Controller
     public function enrollPackage($subject_id)
     {
         $subject = AssignSubject::find(Crypt::decrypt($subject_id));
-
+        $subject_id=$subject->id;
         $board = Board::find($subject->board_id);
         $class = AssignClass::with('boards','subjects')->where('id',$subject->assign_class_id)->first();
         $subjects = $class->subjects;
         $total_amount = $subjects->sum('subject_amount');
-        return view('website.course.enroll', compact('board', 'class', 'subjects', 'total_amount'));
+        $custom_package_active=true;
+        return view('website.course.enroll', compact('board', 'class', 'subjects', 'total_amount','custom_package_active','subject_id'));
 
         // return view('website.course.filter-course', compact('board', 'class', 'subjects', 'total_amount'));
     }

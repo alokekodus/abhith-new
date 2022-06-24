@@ -16,26 +16,46 @@ class WebsiteAuthController extends Controller
 {
     public function signup(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        if (getPrefix($request) == "api") {
+            $validator = Validator::make($request->all(), [
 
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|numeric',
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
 
-        ]);
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            }
+        } else {
+            $validator = Validator::make($request->all(), [
+
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            }
+        }
+        if (getPrefix($request) == "api") {
+            $words = explode(" ", $request->name);
+
+            $fname = $words[0];
+            $lname = $words[1];
+        } else {
+            $fname = $request->firstname;
+            $lname = $request->lastname;
         }
 
-
-        $fname = $request->firstname;
-        $lname = $request->lastname;
         $email = $request->email;
         $phone = $request->phone;
 
-
+        
 
         $check_user_active = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 1]])->exists();
         if ($check_user_active) {
@@ -208,9 +228,9 @@ class WebsiteAuthController extends Controller
                 $validator = Validator::make($request->all(), [
                     'email' => 'required|email',
                     'password' => 'required',
-    
+
                 ]);
-    
+
                 if ($validator->fails()) {
                     return response()->json(['status' => 0, 'message' => $validator->errors()]);
                 }
@@ -259,18 +279,16 @@ class WebsiteAuthController extends Controller
 
     public function logout(Request $request)
     {
-        if(getPrefix($request) == "api"){
-          
-                auth()->user()->tokens()->delete();
-        
-                return [
-                    'message' => 'Tokens Revoked'
-                ];
-            
-        }else{
+        if (getPrefix($request) == "api") {
+
+            auth()->user()->tokens()->delete();
+
+            return [
+                'message' => 'Tokens Revoked'
+            ];
+        } else {
             Auth::logout();
             return redirect('');
         }
-       
     }
 }

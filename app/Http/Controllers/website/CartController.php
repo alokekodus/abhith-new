@@ -23,7 +23,7 @@ class CartController extends Controller
             $countCartItem = Cart::where('user_id',Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->count();
             $totalPrice=0;
             foreach($cart as $item){
-                $totalPrice=$totalPrice+$item->assignClass->subjects->sum('subject_amount');
+                $totalPrice=$totalPrice+$item->assignSubject->sum('amount');
               
             }
            
@@ -33,13 +33,14 @@ class CartController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back();
         }
-       
+      
         return view('website.cart.cart')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' =>$totalPrice  ]);
         
     }
 
     public function addToCart(Request $request){
         try {
+           
                   
             if (!Auth::check()) {
                
@@ -60,7 +61,7 @@ class CartController extends Controller
           
             $check_item_exists_inside_cart = Cart::where('user_id', Auth::user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where([['is_paid','=', 0], ['is_remove_from_cart','=', 0]])->exists();
                 if($all_subjects==null){
-                    Toastr::success('Please select subject for proccess !', '', ["positionClass" => "toast-top-right"]); 
+                    Toastr::error('Please select subject for proccess !', '', ["positionClass" => "toast-top-right"]); 
                     return redirect()->route('website.course');
                 }          
                 if($check_item_exists_inside_cart == true){
@@ -94,7 +95,6 @@ class CartController extends Controller
                 Toastr::success('Item added to cart successfully.', '', ["positionClass" => "toast-top-right"]); 
                 return redirect()->route('website.cart');
         } catch (\Throwable $th) {
-              dd($th);
             Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]); 
                 return redirect()->route('website.course');
         }

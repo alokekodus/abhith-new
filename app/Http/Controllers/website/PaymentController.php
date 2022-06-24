@@ -22,7 +22,7 @@ class PaymentController extends Controller
           $countCartItem = Cart::where('user_id',Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->count();
           $total_amount=0;
           foreach($cart as $item){
-              $total_amount=$total_amount+$item->assignClass->subjects->sum('subject_amount');
+              $total_amount=$total_amount+$item->assignSubject->sum('amount');
             
           }
         
