@@ -76,3 +76,6 @@ function lessonTotalVisite($lesson_id){
 function getPrefix($request){
   return  $request->route()->getPrefix();
 }
+function getAssignSubjects(){
+ return AssignSubject::with('assignClass','boards')->where('is_activate',1)->limit(9)->get();
+}

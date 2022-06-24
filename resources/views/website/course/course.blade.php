@@ -3,28 +3,13 @@
 <style>
     .course-breadcrumbs {
         width: 100%;
-        height: 150px;
+
     }
 
-    .home-courses {
-        margin: 10px 80px;
-    }
-
-    .heading-black {
-        color: #000;
-        font-size: 17px;
+    .subject-heading-black {
+        font-size: 14px;
         font-weight: 700;
-        /* margin-bottom: 40px; */
-    }
-
-    #owl-demo .item {
-        margin: 3px;
-    }
-
-    #owl-demo .item img {
-        display: block;
-        width: 100%;
-        height: auto;
+        color: #000;
     }
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
@@ -78,8 +63,7 @@
             </div>
 
             <div class="col-lg-12 p-4">
-                <form action="{{route('website.course.package.filter.all')}}" class="row justify-content-center"
-                    method="post">
+                <form class="row justify-content-center" method="get">
                     @csrf
                     <div class="col-4">
                         <label>Select Board</label>
@@ -107,64 +91,29 @@
 
 
         </div>
-        {{-- @foreach($all_subjects as $key=>$subject)
-       
+
+
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                       {{$subject}}
-                    </div>
-                    <div class="card-body">
-                        <div id="owl-demo">
+            @foreach($subjects as $key=>$subject)
 
-                            <div class="item">
-
-
-                                <div class="course-pic"><img
-                                        src="http://localhost/abhith-new/public/files/course/subject/lesson/09-06-2022-00-50-32_science-word-theme_23-2148540555.webp"
-                                        class="w100"></div>
-                                <div class="course-desc">
-                                    <h4 class="small-heading-black">SCIENCE</h4>
-                                    Board:SEBA Class:9<br>
-                                    <span>Created by : Demo Teacher</span><br>
-                                    <span>Total Lesson:
-                                        1</span>
-                                    <a href="http://localhost/abhith-new/public/account/my-lesson/eyJpdiI6IkR5YnpkbVd5Q1QrNzJiT3ludXZ0aFE9PSIsInZhbHVlIjoicUVrWGNNZlhoQmF0eUJBVkdMdEpwUT09IiwibWFjIjoiZWFmNGQzODgyNGZkODRjZDUwZTZlODk2OTA0NTY4MjA5OTQ0ZWFiZjQ0ZGE4MzRjMGUxNDdiMTc1M2FjZDcxNSIsInRhZyI6IiJ9/eyJpdiI6IjNCUk5EVWFMRDRwUVVaUzFqRTlJaEE9PSIsInZhbHVlIjoiZXlBdm1OOVZHMHNkamU4Y0JBVzJUQT09IiwibWFjIjoiM2YyNmQ0OWIxMWYxY2IzZDE0YTkwZTVkOWMxNTE2ODY1NjQ4YzNjMTQzNTg1NTAwNDJhZWY4ZTBhZGFlZWQ3NyIsInRhZyI6IiJ9"
-                                        class="enroll">View Details</a>
-                                </div>
-
-                            </div>
-                            <div class="item">
-
-
-                                <div class="course-pic"><img
-                                        src="http://localhost/abhith-new/public/files/course/subject/lesson/09-06-2022-00-50-32_science-word-theme_23-2148540555.webp"
-                                        class="w100"></div>
-                                <div class="course-desc">
-                                    <h4 class="small-heading-black">SCIENCE</h4>
-                                    Board:SEBA Class:9<br>
-                                    <span>Created by : Demo Teacher</span><br>
-                                    <span>Total Lesson:
-                                        1</span>
-                                    <a href="http://localhost/abhith-new/public/account/my-lesson/eyJpdiI6IkR5YnpkbVd5Q1QrNzJiT3ludXZ0aFE9PSIsInZhbHVlIjoicUVrWGNNZlhoQmF0eUJBVkdMdEpwUT09IiwibWFjIjoiZWFmNGQzODgyNGZkODRjZDUwZTZlODk2OTA0NTY4MjA5OTQ0ZWFiZjQ0ZGE4MzRjMGUxNDdiMTc1M2FjZDcxNSIsInRhZyI6IiJ9/eyJpdiI6IjNCUk5EVWFMRDRwUVVaUzFqRTlJaEE9PSIsInZhbHVlIjoiZXlBdm1OOVZHMHNkamU4Y0JBVzJUQT09IiwibWFjIjoiM2YyNmQ0OWIxMWYxY2IzZDE0YTkwZTVkOWMxNTE2ODY1NjQ4YzNjMTQzNTg1NTAwNDJhZWY4ZTBhZGFlZWQ3NyIsInRhZyI6IiJ9"
-                                        class="enroll">View Details</a>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
+            <div class="col-4">
+                <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
+                <div class="course-desc">
+                    {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
+                    <h4 class="subject-heading-black">{{$subject->subject_name}}</h4>
+                    <h6 class="subject-heading-black">BOARD:{{$subject->boards->exam_board}}<br>
+                        CLASS:{{$subject->assignClass->class}}</h6>
+                    <span>
+                        <h6><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount, 2,
+                            '.',
+                            ' ')}}</h6>
+                    </span>
+                    <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll">Enroll Now</a>
                 </div>
             </div>
-
-
-
+            @endforeach
         </div>
-        
-        @endforeach --}}
 
-    </div>
     </div>
 </section>
 

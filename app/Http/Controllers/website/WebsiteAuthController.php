@@ -259,8 +259,18 @@ class WebsiteAuthController extends Controller
 
     public function logout(Request $request)
     {
-
-        Auth::logout();
-        return redirect('');
+        if(getPrefix($request) == "api"){
+          
+                auth()->user()->tokens()->delete();
+        
+                return [
+                    'message' => 'Tokens Revoked'
+                ];
+            
+        }else{
+            Auth::logout();
+            return redirect('');
+        }
+       
     }
 }
