@@ -17,7 +17,7 @@ class WebsiteAuthController extends Controller
     public function signup(Request $request)
     {
         try {
-            if (getPrefix($request) == "api") {
+            
                 $validator = Validator::make($request->all(), [
 
                     'name' => 'required',
@@ -29,30 +29,9 @@ class WebsiteAuthController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['status' => 0, 'message' => $validator->errors()]);
                 }
-            } else {
-                $validator = Validator::make($request->all(), [
-
-                    'firstname' => 'required',
-                    'lastname' => 'required',
-                    'email' => 'required|email',
-                    'phone' => 'required|numeric',
-
-                ]);
-
-                if ($validator->fails()) {
-                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
-                }
-            }
-            if (getPrefix($request) == "api") {
-                $words = explode(" ", $request->name);
-
-                $fname = $words[0];
-                $lname = $words[1];
-            } else {
-                $fname = $request->firstname;
-                $lname = $request->lastname;
-            }
-
+            
+           
+            $name=$request->name;
             $email = $request->email;
             $phone = $request->phone;
 
@@ -79,8 +58,7 @@ class WebsiteAuthController extends Controller
                 } else {
 
                     $create = User::create([
-                        'firstname' => $fname,
-                        'lastname' => $lname,
+                        'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
                         'otp' => $otp,
@@ -92,8 +70,7 @@ class WebsiteAuthController extends Controller
                     $user = User::where('email', $email)->first();
 
                     $userDetails = UserDetails::create([
-                        'firstname' => $fname,
-                        'lastname' => $lname,
+                        'name' => $name,
                         'email' => $email,
                         'phone' => $phone,
                         'user_id' => $user->id,
@@ -212,7 +189,7 @@ class WebsiteAuthController extends Controller
             if ($details == null) {
                 return response()->json(['message' => 'Something went wrong. Signup failed.', 'status' => 0]);
             } else {
-                $roles = 3;
+                $roles = 2;
                 $details->assignRole($roles);
                 $details->password = Hash::make($request->password);
                 $details->is_activate = 1;

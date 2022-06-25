@@ -12,8 +12,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory,Notifiable, HasRoles;
-   
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +21,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'firstname',
-        'lastname',
+        'name',
         'email',
         'phone',
         'otp',
@@ -49,7 +48,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -58,15 +57,18 @@ class User extends Authenticatable
         return "{$this->firstname}   {$this->lastname}";
     }
 
-    public function knowledgeForumPost(){
+    public function knowledgeForumPost()
+    {
         return $this->hasMany('App\Models\KnowledgeForumPost');
     }
 
-    public function knowledgeForumComment(){
+    public function knowledgeForumComment()
+    {
         return $this->hasMany('App\Models\KnowledgeForumComment');
     }
 
-    public function userDetail(){
+    public function userDetail()
+    {
         return $this->hasOne('App\Models\UserDetail');
     }
 }
