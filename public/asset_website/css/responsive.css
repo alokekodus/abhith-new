@@ -14,6 +14,9 @@
 
 @media (max-width: 767px) {
 
+    a {
+        font-size: 14px;
+    }
     .testimonial,
     .professionals {
         margin: 0px 15px;
@@ -52,7 +55,8 @@
 
     #header {
         padding: 0px 15px;
-        top: 73px;
+        top: 70px;
+        box-shadow: 1px 2px 1px #eee!important;
     }
 
     .header-social li {
@@ -97,12 +101,20 @@
     }
 
     .heading-black,
-    .heading-white,
-    .heading-blue {
+    .heading-white {
         font-size: 20px;
         margin-bottom: 25px;
     }
 
+    .heading-blue{
+        font-size: 14px;
+    }
+    .small-heading-black {
+        font-size: 14px;
+    }
+    .about-left{
+        margin-top: 70px;
+    }
     .about-right {
         padding: 30px 15px;
     }
@@ -134,8 +146,9 @@
 
     .view {
         right: 15px;
-        top: -157px;
+        top: -173px;
         padding: 10px 5px;
+        font-size: 12px;
     }
 
     .footer-logo {
@@ -171,6 +184,7 @@
 
     .footer-mid-right {
         margin: 10px 0px;
+        font-size: 14px;
     }
 
     .knowledge-header-section {
