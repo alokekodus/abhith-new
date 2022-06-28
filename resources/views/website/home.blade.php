@@ -169,12 +169,11 @@
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
-                    <h4 class="small-heading-black">{{$subject->subject_name}}</h4>
-                    <span><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount, 2,
-                        '.',
-                        ' ')}}</span>
-                    <a href="" class="enroll" target="_blank">Enroll Now</a>
+                    <h4 class="small-heading-black">{{$subject->subject_name}}(Class-{{$subject->assignClass->class}},{{$subject->boards->exam_board}})</h4>
+                    <span><b><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,2,
+                        '.','')}}</b></span>
                 </div>
+                <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll" target="_blank">Enroll Now</a>
             </div>
             @endforeach
 

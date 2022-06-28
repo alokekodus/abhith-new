@@ -104,7 +104,6 @@
 
     .course-type {
         max-width: 100%;
-        display: block;
         vertical-align: middle;
     }
 
@@ -139,7 +138,6 @@
         display: grid;
         grid-gap: 30px;
         place-items: center;
-        place-content: center;
     }
 
     .grid-col-auto {
@@ -156,7 +154,8 @@
         background: #fff;
         border-radius: 5px;
         max-width: 280px;
-        min-height: 330px;
+        min-height: 200px;
+        min-width: 200px;
         padding: 15px;
         display: grid;
         box-shadow: 0 2px 4px 0 rgba(219, 215, 215, 0.04);
@@ -283,15 +282,15 @@
     <form action="{{route('website.add-to-cart')}}" method="post">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-6">
                     <div class="grid-wrapper grid-col-auto">
                         <label for="radio-card-1" class="radio-card">
                             <input class="course_type" type="radio" name="course_type" id="radio-card-1" value="1"
                                 onclick="changeCourse(this.value)" @if(!$custom_package_active) checked @endif />
                             <div class="card-content-wrapper">
                                 <span class="check-icon"></span>
-                                <div class="card-content">
-                                    <img src="https://image.freepik.com/free-vector/group-friends-giving-high-five_23-2148363170.jpg"
+                                <div class="card-content" style="width:100%; text-align:center">
+                                    <img src="{{asset('asset_website/img/fullcourse.png')}}"
                                         alt="" class="course-type" />
                                     <h4>FULL COURSE</h4>
                                 </div>
@@ -304,8 +303,8 @@
                                 onclick="changeCourse(this.value)" @if($custom_package_active) checked @endif />
                             <div class="card-content-wrapper">
                                 <span class="check-icon"></span>
-                                <div class="card-content">
-                                    <img src="https://image.freepik.com/free-vector/people-putting-puzzle-pieces-together_52683-28610.jpg"
+                                <div class="card-content" style="width:100%; text-align:center">
+                                    <img src="{{asset('asset_website/img/custompackage.png')}}"
                                         alt="" class="course-type" />
                                     <h4>CUSTOM YOUR COURSE</h4>
                                 </div>
@@ -345,7 +344,16 @@
 <script>
     $(document).ready(function() {
       var courseType= $("#radio-card-2").val();
-        changeCourse(courseType);
+      $(".chapter_value").each(function(index) {
+                var subject_id=@json($subject_id);
+                if(subject_id==$(this).attr('value')){
+                    $(this).prop("checked", true); 
+                }else{
+                    $(this).prop("checked", false);
+                    $(this).prop("disabled", false);
+                }
+           });
+        
      });
    function changeCourse(value){
         if(value==1){
@@ -362,13 +370,9 @@
             var messageForCustomPackage=` <button type="button" class="btn btn-secondary btn-lg btn-block">Please Selete Subjects for custom your package</button>`;
             $("#message-for-custom-package").html(messageForCustomPackage);
             $(".chapter_value").each(function(index) {
-                var subject_id=@json($subject_id);
-                if(subject_id==$(this).attr('value')){
-                    $(this).prop("checked", true); 
-                }else{
-                    $(this).prop("checked", false);
-                    $(this).prop("disabled", false);
-                }
+                $(this).prop("checked", false);
+                $(this).prop("disabled", false);
+                
            });
            
            checkedSubject();

@@ -56,14 +56,15 @@ Route::group(['middleware' => ['auth'] ],function(){
 
     Route::prefix('course-management')->group(function(){
         Route::prefix('board')->group(function(){
-            Route::get('all', [BoardController::class, 'allBoard'])->name('admin.course.management.board.all');
+            Route::get('', [BoardController::class, 'allBoard'])->name('admin.course.management.board.all');
             Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
             Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
         });
 
         Route::prefix('class')->group(function(){
-            Route::get('all', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
+            Route::get('', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
             Route::post('assign', [AssignClassController::class, 'assignClass'])->name('admin.course.management.class.assign');
+            Route::post('update-board-status', [AssignClassController::class, 'updateClassStatus'])->name('admin.course.management.class.update.status');
         });
 
         Route::prefix('subject')->group(function(){

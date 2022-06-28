@@ -19,7 +19,8 @@ class SubjectController extends Controller
          
         $validate = Validator::make($request->all(),[
             'name' => 'required',
-        ],['name.required'=>'Subject Name is required']);
+        ],
+        ['name.required'=>'Subject Name is required']);
         if ($validate->fails()) {
             return redirect()->back()
                         ->withErrors($validate)

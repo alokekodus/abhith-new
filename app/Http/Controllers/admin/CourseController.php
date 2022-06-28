@@ -24,6 +24,7 @@ class CourseController extends Controller
 
     protected function create(Request $request)
     {
+        dd($request->all());
         // return response($request->course_video_thumbnail);
         # code...
         $this->validate($request,[

@@ -42,4 +42,24 @@ class AssignClassController extends Controller
             }
         }
     }
+    public function updateClassStatus(Request $request){
+        try {
+            $assigned_class=AssignClass::find($request->class_id);
+            if($assigned_class->is_activate==0){
+                $updated_status=1;
+            }else{
+                $updated_status=0;
+            }
+            $assigned_class->update(['is_activate'=> $updated_status]);
+            if($request->status==1){
+                return response()->json(['message' => 'Status Change Form  Deactive To Active Successfully', 'status' => 1]);
+            }else{
+                return response()->json(['message' => 'Status  Change Form Active to Deactive Successfully', 'status' => 1]);
+            }
+           
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Whoops! Something went wrong. Failed to update status', 'status' => 2]);
+        }
+
+    }
 }

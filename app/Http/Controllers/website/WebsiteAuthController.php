@@ -225,19 +225,20 @@ class WebsiteAuthController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
+                    return response()->json(['code'=>400,'status' => 0, 'message' => $validator->errors()]);
                 }
+                
                 if (!Auth::attempt($request->only('email', 'password'))) {
-                    return response()->json([
-                        'message' => 'Invalid login details'
-                    ], 0);
+                    return response()->json(['code'=>401,'status' => 0,
+                        'message' => 'Invalid login details']);
                 }
 
-                $user = User::where('email', $request['email'])->firstOrFail();
+                $user = User::where('email', $request['email'])->select('id','email','phone','name','is_activate','created_at')->first();
 
                 $token = $user->createToken('auth_token')->plainTextToken;
 
                 return response()->json([
+                    'code'=>200,
                     'status' => 1,
                     'message' => "Student Signin Successfully",
                     'data' => $user,
@@ -266,7 +267,7 @@ class WebsiteAuthController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Whoops! Something Went Wrong', 'status' => 0]);
+            return response()->json(['code'=>500,'message' => 'Whoops! Something Went Wrong', 'status' => 0]);
         }
     }
 

@@ -14,7 +14,7 @@ class AlterAddTeacherId extends Migration
     public function up()
     {
         Schema::table('assign_subjects', function (Blueprint $table) {
-            $table->integer('teacher_id')->after('image');
+            $table->integer('teacher_id')->nullable()->after('image');
         });
     }
 

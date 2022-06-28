@@ -11,24 +11,25 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-Use App\Traits\LessonAttachmentTrait;
+use App\Traits\LessonAttachmentTrait;
+
 class AssignSubjectController extends Controller
 {
     public function allSubjects()
     {
 
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
-        if(auth()->user()->hasRole('Teacher')){
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id',auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
-        }else{
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        if (auth()->user()->hasRole('Teacher')) {
+            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id', auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        } else {
+            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->paginate(2);
         }
-       
+
         return view('admin.course-management.subjects.subject')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
     public function store(Request $request)
     {
-       
+
         try {
             $split_assignedClass = str_split($request->assignedClass);
 
@@ -37,7 +38,7 @@ class AssignSubjectController extends Controller
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
             $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
-           
+
             if (!empty($document)) {
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
 
@@ -51,8 +52,8 @@ class AssignSubjectController extends Controller
             }
             $data = [
                 'subject_name' => ucfirst($request->subjectName),
-                'image'=>$image_path,
-                'teacher_id'=>$request->teacher_id,
+                'image' => $image_path,
+                'teacher_id' => $request->teacher_id,
                 'subject_amount' => $request->subjectAmount,
                 'assign_class_id' => $assignedClass,
                 'board_id' => $assignedBoard,
@@ -61,7 +62,7 @@ class AssignSubjectController extends Controller
                 'why_learn' => $request->why_learn,
             ];
             $assign_subject = AssignSubject::create($data);
-           
+
             // $video_path=str_replace("public/", "",$video_path);
             $data_attachment = [
                 'subject_lesson_id' =>  $assign_subject->id,

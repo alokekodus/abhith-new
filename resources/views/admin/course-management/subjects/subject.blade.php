@@ -2,7 +2,18 @@
 @section('title', 'Course Management - Subjects')
 
 @section('content')
-
+@section('head')
+<style>
+    .pagination {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 853px;
+        list-style: none;
+        border-radius: 0.25rem;
+    }
+</style>
+@endsection
 <div class="page-header">
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -26,7 +37,7 @@
 
 @section('scripts')
 <script>
-        $('#assignSubjectCancelBtn').on('click', function(){
+    $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');
             $('#assignSubjectForm')[0].reset();
             $('.assignedClassdDiv').css('display', 'none');
