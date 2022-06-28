@@ -78,15 +78,15 @@
     }
 
     .icon1 {
-        left: 63%;
+        left: 60%;
         top: 4px;
     }
     .icon2 {
-        left: 72%;
+        left: 60%;
         top: 4px;
     }    
     .icon3 {
-        left: 87%;
+        left: 60%;
         top: 4px;
     }
 
@@ -100,5 +100,8 @@
 
     .blog-list-div li:nth-child(odd) {
         margin-right: 10px;
+    }
+    .knowledge-para {
+        font-size: 16px;
     }
 }

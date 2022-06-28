@@ -628,7 +628,11 @@ main {
     padding: 10px 20px;
 }
 
-.about-right {
+/* .about-right {
+    padding: 60px 40px;
+} */
+
+.about-right1 {
     padding: 0px 40px;
 }
 
@@ -911,14 +915,14 @@ main {
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
-    margin: 60px 80px;
+    /* margin: 60px 80px; */
     padding: 50px 80px 160px 80px;
 }
 
 .knowledge-link {
     background-image: linear-gradient(to left, #076fef, #01b9f1);
     color: #fff !important;
-    padding: 10px 30px;
+    padding: 10px 15px;
     border-radius: 4px;
     border: none;
 }
@@ -948,9 +952,10 @@ main {
     font-size: 14px;
 }
 
-/* .knowledge-para {
+.knowledge-para {
     margin: 30px 0px;
-} */
+}
+
 
 /*blog-list*/
 .blogs {
@@ -1072,7 +1077,7 @@ main {
 
 
 .small-heading-black {
-    font-size: 18px;
+    font-size: 26px;
     font-weight: 700;
     color: #000;
 }
@@ -1190,7 +1195,7 @@ footer {
 
 .heading-blue {
     color: #076fef;
-    font-size: 33px;
+    font-size: 50px;
     font-weight: 700;
     /* margin-bottom: 40px; */
 }

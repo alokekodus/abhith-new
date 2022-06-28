@@ -65,7 +65,7 @@
             <div class="col-lg-12 p-4">
                 <form class="row justify-content-center" method="get">
                     @csrf
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-6">
                         <label>Select Board</label>
                         <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
                             <option value="">-- Select -- </option>
@@ -76,12 +76,12 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-6">
                         <label>Select Class</label>
                         <select id="board-class-dd" class="form-control" name="class_id">
                         </select>
                     </div>
-                    <div class="col-3 p-4">
+                    <div class="col-lg-3 col-md-12 p-4">
                         <button type="submit" id="submitWebsiteFilterCourseForm"
                             class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
                     </div>
@@ -96,7 +96,7 @@
         <div class="row">
             @foreach($subjects as $key=>$subject)
 
-            <div class="col-4">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}

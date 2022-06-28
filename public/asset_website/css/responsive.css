@@ -15,7 +15,7 @@
 @media (max-width: 767px) {
 
     a {
-        font-size: 14px;
+        font-size: 12px;
     }
     .testimonial,
     .professionals {
@@ -38,6 +38,9 @@
     .counter {
         margin: 0px 0px;
         padding: 0px 0px;
+    }
+    .about-content{
+        font-size: 14px;
     }
 
     .home-banner,
@@ -110,10 +113,13 @@
         font-size: 14px;
     }
     .small-heading-black {
-        font-size: 14px;
+        font-size: 12px;
     }
     .about-left{
         margin-top: 70px;
+    }
+    .about-left1{
+        margin-top: 25px;
     }
     .about-right {
         padding: 30px 15px;
@@ -178,9 +184,9 @@
         list-style-type: disc !important;
     }
 
-    .p0 {
+    /* .p0 {
         padding: 0px 15px;
-    }
+    } */
 
     .footer-mid-right {
         margin: 10px 0px;
@@ -226,12 +232,14 @@
         padding: 15px 15px;
     }
 
-    .projectFactsWrap .item:first-child,
+    /* .projectFactsWrap .item:first-child,
     .projectFactsWrap .item:nth-child(2),
     .projectFactsWrap .item:nth-child(3) {
         width: 100%;
+    } */
+    .item-text{
+        font-size: 14px;
     }
-
     .icon1 {
         left: 38%;
     }
