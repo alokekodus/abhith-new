@@ -26,7 +26,7 @@
 <section class="about-us1">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-7 about-left">
+            <div class="col-lg-7 about-left1">
                 <p class="cross-line">
                     <span>ABOUT US</span>
                 </p>
@@ -37,7 +37,7 @@
                 <p>Learning has invariably expanded its horizons and has carved a niche for itself in the larger
                     scenario. The advent of a more learner-centric, skill-based approach has eventually led to the rise
                     of a platform for learners online. </p>
-                <ul class="list-inline about-list">
+                <!-- <ul class="list-inline about-list">
                     <li>
                         <span class="icon-best-learning--09"></span>
                         <h3 class="small-heading-black">Best Learning Communities</h3>
@@ -49,9 +49,27 @@
                         <span class="icon-learn-online-09"></span>
                         <h3 class="small-heading-black">Learn Courses Online</h3>
                         <p>Unlimited access to a wide range of courses, specializations, and certifications. Earn
-                            recognition for every learning program that you complete. </p>
+                            recognition for every learning program that you complete. </p> -->
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="icon-best-learning--09" style="font-size: 35px"></span>
+                            <h3 class="small-heading-black">Best Learning Communities</h3>
+                            <p>Abith Siksha is an interactive learning platform created to improve student engagement
+                                and teacher efficiency. Join millions of learners from around the world, find the right
+                                instructor for you, choose from many topics, skill levels, and languages.</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <span class="icon-learn-online-09" style="font-size: 35px"></span>
+                            <h3 class="small-heading-black">Learn Courses Online</h3>
+                            <p>Unlimited access to a wide range of courses, specializations, and certifications. Earn
+                                recognition for every learning program that you complete. </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-5 about-right">
+            <div class="col-lg-5 about-right1">
                 <div class="about-us-img">
                     <img src="{{asset('asset_website/img/about/image.png')}}" class="w100">
                 </div>
@@ -79,15 +97,15 @@
                             <span>Who We Are</span>
                         </p>
                         <h2 class="heading-white">Who We Are</h2>
-                        <p>Abhith Siksha is an incredibly personalized online learning platform for aspirants wanting to
+                        <p class="about-content">Abhith Siksha is an incredibly personalized online learning platform for aspirants wanting to
                             take the next step towards enhancing personal and professional goals. </p>
-                        <p>We believe in breaking the barriers of traditional learning experience to a more interactive,
+                        <p class="about-content">We believe in breaking the barriers of traditional learning experience to a more interactive,
                             user-friendly approach thus redefining one's learning behavior for the learners to grow.
                         </p>
-                        <p>We partner with the best institutions to bring the best learning to every corner of the world
+                        <p class="about-content">We partner with the best institutions to bring the best learning to every corner of the world
                             so that anyone anywhere can easily access the perks of an effective e-learning platform.
                         </p>
-                        <p>Abhith Siksha is an amalgamation of immensely talented teachers and aspiring learners under
+                        <p class="about-content">Abhith Siksha is an amalgamation of immensely talented teachers and aspiring learners under
                             one roof, thus providing an environment for an individual to grow leaps and bounds. </p>
                         <div id="projectFacts">
                             <div class="">
@@ -96,19 +114,19 @@
                                         <span class="number-icon icon1"><i class="fa fa-plus"
                                                 aria-hidden="true"></i></span>
                                         <p id="number1" class="number">3045</p>
-                                        <p>Student enroll</p>
+                                        <p class="item-text">Student enroll</p>
                                     </div>
                                     <div class="item" data-number="55">
                                         <span class="number-icon icon2"><i class="fa fa-plus"
                                                 aria-hidden="true"></i></span>
                                         <p id="number2" class="number">10690</p>
-                                        <p>Available Courses</p>
+                                        <p class="item-text">Available Courses</p>
                                     </div>
                                     <div class="item" data-number="359">
                                         <span class="number-icon icon3"><i class="fa fa-plus"
                                                 aria-hidden="true"></i></span>
                                         <p id="number3" class="number">8963</p>
-                                        <p>Available Courses</p>
+                                        <p class="item-text">Available Courses</p>
                                     </div>
                                 </div>
                             </div>

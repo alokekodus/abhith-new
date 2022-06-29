@@ -165,7 +165,7 @@
 <section class="home-courses">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4 list-inline courses-list">
+            <div class="col-lg-4 col-md-12 col-sm-12 mb-4 list-inline courses-list">
                 <p class="cross-line1">
                     <span>SUGGESTION OF COURSES</span>
                 </p>
@@ -178,8 +178,7 @@
                         Coures</a></div>
             </div>
             @foreach (getAssignSubjects() as $key => $subject)
-            <div class="col-4">
-                <div class="course-wrapper p-1 mb-5">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 ">
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}

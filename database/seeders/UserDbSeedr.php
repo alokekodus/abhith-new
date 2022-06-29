@@ -24,7 +24,7 @@ class UserDbSeedr extends Seeder
             'otp' => '123456',
             'verify_otp' => 1,
             'password' => Hash::make('P@55w0rd123') ,
-            'role_id' => 1,
+            'type_id' => 1,
             'is_activate' => 1
         ]);
     }
