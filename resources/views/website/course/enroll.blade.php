@@ -4,7 +4,7 @@
 @section('head')
 <style>
     .home-courses {
-        margin: 136px 80px;
+        margin-top: 150px;
     }
 
     /* .home-courses{
