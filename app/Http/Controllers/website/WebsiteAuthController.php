@@ -268,9 +268,8 @@ class WebsiteAuthController extends Controller
                     'email' => 'required',
                     'password' => 'required'
                 ]);
-                $data=$request->password;
-                return response($data);
-                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'type_id' => $type, 'is_activate' => Activation::Activate])) {
+               
+                if (Auth::attempt(['email' => $request->email,  'password' => $request->password,'is_activate' => Activation::Activate])) {
                     if ($request->current_route == null) {
 
                         Auth::LogoutOtherDevices($password);

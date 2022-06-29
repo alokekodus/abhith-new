@@ -9,7 +9,7 @@
 
 <div class="top-header">
     <div class="container-fluid">
-        <div class="row  g-1">
+        <div class="row">
             <div class="col-lg-3 col-8 header-text">HELPING CREATE SUCCESS</div>
             <div class="col-lg-3 col-3">
                 <ul class="list-inline header-social  mb0">
@@ -44,14 +44,14 @@
                 <div class="col-lg-6 col-12">
                     <ul class="list-inline login-details">
                         <li>
-                            <a href="{{route('website.login')}}" class="login-text" target="_parent"><i class="fa fa-user" aria-hidden="true"></i>  Login/Sign Up</a>
+                            <a href="{{route('website.login')}}" class="login-text" target="_parent"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Login/Sign Up</a>
                         </li>
                         <li>
-                            <a href="{{route('teacher.login')}}" class="login-text" target="_parent"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Become a Teacher &nbsp;</a>
+                            <a href="{{route('teacher.login')}}" class="login-text" target="_parent"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Become a Teacher &nbsp;</a>
                         </li>
                         
                         <li>
-                            <a href="{{route('website.cart')}}" class="login-text"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> Cart</a>
+                            <a href="{{route('website.cart')}}" class="login-text"><span class="icon-cart-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>Cart</a>
                         </li>
                     </ul>
 
