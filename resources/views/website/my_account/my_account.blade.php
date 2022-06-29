@@ -27,12 +27,11 @@
                             @endif
                         </div>
                         <div class="knowledge-desc mt-2">
-                            <h4 class="small-heading-black text-center mb0">{{Auth::user()->firstname}}
-                                {{Auth::user()->lastname}}</h4>
+                            <h4 class="small-heading-black text-center mb0">{{Auth::user()->name}}</h4>
                             @if($user_details != null)
                             <p class="text-center">{{$user_details->education}}</p>
                             @else
-                            <p class="text-center">Msc</p>
+                            <p class="text-center">Your Education Details</p>
                             @endif
                         </div>
                     </div>
@@ -86,16 +85,10 @@
                                 </div>
                                 @if($user_details != null)
                                 <div class="form-group col-lg-6 pr10">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control" name="fname" placeholder="Enter First Name"
-                                        id="firstname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
-                                        title="Please Enter Letters only." value="{{Auth::user()->firstname}}" required>
-                                </div>
-                                <div class="form-group col-lg-6 pl10">
-                                    <label>Last Name</label>
-                                    <input type="text" class="form-control" name="lname" placeholder="Enter Last Name"
-                                        id="lastname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
-                                        title="Please Enter Letters only." value="{{Auth::user()->lastname}}" required>
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Enter Name"
+                                        id="name" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
+                                        title="Please Enter Letters only." value="{{Auth::user()->name}}" required>
                                 </div>
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Email ID</label>
@@ -126,16 +119,10 @@
                                 </div>
                                 @else
                                 <div class="form-group col-lg-6 pr10">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control" name="fname" placeholder="Enter First Name"
-                                        id="firstname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
-                                        title="Please Enter Letters only." value="{{Auth::user()->firstname}}" required>
-                                </div>
-                                <div class="form-group col-lg-6 pl10">
-                                    <label>Last Name</label>
-                                    <input type="text" class="form-control" name="lname" placeholder="Enter Last Name"
-                                        id="lastname" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
-                                        title="Please Enter Letters only." value="{{Auth::user()->lastname}}" required>
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Enter Name"
+                                        id="name" pattern="^([a-zA-Z]+)\s?([a-zA-z]+)"
+                                        title="Please Enter Letters only." value="{{Auth::user()->name??''}}" required>
                                 </div>
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Email ID</label>
@@ -145,7 +132,7 @@
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Mobile number</label>
                                     <input type="text" class="form-control" name="phone" placeholder="Enter Phone"
-                                        id="phone" pattern="(0|91)?[6-9][0-9]{9}"
+                                        id="phone" pattern="(0|91)?[6-9][0-9]{9}" value="{{Auth::user()->phone}}"
                                         title="Phone number should start with 6 or 7 or 8 or 9  and 10 chars long.( e.g 7896845214)"
                                         required>
                                 </div>
@@ -230,168 +217,49 @@
                     </div>
                     <div class="tab-pane" id="mycourses" role="tabpanel">
                         <div class="row">
-                            @forelse ($purchase_history as $key => $item)
-                            <div class="col-lg-6">
-
-                                <div class="course-pic"><img
-                                        src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg"
-                                        class="w100"></div>
-                                <div class="course-desc">
-                                    <div class="block-ellipsis5">
-                                        <h4 class="small-heading-black">{{$item->board->exam_board}}</h4>
-                                    </div>
-                                    <span>
-                                        <h4 class="small-heading-black">Class - {{$item->assignClass->class??''}}</h4>
-                                    </span>
-                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}" class="enroll">view
-                                        Details</a>
-                                </div>
-
-                            </div>
-                            
-                            @endforeach
-                        </div>
-                    </div>
-                    {{-- <div class="tab-pane" id="payment" role="tabpanel">
-                        <div class="row">
-                            <div class="col-lg-12 col-12">
-                                <h4 class="small-heading-black">Card Saved</h4>
+                            <div class="col-lg-12 col-6">
+                                <h4 class="small-heading-black">Courses History</h4>
                             </div>
                             <div class="col-lg-12">
-                                <ul class="list-inline card2-list">
-                                    <li>
-                                        <div>
-                                            <div class="card-img"><img
-                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                <table id="purchase_history_table" class="table table-striped">
+                                    <tbody>
+                                        @forelse ($purchase_history as $key => $item)
+                                        <div class="col-lg-6">
+
+                                            <div class="course-pic"><img
+                                                    src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg"
+                                                    class="w100"></div>
+                                            <div class="course-desc">
+                                                <div class="block-ellipsis5">
+                                                    <h4 class="small-heading-black">{{$item->board->exam_board}}</h4>
+                                                </div>
+                                                <span>
+                                                    <h4 class="small-heading-black">Class -
+                                                        {{$item->assignClass->class??''}}</h4>
+                                                </span>
+                                                <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
+                                                    class="enroll">view
+                                                    Details</a>
                                             </div>
-                                            <div class="card-desc">
-                                                <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
-                                                    <span class="f12">XXXXXXXX-3499 </span><br />
-                                                    <span class="f10">VALID TILL 08/23</span>
-                                                </p>
-                                            </div>
-                                            <div class="name-on-card">Hirak jyoti das</div>
-                                            <div class="remove-card"><a href="">REMOVE</a></div>
+
                                         </div>
-
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="card-img"><img
-                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
+                                        @empty
+                                        <tr>
+                                            <div class="text-center">
+                                                <p>Oops! No items purchased yet.</p>
+                                                <div class="shipping-div text-center"><a
+                                                        href="{{route('website.course')}}" class="shipping-btn">Continue
+                                                        shoping</a></div>
                                             </div>
-                                            <div class="card-desc">
-                                                <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
-                                                    <span class="f12">XXXXXXXX-3499 </span><br />
-                                                    <span class="f10">VALID TILL 08/23</span>
-                                                </p>
-                                            </div>
-                                            <div class="name-on-card">Hirak jyoti das</div>
-                                            <div class="remove-card"><a href="">REMOVE</a></div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="card-img"><img
-                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
-                                            </div>
-                                            <div class="card-desc">
-                                                <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
-                                                    <span class="f12">XXXXXXXX-3499 </span><br />
-                                                    <span class="f10">VALID TILL 08/23</span>
-                                                </p>
-                                            </div>
-                                            <div class="name-on-card">Hirak jyoti das</div>
-                                            <div class="remove-card"><a href="">REMOVE</a></div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="card-img"><img
-                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
-                                            </div>
-                                            <div class="card-desc">
-                                                <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
-                                                    <span class="f12">XXXXXXXX-3499 </span><br />
-                                                    <span class="f10">VALID TILL 08/23</span>
-                                                </p>
-                                            </div>
-                                            <div class="name-on-card">Hirak jyoti das</div>
-                                            <div class="remove-card"><a href="">REMOVE</a></div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="card-img"><img
-                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
-                                            </div>
-                                            <div class="card-desc">
-                                                <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
-                                                    <span class="f12">XXXXXXXX-3499 </span><br />
-                                                    <span class="f10">VALID TILL 08/23</span>
-                                                </p>
-                                            </div>
-                                            <div class="name-on-card">Hirak jyoti das</div>
-                                            <div class="remove-card"><a href="">REMOVE</a></div>
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <div class="card-img"><img
-                                                    src="{{asset('asset_website/img/cart/visa.png')}}" class="w100">
-                                            </div>
-                                            <div class="card-desc">
-                                                <p class=""><span class="f14">ICICI CREDIT CARD5267-</span> <br />
-                                                    <span class="f12">XXXXXXXX-3499 </span><br />
-                                                    <span class="f10">VALID TILL 08/23</span>
-                                                </p>
-                                            </div>
-                                            <div class="name-on-card">Hirak jyoti das</div>
-                                            <div class="remove-card"><a href="">REMOVE</a></div>
-                                        </div>
-
-                                    </li>
-
-                                </ul>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+
                     </div>
-                    <div class="tab-pane" id="notification" role="tabpanel">
-                        <div class="row">
-                            <div class="col-lg-12 col-12">
-                                <h4 class="small-heading-black">Notification</h4>
-                            </div>
-                            <div class="col-lg-12">
-                                <ul class="list-inline notification-list">
-                                    <li>
-                                        <div>
-                                            <h4 class="small-heading-black mb0">New Course Add. please Check it .</h4>
-                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error
-                                                sit voluptatem accusantium doloremque laudantium,</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <h4 class="small-heading-black mb0">New Course Add. please Check it .</h4>
-                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error
-                                                sit voluptatem accusantium doloremque laudantium,</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <h4 class="small-heading-black mb0">New Course Add. please Check it .</h4>
-                                            <p class="text-justify mb0">Sed ut perspiciatis unde omnis iste natus error
-                                                sit voluptatem accusantium doloremque laudantium,</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> --}}
+
                     <div class="tab-pane" id="purchase" role="tabpanel">
                         <div class="row">
                             <div class="col-lg-12 col-6">

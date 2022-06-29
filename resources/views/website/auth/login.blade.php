@@ -1,7 +1,9 @@
 @extends('layout.website.auth')
-
+@if($prefix=="teacher")
+@section('title', 'Teacher | Login')
+@else
 @section('title', 'User | Login')
-
+@endif
 @section('main')
 
     <section class="login-section">
@@ -65,13 +67,10 @@
                                     <form class="row" id="signupForm">
                                         @csrf
                                         <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="fname" placeholder="First Name" id="fname"  maxlength="20" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('fname')}}" required>
-                                            <span class="text-danger">@error('fname'){{$message}}@enderror</span>
+                                            <input type="text" class="form-control" name="name" placeholder="Name" id="name"  maxlength="20" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('fname')}}" required>
+                                            <span class="text-danger">@error('name'){{$message}}@enderror</span>
                                         </div>
-                                        <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="lname" placeholder="Last Name" id="lname" maxlength="20"  pattern="^([a-zA-Z]+)$" title="Please Enter Letters only." value="{{old('lname')}}" required>
-                                            <span class="text-danger">@error('lname'){{$message}}@enderror</span>
-                                        </div>
+                                        
                                         <div class="form-group col-lg-12">
                                             <input type="email" name="email" class="form-control" placeholder="Email" id="signupEmail" value="{{old('email')}}" required>
                                             <span class="text-danger">@error('email'){{$message}}@enderror</span>
@@ -122,21 +121,17 @@
 
         let interval = '';
         let no_of_otp_sent = 0;
-        let nameRegex = /^([a-zA-Z]+)$/;
-        let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
 
         $('#sendOtpBtn').on('click',function(e){
             e.preventDefault();
 
-            if($('#fname').val().length == 0){
-                toastr.error('Firstname is required');
-            }else if(!nameRegex.test($('#fname').val())){
-                toastr.error('Firstname should contain letters only.');
-            }else if($('#lname').val().length == 0){
-                toastr.error('Lastname is required');
-            }else if(!nameRegex.test($('#lname').val())){
-                toastr.error('Lastname should contain letters only.');
+            if($('#name').val().length == 0){
+                toastr.error('Name is required');
+            }else if(!nameRegex.test($('#name').val())){
+                toastr.error('Name should contain letters only.');
             }else if($('#signupEmail').val().length == 0){
                 toastr.error('Email is required');
             }else if(!emailRegex.test($('#signupEmail').val())){
@@ -151,15 +146,18 @@
 
                 if(no_of_otp_sent < 2){
                     no_of_otp_sent += 1;
-                    
-
+                    var prefix=@json($prefix);
+                     if(prefix=="teacher"){
+                        var url="{{route('teacher.signup')}}";
+                     }else{
+                        var url="{{route('website.auth.signup')}}";
+                     }
                     $.ajax({
-                        url:"{{route('website.auth.signup')}}",
+                        url:url,
                         type:'POST',
                         data:{
                             '_token': '{{ csrf_token() }}',
-                            'firstname' : $('#fname').val(),
-                            'lastname' : $('#lname').val(),
+                            'name' : $('#name').val(),
                             'email' : $('#signupEmail').val(),
                             'phone' : $('#phone').val()
                         },
@@ -212,8 +210,14 @@
             }else if(!otpRegex.test($('#enterOtp').val())){
                 toastr.error('Enter numbers only');
             }else{
+                var prefix=@json($prefix);
+                     if(prefix=="teacher"){
+                        var url="{{route('teacher.verifyOtp')}}";
+                     }else{
+                        var url="{{route('website.auth.verify.otp')}}";
+                     }
                 $.ajax({
-                    url:"{{route('website.auth.verify.otp')}}",
+                    url:url,
                     type:'POST',
                     data:{
                         '_token': '{{ csrf_token() }}',
@@ -284,8 +288,14 @@
             }else if($('#pwd').val() != $('#confPwd').val()){
                 toastr.error('Whoops! Password not matched');
             }else{
+                var prefix=@json($prefix);
+                     if(prefix=="teacher"){
+                        var url="{{route('teacher.completeSignup')}}";
+                     }else{
+                        var url="{{route('website.auth.complete.signup')}}";
+                     }
                 $.ajax({
-                    url:"{{route('website.auth.complete.signup')}}",
+                    url:url,
                     type:'POST',
                     data:{
                         '_token': '{{ csrf_token() }}',

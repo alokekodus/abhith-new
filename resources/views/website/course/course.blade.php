@@ -11,6 +11,26 @@
         font-weight: 700;
         color: #000;
     }
+
+    .search-form-wrapper {
+        position: relative;
+        border: 1px solid #eee;
+        padding: 20px 10px;
+        box-shadow: 1px 3px 5px #dad7d7;
+    }
+
+    .search-form-wrapper label {
+        font-weight: bold;
+    }
+
+    .reset-form-btn {
+        padding: 10px 3px !important;
+        width: 55px !important;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 0;
+    }
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
 @endsection
@@ -63,30 +83,39 @@
             </div>
 
             <div class="col-lg-12 p-4">
-                <form class="row justify-content-center" method="get">
-                    @csrf
-                    <div class="col-4">
-                        <label>Select Board</label>
-                        <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
-                            <option value="">-- Select -- </option>
-                            @forelse ($boards as $item)
-                            <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                            @empty
-                            <option>No boards to show</option>
-                            @endforelse
-                        </select>
-                    </div>
-                    <div class="col-4">
-                        <label>Select Class</label>
-                        <select id="board-class-dd" class="form-control" name="class_id">
-                        </select>
-                    </div>
-                    <div class="col-3 p-4">
-                        <button type="submit" id="submitWebsiteFilterCourseForm"
-                            class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
-                    </div>
+                <div class="search-form-wrapper">
+                    <form class="row justify-content-center" method="get">
+                        @csrf
+                        <div class="col-3">
+                            <label>Select Board</label>
+                            <select name="assignedBoard" id="assignedBoard" class="form-control"
+                                onchange="changeBoard(null)" required>
+                                <option value="">-- Select -- </option>
+                                @forelse ($boards as $item)
+                                <option value="{{$item->id}}" {{request()->assignedBoard == $item->id ?
+                                    'selected':''}}>{{$item->exam_board}}</option>
+                                @empty
+                                <option>No boards to show</option>
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label>Select Class</label>
+                            <select id="board-class-dd" class="form-control" name="class_id" required>
+                            </select>
+                        </div>
+                        <div class="col-2 p-4">
+                            <button type="submit" id="submitWebsiteFilterCourseForm"
+                                class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
+                        </div>
 
-                </form>
+
+                        <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn"><i class="fa fa-refresh"
+                                aria-hidden="true"></i> </a>
+
+
+                    </form>
+                </div>
             </div>
 
 
@@ -100,15 +129,16 @@
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
-                    <h4 class="subject-heading-black">{{$subject->subject_name}}</h4>
-                    <h6 class="subject-heading-black">BOARD:{{$subject->boards->exam_board}}<br>
-                        CLASS:{{$subject->assignClass->class}}</h6>
+                    <h4 class="subject-heading-black">
+                        {{$subject->subject_name}}
+                        (Class-{{$subject->assignClass->class}},{{$subject->boards->exam_board}})
+                    </h4>
                     <span>
-                        <h6><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount, 2,
-                            '.',
-                            ' ')}}</h6>
+                        <h6><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,
+                            2,'.','')}}</h6>
                     </span>
-                    <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll">Enroll Now</a>
+                    <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
+                        class="enroll">Enroll Now</a>
                 </div>
             </div>
             @endforeach
@@ -124,7 +154,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.js"></script>
 <script>
     $(document).ready(function() {
-     
+    //  var requestData=@json(request()->all());
+    //  var classId=requestData['class_id'];
+    //     if(classId !=="undefined"){
+    //         changeBoard(classId);
+    //     }
+    $("#board-class-dd").prop("disabled",true);
      $("#owl-demo").owlCarousel({
     
          autoPlay: 8000, //Set AutoPlay to 3 seconds
@@ -139,6 +174,7 @@
     function changeBoard()
 {
     let board_id=$("#assignedBoard").val();
+    
     $.ajax({
                 url:"{{route('board.class')}}",
                 type:"post",
@@ -147,10 +183,12 @@
                     'board_id' : board_id
                 },
                 success:function(data){
-                    $('#board-class-dd').html('<option value="">Select State</option>');
+                    $("#board-class-dd").prop("disabled",false);
+                   
                     data.forEach((boardClass) => {
-                        $("#board-class-dd").append('<option value="' + boardClass
-                                .id + '">'+'Class-' + boardClass.class + '</option>');  
+                            $("#board-class-dd").append('<option value="' + boardClass
+                                .id + '">'+'Class-' + boardClass.class + '</option>');
+      
                     });
                    
                       

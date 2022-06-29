@@ -17,37 +17,43 @@ class WebsiteAuthController extends Controller
     public function signup(Request $request)
     {
         try {
-            
-                $validator = Validator::make($request->all(), [
 
-                    'name' => 'required',
-                    'email' => 'required|email',
-                    'phone' => 'required|numeric',
+            $validator = Validator::make($request->all(), [
 
-                ]);
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
 
-                if ($validator->fails()) {
-                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
-                }
-            
-           
-            $name=$request->name;
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            }
+
+
+            $name = $request->name;
             $email = $request->email;
             $phone = $request->phone;
 
+            if (getPrefix($request) == "api") {
+                $type = Type::User;
+            } elseif (getPrefix($request) == "teacher") {
+                $type = Type::Teacher;
+            } else {
+                $type = Type::User;
+            }
 
-
-            $check_user_active = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 1]])->exists();
+            $check_user_active = User::where([['email', $email], ['type_id', $type], ['phone', $phone], ['verify_otp', 1], ['is_activate', 1]])->exists();
             if ($check_user_active) {
                 return response()->json(['message' => 'Oops! User already exists', 'status' => 0]);
             } else {
 
                 $otp = rand(100000, 999999);
 
-                $check_otp_sent_but_user_not_verified = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->exists();
-                $check_otp_verified_but_user_not_activate = User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 1], ['is_activate', 0]])->exists();
+                $check_otp_sent_but_user_not_verified = User::where([['email', $email], ['type_id', $type], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->exists();
+                $check_otp_verified_but_user_not_activate = User::where([['email', $email], ['type_id', $type], ['phone', $phone], ['verify_otp', 1], ['is_activate', 0]])->exists();
                 if ($check_otp_sent_but_user_not_verified) {
-                    User::where([['email', $email], ['type_id', Type::User], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->update([
+                    User::where([['email', $email], ['type_id', $type], ['phone', $phone], ['verify_otp', 0], ['is_activate', 0]])->update([
                         'otp' => $otp
                     ]);
 
@@ -62,7 +68,7 @@ class WebsiteAuthController extends Controller
                         'email' => $email,
                         'phone' => $phone,
                         'otp' => $otp,
-                        'type_id' => Type::User,
+                        'type_id' => $type,
                         'is_activate' => 0
                     ]);
 
@@ -218,6 +224,13 @@ class WebsiteAuthController extends Controller
     {
         try {
             if (getPrefix($request) == "api") {
+                $type = Type::User;
+            } elseif (getPrefix($request) == "teacher") {
+                $type = Type::Teacher;
+            } else {
+                $type = Type::User;
+            }
+            if (getPrefix($request) == "api") {
                 $validator = Validator::make($request->all(), [
                     'email' => 'required|email',
                     'password' => 'required',
@@ -225,20 +238,22 @@ class WebsiteAuthController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return response()->json(['code'=>400,'status' => 0, 'message' => $validator->errors()]);
-                }
-                
-                if (!Auth::attempt($request->only('email', 'password'))) {
-                    return response()->json(['code'=>401,'status' => 0,
-                        'message' => 'Invalid login details']);
+                    return response()->json(['code' => 400, 'status' => 0, 'message' => $validator->errors()]);
                 }
 
-                $user = User::where('email', $request['email'])->select('id','email','phone','name','is_activate','created_at')->first();
+                if (!Auth::attempt($request->only('email', 'password'))) {
+                    return response()->json([
+                        'code' => 401, 'status' => 0,
+                        'message' => 'Invalid login details'
+                    ]);
+                }
+
+                $user = User::where('email', $request['email'])->select('id', 'email', 'phone', 'name', 'is_activate', 'created_at')->first();
 
                 $token = $user->createToken('auth_token')->plainTextToken;
 
                 return response()->json([
-                    'code'=>200,
+                    'code' => 200,
                     'status' => 1,
                     'message' => "Student Signin Successfully",
                     'data' => $user,
@@ -253,12 +268,17 @@ class WebsiteAuthController extends Controller
                     'email' => 'required',
                     'password' => 'required'
                 ]);
-
-                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'type_id' => Type::User, 'is_activate' => Activation::Activate])) {
+                
+                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'type_id' => $type, 'is_activate' => Activation::Activate])) {
                     if ($request->current_route == null) {
 
                         Auth::LogoutOtherDevices($password);
-                        return redirect()->route('website.dashboard');
+                        if(auth()->user()->type_id==2){
+                            return redirect()->route('website.dashboard');
+                        }else{
+                            return redirect()->route('admin.dashboard');
+                        }
+                       
                     } else {
                         return redirect($request->current_route);
                     }
@@ -267,7 +287,7 @@ class WebsiteAuthController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            return response()->json(['code'=>500,'message' => 'Whoops! Something Went Wrong', 'status' => 0]);
+            return response()->json(['code' => 500, 'message' => 'Whoops! Something Went Wrong', 'status' => 0]);
         }
     }
 
@@ -284,5 +304,14 @@ class WebsiteAuthController extends Controller
             Auth::logout();
             return redirect('');
         }
+    }
+    public function viewLogin(Request $request)
+    {
+        if ($request->route()->getPrefix() == "teacher") {
+            $prefix = "teacher";
+        } else {
+            $prefix = "user";
+        }
+        return view('website.auth.login',compact('prefix'));
     }
 }

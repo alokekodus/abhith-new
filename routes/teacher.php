@@ -2,8 +2,14 @@
 use App\Http\Controllers\teacher\CourseController;
 use App\Http\Controllers\teacher\LessonController;
 use App\Http\Controllers\teacher\StudentController;
+use App\Http\Controllers\website\WebsiteAuthController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('login',[WebsiteAuthController::class,'viewLogin'])->name('teacher.login');
+Route::post('signup', [WebsiteAuthController::class, 'signup'])->name('teacher.signup');
+Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp'])->name('teacher.verifyOtp');
+Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup'])->name('teacher.completeSignup');
+Route::post('login', [WebsiteAuthController::class, 'login'])->name('teacher.auth.login');
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('course')->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('teacher.course');

@@ -18,7 +18,7 @@ class RedirectIfAuthenticatedCustom
     public function handle(Request $request, Closure $next,  $guard = null)
     {
         if (Auth::guard($guard)->check() ) {
-            if(Auth::user()->role_id == 1){
+            if(Auth::user()->type_id == 1){
                 return redirect('admin/dashboard');
             }
         }

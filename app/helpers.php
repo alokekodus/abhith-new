@@ -79,3 +79,7 @@ function getPrefix($request){
 function getAssignSubjects(){
  return AssignSubject::with('assignClass','boards')->where('is_activate',1)->limit(9)->get();
 }
+function isSubjectAlreadyInCart($check_item_exists_inside_cart,$all_subjects){
+    $subject_already_in_cart=$check_item_exists_inside_cart;
+    dd($subject_already_in_cart);
+}

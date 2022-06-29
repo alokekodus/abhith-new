@@ -21,7 +21,7 @@ class UserDetailsController extends Controller
         if(Auth::check()){
             $user_details = UserDetails::with('user')->where('email',Auth::user()->email)->first();
             $purchase_history = Order::with('board','assignClass')->where('user_id',Auth::user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
-          
+         
         }
         return view('website.my_account.my_account')->with(['user_details' => $user_details, 'purchase_history' => $purchase_history]);
     }
@@ -29,8 +29,7 @@ class UserDetailsController extends Controller
 
     public function userDetails(Request $request){
 
-        $firstname = $request->fname;
-        $lastname = $request->lname;
+        $name = $request->name;
         $email = $request->email;
         $phone = $request->phone;
         $education = $request->education;
@@ -42,12 +41,11 @@ class UserDetailsController extends Controller
         if($user_details == true){
             UserDetails::where('user_id', Auth::user()->id)
                         ->update([
-                            'firstname' => $firstname,'lastname' => $lastname, 'email' => $email, 'phone' => $phone, 'education' => $education, 'gender' => $gender,
+                            'name' => $name,'email' => $email, 'phone' => $phone, 'education' => $education, 'gender' => $gender,
                         ]);
         }else{
             UserDetails::create([
-                'firstname' => $firstname,
-                'lastname' => $lastname,
+                'name' => $name,
                 'email'  => $email,
                 'phone' => $phone,
                 'education' => $education,
@@ -55,7 +53,7 @@ class UserDetailsController extends Controller
                 'user_id' => $user_id,
             ]);
         }
-        User::where('email', Auth::user()->email)->update(['firstname' => $firstname,'lastname' => $lastname,'email' => $email]);
+        User::where('email', Auth::user()->email)->update(['name' => $name,'email' => $email]);
         
         return response()->json(['message' => 'Profile details updated']);
     }
@@ -67,7 +65,7 @@ class UserDetailsController extends Controller
         $request->validate([
             'image' => 'required | mimes:jpg,jpeg,png'
         ]);
-        $new_imgage_name = time().'-'.Auth::user()->lastname.Auth::user()->firstname.'.'.$image->extension();
+        $new_imgage_name = time().'-'.Auth::user()->lastname.Auth::user()->name.'.'.$image->extension();
         $image_path = $image->move(public_path('files/profile'), $new_imgage_name);
         UserDetails::where('email', Auth::user()->email)->update(['image' => $new_imgage_name]);
         return response()->json(['message' => 'Profile photo uploaded']);

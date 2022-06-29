@@ -11,7 +11,7 @@ class UserDetails extends Model
 
     protected $table = 'user_details';
 
-    protected $fillable = ['firstname','lastname','email','phone','education','gender','image','user_id'];
+    protected $fillable = ['name','email','phone','education','gender','image','user_id'];
 
 
     public function user(){

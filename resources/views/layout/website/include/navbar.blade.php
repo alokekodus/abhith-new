@@ -12,7 +12,7 @@
                 <li class="{{ Route::is('website.blog') || Route::is('website.blog.details') ? 'active' : '' }}"><a href="{{route('website.blog')}}">Blogs</a></li>
                 <li class="{{ Route::is('website.knowledge.forum') ? 'active' : '' }}"><a href="{{route('website.knowledge.forum')}}">Knowledge Forum</a></li>
                 <li class="{{ Route::is('website.get.time.table') ? 'active' : '' }}"><a href="{{route('website.get.time.table')}}">Time Table</a></li>
-                <li class="{{ Route::is('website.contact') ? 'active' : '' }}"><a href="{{route('website.contact')}}" class="about-view">Contact Us</a></li>
+                <li class="{{ Route::is('website.contact') ? 'active' : '' }}"><a href="{{route('website.contact')}}" class="btn btn-block knowledge-link enquiry-form-btn about-view">Contact Us</a></li>
 
             </ul>
 

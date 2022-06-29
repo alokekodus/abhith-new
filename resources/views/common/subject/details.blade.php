@@ -89,12 +89,7 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane container active" id="teacher">
-                <h6>
-                    <p>Name:{{$subject->assignTeacher->getFullName()}}</p>
-                </h6>
-
-            </div>
+            
             <div class="tab-pane container fade" id="whylearn">
                 <h6> {!!$subject->why_learn!!} </h6>
             </div>

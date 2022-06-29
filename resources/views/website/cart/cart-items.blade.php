@@ -1,11 +1,11 @@
 <li>
     <div class="col-3">
         @if($item->is_full_course_selected==1)
-        <img src="https://image.freepik.com/free-vector/group-friends-giving-high-five_23-2148363170.jpg" alt=""
-            class="course-type" style="height:50px;width:70px;" />
+        <img src="{{asset('asset_website/img/custompackage.png')}}" alt=""
+            class="course-type" style="height:68px;width:73px;" />
         @else
-        <img src="https://image.freepik.com/free-vector/people-putting-puzzle-pieces-together_52683-28610.jpg" alt=""
-            class="course-type" style="height:50px;width:70px;" />
+        <img src="{{asset('asset_website/img/custompackage.png')}}" alt=""
+            class="course-type" style="height:68px;width:73px;" />
         @endif
         {{-- <div class="cart-course-image1"><img src="" style="height:50px;width:70px;"></div> --}}
     </div>

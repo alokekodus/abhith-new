@@ -28,6 +28,7 @@ class CourseController extends Controller
 
         $board_details = Board::where('is_activate', 1)->get();
         $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->get();
+        
         if ($request->has('assignedBoard') && $request->has('class_id')) {
 
             $subject_details =  AssignSubject::with('assignClass', 'boards')->where('assign_class_id', $request->class_id)->where('board_id', $request->assignedBoard)->get();

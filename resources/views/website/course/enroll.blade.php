@@ -30,7 +30,7 @@
     .inputGroup label:before {
         width: 10px;
         height: 10px;
-        border-radius: 50%;
+        border-radius: 0;
         content: '';
         background-color: #5562eb;
         position: absolute;
@@ -66,7 +66,7 @@
     }
 
     .inputGroup input:checked~label:before {
-        transform: translate(-50%, -50%) scale3d(56, 56, 1);
+        transform: translate(-50%, -50%) scale3d(57, 57, 1);
         opacity: 1;
     }
 
@@ -95,6 +95,10 @@
         font-size: 18px;
         font-weight: 600;
         line-height: 36px;
+    }
+
+    a:hover {
+        color: white;
     }
 </style>
 <style>
@@ -290,8 +294,8 @@
                             <div class="card-content-wrapper">
                                 <span class="check-icon"></span>
                                 <div class="card-content" style="width:100%; text-align:center">
-                                    <img src="{{asset('asset_website/img/fullcourse.png')}}"
-                                        alt="" class="course-type" />
+                                    <img src="{{asset('asset_website/img/fullcourse.png')}}" alt=""
+                                        class="course-type" />
                                     <h4>FULL COURSE</h4>
                                 </div>
                             </div>
@@ -304,8 +308,8 @@
                             <div class="card-content-wrapper">
                                 <span class="check-icon"></span>
                                 <div class="card-content" style="width:100%; text-align:center">
-                                    <img src="{{asset('asset_website/img/custompackage.png')}}"
-                                        alt="" class="course-type" />
+                                    <img src="{{asset('asset_website/img/custompackage.png')}}" alt=""
+                                        class="course-type" />
                                     <h4>CUSTOM YOUR COURSE</h4>
                                 </div>
                             </div>
@@ -322,7 +326,9 @@
                         <input class="chapter_value" id="option{{$key}}" type="checkbox" value="{{$subject->id}}"
                             name="subjects[]" data-price="{{number_format($subject->subject_amount,2,'.','')}}"
                             onclick="checkedSubject()" />
-                        <label for="option{{$key}}">{{$subject->subject_name}}</label>
+                        <label for="option{{$key}}"><a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}">{{$subject->subject_name}}( <i class="fa fa-inr"
+                                    aria-hidden="true"></i>
+                                {{number_format($subject->subject_amount,2,'.','')}})</label></a>
                     </div>
                     @endforeach
                     <hr>
@@ -332,7 +338,7 @@
                             {{number_format($total_amount, 2, '.', '
                             ')}}</span>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block">Add To Cart</button>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Add to cart</button>
 
                 </div>
             </div>

@@ -32,6 +32,19 @@
     .owl-carousel .owl-stage-outer {
         border-radius: 20px;
     }
+
+    .course-wrapper {
+        position: relative;
+    }
+    .course-desc {
+         padding: 15px 20px 30px;
+    }
+
+    .course-wrapper .enroll{
+        position: absolute;
+        bottom : 15px;
+        right : 15px;
+    }
 </style>
 @endsection
 
@@ -166,6 +179,7 @@
             </div>
             @foreach (getAssignSubjects() as $key => $subject)
             <div class="col-4">
+                <div class="course-wrapper p-1 mb-5">
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
@@ -173,7 +187,8 @@
                     <span><b><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,2,
                         '.','')}}</b></span>
                 </div>
-                <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll" target="_blank">Enroll Now</a>
+                <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll">Enroll Now</a>
+                </div>
             </div>
             @endforeach
 
