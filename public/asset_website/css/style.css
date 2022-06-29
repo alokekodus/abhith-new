@@ -1139,9 +1139,9 @@ footer {
     list-style-type: disc;
 }
 
-.footer-menu-list li:first-child {
+/* .footer-menu-list li:first-child {
     list-style-type: none ;
-}
+} */
 
 .footer-mid-right {
     text-align: right;
