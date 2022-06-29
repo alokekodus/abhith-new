@@ -12,9 +12,9 @@
         border-bottom-left-radius: 0; 
     }
 
-    .about-view {
-        margin: 0 20px;
-    }
+    /* .about-view {
+        margin: 0 5px;
+    } */
 
     
     .footer-image-list li img {
@@ -64,6 +64,9 @@
 
 /* Ipad */
 @media (max-width: 768px) {
+    .login-text {
+        font-size: 14px;
+    }
     .course-pic img {
         height: auto;
     }

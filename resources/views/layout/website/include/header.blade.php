@@ -10,7 +10,7 @@
 <div class="top-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-8">HELPING CREATE SUCCESS</div>
+            <div class="col-lg-3 col-8 header-text">HELPING CREATE SUCCESS</div>
             <div class="col-lg-3 col-3">
                 <ul class="list-inline header-social  mb0">
                     <li><a href="#"><span class="icon-facebook-07 header-social-icon"></span></a></li>
@@ -20,7 +20,7 @@
                 </ul>
             </div>
             @auth
-            <div class="col-lg-6  col-12">
+            <div class="col-lg-6  col-sm-12">
                 <ul class="list-inline login-details">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle login-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>{{Auth::user()->firstname}}<span class="caret"></span></a>

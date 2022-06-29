@@ -212,7 +212,7 @@ a:hover,
 
 .mobile-nav-toggle {
     position: fixed;
-    top: 92px;
+    top: 120px;
     right: 15px;
     z-index: 99;
     border: 0;
@@ -242,8 +242,8 @@ a:hover,
     opacity: 0;
     visibility: hidden;
     border-radius: 10px;
-    padding: 10px 0;
-    height: 300px;
+    padding: 10px 20px;
+    height: 340px;
 }
 
 .mobile-nav * {
@@ -256,7 +256,7 @@ a:hover,
     display: block;
     position: relative;
     color: #37423b;
-    padding: 10px 20px;
+    padding: 10px 0px;
     font-weight: 500;
     outline: none;
 }
@@ -482,6 +482,10 @@ main {
 
 .login-details li:first-child {
     margin-right: 35px;
+    position: relative;
+}
+.login-details li:nth-child(2) {
+    margin-right: 30px;
     position: relative;
 }
 .login-details li:last-child {
