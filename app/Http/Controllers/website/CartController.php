@@ -42,8 +42,6 @@ class CartController extends Controller
     {
         try {
               
-         
-
             if (!Auth::check()) {
 
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
@@ -105,11 +103,18 @@ class CartController extends Controller
 
     public function removeFromCart(Request $request)
     {
-        if (Auth::check()) {
-            Cart::where('user_id', Auth::user()->id)->where('is_paid', 0)->where('chapter_id', $request->chapter_id)->update([
-                'is_remove_from_cart' => 1
-            ]);
-            return response()->json(['message' => 'Item removed successfully']);
+        try {
+            if (Auth::check()) {
+                $cart=Cart::find($request->cart_id);
+                $cart->update([ 'is_remove_from_cart' => 1]);
+                $cart->assignSubject()->delete();
+                return response()->json(['message' => 'Item removed successfully']);
+            }else{
+                return response()->json(['message' => ' Something want wrong']);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => ' Something want wrong']);
         }
+
     }
 }

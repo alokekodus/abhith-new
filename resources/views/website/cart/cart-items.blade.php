@@ -17,7 +17,7 @@
         <h6>Board: {{$item->board->exam_board??''}}<br>Class: {{$item->assignClass->class??''}}</h6>
     </div>
     <div class="col-2">
-        <div class="mt10"><a href="#" class="remove removeCartItem" data-id="{{$item->chapter_id??''}}">Remove</a></div>
+        <div class="mt10"><a href="#" class="remove removeCartItem" data-id="{{$item->id??''}}">Remove</a></div>
     </div>
     <div class="col-2">
         <span class="course-price2" id="itemPrice"><i class="fa fa-inr" aria-hidden="true"></i>
