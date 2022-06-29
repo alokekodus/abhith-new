@@ -5,10 +5,10 @@
     height: 250px;
     object-fit: cover;
 }
-
+/* 
 .counter-list li{
-    /* height: 520px; */
-}
+    height: 520px;
+} */
 .counter-list img{
     height: 601px;
     object-fit: cover;

@@ -12,6 +12,24 @@
 
 @media only screen and (min-width: 767px) and (max-width: 1023px) {}
 
+@media (min-width:768px) and (max-width:992px){
+    .login-details li:first-child {
+        margin-right: 100px;
+        position: relative;
+    }
+    .login-details li:nth-child(2) {
+        margin-right: 100px;
+    }
+    .mobile-nav-toggle {
+        top: 100px;
+    }
+    #header {
+        top: 75px;
+    }
+    .mobile-nav-toggle {
+        right: 100px;
+    }
+}
 @media (max-width: 767px) {
 
     a {
@@ -58,7 +76,7 @@
 
     #header {
         padding: 0px 15px;
-        top: 70px;
+        top: 95px;
         box-shadow: 1px 2px 1px #eee!important;
     }
 
@@ -76,6 +94,9 @@
         margin-right: 30px;
         width: 70%;
     }
+    .login-details li:nth-child(2) {
+        margin-right: 40px;
+    }
 
     main {
         margin-top: 150px;
@@ -92,6 +113,7 @@
 
     #carousel-banner .home-slide {
         height: 100%;
+        margin-top: 15px;
     }
 
     .home-desc {
