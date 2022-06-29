@@ -165,20 +165,21 @@
 <section class="home-courses">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4 col-md-12 col-sm-12 mb-4 list-inline courses-list">
+            <div class="col-lg-4 col-md-12 mb-4 list-inline courses-list">
                 <p class="cross-line1">
                     <span>SUGGESTION OF COURSES</span>
                 </p>
-                <h2 class="heading-black">The world’s largest
+                <h2 class="heading-black">The world's largest
                     selection of courses</h2>
                 <p>Choose from over 100,000 online video courses with
                     new additions published every month</p>
                 <div class="mt-5"><a href="{{ route('website.course') }}" target="_blank" class="knowledge-link">View
                         All
-                        Coures</a></div>
+                        Coures</a>
+                </div>
             </div>
             @foreach (getAssignSubjects() as $key => $subject)
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4 ">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
@@ -187,7 +188,6 @@
                         '.','')}}</b></span>
                 </div>
                 <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll">Enroll Now</a>
-                </div>
             </div>
             @endforeach
 
