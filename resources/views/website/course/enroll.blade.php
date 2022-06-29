@@ -338,7 +338,7 @@
                             {{number_format($total_amount, 2, '.', '
                             ')}}</span>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block">Add to cart</button>
+                    <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart">Add to cart</button>
 
                 </div>
             </div>
@@ -385,28 +385,33 @@
         }
    }
    function checkedSubject(){
+    var total_subject=@json($total_subject);
     var totalAmount=0.00;
-   
+    var count=0;
       $(".chapter_value").each(function(index) {
-          if(this.checked==true){         
+          if(this.checked==true){     
+            count+=1;    
             totalAmount= parseFloat(totalAmount) + parseFloat($(this).attr('data-price'));
           }
          
       });
-      var amount=`<i class="fa fa-inr" aria-hidden="true"></i> &nbsp;`;
-      if(totalAmount==0){
-        $("#add_cart").prop("disabled",true);
-        $("#total-cart").html(``);
-       
+      
+      if(count==total_subject){
+        $("#radio-card-1").prop("checked", true); 
       }else{
-          var totalCart=`<ul class="list-inline total-car-list p-6"><button type="submit" class="add-cart form-control" id="add_cart">Add to Cart</button></ul>`
-        
-        $("#add_cart").prop("disabled",false);
-        $("#total-cart").html(totalCart);
+        $("#radio-card-2").prop("checked", true);
       }
+     
+      var amount=`<i class="fa fa-inr" aria-hidden="true"></i> &nbsp;`;
+     
       $("#total_price").html(amount+totalAmount.toFixed(2));
-   }
-  
+      const box = document.getElementById('add-to-cart');
+      if(count==0){
+        box.style.display = 'none';
+      }else{
+        box.style.display = 'block';
+      }  
+    }
 </script>
 
 
