@@ -204,6 +204,7 @@
     .footer-menu-list li {
         width: 100% !important;
         list-style-type: disc !important;
+        margin-left: 18px;
     }
 
     /* .p0 {

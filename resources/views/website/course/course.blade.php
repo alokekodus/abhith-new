@@ -41,7 +41,7 @@
 <section class="subheader">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <!-- <div class="col-lg-12">
                 <ul class="list-inline cart-course-list1">
                     @if ($message = Session::get('success'))
                     <div class="alert alert-success alert-block">
@@ -57,7 +57,7 @@
                     @endif
 
                 </ul>
-            </div>
+            </div> -->
         </div>
         <div class="row">
             <div class="col-lg-12 p0">

@@ -64,8 +64,12 @@
 
 /* Ipad */
 @media (max-width: 768px) {
-    .login-text {
+    .login-text{
         font-size: 14px;
+    }
+    .login-details-icon {
+        font-size: 20px;
+        float: none;
     }
     .course-pic img {
         height: auto;
