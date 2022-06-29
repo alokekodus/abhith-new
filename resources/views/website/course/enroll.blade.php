@@ -7,6 +7,10 @@
         margin: 136px 80px;
     }
 
+    /* .home-courses{
+        padding-top: 75px;
+    } */
+
     .inputGroup {
         background-color: #ada2a1;
         display: block;
@@ -66,7 +70,7 @@
     }
 
     .inputGroup input:checked~label:before {
-        transform: translate(-50%, -50%) scale3d(57, 57, 1);
+        transform: translate(-50%, -50%) scale3d(70, 70, 1);
         opacity: 1;
     }
 
@@ -286,23 +290,40 @@
     <form action="{{route('website.add-to-cart')}}" method="post">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-6">
-                    <div class="grid-wrapper grid-col-auto">
-                        <label for="radio-card-1" class="radio-card">
-                            <input class="course_type" type="radio" name="course_type" id="radio-card-1" value="1"
-                                onclick="changeCourse(this.value)" @if(!$custom_package_active) checked @endif />
-                            <div class="card-content-wrapper">
-                                <span class="check-icon"></span>
-                                <div class="card-content" style="width:100%; text-align:center">
-                                    <img src="{{asset('asset_website/img/fullcourse.png')}}" alt=""
-                                        class="course-type" />
-                                    <h4>FULL COURSE</h4>
-                                </div>
+                <div class="col-lg-6 col-sm-12">
+                        <div class="leftBlock d-flex justify-content-around">
+                            <div class="mb-4">
+                                <label for="radio-card-1" class="radio-card">
+                                    <input class="course_type" type="radio" name="course_type" id="radio-card-1" value="1"
+                                        onclick="changeCourse(this.value)" @if(!$custom_package_active) checked @endif />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content" style="width:100%; text-align:center">
+                                            <img src="{{asset('asset_website/img/fullcourse.png')}}" alt=""
+                                                class="course-type" />
+                                            <h4>FULL COURSE</h4>
+                                        </div>
+                                    </div>
+                                </label>
                             </div>
-                        </label>
+                            <div>
+                                <label for="radio-card-2" class="radio-card">
+                                    <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
+                                        onclick="changeCourse(this.value)" @if($custom_package_active) checked @endif />
+                                    <div class="card-content-wrapper">
+                                        <span class="check-icon"></span>
+                                        <div class="card-content" style="width:100%; text-align:center">
+                                            <img src="{{asset('asset_website/img/custompackage.png')}}" alt=""
+                                                class="course-type" />
+                                            <h4>CUSTOM COURSE</h4>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                         <!-- /.radio-card -->
 
-                        <label for="radio-card-2" class="radio-card">
+                        <!-- <label for="radio-card-2" class="radio-card">
                             <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
                                 onclick="changeCourse(this.value)" @if($custom_package_active) checked @endif />
                             <div class="card-content-wrapper">
@@ -313,11 +334,10 @@
                                     <h4>CUSTOM YOUR COURSE</h4>
                                 </div>
                             </div>
-                        </label>
+                        </label> -->
                         <!-- /.radio-card -->
-                    </div>
                 </div>
-                <div class="col-6">
+                <div class="rightBlock col-lg-6 col-md-12">
                     @csrf
                     <input type="hidden" name="board_id" value="{{$board->id}}">
                     <input type="hidden" name="class_id" value="{{$class->id}}">

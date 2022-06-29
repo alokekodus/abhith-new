@@ -12,7 +12,7 @@
 
 @media only screen and (min-width: 767px) and (max-width: 1023px) {}
 
-@media (min-width:768px) and (max-width:992px){
+@media (min-width:768px) and (max-width:991px){
     .login-details li:first-child {
         margin-right: 100px;
         position: relative;
@@ -28,6 +28,13 @@
     }
     .mobile-nav-toggle {
         right: 100px;
+    }
+    .home-courses{
+        padding-top: 50px;
+    }
+    .footer-menu-list li {
+        font-size: 15px;
+        margin-bottom: 14px;
     }
 }
 @media (max-width: 767px) {
@@ -500,6 +507,17 @@
         height: 300px;
     }
 
+    .home-courses .leftBlock{
+        flex-direction: column;
+        align-items: center;
+    }
+    .home-courses{
+        padding-top: 20px;
+    }
+    .inputGroup {
+        width: 100%;
+        
+    }
 }
 
 @media only screen and (min-width: 360px) and (max-width: 375px) {}
