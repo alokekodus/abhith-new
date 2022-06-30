@@ -213,7 +213,7 @@ a:hover,
 .mobile-nav-toggle {
     position: fixed;
     top: 120px;
-    right: 15px;
+    right: 20px;
     z-index: 99;
     border: 0;
     background: none;
@@ -342,6 +342,7 @@ a:hover,
 .cross-line {
     display: table;
     white-space: nowrap;
+    margin-bottom: 5px;
 }
 
 .cross-line > span {
@@ -448,6 +449,14 @@ a:hover,
     width: 15%;
 }
 
+
+.desc-text{
+    margin-top: 0;
+    line-height: 32px;
+}
+.courseRightBlock{
+    padding-top: 50px;
+}
 
 /*main*/
 main {
