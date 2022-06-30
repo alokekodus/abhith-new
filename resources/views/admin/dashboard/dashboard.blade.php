@@ -60,31 +60,75 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Become a teacher</h4>
-            <p class="card-description"> Personal Details </p>
             <form class="forms-sample">
-                <div class="form-group">
-                    <label for="exampleInputName1">Name</label>
-                    <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+                <p class="card-description"> Personal Details </p>
+
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Contact Number</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Contact Number">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Gmail</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="exampleSelectGender">
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <h4 class="card-title">Professional Details</h4>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="exampleInputCity1">Total Experience</label>
+                        <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="exampleTextarea1">Course applying for</label>
+                        <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                    </div>
+                </div>
+                <div class="row">
+                <div class="form-group col-6">
+                    <label for="exampleTextarea1">10th Percentage</label>
+                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                </div>
+                <div class="form-group col-6">
+                    <label for="exampleTextarea1">12th Percentage</label>
+                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail3">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                    <label for="exampleTextarea1">Highest Qualification</label>
+                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
                 </div>
+              
                 <div class="form-group">
-                    <label for="exampleSelectGender">Gender</label>
-                    <select class="form-control" id="exampleSelectGender">
-                        <option>Male</option>
-                        <option>Female</option>
-                    </select>
-                </div>
-               
-                <div class="form-group">
-                    <label for="exampleInputCity1">City</label>
+                    <label for="exampleTextarea1">Current organization</label>
                     <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
                 </div>
                 <div class="form-group">
-                    <label for="exampleTextarea1">Textarea</label>
-                    <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                    <label for="exampleTextarea1">Current Designation</label>
+                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                </div>
+                <div class="form-group">
+                    <label for="exampleTextarea1">12th Percentage:</label>
+                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
                 </div>
                 <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
                 <button class="btn btn-light">Cancel</button>

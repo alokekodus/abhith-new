@@ -205,13 +205,13 @@ class WebsiteAuthController extends Controller
                 if (getPrefix($request) == "api") {
                     return response()->json([
                         'status' => 1,
-                        'message' => "Student Signup successful",
+                        'message' => "Signed up successfully",
                         'data' => $details,
                         'access_token' => $token,
                         'token_type' => 'Bearer',
                     ]);
                 } else {
-                    return response()->json(['message' => 'Signup successful', 'status' => 1]);
+                    return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
                 }
             }
         } catch (\Throwable $th) {
@@ -255,7 +255,7 @@ class WebsiteAuthController extends Controller
                 return response()->json([
                     'code' => 200,
                     'status' => 1,
-                    'message' => "Student Signin Successfully",
+                    'message' => "Signed in successfully",
                     'data' => $user,
                     'access_token' => $token,
                     'token_type' => 'Bearer',
