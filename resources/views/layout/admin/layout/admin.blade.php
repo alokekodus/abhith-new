@@ -77,6 +77,7 @@
     <script src="{{ asset('asset_admin/vendors/chart.js/Chart.min.js') }}"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
+    <script src="{{ asset('asset_admin/js/file-upload.js') }}"></script>
     <script src="{{ asset('asset_admin/js/off-canvas.js') }}"></script>
     <script src="{{ asset('asset_admin/js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('asset_admin/js/misc.js') }}"></script>

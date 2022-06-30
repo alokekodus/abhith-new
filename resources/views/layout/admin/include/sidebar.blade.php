@@ -69,12 +69,7 @@
               </ul>
             </div>
         </li>
-        {{-- <li class="nav-item {{ (request()->routeIs('admin.create.course')) ? 'active' : '' }}">
-            <a class="nav-link" href="{{route('admin.get.course')}}">
-                <span class="menu-title">Course</span>
-                <i class="mdi mdi-book menu-icon"></i>
-            </a>
-        </li> --}}
+      
         <li class="nav-item {{ (request()->routeIs('admin.insert.mcq.question')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.index.multiple.choice')}}"><span class="menu-title">MCQ's</span>
                 <i class="mdi  mdi-format-list-bulleted menu-icon"></i></a>

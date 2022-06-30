@@ -21,9 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //singup api
-Route::post('signup', [WebsiteAuthController::class, 'signup']);
+// Route::post('signup', [WebsiteAuthController::class, 'signup']);
 Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp']);
-Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup']);
+Route::post('signup', [WebsiteAuthController::class, 'mobileSignUp']);
 Route::post('login', [WebsiteAuthController::class, 'login']);
 
 
