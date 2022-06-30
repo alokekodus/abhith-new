@@ -68,13 +68,13 @@
     <div class="row">
         <div class="col-md-7">
             <ul class="nav nav-tabs">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#teacher">
                         <h4 class="small-heading-black">Teacher</h4>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#whylearn">
+                    <a class="nav-link active" data-toggle="tab" href="#whylearn">
                         <h4 class="small-heading-black">What you'll learn</h4>
                     </a>
                 </li>
