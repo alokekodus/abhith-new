@@ -56,6 +56,7 @@
         </div>
     </div>
 </div>
+@if(auth()->user()->hasRole('Teacher'))
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -63,34 +64,33 @@
             <form class="forms-sample">
                 <p class="card-description"> Personal Details </p>
 
-                <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Name">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputName">Name</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="Name">
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
                     </div>
+
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-2 col-form-label">Contact Number</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Contact Number">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputContact">Contact Number</label>
+                        <input type="text" class="form-control" id="inputContact" placeholder="Contact number">
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-2 col-form-label">Gmail</label>
-                    <div class="col-sm-10">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Gender</label>
                         <select class="form-control" id="exampleSelectGender">
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
                         </select>
                     </div>
+
                 </div>
+
                 <h4 class="card-title">Professional Details</h4>
 
                 <div class="row">
@@ -104,30 +104,53 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="form-group col-6">
-                    <label for="exampleTextarea1">10th Percentage</label>
-                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
-                </div>
-                <div class="form-group col-6">
-                    <label for="exampleTextarea1">12th Percentage</label>
-                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
-                </div>
+                    <div class="form-group col-6">
+                        <label for="exampleTextarea1">10th Percentage</label>
+                        <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="exampleTextarea1">12th Percentage</label>
+                        <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="exampleTextarea1">Highest Qualification</label>
                     <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
                 </div>
-              
-                <div class="form-group">
-                    <label for="exampleTextarea1">Current organization</label>
-                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="currentOrganization">Current organization</label>
+                        <input type="text" class="form-control" id="currentOrganization"
+                            placeholder="Current Organinzation">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ciurrentDesignation">Current Designation</label>
+                        <input type="email" class="form-control" id="ciurrentDesignation"
+                            placeholder="Current Designation">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="currentCTC">Current CTC</label>
+                        <input type="text" class="form-control" id="currentCTC" placeholder="Current Organinzation">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="form-group">
+                            <label>Upload resume</label>
+                            <input type="file" name="img[]" class="file-upload-default">
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control file-upload-info" disabled
+                                    placeholder="Upload Image">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-gradient-primary"
+                                        type="button">Upload</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleTextarea1">Current Designation</label>
-                    <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
-                </div>
-                <div class="form-group">
-                    <label for="exampleTextarea1">12th Percentage:</label>
+                    <label for="exampleTextarea1">Upload resume:</label>
                     <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
                 </div>
                 <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
@@ -136,5 +159,5 @@
         </div>
     </div>
 </div>
-
+@endif
 @endsection

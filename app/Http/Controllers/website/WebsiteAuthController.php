@@ -195,7 +195,13 @@ class WebsiteAuthController extends Controller
             if ($details == null) {
                 return response()->json(['message' => 'Something went wrong. Signup failed.', 'status' => 0]);
             } else {
-                $roles = 2;
+                 if (getPrefix($request) == "teacher")
+                {
+                    $role=3;
+                }else{
+                    $roles = 2;
+                }
+             
                 $details->assignRole($roles);
                 $details->password = Hash::make($request->password);
                 $details->is_activate = 1;
