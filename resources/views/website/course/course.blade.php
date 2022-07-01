@@ -24,7 +24,7 @@
     }
 
     .reset-form-btn {
-        padding: 10px 3px !important;
+        padding: 0px 3px !important;
         width: 55px !important;
         position: absolute;
         top: 0;
@@ -78,11 +78,10 @@
 <section class="home-courses">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <h5 class="heading-black">All Courses</h5>
             </div>
-
-            <div class="col-lg-12 p-4">
+            <div class="col-lg-12">
                 <form class="row justify-content-center" method="get">
                     @csrf
                     <div class="col-lg-4 col-md-6">
@@ -101,24 +100,18 @@
                         <select id="board-class-dd" class="form-control" name="class_id">
                         </select>
                     </div>
-                    <div class="col-lg-3 col-md-12 p-4">
+                    <div class="col-lg-4 col-md-12 py-4">
                         <button type="submit" id="submitWebsiteFilterCourseForm"
                             class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
                     </div>
-
-
-                        <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn"><i class="fa fa-refresh"
-                                aria-hidden="true"></i> </a>
-
-
-                    </form>
-                </div>
+                    <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn">
+                        <i class="fa fa-refresh" aria-hidden="true"></i> 
+                    </a>
+                </form>
             </div>
-
-
         </div>
-
-
+    </div>
+    <div class="container-fluid">
         <div class="row">
             @foreach($subjects as $key=>$subject)
 
@@ -140,7 +133,6 @@
             </div>
             @endforeach
         </div>
-
     </div>
 </section>
 
