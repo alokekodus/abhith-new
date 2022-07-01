@@ -82,7 +82,7 @@
                 <h5 class="heading-black">All Courses</h5>
             </div>
             <div class="col-lg-12">
-                <form class="row justify-content-center" method="get">
+                <form class="row mt-2 justify-content-center" method="get">
                     @csrf
                     <div class="col-lg-4 col-md-6">
                         <label>Select Board</label>
@@ -96,11 +96,11 @@
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <label>Select Class</label>
+                        <label class="selectClass">Select Class</label>
                         <select id="board-class-dd" class="form-control" name="class_id">
                         </select>
                     </div>
-                    <div class="col-lg-4 col-md-12 py-4">
+                    <div class="col-lg-4 col-md-12 py-4 submitBtn">
                         <button type="submit" id="submitWebsiteFilterCourseForm"
                             class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
                     </div>

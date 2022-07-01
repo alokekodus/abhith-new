@@ -133,3 +133,7 @@ select.form-control{
 .nav-tabs {
     border-bottom: 1px solid #67a7e4;
 }
+
+.submitBtn{
+    margin-top: 8px;
+}
