@@ -4,7 +4,7 @@
     </p>
     <div class="row">
 
-        <div class="col-lg-8 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
+        <div class="col-lg-7 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
             
             <p class="cross-line">
                 <span>Description</span>
@@ -18,7 +18,7 @@
             @include('common.lesson.content')
         </div>
 
-        <div class="col-lg-4 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
+        <div class="col-lg-5 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
             <video id="player" class="video-js" controls preload="auto" autoplay loop muted
                 poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" loading="lazy">
             </video>
@@ -43,7 +43,7 @@
 
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-lg-8 col-md-12">
+        <div class="col-lg-7 col-md-12">
             
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -66,7 +66,7 @@
 
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <ul class="nav nav-tabs">
                 <!-- <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#teacher">
@@ -74,13 +74,13 @@
                     </a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#whylearn">
+                    <a class="nav-link active" data-toggle="tab" href="#whylearn">
                         <h4 class="small-heading-black">What you'll learn</h4>
                     </a>
                 </li>
             </ul>
             <!-- Tab panes -->
-            <div class="tab-content">                
+            <div class="tab-content mt-3">                
                 <div class="tab-pane container fade" id="whylearn">
                     <h6> {!!$subject->why_learn!!} </h6>
                 </div>
