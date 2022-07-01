@@ -934,6 +934,7 @@ main {
 
 .knowledge-link {
     background-image: linear-gradient(to left, #076fef, #01b9f1);
+    /* background-image: linear-gradient(to left, #7698c3, #326777); */
     color: #fff !important;
     padding: 10px 15px;
     border-radius: 4px;
