@@ -276,12 +276,11 @@ class WebsiteAuthController extends Controller
 
                 if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
                     if ($request->current_route == null) {
-
-                        Auth::LogoutOtherDevices($password);
-                        if (auth()->user()->type_id == 2) {
-                            return redirect()->route('website.dashboard');
-                        } else {
+                        if (auth()->user()->hasRole('Teacher')) {
                             return redirect()->route('admin.dashboard');
+                        }
+                        if (auth()->user()->hasRole('Student')) {
+                            return redirect()->route('website.dashboard');
                         }
                     } else {
                         return redirect($request->current_route);
@@ -326,7 +325,7 @@ class WebsiteAuthController extends Controller
                 'name' => 'required',
                 'email' => 'required|email',
                 'phone' => 'required|numeric',
-                'password' => 'required',
+
 
             ]);
 
