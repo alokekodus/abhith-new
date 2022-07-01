@@ -35,9 +35,9 @@ use App\Http\Controllers\website\UserCourseController;
 
 Route::get('', [DashboardController::class, 'index'])->name('website.dashboard');
 
-Route::get('dashboard', function () {
-    return view('admin.dashboard.dashboard');
-})->name('admin.dashboard')->middleware('admin');
+// Route::get('dashboard', function () {
+//     return view('admin.dashboard.dashboard');
+// })->name('admin.dashboard')->middleware('admin');
 /* ------------------------------- Course ------------------------------------ */
 Route::prefix('course')->group(function () {
     Route::get('', [CourseController::class, 'index'])->name('website.course');

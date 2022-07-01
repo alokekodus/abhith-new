@@ -4,6 +4,8 @@ use App\Models\AssignSubject;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\SubjectLessonVisitor;
+use App\Models\User;
+use App\Models\UserDetails;
 
 function attachmenetPath($path)
 {
@@ -63,23 +65,42 @@ function subjectTotalResource($subject_id, $type)
 {
     if ($type == "content") {
         return Lesson::where('assign_subject_id', $subject_id)->get()->count();
-    } elseif($type=="image") {
-        return LessonAttachment::whereHas('lesson')->where('img_url','!=',null)->get()->count();
-    }else{
-        return LessonAttachment::whereHas('lesson')->where('origin_video_url','!=',null)->get()->count();  
+    } elseif ($type == "image") {
+        return LessonAttachment::whereHas('lesson')->where('img_url', '!=', null)->get()->count();
+    } else {
+        return LessonAttachment::whereHas('lesson')->where('origin_video_url', '!=', null)->get()->count();
     }
 }
-function lessonTotalVisite($lesson_id){
-    $total_visit=SubjectLessonVisitor::where('lesson_subject_id',$lesson_id)->where('visitor_id',auth()->user()->id)->where('type',2)->first();
+function lessonTotalVisite($lesson_id)
+{
+    $total_visit = SubjectLessonVisitor::where('lesson_subject_id', $lesson_id)->where('visitor_id', auth()->user()->id)->where('type', 2)->first();
     return $total_visit->total_visit;
 }
-function getPrefix($request){
-  return  $request->route()->getPrefix();
+function getPrefix($request)
+{
+    return  $request->route()->getPrefix();
 }
-function getAssignSubjects(){
- return AssignSubject::with('assignClass','boards')->where('is_activate',1)->limit(9)->get();
+function getAssignSubjects()
+{
+    return AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->limit(9)->get();
 }
-function isSubjectAlreadyInCart($check_item_exists_inside_cart,$all_subjects){
-    $subject_already_in_cart=$check_item_exists_inside_cart;
+function isSubjectAlreadyInCart($check_item_exists_inside_cart, $all_subjects)
+{
+    $subject_already_in_cart = $check_item_exists_inside_cart;
     dd($subject_already_in_cart);
+}
+function isTeacherApply()
+{
+     $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->count();
+    if($user_details==0){
+        return false;
+    }else{
+        return true;
+    }
+}
+function userFirstName()
+{
+    $words = explode(" ", auth()->user()->name);
+
+    return $words[0];
 }

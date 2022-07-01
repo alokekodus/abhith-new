@@ -10,14 +10,17 @@ use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\BoardController;
 use App\Http\Controllers\admin\AssignClassController;
 use App\Http\Controllers\admin\AssignSubjectController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\admin\LessonController;
+use App\Http\Controllers\teacher\TeacherController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\AssignSubject;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +38,9 @@ use App\Models\AssignSubject;
 Route::group(['middleware' => ['auth'] ],function(){
     Route::get('logout',[AuthController::class,'logout'])->name('log.out');
 
-    Route::get('dashboard', function () {
-        return view('admin.dashboard.dashboard');
-    })->name('admin.dashboard')->middleware('admin');
+    Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dashboard')->middleware('admin');
+    //     return view('admin.dashboard.dashboard');
+    // })->name('admin.dashboard')->middleware('admin');
 
     /* ------------------------------- COURSE ------------------------------------ */
     // Route::prefix('course')->group(function () {
@@ -60,7 +63,9 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
             Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
         });
-
+        Route::prefix('teacher')->group(function(){
+            Route::get('', [TeacherController::class, 'index'])->name('admin.teacher.all');
+        });
         Route::prefix('class')->group(function(){
             Route::get('', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
             Route::post('assign', [AssignClassController::class, 'assignClass'])->name('admin.course.management.class.assign');

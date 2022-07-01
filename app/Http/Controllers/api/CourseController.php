@@ -100,4 +100,7 @@ class CourseController extends Controller
         $subject=AssignSubject::where(['board_id'=>$request->board_id,'is_activate'=>1,'assign_class_id'=>$request->class_id])->get();
        return response()->json($subject);
     }
+    public function allCourses(){
+        
+    }
 }
