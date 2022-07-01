@@ -28,8 +28,13 @@ Route::post('login', [WebsiteAuthController::class, 'login']);
 
 
 
-
+Route::get('/video-url', function () {
+    $path = storage_path('app/public/1_480.mp4');
+    return response()->json($path); 
+});
 
 Route::post('get-course-details', [CourseController::class, 'index']);
+
 Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
 Route::post('board-class-subject', [CourseController::class, 'findBoardClassSubject'])->name('board.class.subject');
+
