@@ -16,10 +16,11 @@
         display: block;
         margin: 10px 0;
         position: relative;
+        height:50px;
     }
 
     .inputGroup label {
-        padding: 12px 30px;
+        padding: 16px 30px;
         width: 100%;
         display: block;
         text-align: left;
@@ -29,6 +30,10 @@
         z-index: 2;
         transition: color 200ms ease-in;
         overflow: hidden;
+    }
+
+    .inputGroup label a{
+        color:white;
     }
 
     .inputGroup label:before {

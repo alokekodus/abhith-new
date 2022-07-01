@@ -137,3 +137,37 @@ select.form-control{
 .submitBtn{
     margin-top: 8px;
 }
+
+.course-image-overlay{
+    height: 0px;
+    width: calc(100% - 30px);
+    background-color: #0000007d;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    border-radius: 10px 10px 0px 0px;
+    transition: 0.8s;
+    cursor: pointer;
+
+}
+.course-pic:hover .course-image-overlay{
+    height: 250px;
+}
+.course-image-overlay .course-image-overlay-eye-icon{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+
+.course-pic:hover .course-image-overlay-eye-icon{
+    opacity: 1;
+}
+
+
