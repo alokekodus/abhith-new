@@ -8,7 +8,9 @@
     <div class="container-fluid">
         <div class="row footer-top">
             <div class="col-lg-3 col-6 p0">
-                <div class="footer-logo"><a href="{{route('website.dashboard')}}"><img src="{{asset('asset_website/img/home/logo_.png')}}" ></a></div>
+                <div class="footer-logo">
+                    <a href="{{route('website.dashboard')}}"><img src="{{asset('asset_website/img/home/logo_.png')}}" ></a>
+                </div>
             </div>
             <div class="col-lg-9 col-6 p0">
                 <ul class="list-inline social-media mb0">

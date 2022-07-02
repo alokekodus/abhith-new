@@ -102,7 +102,7 @@
                     </div>
                     <div class="col-lg-4 col-md-12 py-4 submitBtn">
                         <button type="submit" id="submitWebsiteFilterCourseForm"
-                            class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
+                            class="btn knowledge-link enquiry-form-btn">Submit</button>
                     </div>
                     <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn">
                         <i class="fa fa-refresh" aria-hidden="true"></i> 

@@ -12,15 +12,18 @@
     } */
 
     .inputGroup {
-        background-color: #ada2a1;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        /* background-color: #e9e6e6; */
         display: block;
         margin: 10px 0;
         position: relative;
-        height:50px;
+        height: 65px;
+        border-radius: 5px;
     }
 
     .inputGroup label {
-        padding: 16px 30px;
+        padding: 24px 30px;
         width: 100%;
         display: block;
         text-align: left;
@@ -30,18 +33,21 @@
         z-index: 2;
         transition: color 200ms ease-in;
         overflow: hidden;
+        font-weight: 600;
+        font-size: 16px;
     }
 
-    .inputGroup label a{
+    /* .inputGroup label a{
         color:white;
-    }
+    } */
 
     .inputGroup label:before {
         width: 10px;
         height: 10px;
         border-radius: 0;
         content: '';
-        background-color: #5562eb;
+        /* background-color: #5562eb; */
+        background-image: linear-gradient(to right, #93bcf8, #8bb5f5, #83adf1, #7ba6ee, #749eea, #6d9be9, #6598e7, #5d95e6, #5196e6, #4496e6, #3497e6, #1c97e5);
         position: absolute;
         left: 50%;
         top: 50%;
@@ -80,8 +86,8 @@
     }
 
     .inputGroup input:checked~label:after {
-        background-color: #54e0c7;
-        border-color: #54e0c7;
+        background-color: #03bd9c;
+        border-color: #01a386;
     }
 
     .inputGroup input {
@@ -205,7 +211,8 @@
     }
 
     label.radio-card input[type='radio']:checked+.card-content-wrapper {
-        box-shadow: 0 2px 4px 0 rgba(219, 215, 215, 0.5), 0 0 0 2px #3057d5;
+        /* box-shadow: 0 2px 4px 0 rgba(219, 215, 215, 0.5), 0 0 0 2px #3057d5; */
+        box-shadow: 0 2px 10px 0 rgb(173 173 173 / 50%), 0 0 0 2px #f4f0f0;
     }
 
     label.radio-card input[type='radio']:checked+.card-content-wrapper .check-icon {
@@ -350,10 +357,16 @@
                     <div class="inputGroup">
                         <input class="chapter_value" id="option{{$key}}" type="checkbox" value="{{$subject->id}}"
                             name="subjects[]" data-price="{{number_format($subject->subject_amount,2,'.','')}}"
-                            onclick="checkedSubject()" />
-                        <label for="option{{$key}}"><a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}">{{$subject->subject_name}}( <i class="fa fa-inr"
-                                    aria-hidden="true"></i>
-                                {{number_format($subject->subject_amount,2,'.','')}})</label></a>
+                            onclick="checkedSubject()"  />
+                        <label for="option{{$key}}">
+                            <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}">
+                                {{$subject->subject_name}}( 
+                                    <i class="fa fa-inr" aria-hidden="true"></i>
+                                {{number_format($subject->subject_amount,2,'.','')
+                                }}
+                                )
+                            </a>
+                        </label>
                     </div>
                     @endforeach
                     <hr>

@@ -34,6 +34,7 @@
             <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
                 class="btn btn-primary btn-lg btn-block">Start Your Course</a>
             @else
+            <a href="#" class="btn btn-success btn-lg btn-block">Add to cart</a>
             <a class="btn btn-primary btn-lg btn-block">Go to Package</a>
             @endif
         </div>

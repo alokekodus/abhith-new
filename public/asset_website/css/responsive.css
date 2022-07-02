@@ -77,6 +77,12 @@
         margin: 0px 15px;
     }
 
+    .logo img{
+        max-width: 175px;
+    }
+    .footer-logo img{
+        max-width: 175px;
+    }
     .upcoming-course {
         margin: 0px 0px;
     }
