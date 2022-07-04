@@ -144,7 +144,6 @@ select.form-control{
     background-color: #0000007d;
     position: absolute;
     top: 0;
-    z-index: 10;
     border-radius: 10px 10px 0px 0px;
     transition: 0.8s;
     cursor: pointer;
