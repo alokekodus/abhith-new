@@ -759,10 +759,14 @@ main {
 }
 
 .rightBlock .inputGroup a{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
 }
+.rightBlock .inputGroup a i:nth-child(1){
+    font-size: 12px;
+    font-weight: 300;
 
+}
 
 /*select*/
 .course-select {
