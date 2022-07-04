@@ -113,7 +113,7 @@
     }
 
     a:hover {
-        color: white;
+        color: blue;
     }
 </style>
 <style>
@@ -360,10 +360,11 @@
                             onclick="checkedSubject()"  />
                         <label for="option{{$key}}">
                             <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}">
+                                <i class="fa fa-eye mr-2" aria-hidden="true"></i>    
                                 {{$subject->subject_name}}( 
                                     <i class="fa fa-inr" aria-hidden="true"></i>
-                                {{number_format($subject->subject_amount,2,'.','')
-                                }}
+                                    {{number_format($subject->subject_amount,2,'.','')
+                                    }}
                                 )
                             </a>
                         </label>

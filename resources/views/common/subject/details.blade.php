@@ -4,13 +4,13 @@
     </p>
     <div class="row">
 
-        <div class="col-lg-7 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
+        <div class="col-lg-8 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
             
             <p class="cross-line">
                 <span>Description</span>
             </p>
             <p class="cross-line">
-                <h5 class="desc-text">{!!$subject->description!!}</h5>
+                {!!$subject->description!!}
             </p>
             <p class="cross-line">
                 <span>{{$subject->subject_name}} All Content</span>
@@ -18,25 +18,40 @@
             @include('common.lesson.content')
         </div>
 
-        <div class="col-lg-5 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
-            <video id="player" class="video-js" controls preload="auto" autoplay loop muted
-                poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" loading="lazy">
-            </video>
-            <div class="course-desc">
-                <h4 class="small-heading-black">{{$subject->subject_name}}</h4>
-                <span>Created by : Demo Teacher</span><br>
-                <span></i>Total Lesson:
-                    {{$subject->lesson->count()}}</span>
-                {{-- <a href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
-                    class="enroll">View Details</a> --}}
+        <div class="col-lg-4 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
+            <div style="box-shadow: 0px 6px 10px #d1d1d1;">
+                <video id="player" class="video-js" controls preload="auto" autoplay loop muted
+                    poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" loading="lazy">
+                </video>
+                <div class="course-desc1">
+                    <h4 class="small-heading-black">
+                        <span class="d-flex  course-header-and-back-to-pckg-btn">
+                            {{$subject->subject_name}}
+                            @guest
+                                <a href="#">
+                                    <i class="fa fa-reply"></i> &nbsp;Package
+                                </a>
+                            @endguest
+                        </span>
+                   </h4>
+                    <span>Created by : Demo Teacher</span><br>
+                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span>
+                    {{-- <a href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
+                        class="enroll">View Details</a> --}}
+
+                        @if(auth()->check())
+                        <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+                            class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your Course</a>
+                        @else
+                            <div class="d-flex card-button mb-2">
+                                <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn"><i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
+                                <!-- <a class="btn btn-primary btn-lg btn-block mt-2">Go to Package</a> -->
+                            </div>
+                        @endif
+                </div>
+                
             </div>
-            @if(auth()->check())
-            <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
-                class="btn btn-primary btn-lg btn-block">Start Your Course</a>
-            @else
-            <a href="#" class="btn btn-success btn-lg btn-block">Add to cart</a>
-            <a class="btn btn-primary btn-lg btn-block">Go to Package</a>
-            @endif
+            
         </div>
     </div>
 </div>

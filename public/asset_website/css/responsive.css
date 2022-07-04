@@ -40,6 +40,11 @@
         font-size: 15px;
         margin-bottom: 14px;
     }
+
+
+    .course-header-and-back-to-pckg-btn a{
+        font-size: 18px;
+    }
 }
 @media (max-width: 767px) {
 
@@ -85,6 +90,11 @@
     }
     .upcoming-course {
         margin: 0px 0px;
+    }
+
+    .rightBlock .inputGroup a {
+        font-size: 14px;
+        font-weight: 600;
     }
 
     .top-header {
@@ -350,6 +360,11 @@
     .course-desc-list li:last-child,
     .cart-desc-list1 li:last-child {
         border-left: none !important;
+    }
+
+    .card-button{
+        flex-direction: column;
+        
     }
 
     .styled-checkbox + label {
