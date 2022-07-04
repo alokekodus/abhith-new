@@ -179,7 +179,7 @@
                 </div>
             </div>
             @foreach (getAssignSubjects() as $key => $subject)
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <!-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
@@ -188,9 +188,30 @@
                         '.','')}}</b></span>
                 </div>
                 <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="enroll">Enroll Now</a>
+            </div> -->
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                <div class="course-pic">
+                    <img src="{{asset($subject->image)}}" class="w100">
+                    <div class="course-image-overlay">
+                        <a href="#" class="btn btn-default course-image-overlay-eye-icon text-white">View</a>
+                        <!-- <i class="fa fa-eye course-image-overlay-eye-icon text-white"  aria-hidden="true"></i> -->
+                    </div>
+                </div>
+                <div class="course-desc">
+                    {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
+                    <h4 class="subject-heading-black">
+                        {{$subject->subject_name}}
+                        (Class-{{$subject->assignClass->class}},{{$subject->boards->exam_board}})
+                    </h4>
+                    <span>
+                        <h6><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,
+                            2,'.','')}}</h6>
+                    </span>
+                    <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
+                        class="enroll mb-3">Enroll Now</a>
+                </div>
             </div>
             @endforeach
-
         </div>
     </div>
 </section>
