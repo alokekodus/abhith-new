@@ -82,7 +82,7 @@
                 <h5 class="heading-black">All Courses</h5>
             </div>
             <div class="col-lg-12">
-                <form class="row justify-content-center" method="get">
+                <form class="row mt-2 justify-content-center" method="get">
                     @csrf
                     <div class="col-lg-4 col-md-6">
                         <label>Select Board</label>
@@ -96,13 +96,13 @@
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <label>Select Class</label>
+                        <label class="selectClass">Select Class</label>
                         <select id="board-class-dd" class="form-control" name="class_id">
                         </select>
                     </div>
-                    <div class="col-lg-4 col-md-12 py-4">
+                    <div class="col-lg-4 col-md-12 py-4 submitBtn">
                         <button type="submit" id="submitWebsiteFilterCourseForm"
-                            class="btn btn-block knowledge-link enquiry-form-btn">Submit</button>
+                            class="btn knowledge-link enquiry-form-btn">Submit</button>
                     </div>
                     <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn">
                         <i class="fa fa-refresh" aria-hidden="true"></i> 
@@ -116,7 +116,13 @@
             @foreach($subjects as $key=>$subject)
 
             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
+                <div class="course-pic">
+                    <img src="{{asset($subject->image)}}" class="w100">
+                    <div class="course-image-overlay">
+                        <a href="#" class="btn btn-default course-image-overlay-eye-icon text-white">View</a>
+                        <!-- <i class="fa fa-eye course-image-overlay-eye-icon text-white"  aria-hidden="true"></i> -->
+                    </div>
+                </div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
                     <h4 class="subject-heading-black">
@@ -128,7 +134,7 @@
                             2,'.','')}}</h6>
                     </span>
                     <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
-                        class="enroll">Enroll Now</a>
+                        class="enroll mb-3">Enroll Now</a>
                 </div>
             </div>
             @endforeach
