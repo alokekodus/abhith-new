@@ -46,8 +46,7 @@
                             <th> Phone </th>
                             <th>Apply For </th>
                             <th>Total Exprience </th>
-                            <th>10th %</th>
-                            <th>12th %</th>
+                            <th>Status</th>
                             <th>Applyed Date</th>
                             <th>Action</th>
                             {{-- <th>Details</th> --}}
@@ -60,11 +59,12 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->email}}</td>
                             <td>{{$item->phone}}</td>
-                            <td>{{$item->assign_board_id}}{{$item->assign_class_id}}{{$item->assign_subject_id}}</td>
-                            <td> {{$item->total_experience_month}} {{$item->total_experience_month}}</td>
-                            <td>{{$item->hslc_percentage}} %</td>
-                            <td>{{$item->hs_percentage}} %</td>
+                            <td>{{$item->board->exam_board}}--Class{{$item->assignClass->class}}--{{$item->assignSubject}}</td>
+                            <td> {{$item->total_experience_month??'0'}}Years {{$item->total_experience_month??'0'}}Months</td>
+                            <td>@if($item->status==1) <span class="badge badge-warning">Apply for approve</span> @else <span class="badge badge-success">Approved</span>
+                                 @endif</td>
                             <td>{{$item->updated_at->format('d-M-Y')}}</td>
+                            <td><a href="{{route('admin.teacher.details',Crypt::encrypt($item->id))}}"><i class="mdi mdi-eye"></i></a></td>
                             {{-- <td><a href="#">view</a></td> --}}
                         </tr>
                         @endforeach

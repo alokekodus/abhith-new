@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth'] ],function(){
         });
         Route::prefix('teacher')->group(function(){
             Route::get('', [TeacherController::class, 'index'])->name('admin.teacher.all');
+            Route::get('/{teacher_id}',[TeacherController::class,'details'])->name('admin.teacher.details');
+            Route::get('approved/{userdetails_id}',[TeacherController::class,'approvedApplication'])->name('approved.teacher');
         });
         Route::prefix('class')->group(function(){
             Route::get('', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');

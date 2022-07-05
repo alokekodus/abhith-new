@@ -93,11 +93,11 @@ class CourseController extends Controller
     }
     public function findClass(Request $request){
        
-       $board=AssignClass::where(['board_id'=>$request->board_id,'is_activate'=>1])->get();
+       $board=AssignClass::where(['board_id'=>$request->board_id])->get();
        return response()->json($board);
     }
     public function findBoardClassSubject(Request $request){
-        $subject=AssignSubject::where(['board_id'=>$request->board_id,'is_activate'=>1,'assign_class_id'=>$request->class_id])->get();
+        $subject=AssignSubject::where(['board_id'=>$request->board_id,'assign_class_id'=>$request->class_id])->get();
        return response()->json($subject);
     }
     public function allCourses(){

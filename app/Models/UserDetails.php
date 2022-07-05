@@ -21,4 +21,16 @@ class UserDetails extends Model
     public function forumPost(){
         return $this->hasMany('App\Models\KnowledgeForumPost');
     }
+    public function board()
+    {
+        return $this->belongsTo(Board::class,'assign_board_id','id');
+    }
+    public function assignClass()
+    {
+        return $this->belongsTo(assignClass::class,'assign_class_id','id');
+    }
+    public function assignSubject()
+    {
+        return $this->belongsTo(assignSubject::class,'assign_subject_id','id');
+    }
 }

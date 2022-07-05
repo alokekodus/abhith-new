@@ -4,7 +4,9 @@ namespace App\Http\Controllers\teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserDetails;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class TeacherController extends Controller
 {
@@ -67,5 +69,28 @@ class TeacherController extends Controller
     public function index(Request $request){
           $applications=UserDetails::with('user')->where('status','!=',0)->get();
           return view('admin.teacher.index',compact('applications'));
+    }
+    public function details($teacher_id){
+        try {
+            $user_details=UserDetails::with('user')->where('id',Crypt::decrypt($teacher_id))->first();
+            return view('admin.teacher.application',compact('user_details'));
+           
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function approvedApplication($user_detail_id){
+        try {
+            $data=[
+                'status'=>2,
+                'referral_id'=>teacherReferralId(),
+            ];
+            $user_details=UserDetails::find(Crypt::encrypt($user_detail_id));
+            $user_details->update($data);
+            Toastr::success('Application approved sccessfully.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

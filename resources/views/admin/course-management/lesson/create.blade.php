@@ -341,7 +341,24 @@
             $("#noImageFile").text(filename.replace("C:\\fakepath\\", ""));
         }
     });
-
+ function showDiv(){
+   var showDivId= document.getElementById("content_type").value;
+  
+   if(showDivId==1){
+          $('#fileattachment').show();
+            $('#video').hide();
+            $('#article').hide();
+   }else if(showDivId==2){
+            $('#fileattachment').hide();
+            $('#video').show();
+            $('#article').hide();
+   }else{
+            $('#fileattachment').hide();
+            $('#video').hide();
+            $('#article').show();
+   }
+   
+ }
 </script>
 
 @endsection

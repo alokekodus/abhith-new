@@ -22,14 +22,15 @@ class AssignSubjectController extends Controller
         if (auth()->user()->hasRole('Teacher')) {
             $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id', auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         } else {
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->paginate(2);
+            $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(2);
         }
+     
 
         return view('admin.course-management.subjects.subject')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
     public function store(Request $request)
     {
-
+      
         try {
             $split_assignedClass = str_split($request->assignedClass);
 
@@ -42,19 +43,23 @@ class AssignSubjectController extends Controller
             if (!empty($document)) {
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
 
-            }
-            if (!empty($videoThumbnailImageUrl)) {
-                $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
-
+            }else{
+                $image_path ='/files/subject/placeholder.jpg';
             }
             if (!empty($lessonVideo)) {
                 $video_path = $request->video_url->store('public');
+                if (!empty($videoThumbnailImageUrl)) {
+                    $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
+    
+                }else{
+                    $image_path='/files/subject/placeholder.jpg';
+                }
             }
             $data = [
                 'subject_name' => ucfirst($request->subjectName),
-                'image' => $image_path,
+                'image' =>  base_path().'/public'.$image_path,
                 'teacher_id' => $request->teacher_id,
-                'subject_amount' => $request->subjectAmount,
+                'subject_amount' => $request->subject_amount,
                 'assign_class_id' => $assignedClass,
                 'board_id' => $assignedBoard,
                 'is_activate' => 0, //initially subject not active
@@ -66,7 +71,7 @@ class AssignSubjectController extends Controller
             // $video_path=str_replace("public/", "",$video_path);
             $data_attachment = [
                 'subject_lesson_id' =>  $assign_subject->id,
-                'img_url' => $image_path,
+                'img_url' =>base_path().'/public'.$image_path,
                 'origin_video_url' => $video_path,
                 'video_thumbnail_image' => $video_thumbnail_image_url_path,
                 'type' => 1,

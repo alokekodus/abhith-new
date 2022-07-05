@@ -104,3 +104,8 @@ function userFirstName()
 
     return $words[0];
 }
+function teacherReferralId(){
+    
+    $referralId         = 'ABHITHSIKSHA' . date('dmY') . '/' . random_int(10000000, 99999999);
+    return $referralId;
+}
