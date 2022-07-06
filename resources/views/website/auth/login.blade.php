@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="login-div">
-                        <div class="login-logo"><img src="{{ asset('asset_website/img/home/logo.png') }}"
+                        <div class="login-logo"><img src="{{ asset('asset_website/img/home/logo_.png') }}"
                                 class="w100"></div>
 
                         <a onclick="goBack()" class="page-close"><span class="icon-cancel-30"></span></a>
