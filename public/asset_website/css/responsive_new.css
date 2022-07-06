@@ -3,9 +3,9 @@
         font-size: 14px;
     }
 
-    .course-pic img {
+    /* .course-pic img {
         height: auto;
-    }
+    } */
 
     .counter-list li:nth-child(1) img{
         border-top-left-radius: 0;
@@ -71,9 +71,9 @@
         font-size: 20px;
         float: none;
     }
-    .course-pic img {
+    /* .course-pic img {
         height: auto;
-    }
+    } */
 
     .courses-list li {
         margin: 0;

@@ -134,7 +134,7 @@
                             2,'.','')}}</h6>
                     </span>
                     <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
-                        class="enroll mb-3">Enroll Now</a>
+                        class="enroll mb-2">Enroll Now</a>
                 </div>
             </div>
             @endforeach
