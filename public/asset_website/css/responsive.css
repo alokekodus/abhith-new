@@ -45,6 +45,14 @@
     .course-header-and-back-to-pckg-btn a{
         font-size: 18px;
     }
+
+    .course-image-overlay{
+        height: 250px;
+    }
+
+    .course-image-overlay .course-image-overlay-eye-icon{
+        opacity: 1;
+    }
 }
 @media (max-width: 767px) {
 
@@ -157,6 +165,15 @@
 
     .banner-para {
         display: none;
+    }
+
+
+    .course-image-overlay{
+        height: 250px;
+    }
+
+    .course-image-overlay .course-image-overlay-eye-icon{
+        opacity: 1;
     }
 
     .heading-black,
