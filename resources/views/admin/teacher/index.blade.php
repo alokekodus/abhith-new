@@ -64,7 +64,7 @@
                             <td>@if($item->status==1) <span class="badge badge-warning">Apply for approve</span> @else <span class="badge badge-success">Approved</span>
                                  @endif</td>
                             <td>{{$item->updated_at->format('d-M-Y')}}</td>
-                            <td><a href="{{route('admin.teacher.details',Crypt::encrypt($item->id))}}"><i class="mdi mdi-eye"></i></a></td>
+                            <td>@if(auth()->user()->hasRole("Teacher")) <a href="{{route('teacher.application.view',Crypt::encrypt($item->id))}}"> @else <a href="{{route('admin.teacher.details',Crypt::encrypt($item->id))}}"> @endif<i class="mdi mdi-eye"></i></a></td>
                             {{-- <td><a href="#">view</a></td> --}}
                         </tr>
                         @endforeach

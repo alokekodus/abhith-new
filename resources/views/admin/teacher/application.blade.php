@@ -5,6 +5,11 @@
 @section('head')
 <style>
     @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
+
+    .padding-1 {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
 </style>
 
 @endsection
@@ -23,12 +28,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex">
-                    <div class="d-flex align-items-center me-4 text-muted font-weight-light">
-                        <i class="mdi mdi-video icon-sm me-2"></i>
-                        <span>Promo Video</span>
-                    </div>
-
+                    <strong>Promo Video</strong>
                 </div>
+
                 <div class="row mt-3">
                     <div class="col-12">
                         <div id="videoAttach" class="tabcontent">
@@ -43,8 +45,33 @@
 
             </div>
             <div class="card-footer">
-                <a href="{{asset($user_details->resume_url)}}" class="btn btn-primary">View Resume</a>
-                <a herf ="{{route('approved.teacher',Crypt::encrypt($user_details->id))}}" class="btn btn-primay" style="float: right">Approved For Become a Teacher</a>
+                <a href="{{asset($user_details->resume_url)}}" class="btn btn-primary" data-toggle="modal"
+                    data-target=".bd-example-modal-lg">View Resume</a>
+                @if($user_details->status==1 && (auth()->user()->hasRole('Admin')))
+                <a href="{{route('approved.teacher',Crypt::encrypt($user_details->id))}}"
+                    class="btn btn-inverse-success btn-fw" style="float: right"
+                    onclick="return confirm('Are you sure you would like to approve this application for Teacher Role?');"><i
+                        class="mdi mdi-check-all"></i>
+                    Approved For Become a Teacher</a>
+                @endif
+                @if($user_details->status==2)
+                <div class="btn btn-gradient-success" style="float:right!important;">Referral Code :
+                    {{$user_details->referral_id}}</div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+
+                </div>
             </div>
         </div>
     </div>
@@ -54,36 +81,48 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <address class="text-primary">
-                            <p class="font-weight-bold">Name: <span>{{$user_details->name}} </span></p>
+                    <div class="col-4 text-primary padding-1">
 
-                            <p class="font-weight-bold"> E-mail : {{$user_details->email}}</p>
+                        <span class="font-weight-bold">Name:</span> <span>{{$user_details->name}} </span><br>
 
-                            <p class="font-weight-bold"> Phone :{{$user_details->phone}} </p>
+                        <span class="font-weight-bold"> E-mail :</span><span> {{$user_details->email}}</span><br>
 
-                            <p class="font-weight-bold"> Gender : {{$user_details->gender}}</p>
+                        <span class="font-weight-bold"> Phone :</span><span>{{$user_details->phone}} </span><br>
 
-                            <p class="font-weight-bold"> DOB : {{$user_details->dob}} </p>
+                        <span class="font-weight-bold"> Gender :</span><span> {{$user_details->gender}}</span><br>
 
-                        </address>
+                        <span class="font-weight-bold"> DOB :</span><span> {{$user_details->dob}} </span>
+
+
                     </div>
-                    <div class="col-md-4">
-                        <address class="text-primary">
-                            <p class="font-weight-bold"> Apply For :
-                                {{$user_details->board->exam_board}}--Class{{$user_details->assignClass->class}}--{{$user_details->assignSubject}}
-                            </p>
-                            <p class="font-weight-bold"> </p>
-                            <p> www.Purple.com </p>
-                        </address>
+                    <div class="col-4 text-primary padding-1">
+
+
+                        <span class="font-weight-bold"> Apply For : </span><span>
+                            {{$user_details->board->exam_board}}--Class{{$user_details->assignClass->class}}--{{$user_details->assignSubject}}
+                        </span><br>
+                        <span class="font-weight-bold"> Highest Qualification:
+                        </span><span>{{$user_details->education}}</span> <br>
+                        <span class="font-weight-bold"> Class 10th Percentage :
+                        </span><span>{{$user_details->hslc_percentage}}% </span> <br>
+                        <span class="font-weight-bold"> Class 12th Percentage:
+                        </span><span>{{$user_details->hs_percentage}}% </span> <br>
+                        <span class="font-weight-bold">Total Exprience:
+                        </span><span>{{$user_details->total_experience_year??0}} YEAR
+                            {{$user_details->total_experience_month??0}} Month</span> <br>
+
+
                     </div>
-                    <div class="col-md-4">
-                        <address>
-                            <p class="font-weight-bold">Purple imc</p>
-                            <p> 695 lsom Ave, </p>
-                            <p> Suite 00 </p>
-                            <p> San Francisco, CA 94107 </p>
-                        </address>
+                    <div class="col-4 text-primary padding-1 ">
+                        <span class="font-weight-bold"> Current Organization : </span><span>
+                            {{$user_details->current_organization??"NA"}}
+                        </span><br>
+                        <span class="font-weight-bold"> Current Designation : </span><span>
+                            {{$user_details->current_designation??"NA"}}
+                        </span><br>
+                        <span class="font-weight-bold"> Current CTC : </span><span>
+                            {{$user_details->ctc??"NA"}}
+                        </span>
                     </div>
                 </div>
             </div>

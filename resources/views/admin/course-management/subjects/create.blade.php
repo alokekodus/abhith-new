@@ -291,8 +291,8 @@
     videoPriview.style.display = "block";
         let file = evt.target.files[0];
         let blobURL = URL.createObjectURL(file);
-        var input=evt.srcElement;
         document.querySelector("video").src = blobURL;
+        var input=evt.srcElement;
             $("#noFileVideo").html(input.files[0].name);
    }
     

@@ -89,21 +89,14 @@
                 },
                 name: {
                     required: true,
-                    // name_rule: true,
-                    minlength: 10,
+                  
                 },
-                image_url: {
+                content_type: {
                     required: true,
-                    img_extension: true,
-                    img_maxfilesize: 2,
+                   
 
                 },
-                video_url: {
-                    required: true,
-                },
-                content: {
-                    required: true,
-                },
+               
 
             },
             messages: {
@@ -119,35 +112,13 @@
                 },
                 name: {
                     required: "Lesson Name is required",
-                    name_rule: "Please insert a valid name",
-                    minlength: "The name should greater than or equal to 50 characters"
                 },
-                image_url: {
+                content_type: {
                     required: "Image is required",
-                    img_extension: "The Image should be in jpg|jpeg|png|gif format",
-                    maxfilesize: "File size must not be more than 1 MB."
-                },
-                video_url: {
-                    required: "Video is required",
-
-                },
-                content: {
-                    required: "Content is required",
-                },
-
-            },
-            errorPlacement: function (error, element) {
-                console.log(element.attr("name"));
-                if (element.attr("name") == "image_url") {
-                    error.appendTo("#imageUrlError");
-                } else if (element.attr("name") == "video_url") {
-                    error.appendTo("#videoUrlError");
-                } else {
-                    error.insertAfter(element)
+                    
                 }
 
-
-            }
+            },
         });
     });
 
@@ -180,9 +151,8 @@
     imageUpload.onchange = evt => {
         const [file] = imageUpload.files
         if (file) {
-            blah.style.display = "block";
-            blah.src = URL.createObjectURL(file)
-
+            var input=evt.srcElement;
+            $("#noCoverImage").html(input.files[0].name);
         }
     }
     videoThumbnailImageUpload.onchange = evt => {
@@ -190,14 +160,17 @@
         if (file) {
             videothumbnailimagepreview.style.display = "block";
             videothumbnailimagepreview.src = URL.createObjectURL(file)
-
+            var input=evt.srcElement;
+            $("#noImageFilePromoVideo").html(input.files[0].name);
         }
     }
-    videoUpload.onchange = function (event) {
+    videoUpload.onchange = evt => {
         videoPriview.style.display = "block";
-        let file = event.target.files[0];
+        let file = evt.target.files[0];
         let blobURL = URL.createObjectURL(file);
         document.querySelector("video").src = blobURL;
+        var input=evt.srcElement;
+            $("#noFileVideo").html(input.files[0].name);
     }
     $("#addLesson").on('click', function () {
         $('#assignLessonModal').modal({ backdrop: 'static', keyboard: false });
@@ -352,10 +325,14 @@
             $('#fileattachment').hide();
             $('#video').show();
             $('#article').hide();
-   }else{
+   }else if(showDivId==3){
             $('#fileattachment').hide();
             $('#video').hide();
             $('#article').show();
+   }else{
+     $('#fileattachment').hide();
+            $('#video').hide();
+            $('#article').hide();
    }
    
  }

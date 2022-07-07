@@ -61,15 +61,15 @@ class ConvertVideoForResolution implements ShouldQueue
             
             if($this->y_dimension==480){
                 $this->lesson_attachment->update([
-                    'video_resize_480' => $this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
+                    'video_resize_480' => url('').'/' .$this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
                 ]);
             }elseif($this->y_dimension==720){
                 $this->lesson_attachment->update([
-                    'video_resize_720' => $this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
+                    'video_resize_720' => url('').'/' .$this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
                 ]);
             }else{
                 $this->lesson_attachment->update([
-                    'video_resize_1080' => $this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
+                    'video_resize_1080' => url('') .'/'.$this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
                 ]);
             }
            

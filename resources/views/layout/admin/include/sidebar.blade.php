@@ -17,20 +17,19 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route('admin.dashboard')}}">
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title">@if(isTeacherApply())Dashboard @else Become a Teacher @endif</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
         @if(auth()->user()->hasRole('Teacher'))
-       
+
         @if(isTeacherApply())
         <li class="nav-item">
-            <a class="nav-link" href="{{route('admin.dashboard')}}">
+            <a class="nav-link" href="{{route('teacher.application')}}">
                 <span class="menu-title">Your Application</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
-        @endif
         <li class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
                 <span class="menu-title">Course Management</span>
@@ -43,9 +42,7 @@
                 </ul>
             </div>
         </li>
-
-
-        @yield('subjectdetails')
+        @endif
         @else
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">

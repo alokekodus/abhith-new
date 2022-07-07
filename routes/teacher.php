@@ -14,7 +14,8 @@ Route::post('login', [WebsiteAuthController::class, 'login'])->name('teacher.aut
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('apply')->group(function () {
         Route::post('/', [TeacherController::class, 'store'])->name('teacher.store');
-      
+        Route::get('/application',[TeacherController::class,'index'])->name('teacher.application');
+        Route::get('/application/{userdetails_id}',[TeacherController::class,'details'])->name('teacher.application.view');
     });
     Route::prefix('course')->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('teacher.course');

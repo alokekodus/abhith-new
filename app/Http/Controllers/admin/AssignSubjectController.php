@@ -24,14 +24,15 @@ class AssignSubjectController extends Controller
         } else {
             $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(2);
         }
-     
+
 
         return view('admin.course-management.subjects.subject')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
     public function store(Request $request)
     {
-      
+
         try {
+
             $split_assignedClass = str_split($request->assignedClass);
 
             $assignedClass = $split_assignedClass[0];
@@ -42,22 +43,28 @@ class AssignSubjectController extends Controller
 
             if (!empty($document)) {
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
-
-            }else{
-                $image_path ='/files/subject/placeholder.jpg';
+                $image_path = url('') . $image_path;
+            } else {
+                $image_path = '/files/subject/placeholder.jpg';
+                $image_path = url('') . $image_path;
             }
             if (!empty($lessonVideo)) {
                 $video_path = $request->video_url->store('public');
+                $video_thumbnail_image_url_path = url('') . $video_path;
                 if (!empty($videoThumbnailImageUrl)) {
                     $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
-    
-                }else{
-                    $image_path='/files/subject/placeholder.jpg';
+                    $video_thumbnail_image_url_path = url('') . $video_thumbnail_image_url_path;
+                } else {
+                    $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
+                    $video_thumbnail_image_url_path = url('') . $video_thumbnail_image_url_path;
                 }
+            } else {
+                $video_path = null;
+                $video_thumbnail_image_url_path = null;
             }
             $data = [
                 'subject_name' => ucfirst($request->subjectName),
-                'image' =>  base_path().'/public'.$image_path,
+                'image' =>  $image_path,
                 'teacher_id' => $request->teacher_id,
                 'subject_amount' => $request->subject_amount,
                 'assign_class_id' => $assignedClass,
@@ -71,7 +78,7 @@ class AssignSubjectController extends Controller
             // $video_path=str_replace("public/", "",$video_path);
             $data_attachment = [
                 'subject_lesson_id' =>  $assign_subject->id,
-                'img_url' =>base_path().'/public'.$image_path,
+                'img_url' => $image_path,
                 'origin_video_url' => $video_path,
                 'video_thumbnail_image' => $video_thumbnail_image_url_path,
                 'type' => 1,
@@ -79,22 +86,25 @@ class AssignSubjectController extends Controller
             ];
 
             $lesson_attachment = LessonAttachment::create($data_attachment);
-            $resizes = ["480", "720", "1080"];
-            foreach ($resizes as $key => $resize) {
-                if ($resize == 480) {
-                    $x_dimension = 640;
-                    $y_dimension = 480;
+            if ($video_path != null) {
+                $resizes = ["480", "720", "1080"];
+                foreach ($resizes as $key => $resize) {
+                    if ($resize == 480) {
+                        $x_dimension = 640;
+                        $y_dimension = 480;
+                    }
+                    if ($resize == 720) {
+                        $x_dimension = 1280;
+                        $y_dimension = 720;
+                    }
+                    // if($resize==1080){
+                    //     $x_dimension=1920;
+                    //     $y_dimension =1080;  
+                    // }
+                    $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension));
                 }
-                if ($resize == 720) {
-                    $x_dimension = 1280;
-                    $y_dimension = 720;
-                }
-                // if($resize==1080){
-                //     $x_dimension=1920;
-                //     $y_dimension =1080;  
-                // }
-                $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension));
             }
+
 
 
 

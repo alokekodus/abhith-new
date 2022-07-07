@@ -32,14 +32,23 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         try {
-            
+            dd($request->all());
             $type = $request->type; 
             $validator = Validator::make($request->all(), Lesson::getRules($type), Lesson::getRuleMessages($type));
           
             if ($validator->fails()) {
                 return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
-            } else {
-              
+            }
+               
+                if($request->attachment_type==1){
+
+                }
+                if($request->attachment_type==2){
+
+                }
+                if($request->attachement_type==3){
+                    
+                }
                 $image_path = null;
                 $video_path = null;
                 $document = $request->file('image_url');
@@ -126,7 +135,7 @@ class LessonController extends Controller
                      }
 
                 $this->lessonFunctionResponse($type);
-            }
+            
         } catch (\Throwable $th) {
               dd($th);
             // return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);

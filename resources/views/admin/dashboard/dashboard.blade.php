@@ -11,167 +11,7 @@
 </style>
 
 @if(auth()->user()->hasRole('Teacher') && !isTeacherApply())
-<div class="col-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Become a teacher</h4>
-            <form class="forms-sample" id="applyForm" enctype="multipart/form-data" method="post"
-                action="{{route('teacher.store')}}">
-                @csrf
-                <p class="card-description"> Personal Details </p>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="name">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" placeholder="Name" name="name"
-                            value="{{auth()->user()->name}}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="email">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" id="email" placeholder="Email" name="email"
-                            value="{{auth()->user()->email}}">
-                    </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="phone">Contact Number <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="phone" placeholder="Contact number" name="phone"
-                            value="{{auth()->user()->phone}}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="gender">Gender <span class="text-danger">*</span></label>
-                        <select class="form-control" id="gender" name="gender">
-                            <option>Male</option>
-                            <option>Female</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="dob"> Date of Birth <span class="text-danger">*</span></label>
-                        <input type="date" name="dob" id="dob" class="form-control" placeholder="Date of Birth"
-                            name="dob">
-                    </div>
-                </div>
-
-                <h4 class="card-title">Professional Details</h4>
-
-                <div class="form-row">
-
-                    <div class="form-group col-md-3">
-                        <label for="inputCity">Total Experience Year </label>
-                        <input type="text" class="form-control" id="total_experience_year" name="total_experience_year">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputCity">Total Experience Month</label>
-                        <input type="text" class="form-control" id="total_experience_month"
-                            name="total_experience_month">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="exampleTextarea1">Highest Qualification<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="education" placeholder="Highest Qualification"
-                            name="education">
-                    </div>
-                </div>
-
-
-
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">Course applying for Board <span class="text-danger">*</span></label>
-                        <select name="board_id" id="assignedBoard" class="form-control" onchange="changeBoard()">
-                            <option value="">-- Select -- </option>
-                            @forelse ($boards as $item)
-                            <option value="{{$item->id}}" @isset($lesson)@if($lesson->board_id==$item->id) selected
-                                @endif
-                                @endisset>{{$item->exam_board}}</option>
-                            @empty
-                            <option>No boards to show</option>
-                            @endforelse
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Class <span class="text-danger">*</span></label>
-                        <select name="assign_class_id" id="board-class-dd" class="form-control">
-                            <option value="">-- Select -- </option>
-
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputZip">Subject <span class="text-danger">*</span></label>
-                        <select name="assign_subject_id" id="board-subject-dd" class="form-control">
-                            <option value="">-- Select -- </option>
-
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="exampleTextarea1">10th Percentage <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="exampleInputCity1" placeholder="10th percentage"
-                            name="hslc_percentage">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="exampleTextarea1">12th Percentage <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="exampleInputCity1" placeholder="12th percentage"
-                            name="hs_percentage">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="currentOrganization">Current organization </label>
-                        <input type="text" class="form-control" id="currentOrganization"
-                            placeholder="Current Organinzation" name="current_organization">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="ciurrentDesignation">Current Designation </label>
-                        <input type="text" class="form-control" id="currentDesignation"
-                            placeholder="Current Designation" name="current_designation">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="currentCTC">Current CTC </label>
-                        <input type="text" class="form-control" id="currentCTC" placeholder="Current CTC"
-                            name="current_ctc">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <div class="form-group">
-                            <label>Upload resume <span class="text-danger">*</span></label>
-                            <input type="file" name="resume" class="file-upload-default">
-                            <div class="input-group col-xs-12">
-                                <input type="text" class="form-control file-upload-info" disabled
-                                    placeholder="Upload Image" name="resume">
-                                <span class="input-group-append">
-                                    <button class="file-upload-browse btn btn-gradient-primary"
-                                        type="button">Upload</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="exampleTextarea1">Upload any Demo video() <span class="text-danger">*</span></label>
-                    <input type="file" name="teacherdemovideo" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled
-                            placeholder="Upload Demo Video" name="teacherdemovideo">
-                        <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
-                        </span>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
-                <button class="btn btn-light">Cancel</button>
-            </form>
-        </div>
-    </div>
-</div>
+@include('admin.teacher.applicationform')
 @else
 <div class="page-header">
     <h3 class="page-title">
@@ -230,6 +70,40 @@
 @endsection
 @section('scripts')
 <script>
+    var myVideos = [];
+
+    window.URL = window.URL || window.webkitURL;
+    document.getElementById('fileUp').onchange = setFileInfo;
+
+        function setFileInfo() {
+        var files = this.files;
+        myVideos.push(files[0]);
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = function() {
+            window.URL.revokeObjectURL(video.src);
+            var duration = video.duration;
+            myVideos[myVideos.length - 1].duration = duration;
+            updateInfos();
+        }
+
+        video.src = URL.createObjectURL(files[0]);;
+        }
+        function updateInfos() {
+        
+      
+        for (var i = 0; i < myVideos.length; i++) {
+           if(myVideos[i].duration/60>=5){
+            toastr.error('Video Dureation should be less then 5 minutes');
+            $('#applicationSubmit').attr('disabled',true);
+           }else{
+            $('#applicationSubmit').attr('disabled',false);
+           }
+        }
+      }
+</script>
+<script>
     function changeBoard()
       {
         let board_id=$("#assignedBoard").val();
@@ -284,6 +158,131 @@
      });
     
 </script>
+{{-- <script>
+    $('#verifyOtpBtn').attr('disabled',true);
+
+        let interval = '';
+        let no_of_otp_sent = 0;
+        let nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
+
+        $('#sendOtpBtn').on('click',function(e){
+            e.preventDefault();
+
+            if($('#name').val().length == 0){
+                toastr.error('Name is required');
+            }else if(!nameRegex.test($('#name').val())){
+                toastr.error('Name should contain letters only.');
+            }else if($('#signupEmail').val().length == 0){
+                toastr.error('Email is required');
+            }else if(!emailRegex.test($('#signupEmail').val())){
+                toastr.error('Email is invalid');
+            }else if($('#phone').val().length < 10){
+                toastr.error('Phone number is required. Enter valid phone number');
+            }else if(!phoneRegex.test($('#phone').val())){
+                toastr.error('Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)');
+            }else{
+                
+
+
+                if(no_of_otp_sent < 2){
+                    no_of_otp_sent += 1;
+                    var prefix=@json($prefix);
+                     if(prefix=="teacher"){
+                        var url="{{route('teacher.signup')}}";
+                     }else{
+                        var url="{{route('website.auth.signup')}}";
+                     }
+                    $.ajax({
+                        url:url,
+                        type:'POST',
+                        data:{
+                            '_token': '{{ csrf_token() }}',
+                            'name' : $('#name').val(),
+                            'email' : $('#signupEmail').val(),
+                            'phone' : $('#phone').val()
+                        },
+                        success:function(data){
+                           
+                            if(data.status == 1){
+                                $('#sendOtpBtn').attr('disabled',true); 
+                                $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
+                                $('#sendOtpBtn').text('OTP Sent');
+                                $('.verify-otp-div').css('display','block');
+                               
+                                interval = setInterval(updateTimer, 2000);
+                                toastr.success(data.message);
+                            }else{
+                                toastr.error(data.message);
+                            }
+                        },
+                        error:function(xhr, status, error){
+                            if(xhr.status == 500 || xhr.status == 422){
+                                toastr.error('Whoops! Something went wrong while sending OTP');
+                            }
+                        }
+                    });
+                }else{
+                    $('#sendOtpBtn').attr('disabled',true); 
+                    toastr.info('You have reached maximum attempts for sending otp. Please wait for 1 hour to resume the service. ');
+                }
+            }
+            
+            
+        });
+
+       
+        // $('#verifyOtpBtn').on('click',function(e){
+        //     e.preventDefault();
+        //     let otpRegex = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
+
+        //     if($('#enterOtp').val().length > 6){
+        //         toastr.error('Not a valid OTP');
+        //     }else if(!otpRegex.test($('#enterOtp').val())){
+        //         toastr.error('Enter numbers only');
+        //     }else{
+        //         var prefix=@json($prefix);
+        //              if(prefix=="teacher"){
+        //                 var url="{{route('teacher.verifyOtp')}}";
+        //              }else{
+        //                 var url="{{route('website.auth.verify.otp')}}";
+        //              }
+        //         $.ajax({
+        //             url:url,
+        //             type:'POST',
+        //             data:{
+        //                 '_token': '{{ csrf_token() }}',
+        //                 'email' : $('#signupEmail').val(),
+        //                 'phone' : $('#phone').val(),
+        //                 'otp' :  $('#enterOtp').val(),
+        //             },
+        //             success:function(data){
+        //                 if(data.status == 1){
+        //                     toastr.success(data.message);
+        //                     $('#phone').prop('readonly',true);
+        //                     $('#enterOtp').prop('readonly',true);
+        //                     $('#sendOtpBtn').attr('disabled',true);
+        //                     $('#verifyOtpBtn').attr('disabled',true);
+        //                     $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
+        //                     $('#pwd').css('display','block');
+        //                     $('#confPwd').css('display','block');
+
+        //                 }else{
+        //                     toastr.error(data.message);
+        //                 }
+        //             },
+        //             error:function(xhr, status, error){
+        //                 if(xhr.status == 500 || xhr.status == 422){
+        //                     toastr.error('Whoops! Something went wrong while sending OTP');
+        //                 }
+        //             }
+        //         });
+        //     }
+            
+        // });      
+</script> --}}
+
 
 <script>
     $(document).ready(function () {
@@ -389,8 +388,22 @@
                     teacherdemovideo:{
                         required:"Please upload demo video",
                     }
-                }
-            });
+                },
+            //     submitHandler: function(form) {
+            //     $.ajaxSetup({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         }
+            //     });
+            //     $.ajax({
+            //         url: '{{route('teacher.store')}}' ,
+            //         type: "POST",
+            //         data: $('#applyForm').serialize(),
+            //         success: function( response ) {
+            //            console.log(response);
+            //         }
+            //     });
+            //  });
     });
 </script>
 @endsection

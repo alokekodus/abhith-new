@@ -21,9 +21,9 @@
         </div>
     </div>
 </div>
-<div class="fileattachment" id="fileattachment" style="display:none;">
+<div class="blockquote blockquote-primary fileattachment" id="fileattachment" style="display:none;">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <div class="form-group">
                 <label for="">Upload File Attachement(Image/pdf)</label>
                 <div class="file-upload">
@@ -37,15 +37,9 @@
                 <span id="imageUrlError"></span>
             </div>
         </div>
-        <div class="col-6">
-            <div class="form-group">
-                <img id="blah" src="{{asset('files/subject/placeholder.jpg')}}" alt="your image" height="200"
-                    width="350" controls style="" />
-            </div>
-        </div>
     </div>
 </div>
-<div class="video" id="video" style="display:none;">
+<div class="blockquote blockquote-primary video" id="video" style="display:none;">
     <div class="row">
         <div class="col-6">
             <div class="form-group">
@@ -92,7 +86,7 @@
     </div>
 </div>
 
-<div class="article" id="article" style="display:none;">
+<div class="blockquote blockquote-primary article" id="article" style="display:none;">
     <div class="row">
         <div class="col-12">
             <div class="form-group">
