@@ -53,6 +53,16 @@
     .course-image-overlay .course-image-overlay-eye-icon{
         opacity: 1;
     }
+    .login-div {
+        width: 60%;
+        background: #fff;
+        margin: 0px;
+        padding: 40px 50px;
+        border-radius: 20px;
+        position: relative;
+        top: 60%;
+        left: 20%;
+    }
 }
 @media (max-width: 767px) {
 
