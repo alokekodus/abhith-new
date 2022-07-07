@@ -4,7 +4,7 @@
 
 @section('head')
 <style>
-    @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
+    /* @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"); */
     table{
         border: 1px solid #f3f3f3;
         border-radius: 10px;

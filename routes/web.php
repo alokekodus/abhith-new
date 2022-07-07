@@ -156,3 +156,8 @@ Route::view('website/faq', 'website.docs.faq')->name('website.faq');
 Route::view('website/privacy-policy', 'website.docs.privacy')->name('website.privacy');
 Route::view('website/terms-and-conditions', 'website.docs.terms')->name('website.terms');
 Route::view('website/refund-and-cancellation-policy', 'website.docs.refund')->name('website.refund');
+
+
+/* --------------------------------------- View -> Become A Teacher ------------------------------------------------------------ */
+
+Route::view('become-a-teacher', 'website.becomeTeacher.becomeTeacher')->name('website.becomeTeacher');
