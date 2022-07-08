@@ -2592,7 +2592,7 @@ top: 0px;}
 
 .knowledge-forum {
     padding: 60px 80px;
-    background: #f1f1f1;
+    /* background: #f1f1f1; */
 }
 
 .answer-list{
@@ -3321,5 +3321,30 @@ input {
     top:50%;
     left:50%;
     transform:translate(-50%, -50%);
+}
+/* 
+.become-a-teacher-icon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #312f2f;
+    padding: 5px;
+    display: inline-block;
+    text-align: center;
+} */
+
+.support-team{
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.support-team-icon1 img, .support-team-icon2 img{
+    width: 465px;
+    height: 480px;
+}
+
+.leftBlock img, .centerBlock img, .rightBlock img{
+    width: 100px;
 }
 

@@ -47,11 +47,16 @@
                             <a href="{{route('website.login')}}" class="login-text" target="_parent"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Login/Sign Up</a>
                         </li>
                         <li>
-                            <a href="{{route('teacher.login')}}" class="login-text" target="_parent"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Become a Teacher &nbsp;</a>
+                            {{-- <a href="{{route('teacher.login')}}" class="login-text" target="_parent">
+                                <span class="icon-user-08 login-details-icon"><span class="path1"></span>
+                                <span class="path2"></span><span class="path3"></span></span>Become a Teacher &nbsp;
+                            </a> --}}
+                            <a href="{{route('website.becomeTeacher')}}" class="login-text become-a-teacher-tag" target="_parent">
+                                <span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Become a Teacher &nbsp;
+                            </a>  
                         </li>
-                        
                         <li>
-                            <a href="{{route('website.cart')}}" class="login-text"><span class="icon-cart-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>Cart</a>
+                            <a href="{{route('website.cart')}}" class="login-text header-cart-btn"><span class="icon-cart-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>Cart</a>
                         </li>
                     </ul>
 

@@ -129,6 +129,10 @@
         margin: 0px 2px;
     }
 
+    .knowledge-logo{
+        margin-top: 60px;
+    }
+    
     .login-details {
         float: left;
         width: 100%;
@@ -289,10 +293,11 @@
 
     .knowledge-header-list li:first-child {
         width: 16%;
+        display: none;
     }
 
     .knowledge-header-list li:nth-child(2) {
-        width: 50%;
+        width: 66%;
         margin-right: 4px;
     }
 
@@ -302,7 +307,7 @@
     }
 
     .add-post {
-        padding: 10px 15px;
+        padding: 10px 25px;
     }
 
     .counter-list li:first-child,
