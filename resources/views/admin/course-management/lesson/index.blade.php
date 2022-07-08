@@ -67,7 +67,7 @@
                             <td> <a href="{{route('admin.course.management.lesson.edit',$all_lesson->id)}}"
                                     class="btn btn-gradient-primary p-2" title="Edit Lesson"><i
                                         class="mdi mdi-pencil"></i></a> <a
-                                    href="{{route('admin.course.management.lesson.topic.create',$all_lesson->id)}}"
+                                    href="{{route('admin.course.management.lesson.topic.create',Crypt::encrypt($all_lesson->id))}}"
                                     class="btn btn-gradient-primary p-2" title="Add New Topic"><i
                                         class="mdi mdi-plus"></i></a> <a
                                     href="{{route('admin.course.management.lesson.view',Crypt::encrypt($all_lesson->id))}}"

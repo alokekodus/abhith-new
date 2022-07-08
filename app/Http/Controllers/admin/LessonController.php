@@ -35,16 +35,27 @@ class LessonController extends Controller
        
         try {
             $slug=Str::slug($request->name);
+            if($request->has('parent_id')){
+                $lesson=Lesson::find($request->parent_id);
+                $board_id=$lesson->board_id;
+                $assign_class_id=$lesson->assign_class_id;
+                $assign_subject_id=$lesson->assign_subject_id;
+            }else{
+                $board_id=$request->board_id;
+                $assign_class_id=$request->assign_class_id;
+                $assign_subject_id=$request->assign_subject_id;
+            }
             $data = [
                 'name' => ucfirst($request->name),
                 'slug' => $slug,
                 'parent_id' => $request->parent_id,
                 'parent_lesson_id' => $request->parent_lesson_id,
-                'board_id' => $request->board_id,
-                'assign_class_id' => $request->assign_class_id,
-                'assign_subject_id' => $request->assign_subject_id,
+                'board_id' => $board_id,
+                'assign_class_id' => $assign_class_id,
+                'assign_subject_id' => $assign_subject_id,
                 'type' => $request->content_type,
             ];
+         
             $lesson = Lesson::create($data);
             if ($request->content_type == 1) {
                 $document = $request->file('image_url');
@@ -114,9 +125,9 @@ class LessonController extends Controller
         $imgFile = 'files/lesson/' . $new_img_name;
         return $imgFile;
     }
-    public function topicCreate($slug)
-    {
-        $lesson = Lesson::where('slug', $slug)->first();
+    public function topicCreate($id)
+    {   $lesson_id=Crypt::decrypt($id);
+        $lesson = Lesson::where('id', $lesson_id)->first();
         return view('admin.course-management.lesson.topic.create', compact('lesson'));
     }
     public function subTopicCreate($lesson_slug, $topic_slug)

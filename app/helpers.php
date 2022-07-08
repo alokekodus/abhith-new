@@ -109,3 +109,16 @@ function teacherReferralId(){
     $referralId         = 'ABHITHSIKSHA' . date('dmY') . '/' . random_int(10000000, 99999999);
     return $referralId;
 }
+function getlessonAttachment($lesson_id){
+ $lesson=Lesson::with('lessonAttachment')->where('id',$lesson_id)->first();
+ if($lesson->type==1){
+    $url_name=$lesson->lessonAttachment->img_url;
+    $type=1;
+    $extension=pathinfo($url_name, PATHINFO_EXTENSION);
+    return $data=[
+        'url_name'=>$url_name,
+        'type'=>$type,
+        'extension'=>$extension,
+    ];
+ }
+}

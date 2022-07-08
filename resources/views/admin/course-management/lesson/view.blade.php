@@ -211,7 +211,7 @@
                 <h2 class="mb-0">
                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                       <b>Lesson Name:</b> {{$lesson->name}}
+                        <b>Lesson Name:</b> {{$lesson->name}}
                     </button>
                 </h2>
             </div>
@@ -219,9 +219,9 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card">
                     <div class="card-body">
-                      @if($lesson->type==1)
-                      
-                      @endif
+                        <embed src="{{ asset(getlessonAttachment($lesson->id)['url_name']) }}#toolbar=0" width="100%"
+                            height="500" alt="pdf" />
+
                     </div>
                 </div>
             </div>
@@ -232,31 +232,26 @@
                     <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
                         data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         All Topics
+                        <a href="{{route('admin.course.management.lesson.topic.create',Crypt::encrypt($lesson->id))}}"
+                            class="btn btn-gradient-primary p-2" title="Add New Topic" style="float: right;"><i
+                                class="mdi mdi-plus"></i> Add Topics</a>
                     </button>
                 </h2>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                     <div class="card">
-                        <div class="card-header">
-                            <h4 style="text-align: center;">All Topics
-                                <a href="{{route('admin.course.management.lesson.topic.create',$lesson->slug)}}"
-                                    class="btn btn-gradient-primary p-2" title="Add New Topic" style="float: right;"><i
-                                        class="mdi mdi-plus"></i></a>
-                            </h4>
-                        </div>
-                        <div class="card-body">
+
+                        <div class="card-body" style="padding: 0.2rem 0.2rem">
                             @if($lesson->topics()->exists())
                             @include('admin.course-management.lesson.topic.all')
                             @else
                             <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
 
-                                        Topic Not Added yet
 
-                                    </h5>
-                                </div>
+                                Topic Not Added yet
+
+
                             </div>
                             @endif
                         </div>

@@ -1,24 +1,17 @@
-<div class="card" id="headingOne">
-    <div class="card-header">
-        <h5 class="mb-0">
-            All Topics
-        </h5>
-
-    </div>
-</div>
 <div id="accordion">
-
     @foreach($lesson->topics as $key=>$topic)
-    <div class="card" id="headingOne">
+    <div class="card p-2" id="headingOne">
         <div class="card-header">
             <h5 class="mb-0">
                 <button class="" data-toggle="collapse" data-target="#collapseOne{{$key}}" aria-expanded="true"
                     aria-controls="collapseOne">
-                    <li>{{$topic->name}}[Sub Topic:{{$topic->subTopics->count()}}]
+                    <div>
+                        {{$key+1}} .{{$topic->name}}[Sub Topic:{{$topic->subTopics->count()}}]
                         <span style="float: right;"><a
                                 href="{{route('admin.course.management.lesson.subtopic.create',[$lesson->slug,$topic->slug])}}"><i
                                     class="mdi mdi-plus-outline"></i></a></span>
-                    </li>
+                    </div>
+
 
                 </button>
 
@@ -60,7 +53,7 @@
                             </figcaption>
                         </figure>
                     </div>
-                    
+
                     @endif
                 </div>
                 <hr>
@@ -77,7 +70,7 @@
                                 <figcaption>
                                     <div>
                                         <h6>{{$sub_topics->name}}</h6>
-    
+
                                     </div>
                                     <a class="vimeo-popup"
                                         href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($sub_topics->id),Crypt::Encrypt(1)])}}">View
@@ -94,7 +87,7 @@
                                 <figcaption>
                                     <div>
                                         <h6>{{$sub_topics->name}}</h6>
-    
+
                                     </div>
                                     <a class="vimeo-popup"
                                         href="{{route('admin.course.management.lesson.attachment',[Crypt::Encrypt($sub_topics->id),Crypt::Encrypt(2)])}}">View

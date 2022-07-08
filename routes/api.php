@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\BannerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
@@ -32,7 +33,8 @@ Route::get('/video-url', function () {
     $path = storage_path('app/public/1_480.mp4');
     return response()->json($path); 
 });
-
+//get banner
+Route::get('/banner',[BannerController::class,'index']);
 Route::post('get-course-details', [CourseController::class, 'index']);
 
 Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
