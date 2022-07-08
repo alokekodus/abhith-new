@@ -211,7 +211,7 @@
                 <h2 class="mb-0">
                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        {{$lesson->name}}
+                       <b>Lesson Name:</b> {{$lesson->name}}
                     </button>
                 </h2>
             </div>
@@ -219,52 +219,9 @@
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card">
                     <div class="card-body">
-                        <div class="label"><u>Lesson Attachments</u></div>
-                        <div class="row">
-
-                            @if($lesson->lessonAttachment->exists())
-                            @if($lesson->lessonAttachment->img_url!=null)
-                            <div class="video-gallery">
-                                <figure class="gallery-item">
-                                    <img src="{{asset($lesson->lessonAttachment->img_url)}}" alt="image" />
-                                    <figcaption>
-                                        <div>
-                                            <h6>{{$lesson->name}}</h6>
-
-                                        </div>
-                                        <a class="vimeo-popup"
-                                            href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(1)])}}">View
-                                            more</a>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                            @endif
-                            @if($lesson->lessonAttachment->origin_video_url!=null)
-                            <div class="video-gallery">
-                                <figure class="gallery-item">
-
-                                    <img src="{{asset($lesson->lessonAttachment->video_thumbnail_image)}}"
-                                        alt="Lesson Video" />
-                                    <figcaption>
-                                        <div>
-                                            <h6>Video</h6>
-
-                                        </div>
-                                        <a class="vimeo-popup"
-                                            href="{{route('admin.course.management.lesson.attachment',[Crypt::encrypt($lesson->id),Crypt::encrypt(2)])}}">View
-                                            more</a>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                            <hr>
-                            @endif
-                            @endif
-                        </div>
-
-
-                        <br>
-                        {!!$lesson->content!!}
-                        <br>
+                      @if($lesson->type==1)
+                      
+                      @endif
                     </div>
                 </div>
             </div>

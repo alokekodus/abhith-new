@@ -64,13 +64,13 @@
                             <td>{{$all_lesson->assignClass->class}}</td>
                             <td>{{$all_lesson->assignSubject->subject_name}}</td>
                             <td>{{$all_lesson->name}}</td>
-                            <td> <a href="{{route('admin.course.management.lesson.edit',$all_lesson->slug)}}"
+                            <td> <a href="{{route('admin.course.management.lesson.edit',$all_lesson->id)}}"
                                     class="btn btn-gradient-primary p-2" title="Edit Lesson"><i
                                         class="mdi mdi-pencil"></i></a> <a
-                                    href="{{route('admin.course.management.lesson.topic.create',$all_lesson->slug)}}"
+                                    href="{{route('admin.course.management.lesson.topic.create',$all_lesson->id)}}"
                                     class="btn btn-gradient-primary p-2" title="Add New Topic"><i
                                         class="mdi mdi-plus"></i></a> <a
-                                    href="{{route('admin.course.management.lesson.view',$all_lesson->slug)}}"
+                                    href="{{route('admin.course.management.lesson.view',Crypt::encrypt($all_lesson->id))}}"
                                     class="btn btn-gradient-primary p-2" title="View Lesson Details"><i
                                         class="mdi mdi-eye"></i></a></td>
                         </tr>

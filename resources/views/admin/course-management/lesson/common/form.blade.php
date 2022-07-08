@@ -30,7 +30,7 @@
                     <div class="file-select">
                         <div class="file-select-button" id="fileName">Choose File</div>
                         <div class="file-select-name" id="noCoverImage">No file chosen...</div>
-                        <input type="file" id='imageUpload' name="image_url" accept=".jpg, .jpeg, .png"
+                        <input type="file" id='imageUpload' name="image_url" accept=".jpg,.jpeg,.png,.pdf"
                             value="{{asset('files/subject/placeholder.jpg')}}">
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         <div class="file-select-button" id="fileName">Choose File</div>
                         <div class="file-select-name" id="noImageFilePromoVideo">No file chosen...</div>
                         <input type="file" id='videoThumbnailImageUpload' onchange="changeVideoImage(this);"
-                            name="video_thumbnail_image_url" value="{{asset('files/subject/placeholder.jpg')}}">
+                            name="video_thumbnail_image_url" value="{{asset('files/subject/placeholder.jpg')}}" accept=".jpg,.jpeg,.png">
                     </div>
                 </div>
                 <span id="imageUrlError"></span>

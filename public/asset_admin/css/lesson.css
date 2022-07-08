@@ -74,24 +74,6 @@ div.scrollmenu a:hover {
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
 }
-
-.file-upload.active .file-select {
-    border-color: #3fa46a;
-    transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-}
-
-.file-upload.active .file-select .file-select-button {
-    background: #3fa46a;
-    color: #FFFFFF;
-    transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-}
-
 .file-upload .file-select input[type=file] {
     z-index: 100;
     cursor: pointer;
