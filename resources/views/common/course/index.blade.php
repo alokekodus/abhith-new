@@ -1,9 +1,20 @@
 <div class="card">
     <div class="card-body">
+        @if($subjects->count()>0)
         @foreach ($subjects as $key => $item)
 
         <div class="blockquote blockquote-primary">
-
+            @if ($item->is_activate == 1)
+            <label class="switch">
+                <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}" checked>
+                <span class="slider round"></span>
+            </label>
+        @else
+            <label class="switch">
+                <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}">
+                <span class="slider round"></span>
+            </label>
+        @endif
 
             <span style="float: right">
                 <a href="" class="btn btn-gradient-primary p-2" title="Edit Subject"><i class="mdi mdi-pencil"></i></a>
@@ -33,6 +44,11 @@
         </div>
 
         @endforeach
+        @else
+        <div class="alert alert-dark" role="alert">
+           No data available for display
+        </div>
+        @endif
     </div>
 
 

@@ -247,11 +247,7 @@
                             @include('admin.course-management.lesson.topic.all')
                             @else
                             <div class="card">
-
-
                                 Topic Not Added yet
-
-
                             </div>
                             @endif
                         </div>
