@@ -64,22 +64,22 @@
     <section class="become-a-teacher">
 
         <!-- Reasons -->
-        <div class="container">
+        <div class="container" id="reasons">
             <h1 class="heading-black text-center">So many reasons to start</h1>
             <div class="row mt-5">
                 <div class="col-md-4 text-center mb-2 leftBlock">
                     <img src="{{asset('asset_website/img/becomeTeacher/Teach_your_way.png')}}" alt="">
-                    <h5><b>Teach your way</b></h5>
+                    <h5 class="mt-3"><b>Teach your way</b></h5>
                     <p>Publish the course you want, in the way you want, and always have of control your own content.</p>
                 </div>
                 <div class="col-md-4 text-center mb-2 centerBlock">
                     <img src="{{asset('asset_website/img/becomeTeacher/Inspire_Learners.png')}}" alt="">
-                    <h5><b>Inspire learners</b></h5>
+                    <h5 class="mt-3"><b>Inspire learners</b></h5>
                     <p>Teach what you know and help learners explore their interests, gain new skills, and advance their careers.</p>
                 </div>
                 <div class="col-md-4 text-center mb-2 rightBlock">
                     <img src="{{asset('asset_website/img/becomeTeacher/Get_Rewarded.png')}}" alt="">
-                    <h5><b>Get rewarded</b></h5>
+                    <h5 class="mt-3"><b>Get rewarded</b></h5>
                     <p>Expand your professional network, build your expertise, and earn money on each paid enrollment.</p>
                 </div>
             </div>
@@ -100,13 +100,13 @@
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
                                 <p>You start with your passion and knowledge. Then choose a promising topic with the help of our Marketplace Insights tool.</p>
                                 <p>The way that you teach — what you bring to it — is up to you.</p>
                                 <h5><b>How we help you</b></h5>
                                 <p>We offer plenty of resources on how to create your first course. And, our instructor dashboard and curriculum pages help keep you organized.</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 order-1 order-lg-2 order-md-2 order-sm-2">
                                 <img src="{{asset('asset_website/img/becomeTeacher/plan-your-curriculum-v3.jpg')}}" alt="">
                             </div>
                         </div>
@@ -115,13 +115,13 @@
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
                                 <p>Use basic tools like a smartphone or a DSLR camera. Add a good microphone and you’re ready to start.</p>
                                 <p>If you don’t like being on camera, just capture your screen. Either way, we recommend two hours or more of video for a paid course.</p>
                                 <h5><b>How we help you</b></h5>
                                 <p>Our support team is available to help you throughout the process and provide feedback on test videos.</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 order-1 order-lg-2 order-md-2 order-sm-2">
                                 <img src="{{asset('asset_website/img/becomeTeacher/record-your-video-v3.jpg')}}" alt="">
                             </div>
                         </div>
@@ -130,13 +130,13 @@
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
                                 <p>Gather your first ratings and reviews by promoting your course through social media and your professional networks.</p>
                                 <p>Your course will be discoverable in our marketplace where you earn revenue from each paid enrollment.</p>
                                 <h5><b>How we help you</b></h5>
                                 <p>Our custom coupon tool lets you offer enrollment incentives while our global promotions drive traffic to courses. There’s even more opportunity for courses chosen for Udemy Business.</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 order-1 order-lg-2 order-md-2 order-sm-2">
                                 <img src="{{asset('asset_website/img/becomeTeacher/launch-your-course-v3.jpg')}}" alt="">
                             </div>
                         </div>

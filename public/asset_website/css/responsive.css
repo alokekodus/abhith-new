@@ -63,6 +63,15 @@
         top: 60%;
         left: 20%;
     }
+    .leftBlock img, .centerBlock img, .rightBlock img {
+        width: 75px;
+    }
+    #reasons .leftBlock h5, #reasons .centerBlock h5, #reasons .rightBlock h5 {
+        font-size: 15px;
+    }
+    #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p {
+        font-size: 13px;
+    }
 }
 @media (max-width: 767px) {
 
@@ -123,6 +132,16 @@
         padding: 0px 15px;
         top: 95px;
         box-shadow: 1px 2px 1px #eee!important;
+    }
+
+    #reasons h1{
+        margin-bottom: 0;
+    }
+    #reasons .leftBlock h5, #reasons .centerBlock h5, #reasons .rightBlock h5{
+        font-size: 15px;
+    }
+    #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
+        font-size: 13px;
     }
 
     .header-social li {

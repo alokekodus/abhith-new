@@ -3344,6 +3344,9 @@ input {
     height: 480px;
 }
 
+#reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
+    font-size: 16px;
+}
 .leftBlock img, .centerBlock img, .rightBlock img{
     width: 100px;
 }
