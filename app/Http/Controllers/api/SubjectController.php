@@ -14,7 +14,7 @@ class SubjectController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'board' => 'required',
-                'class'=>'required',
+                'standard'=>'required',
             ]);
             if ($validator->fails()) {
                 $data = [
@@ -29,7 +29,7 @@ class SubjectController extends Controller
             $subjects = AssignSubject::whereHas('boards', function ($query) use($request){
                 $query->where('exam_board', $request->board);
             })->whereHas('assignClass', function ($query) use($request){
-                $query->where('class', $request->class);
+                $query->where('class', $request->standard);
             })->select('id','subject_name','image','subject_amount', 'subject_amount')->where('is_activate',1)->get();
             $data=[
                 'subjects'=>$subjects,
