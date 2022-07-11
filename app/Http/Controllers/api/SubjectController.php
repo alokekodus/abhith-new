@@ -30,7 +30,7 @@ class SubjectController extends Controller
                 $query->where('exam_board', $request->board);
             })->whereHas('assignClass', function ($query) use($request){
                 $query->where('class', $request->class);
-            })->select('id','subject_name','image','subject_amount', 'subject_amount')->get();
+            })->select('id','subject_name','image','subject_amount', 'subject_amount')->where('is_activate',1)->get();
 
             if (!$subjects->isEmpty()) {
                 $data = [
