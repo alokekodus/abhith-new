@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class BoardController extends Controller
 {
     public function allBoard(){
-        $board_details = Board::orderBy('created_at', 'DESC')->get();
+        $board_details = Board::orderBy('created_at', 'DESC')->where('is_activate',1)->get();
         return view('admin.course-management.board.board')->with('board', $board_details);
     }
 

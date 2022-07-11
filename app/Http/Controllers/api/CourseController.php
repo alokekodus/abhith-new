@@ -101,6 +101,10 @@ class CourseController extends Controller
        return response()->json($subject);
     }
     public function allCourses(){
-        
+        try {
+            $courses=AssignSubject::with('assignClass','boards')->where('is_activate', 1)->limit(4)->get();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

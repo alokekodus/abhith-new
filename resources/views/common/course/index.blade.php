@@ -4,6 +4,7 @@
         @foreach ($subjects as $key => $item)
 
         <div class="blockquote blockquote-primary">
+            <span>Publish</span>
             @if ($item->is_activate == 1)
             <label class="switch">
                 <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}" checked>

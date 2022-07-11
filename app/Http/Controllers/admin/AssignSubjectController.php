@@ -22,7 +22,7 @@ class AssignSubjectController extends Controller
         if (auth()->user()->hasRole('Teacher')) {
             $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id', auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         } else {
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(2);
+            $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
         }
 
 
@@ -30,7 +30,7 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-
+        
         try {
 
             $split_assignedClass = str_split($request->assignedClass);
@@ -43,26 +43,27 @@ class AssignSubjectController extends Controller
 
             if (!empty($document)) {
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
-                $image_path = url('') . $image_path;
+                $image_path = $image_path;
             } else {
                 $image_path = '/files/subject/placeholder.jpg';
-                $image_path = url('') . $image_path;
+                $image_path = $image_path;
             }
 
             if (!empty($lessonVideo)) {
-                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video");;
-                $video_path = url('') . $video_path;
+                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo,"video");
+                $video_path = $video_path;
                 if (!empty($videoThumbnailImageUrl)) {
                     $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
-                    $video_thumbnail_image_url_path = url('') . $video_thumbnail_image_url_path;
+                    $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
                 } else {
                     $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
-                    $video_thumbnail_image_url_path = url('') . $video_thumbnail_image_url_path;
+                    $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
                 }
             } else {
                 $video_path = null;
                 $video_thumbnail_image_url_path = null;
             }
+           
             $data = [
                 'subject_name' => ucfirst($request->subjectName),
                 'image' =>  $image_path,
@@ -80,7 +81,7 @@ class AssignSubjectController extends Controller
             $data_attachment = [
                 'subject_lesson_id' =>  $assign_subject->id,
                 'img_url' => $image_path,
-                'origin_video_url' => $video_path,
+                'attachment_origin_url' => $video_path,
                 'video_thumbnail_image' => $video_thumbnail_image_url_path,
                 'type' => 1,
 

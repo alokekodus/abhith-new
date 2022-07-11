@@ -28,18 +28,18 @@
                 @else
                 {!!$topic->content!!}
                 @endif
-               
-                </div>
-                <hr>
-                @if($topic->subTopics()->exists())
-                <h4><u>Sub Topics:</u></h4>
-                <ol>
-                    @foreach($topic->subTopics as $key=>$sub_topics)
-                   
-                    @endforeach
-                </ol>
-                @endif
+
             </div>
+            <hr>
+            @if($topic->subTopics()->exists())
+            <h4><u>Sub Topics:</u></h4>
+            <ol>
+                @foreach($topic->subTopics as $key=>$sub_topics)
+
+                @endforeach
+            </ol>
+            @endif
+
 
         </div>
     </div>

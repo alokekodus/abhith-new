@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\admin\BoardController;
 use App\Http\Controllers\api\BannerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
+use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\website\WebsiteAuthController;
 
 /*
@@ -36,7 +38,18 @@ Route::get('/video-url', function () {
 //get banner
 Route::get('/banner',[BannerController::class,'index']);
 Route::post('get-course-details', [CourseController::class, 'index']);
+//courses
+Route::prefix('course')->group(function(){
+    Route::get('',[CourseController::class,'allCourses']);
+    Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
+   
+});
+Route::prefix('subjects')->group(function(){
+    Route::post('',[SubjectController::class,'findSubject']);
+});
+//get board
+Route::get('/board',[BoardController::class,'index']);
 
-Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
+
 Route::post('board-class-subject', [CourseController::class, 'findBoardClassSubject'])->name('board.class.subject');
 

@@ -119,6 +119,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
+                        <label for="">Subject Amount<span class="text-danger">*</span></label>
+                        <input type="text" name="subject_amount" class="form-control" id="subject_amount"
+                            placeholder="7000">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
                         <label for="">Subject Description<span class="text-danger">*</span></label>
                         <textarea class="ckeditor form-control" name="description" id="description">
 
@@ -127,16 +136,6 @@
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="">Subject Amount<span class="text-danger">*</span></label>
-                        <input type="text" name="subject_amount" class="form-control" id="subject_amount"
-                            placeholder="7000">
-                    </div>
-                </div>
-            </div>
-            
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">

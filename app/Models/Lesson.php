@@ -144,5 +144,7 @@ class Lesson extends Model
         return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',2);
     }
     
-    
+    public function assignTeacher(){
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
 }
