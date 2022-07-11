@@ -32,7 +32,25 @@ class AssignSubjectController extends Controller
     {
         
         try {
+            $this->validate($request,[
+                'subjectName' => 'required',
+                'assignedClass' => 'required',
+                'subject_amount' => 'required',
+                'description'=>'required',
+                'why_learn'=>'required',
+                'image_url'=>'mimes:jpg,png,jpeg',
+                'video_thumbnail_image_url'=>'mimes:jpg,png,jpeg',
+                'video_url'=>'mimes:mp4,WEBM,MOV',
+    
+            ],[
+                'subjectName.required' => 'Subject name is required',
+                'assignedClass.required' => 'Subject class is required',
+                'subject_amount.required' => 'Amount filed is required',
+                'description.required' => 'Subject descripttion filed is required',
+                'why_learn.required' => 'Why learn filed is required',
+            ]);
 
+            
             $split_assignedClass = str_split($request->assignedClass);
 
             $assignedClass = $split_assignedClass[0];
