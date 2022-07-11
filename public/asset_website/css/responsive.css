@@ -143,6 +143,12 @@
     #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
         font-size: 13px;
     }
+    .card-body p{
+        font-size: 14px;
+    }
+    .card-body h5{
+        font-size: 16px;
+    }
 
     .header-social li {
         margin: 0px 2px;

@@ -3340,8 +3340,8 @@ input {
 }
 
 .support-team-icon1 img, .support-team-icon2 img{
-    width: 465px;
-    height: 480px;
+    width: 450px;
+    height: 450px;
 }
 
 #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
@@ -3349,5 +3349,22 @@ input {
 }
 .leftBlock img, .centerBlock img, .rightBlock img{
     width: 100px;
+}
+
+#nav-tab .nav-link.active {
+    color: #0178ee;
+    background-color: #fff;
+    border-color: #ebeaea #f1f1f1 #ffffff;
+    border-radius: 7px 7px 0px 0px;
+    box-shadow: -5px -10px 10px #f2f2f2;
+}
+#nav-tab .nav-link {
+    margin-bottom: -1px;
+    border: 2px solid transparent;
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+}
+#nav-tab {
+    border-bottom: 1px solid #e0e0e0;
 }
 
