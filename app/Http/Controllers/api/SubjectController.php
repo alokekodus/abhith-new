@@ -31,13 +31,15 @@ class SubjectController extends Controller
             })->whereHas('assignClass', function ($query) use($request){
                 $query->where('class', $request->class);
             })->select('id','subject_name','image','subject_amount', 'subject_amount')->where('is_activate',1)->get();
-
+            $data=[
+                'subjects'=>$subjects,
+            ];
             if (!$subjects->isEmpty()) {
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "all board",
-                    "result" => $subjects,
+                    "result" => $data,
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
