@@ -39,9 +39,11 @@ Route::get('/video-url', function () {
 Route::get('/banner',[BannerController::class,'index']);
 Route::post('get-course-details', [CourseController::class, 'index']);
 //courses
-Route::prefix('course')->group(function(){
+Route::prefix('homepage')->group(function(){
     //homepage courses
-    Route::get('',[CourseController::class,'allCourses']);
+    Route::get('courses',[CourseController::class,'allCourses']);
+    //homepage  upcomming courses
+    Route::get('upcomming',[CourseController::class,'allUpcommingCourses']);
     Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
    
 });
