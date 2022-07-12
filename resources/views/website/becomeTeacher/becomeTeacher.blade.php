@@ -80,7 +80,7 @@
         @media (min-width:768px) and (max-width:991px){
             #header{
                 display: block;
-                background: none;
+                /* background: none; */
             }
             .login-details {
                 float: none;
@@ -100,10 +100,27 @@
 
     <section class="become-a-teacher">
 
+        <!-- Hero Image -->
+        <div class="hero-image-for-teacher">
+            <img src="{{asset('asset_website/img/becomeTeacher/banner.png')}}" alt="">
+            <div class="hero-header">
+                <h1>Come teach with us</h1>
+                <p>Become an instructor and change <br> lives  — including your own</p>
+                <div class="hero-header-btn">
+                    <a href="{{route('website.login')}}" class="btn knowledge-link">Get Started</a>
+                </div>
+            </div>
+            {{-- <div class="hero-header1">
+                <h1 class="">Come teach with us</h1>
+                <p>Become an instructor and change lives — including your own</p>
+                <button class="btn btn-primary" type="button">Get Started</button>
+            </div> --}}
+        </div>
+
         <!-- Reasons -->
         <div class="container" id="reasons">
             <h1 class="heading-black text-center">So many reasons to start</h1>
-            <div class="row mt-5">
+            <div class="row py-4">
                 <div class="col-md-4 text-center mb-2 leftBlock">
                     <img src="{{asset('asset_website/img/becomeTeacher/Teach_your_way.png')}}" alt="">
                     <h5 class="mt-3"><b>Teach your way</b></h5>
@@ -302,12 +319,12 @@
         <!-- ENd Support Team -->
 
         <!-- Instructor Today -->
-        <div class="container-fluid text-center mt-5">
+        <div class="col-md-12 text-center mt-5" id="instructor">
             <div class="py-5">
-                <h2 class="heading-black">Become an instructor today</h2>
+                <h2>Become an instructor today</h2>
                 <p>Join one of the world’s largest online learning marketplaces.</p>
                 <div class="teacher-btn">
-                    <a href="{{route('website.login')}}" class="btn btn-primary">Get Started</a>
+                    <a href="{{route('website.login')}}" class="btn knowledge-link">Get Started</a>
                 </div>
             </div>
         </div>
