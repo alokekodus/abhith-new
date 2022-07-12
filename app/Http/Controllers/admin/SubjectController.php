@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignSubject;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Validator;
@@ -34,9 +35,15 @@ class SubjectController extends Controller
     }
 
     protected function active(Request $request) {
-        $subjects = Subject::find($request->catId);
-        $subjects->is_activate = $request->active;
-        $subjects->save();
+        $subject = AssignSubject::find($request->subjectId);
+        $subject->is_activate = $request->active;
+        $subject->save();
+
+        if($request->active == 0){
+            return response()->json(['status'=>1,'message' => 'Subject visibility changed from show to hide']);
+        }else{
+            return response()->json(['status'=>1,'message' => 'Subject visibility changed from hide to show']);
+        }
     }
 
     protected function editSubject(Request $request) {

@@ -31,8 +31,10 @@ class SubjectController extends Controller
             })->whereHas('assignClass', function ($query) use($request){
                 $query->where('class', $request->standard);
             })->select('id','subject_name','image','subject_amount', 'subject_amount')->where('is_activate',1)->get();
+            $total_amount=$subjects->sum('subject_amount');
             $data=[
                 'subjects'=>$subjects,
+                'total_amount'=>$total_amount,
             ];
             if (!$subjects->isEmpty()) {
                 $data = [

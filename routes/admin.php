@@ -77,8 +77,10 @@ Route::group(['middleware' => ['auth'] ],function(){
         Route::prefix('subject')->group(function(){
             Route::get('/', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
             Route::get('create', [AssignSubjectController::class, 'create'])->name('admin.course.management.subject.create');
+            Route::get('edit/{subject_id}', [AssignSubjectController::class, 'edit'])->name('admin.course.management.subject.edit');
             Route::post('store', [AssignSubjectController::class, 'store'])->name('admin.course.management.subject.store');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
+            Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');

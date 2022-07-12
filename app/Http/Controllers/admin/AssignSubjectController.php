@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\LessonAttachmentTrait;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Crypt;
 
 class AssignSubjectController extends Controller
 {
@@ -30,27 +32,35 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-        
-        try {
-            $this->validate($request,[
-                'subjectName' => 'required',
-                'assignedClass' => 'required',
-                'subject_amount' => 'required',
-                'description'=>'required',
-                'why_learn'=>'required',
-                'image_url'=>'mimes:jpg,png,jpeg',
-                'video_thumbnail_image_url'=>'mimes:jpg,png,jpeg',
-                'video_url'=>'mimes:mp4,WEBM,MOV',
-    
-            ],[
-                'subjectName.required' => 'Subject name is required',
-                'assignedClass.required' => 'Subject class is required',
-                'subject_amount.required' => 'Amount filed is required',
-                'description.required' => 'Subject descripttion filed is required',
-                'why_learn.required' => 'Why learn filed is required',
-            ]);
 
-            
+        try {
+
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'subjectName' => 'required',
+                    'assignedClass' => 'required',
+                    'subject_amount' => 'required',
+                    'description' => 'required',
+                    'why_learn' => 'required',
+                    'image_url' => 'mimes:jpg,png,jpeg',
+                    'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg',
+                    'video_url' => 'mimes:mp4,WEBM,MOV',
+
+                ],
+                [
+                    'subjectName.required' => 'Subject name is required',
+                    'assignedClass.required' => 'Subject class is required',
+                    'subject_amount.required' => 'Amount filed is required',
+                    'description.required' => 'Subject descripttion filed is required',
+                    'why_learn.required' => 'Why learn filed is required',
+                ]
+            );
+
+            if ($validate->fails()) {
+                Toastr::error('Something Want wrong', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
             $split_assignedClass = str_split($request->assignedClass);
 
             $assignedClass = $split_assignedClass[0];
@@ -68,7 +78,7 @@ class AssignSubjectController extends Controller
             }
 
             if (!empty($lessonVideo)) {
-                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo,"video");
+                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video");
                 $video_path = $video_path;
                 if (!empty($videoThumbnailImageUrl)) {
                     $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
@@ -81,7 +91,7 @@ class AssignSubjectController extends Controller
                 $video_path = null;
                 $video_thumbnail_image_url_path = null;
             }
-           
+
             $data = [
                 'subject_name' => ucfirst($request->subjectName),
                 'image' =>  $image_path,
@@ -124,8 +134,9 @@ class AssignSubjectController extends Controller
             //         $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension));
             //     }
             // }
-            $request->session()->flash('subject_created', 'Subject created successfully');
-            return \redirect()->back();
+
+            Toastr::success('Subject created successfully', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->route('admin.course.management.subject.all');
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -193,5 +204,20 @@ class AssignSubjectController extends Controller
         )->get();
 
         return view('admin.course-management.subjects.create')->with(['subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers]);
+    }
+    public function edit($id)
+    {
+        $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $teachers = $students = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'Teacher');
+            }
+        )->get();
+
+        $subject_id = Crypt::decrypt($id);
+        $subject = AssignSubject::with('subjectAttachment')->where('id', $subject_id)->first();
+        return view('admin.course-management.subjects.edit')->with(['subject'=>$subject,'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers]);
     }
 }

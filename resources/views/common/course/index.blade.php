@@ -7,18 +7,18 @@
             <span>Publish</span>
             @if ($item->is_activate == 1)
             <label class="switch">
-                <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}" checked>
+                <input type="checkbox" id="isPublish" data-id="{{ $item->id }}" checked>
                 <span class="slider round"></span>
             </label>
         @else
             <label class="switch">
-                <input type="checkbox" id="testingUpdate" data-id="{{ $item->id }}">
+                <input type="checkbox" id="isPublish" data-id="{{ $item->id }}">
                 <span class="slider round"></span>
             </label>
         @endif
 
             <span style="float: right">
-                <a href="" class="btn btn-gradient-primary p-2" title="Edit Subject"><i class="mdi mdi-pencil"></i></a>
+                <a href="{{route('admin.course.management.subject.edit',Crypt::encrypt($item->id) )}}" class="btn btn-gradient-primary p-2" title="Edit Subject"><i class="mdi mdi-pencil"></i></a>
                 <a href="{{route('teacher.course.view',Crypt::encrypt($item->id))}}"
                     class="btn btn-gradient-primary p-2" title="View Lesson Details"><i class="mdi mdi-eye"></i></a>
             </span>
