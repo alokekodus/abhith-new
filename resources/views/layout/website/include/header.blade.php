@@ -21,7 +21,7 @@
             </div>
             @auth
             <div class="col-lg-6  col-sm-12">
-                <ul class="list-inline login-details">
+                <ul class="list-inline login-details-1">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle login-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>{{userFirstName()}}<span class="caret"></span></a>
                         <ul class="dropdown-menu account-list">
