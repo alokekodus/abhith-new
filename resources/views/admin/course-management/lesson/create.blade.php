@@ -42,6 +42,36 @@
 
 @section('scripts')
 <script>
+   
+    var myVideos = [];
+
+    window.URL = window.URL || window.webkitURL;
+    document.getElementById('videoUpload').onchange = setFileInfo;
+
+        function setFileInfo() {
+        var files = this.files;
+        myVideos.push(files[0]);
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = function() {
+            window.URL.revokeObjectURL(video.src);
+            var duration = video.duration;
+            myVideos[myVideos.length - 1].duration = duration;
+            updateInfos();
+        }
+
+        video.src = URL.createObjectURL(files[0]);;
+        }
+        function updateInfos() {
+        
+      
+        for (var i = 0; i < myVideos.length; i++) {
+            var duration= myVideos[i].duration/60;
+        }
+      }
+</script>
+<script>
     $(document).ready(function () {
         // jQuery.validator.addMethod('name_rule', function (value, element) {
         //     if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
