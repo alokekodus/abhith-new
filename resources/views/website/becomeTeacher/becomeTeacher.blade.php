@@ -11,6 +11,34 @@
         .top-header .header-cart-btn{
             display: none;
         }
+        .card {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        .accordion>.card:not(:last-of-type){
+            border-bottom: 1px solid rgba(0, 0, 0, .125);
+        }
+        
+        .card-header {
+            background-color: none;
+            border-bottom: none;
+            background: transparent;
+            padding: 0px;
+        }
+        .card-header p{
+            color: black;
+            font-weight: 600;
+        }
+
+        .form-control:focus,
+        .btn.focus,
+        .btn:focus {
+            border-color: transparent;
+        }
+        #accordion{
+            display: none;
+        }
 
         @media (max-width: 767px){
             #header{
@@ -39,11 +67,20 @@
             .leftBlock img, .centerBlock img, .rightBlock img{
                 width: 75px;
             }
+            #how-to-begin{
+                display: none;
+            }
+            #accordion{
+                display: block;
+            }
+            #accordion img{
+                width: inherit;
+            }
         }
         @media (min-width:768px) and (max-width:991px){
             #header{
                 display: block;
-                background: none;
+                /* background: none; */
             }
             .login-details {
                 float: none;
@@ -63,10 +100,27 @@
 
     <section class="become-a-teacher">
 
+        <!-- Hero Image -->
+        <div class="hero-image-for-teacher">
+            <img src="{{asset('asset_website/img/becomeTeacher/banner.png')}}" alt="">
+            <div class="hero-header">
+                <h1>Come teach with us</h1>
+                <p>Become an instructor and change <br> lives  — including your own</p>
+                <div class="hero-header-btn">
+                    <a href="{{route('website.login')}}" class="btn knowledge-link">Get Started</a>
+                </div>
+            </div>
+            {{-- <div class="hero-header1">
+                <h1 class="">Come teach with us</h1>
+                <p>Become an instructor and change lives — including your own</p>
+                <button class="btn btn-primary" type="button">Get Started</button>
+            </div> --}}
+        </div>
+
         <!-- Reasons -->
         <div class="container" id="reasons">
             <h1 class="heading-black text-center">So many reasons to start</h1>
-            <div class="row mt-5">
+            <div class="row py-4">
                 <div class="col-md-4 text-center mb-2 leftBlock">
                     <img src="{{asset('asset_website/img/becomeTeacher/Teach_your_way.png')}}" alt="">
                     <h5 class="mt-3"><b>Teach your way</b></h5>
@@ -87,13 +141,19 @@
         <!-- End Reasons -->
         
         <!-- How to Begin -->
-        <div class="container mt-5">
+        <div class="container mt-5" id="how-to-begin">
             <h2 class="heading-black text-center">How to begin</h2>
             <nav class="mt-4">
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Curriculum</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Record</a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Launch course</a>
+                <div class="nav" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                        <h4>Curriculum</h4>
+                    </a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+                        <h4>Record Your Video</h4>
+                    </a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+                        <h4>Launch course</h4>
+                    </a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -146,51 +206,98 @@
         </div>
 
             <!-- Responsive view -->
-            {{-- <div id="accordion">
-                <div class="card">
-                  <div class="card-header" id="headingOne">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Collapsible Group Item #1
-                      </button>
-                    </h5>
-                  </div>
-              
-                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                    <div class="card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            <div class="container mt-5" id="accordion">
+                <h2 class="heading-black text-center">How to begin</h2>
+                <div class="accordion">
+                    <div class="card">
+                      <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
+                            <div class="d-flex justify-content-between">
+                                <p>Plan your Curriculum</p>
+                                <p><i class="fa fa-plus"></i></p>
+                            </div>
+                        </button>
+                        </h5>
+                      </div>
+                  
+                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
+                                    <p>You start with your passion and knowledge. Then choose a promising topic with the help of our Marketplace Insights tool.</p>
+                                    <p>The way that you teach — what you bring to it — is up to you.</p>
+                                    <h5><b>How we help you</b></h5>
+                                    <p>We offer plenty of resources on how to create your first course. And, our instructor dashboard and curriculum pages help keep you organized.</p>
+                                </div>
+                                <div class="col-md-6 order-1 order-lg-2 order-md-2 order-sm-2">
+                                    <img src="{{asset('asset_website/img/becomeTeacher/plan-your-curriculum-v3.jpg')}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseTwo" style="text-decoration: none;">
+                                <div class="d-flex justify-content-between">
+                                    <p>Record Your Video</p>
+                                    <p><i class="fa fa-plus"></i></p>
+                                </div>
+                            </button>
+                        </h5>
+                      </div>
+                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
+                                    <p>Use basic tools like a smartphone or a DSLR camera. Add a good microphone and you’re ready to start.</p>
+                                    <p>If you don’t like being on camera, just capture your screen. Either way, we recommend two hours or more of video for a paid course.</p>
+                                    <h5><b>How we help you</b></h5>
+                                    <p>Our support team is available to help you throughout the process and provide feedback on test videos.</p>
+                                </div>
+                                <div class="col-md-6 order-1 order-lg-2 order-md-2 order-sm-2">
+                                    <img src="{{asset('asset_website/img/becomeTeacher/record-your-video-v3.jpg')}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree" style="text-decoration: none;">    
+                                <div class="d-flex justify-content-between">
+                                    <p>Launch Course</p>
+                                    <p><i class="fa fa-plus"></i></p>
+                                </div>
+                            </button>
+                        </h5>
+                      </div>
+                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
+                                    <p>Gather your first ratings and reviews by promoting your course through social media and your professional networks.</p>
+                                    <p>Your course will be discoverable in our marketplace where you earn revenue from each paid enrollment.</p>
+                                    <h5><b>How we help you</b></h5>
+                                    <p>Our custom coupon tool lets you offer enrollment incentives while our global promotions drive traffic to courses. There’s even more opportunity for courses chosen for Udemy Business.</p>
+                                </div>
+                                <div class="col-md-6 order-1 order-lg-2 order-md-2 order-sm-2">
+                                    <img src="{{asset('asset_website/img/becomeTeacher/launch-your-course-v3.jpg')}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="headingTwo">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Collapsible Group Item #2
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="headingThree">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Collapsible Group Item #3
-                      </button>
-                    </h5>
-                  </div>
-                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                    <div class="card-body">
-                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                    </div>
-                  </div>
-                </div>
-              </div> --}}
+            </div>
             <!-- End Responsive view -->
 
         <!-- End How to Begin -->
@@ -212,12 +319,12 @@
         <!-- ENd Support Team -->
 
         <!-- Instructor Today -->
-        <div class="container-fluid text-center mt-5">
+        <div class="col-md-12 text-center mt-5" id="instructor">
             <div class="py-5">
-                <h2 class="heading-black">Become an instructor today</h2>
+                <h2>Become an instructor today</h2>
                 <p>Join one of the world’s largest online learning marketplaces.</p>
                 <div class="teacher-btn">
-                    <a href="{{route('website.login')}}" class="btn btn-primary">Get Started</a>
+                    <a href="{{route('website.login')}}" class="btn knowledge-link">Get Started</a>
                 </div>
             </div>
         </div>

@@ -150,3 +150,24 @@ select.form-control{
 }
 
 
+.mobile-nav-active .mobile-nav-toggle i {
+    color: #111;
+}
+
+.mobile-nav{
+    top: 30%;
+}
+
+.mobile-nav-close-btn {
+    position: fixed;
+    top: 18%;
+    right: 18px;
+    font-size: 2rem;
+    background: white;
+    z-index: 10000;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}

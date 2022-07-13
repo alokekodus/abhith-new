@@ -1,18 +1,25 @@
-@media only screen and (min-width: 1024px) {}
+@media only screen and (min-width: 1024px) {
+}
 
-@media only screen and (max-width: 1023px) {}
+@media only screen and (max-width: 1023px) {
+}
 
-@media only screen and (min-width: 1024px) and (max-width: 1024px) {}
+@media only screen and (min-width: 1024px) and (max-width: 1024px) {
+}
 
-@media only screen and (min-width: 1440px) and (max-width: 1440px) {}
+@media only screen and (min-width: 1440px) and (max-width: 1440px) {
+}
 
-@media only screen and (min-width: 1280px) and (max-width: 1280px) {}
+@media only screen and (min-width: 1280px) and (max-width: 1280px) {
+}
 
-@media only screen and (min-width: 1900px) and (max-width: 1920px) {}
+@media only screen and (min-width: 1900px) and (max-width: 1920px) {
+}
 
-@media only screen and (min-width: 767px) and (max-width: 1023px) {}
+@media only screen and (min-width: 767px) and (max-width: 1023px) {
+}
 
-@media (min-width:768px) and (max-width:991px){
+@media (min-width: 768px) and (max-width: 991px) {
     .login-details li:first-child {
         margin-right: 100px;
         position: relative;
@@ -29,28 +36,27 @@
     .mobile-nav-toggle {
         right: 100px;
     }
-    .home-courses{
+    .home-courses {
         padding-top: 50px;
     }
     .courseRightBlock {
         padding-top: 0px;
-        margin-bottom: 15px
+        margin-bottom: 15px;
     }
     .footer-menu-list li {
         font-size: 15px;
         margin-bottom: 14px;
     }
 
-
-    .course-header-and-back-to-pckg-btn a{
+    .course-header-and-back-to-pckg-btn a {
         font-size: 18px;
     }
 
-    .course-image-overlay{
+    .course-image-overlay {
         height: 250px;
     }
 
-    .course-image-overlay .course-image-overlay-eye-icon{
+    .course-image-overlay .course-image-overlay-eye-icon {
         opacity: 1;
     }
     .login-div {
@@ -63,18 +69,41 @@
         top: 60%;
         left: 20%;
     }
-    .leftBlock img, .centerBlock img, .rightBlock img {
-        width: 75px;
+    .leftBlock img,
+    .centerBlock img,
+    .rightBlock img {
+        width: 60px;
     }
-    #reasons .leftBlock h5, #reasons .centerBlock h5, #reasons .rightBlock h5 {
+    #reasons .leftBlock h5,
+    #reasons .centerBlock h5,
+    #reasons .rightBlock h5 {
         font-size: 15px;
     }
-    #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p {
+    #reasons .leftBlock p,
+    #reasons .centerBlock p,
+    #reasons .rightBlock p {
         font-size: 13px;
+    }
+    .hero-image-for-teacher {
+        margin-top: 155px;
+    }
+    .hero-image-for-teacher .hero-header {
+        top: 22%;
+        left: 14%;
+    }
+    .hero-header h1 {
+        font-size: 24px;
+    }
+    .hero-header p {
+        padding: 5px 0px;
+        font-size: 18px;
+    }
+    .hero-header-btn a {
+        width: 50%;
+        padding: 10px;
     }
 }
 @media (max-width: 767px) {
-
     a {
         font-size: 12px;
     }
@@ -100,7 +129,7 @@
         margin: 0px 0px;
         padding: 0px 0px;
     }
-    .about-content{
+    .about-content {
         font-size: 14px;
     }
 
@@ -109,10 +138,10 @@
         margin: 0px 15px;
     }
 
-    .logo img{
+    .logo img {
         max-width: 175px;
     }
-    .footer-logo img{
+    .footer-logo img {
         max-width: 175px;
     }
     .upcoming-course {
@@ -131,27 +160,79 @@
     #header {
         padding: 0px 15px;
         top: 95px;
-        box-shadow: 1px 2px 1px #eee!important;
+        box-shadow: 1px 2px 1px #eee !important;
     }
 
-    #reasons h1{
+    #reasons h1 {
         margin-bottom: 0;
     }
-    #reasons .leftBlock h5, #reasons .centerBlock h5, #reasons .rightBlock h5{
+    #reasons .leftBlock h5,
+    #reasons .centerBlock h5,
+    #reasons .rightBlock h5 {
         font-size: 15px;
     }
-    #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
+    #reasons .leftBlock p,
+    #reasons .centerBlock p,
+    #reasons .rightBlock p {
         font-size: 13px;
+    }
+    .card-body p {
+        font-size: 14px;
+    }
+    .card-body h5 {
+        font-size: 16px;
+    }
+
+    .hero-image-for-teacher {
+        position: relative;
+        margin-top: -10px;
+    }
+    .hero-image-for-teacher img {
+        width: 100%;
+        height: 150px;
+    }
+    .hero-image-for-teacher .hero-header {
+        top: 20%;
+        left: 8%;
+    }
+    .hero-header h1 {
+        font-size: 16px;
+    }
+    .hero-header p {
+        font-size: 10px;
+        padding: 0px;
+    }
+    .hero-header-btn a {
+        width: 55%;
+        padding: 5px;
+        font-size: 13px;
+    }
+    #reasons {
+        margin-top: 40px;
+    }
+    #instructor h2 {
+        font-size: 28px;
+        color: #000;
+        font-weight: 700;
+    }
+    #instructor p {
+        font-size: 14px;
+        color: rgb(51, 51, 51);
+        padding: 5px 0px;
+    }
+    .teacher-btn a {
+        width: 75%;
+        padding: 10px;
     }
 
     .header-social li {
         margin: 0px 2px;
     }
 
-    .knowledge-logo{
+    .knowledge-logo {
         margin-top: 60px;
     }
-    
+
     .login-details {
         float: left;
         width: 100%;
@@ -165,12 +246,12 @@
     /* .login-details li:nth-child(2) {
         margin-right: 40px;
     } */
-    .courseRightBlock{
+    .courseRightBlock {
         padding-top: 0px;
         margin-bottom: 25px;
     }
 
-    .selectClass{
+    .selectClass {
         margin-top: 8px;
     }
 
@@ -200,12 +281,11 @@
         display: none;
     }
 
-
-    .course-image-overlay{
+    .course-image-overlay {
         height: 250px;
     }
 
-    .course-image-overlay .course-image-overlay-eye-icon{
+    .course-image-overlay .course-image-overlay-eye-icon {
         opacity: 1;
     }
 
@@ -215,16 +295,16 @@
         margin-bottom: 25px;
     }
 
-    .heading-blue{
+    .heading-blue {
         font-size: 14px;
     }
     .small-heading-black {
         font-size: 12px;
     }
-    .about-left{
+    .about-left {
         margin-top: 100px;
     }
-    .about-left1{
+    .about-left1 {
         margin-top: 25px;
     }
     .about-right {
@@ -239,7 +319,7 @@
     .cross-line2 {
         width: 70%;
     }
-    .desc-text{
+    .desc-text {
         font-size: 16px;
         text-align: justify;
         line-height: 26px;
@@ -287,7 +367,7 @@
     }
 
     .footer-menu-list {
-        display: inline-block
+        display: inline-block;
     }
 
     .footer-menu-list li {
@@ -350,7 +430,7 @@
     .projectFactsWrap .item:nth-child(3) {
         width: 100%;
     } */
-    .item-text{
+    .item-text {
         font-size: 14px;
     }
     .icon1 {
@@ -412,9 +492,8 @@
         border-left: none !important;
     }
 
-    .card-button{
+    .card-button {
         flex-direction: column;
-        
     }
 
     .styled-checkbox + label {
@@ -541,15 +620,15 @@
     }
 
     .knowledge-forum-right1 {
-        margin-bottom: 30px
+        margin-bottom: 30px;
     }
 
     .profile-form .pl10 {
-        padding-left: 15px
+        padding-left: 15px;
     }
 
     .profile-form .pr10 {
-        padding-right: 15px
+        padding-right: 15px;
     }
 
     .button-div {
@@ -595,63 +674,72 @@
         height: 300px;
     }
 
-    .home-courses .leftBlock{
+    .home-courses .leftBlock {
         flex-direction: column;
         align-items: center;
     }
-    .home-courses{
+    .home-courses {
         padding-top: 20px;
     }
     .inputGroup {
         width: 100%;
-        
     }
+/* 
+    .mobile-nav-close-btn {
+        display: none;
+    } */
 }
 
-@media only screen and (min-width: 360px) and (max-width: 375px) {}
+@media only screen and (min-width: 350px) and (max-width: 375px) {
+}
 
 @media only screen and (min-width: 384px) and (max-width: 384px),
-only screen and (min-width: 800px) and (max-width: 800px),
-only screen and (min-width: 412px) and (max-width: 414px)
-    {}
+    only screen and (min-width: 800px) and (max-width: 800px),
+    only screen and (min-width: 412px) and (max-width: 414px) {
+}
 
-@media only screen and (min-width: 600px) and (max-width: 600px) {}
+@media only screen and (min-width: 600px) and (max-width: 600px) {
+}
 
-@media only screen and (min-width: 320px) and (max-width: 320px) {}
-
-
+@media only screen and (min-width: 320px) and (max-width: 320px) {
+}
 
 /* iPad Mini in landscape only */
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+}
 
 /* iPad Mini in portrait only */
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {}
-
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+}
 
 /*iPhone X in portrait & landscape*/
 
-@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {}
-
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+}
 
 /*iPhone 6, 7, & 8 in portrait & landscape*/
 
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {}
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+}
 
 /*iPhone 6, 7, & 8 Plus in portrait & landscape*/
 
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) {}
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) {
+}
 
 /*iPhone 5 & 5S in portrait & landscape*/
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {}
-
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+}
 
 /*iPhone 2G-4S in portrait & landscape*/
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+}
 
 /*Only iPhone 4/4S (both: landscape and portrait)*/
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) {}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) {
+}

@@ -3340,14 +3340,76 @@ input {
 }
 
 .support-team-icon1 img, .support-team-icon2 img{
-    width: 465px;
-    height: 480px;
+    width: 450px;
+    height: 450px;
 }
 
+#reasons{
+    margin-top: 90px;
+}
 #reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
     font-size: 16px;
 }
 .leftBlock img, .centerBlock img, .rightBlock img{
     width: 100px;
+}
+
+#nav-tab .nav-link.active {
+    color: #0178ee;
+    background-color: #fff;
+    border-color: #ebeaea #f1f1f1 #ffffff;
+    border-radius: 7px 7px 0px 0px;
+    box-shadow: -5px -10px 10px #f2f2f2;
+}
+#nav-tab .nav-link {
+    margin-bottom: -1px;
+    border: 2px solid transparent;
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+}
+#nav-tab {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.hero-image-for-teacher{
+    position: relative;
+    margin-top: -90px;
+}
+.hero-image-for-teacher .hero-header{
+    position: absolute;
+    top: 40%;
+    left: 16%;
+}
+.hero-image-for-teacher img{
+    width: 100%;
+}
+.hero-header h1{
+    font-weight: 700;
+    font-size: 50px;
+    color: #000;
+    text-transform: capitalize;
+}
+.hero-header p{
+    padding: 10px 0px;
+    font-size: 21px;
+}
+.hero-header-btn a {
+    width: 50%;
+    padding: 15px;
+    font-weight: 600;
+}
+#instructor h2{
+    font-size: 38px;
+    color: #000;
+    font-weight: 700;
+}
+#instructor p{
+    font-size: 18px;
+    color: rgb(51, 51, 51);
+    padding: 5px 0px;
+}
+.teacher-btn a{
+    width: 20%;
+    padding: 10px;
 }
 
