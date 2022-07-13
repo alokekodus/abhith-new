@@ -88,8 +88,17 @@
         margin-top: 155px;
     }
     .hero-image-for-teacher .hero-header {
-        top: 22%;
+        top: 30%;
         left: 14%;
+    }
+    .hero-image-for-teacher img {
+        height: 400px;
+    }
+    .hero-image-for-teacher .hero-image-girl {
+        top: -20px;
+    }
+    .hero-image-girl img{
+        height: 420px;
     }
     .hero-header h1 {
         font-size: 24px;
@@ -185,27 +194,32 @@
 
     .hero-image-for-teacher {
         position: relative;
-        margin-top: -10px;
+        margin-top: -15px;
     }
     .hero-image-for-teacher img {
         width: 100%;
         height: 150px;
     }
     .hero-image-for-teacher .hero-header {
-        top: 20%;
-        left: 8%;
+        top: 15%;
+        left: 14%;
     }
     .hero-header h1 {
-        font-size: 16px;
+        font-size: 14px;
     }
     .hero-header p {
         font-size: 10px;
         padding: 0px;
     }
     .hero-header-btn a {
-        width: 55%;
+        width: 45%;
         padding: 5px;
-        font-size: 13px;
+        font-size: 10px;
+    }
+    .hero-image-for-teacher .hero-image-girl {
+        position: absolute;
+        top: 0;
+        left: 62%;
     }
     #reasons {
         margin-top: 40px;

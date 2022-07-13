@@ -102,12 +102,15 @@
 
         <!-- Hero Image -->
         <div class="hero-image-for-teacher">
-            <img src="{{asset('asset_website/img/becomeTeacher/banner.png')}}" alt="">
+            <img src="{{asset('asset_website/img/becomeTeacher/main-banner.png')}}" alt="">
+            <div class="hero-image-girl">
+                <img src="{{asset('asset_website/img/becomeTeacher/girl.png')}}" alt="">
+            </div>
             <div class="hero-header">
                 <h1>Come teach with us</h1>
                 <p>Become an instructor and change <br> lives  — including your own</p>
                 <div class="hero-header-btn">
-                    <a href="{{route('website.login')}}" class="btn knowledge-link">Get Started</a>
+                    <a href="{{route('website.login')}}" class="btn knowledge-link-1">Get Started</a>
                 </div>
             </div>
             {{-- <div class="hero-header1">
