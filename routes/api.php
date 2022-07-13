@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\BoardController;
 use App\Http\Controllers\api\BannerController;
+use App\Http\Controllers\api\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
@@ -50,9 +51,15 @@ Route::prefix('homepage')->group(function(){
 Route::prefix('subjects')->group(function(){
     Route::post('',[SubjectController::class,'findSubject']);
 });
+
+
 //get board
 Route::get('/board',[BoardController::class,'index']);
 
 
 Route::post('board-class-subject', [CourseController::class, 'findBoardClassSubject'])->name('board.class.subject');
 
+//laravel cart
+Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
+    Route::post('/store', [CartController::class,'store']);
+});
