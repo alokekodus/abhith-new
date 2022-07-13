@@ -35,7 +35,7 @@
 <section class="cart-describtion">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-md-12 col-sm-12">
                 <ul class="list-inline cart-course-list1">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">
