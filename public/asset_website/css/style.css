@@ -1719,6 +1719,9 @@ footer {
     border: none !important;
     margin-bottom: 20px;
 }
+.cart-course-list1 li .centerBlock, .cart-course-list1 li .rightBlock{
+    margin-top: 15px;
+}
 
 .course-desc-list-right {
     padding: 0px 0px 0px 35px;
@@ -1729,13 +1732,13 @@ footer {
     width: 20%;
 }
 
-.course-price2 {
+/* .course-price2 {
     position: absolute;
     font-size: 16px;
     top: 20%;
     right: 0px;
     font-weight: 600;
-}
+} */
 
 /*course-tooltip*/
 .course-tooltip .dropbtn {
