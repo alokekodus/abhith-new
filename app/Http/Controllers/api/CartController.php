@@ -7,9 +7,33 @@ use App\Models\AssignSubject;
 use App\Models\Cart;
 use App\Models\CartOrOrderAssignSubject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function index(){
+        $cart = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
+        return response()->json($cart);
+        if (!$cart->isEmpty()) {
+
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Your Cart is empty",
+
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        } else {
+            $data = [
+                "code" => 200,
+                "status" => 0,
+                "message" => "Your cart is empty",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
     public function store(Request $request)
     {
         try {
@@ -86,7 +110,7 @@ class CartController extends Controller
                 "message" => "Subjects was successfully removed from your cart",
 
             ];
-            
+
             return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
             $data = [
