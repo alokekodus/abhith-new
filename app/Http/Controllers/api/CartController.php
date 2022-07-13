@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class CartController extends Controller
 {
     public function index(){
-        return response()->json(Auth::user()->id);
+        
         $cart = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
         return response()->json($cart);
         if (!$cart->isEmpty()) {
