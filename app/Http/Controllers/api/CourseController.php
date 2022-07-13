@@ -93,11 +93,74 @@ class CourseController extends Controller
     }
     public function findClass(Request $request){
        
-       $board=AssignClass::where(['board_id'=>$request->board_id,'is_activate'=>1])->get();
+       $board=AssignClass::where(['board_id'=>$request->board_id])->get();
        return response()->json($board);
     }
     public function findBoardClassSubject(Request $request){
-        $subject=AssignSubject::where(['board_id'=>$request->board_id,'is_activate'=>1,'assign_class_id'=>$request->class_id])->get();
+        $subject=AssignSubject::where(['board_id'=>$request->board_id,'assign_class_id'=>$request->class_id])->get();
        return response()->json($subject);
+    }
+    public function allCourses(){
+        try {
+            $courses=AssignSubject::select('id','subject_name','image','subject_amount','assign_class_id','board_id')->with('assignClass:id,class','boards:id,exam_board')->where('is_activate', 1)->limit(4)->get();
+            if (!$courses->isEmpty()) {
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "all board",
+                    "result" => $courses,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "status" => 0,
+                    "message" => "No record found",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+       
+    }
+    public function allUpcommingCourses(){
+        try {
+            $courses=AssignSubject::select('id','subject_name','image','subject_amount','assign_class_id','board_id')->with('assignClass:id,class','boards:id,exam_board')->where('is_activate',1)->limit(4)->get();
+            if (!$courses->isEmpty()) {
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "all board",
+                    "result" => $courses,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "status" => 0,
+                    "message" => "No record found",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }  
     }
 }

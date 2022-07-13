@@ -89,7 +89,7 @@
             type:"POST",
             data:{
                 '_token' : "{{csrf_token()}}",
-                'chapter_id' : $(this).data('id'),
+                'cart_id' : $(this).data('id'),
             },
             success:function(result){
                 toastr.success(result.message);

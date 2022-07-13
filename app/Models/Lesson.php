@@ -19,7 +19,8 @@ class Lesson extends Model
         'board_id',
         'assign_class_id',
         'assign_subject_id',
-        'content'
+        'content',
+        'type'
 
     ];
     public static function getRules($type)
@@ -143,5 +144,7 @@ class Lesson extends Model
         return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',2);
     }
     
-    
+    public function assignTeacher(){
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
 }

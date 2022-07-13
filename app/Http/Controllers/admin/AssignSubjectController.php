@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\LessonAttachmentTrait;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Crypt;
 
 class AssignSubjectController extends Controller
 {
@@ -22,8 +24,9 @@ class AssignSubjectController extends Controller
         if (auth()->user()->hasRole('Teacher')) {
             $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id', auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         } else {
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->paginate(2);
+            $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
         }
+
 
         return view('admin.course-management.subjects.subject')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
@@ -31,6 +34,34 @@ class AssignSubjectController extends Controller
     {
 
         try {
+
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'subjectName' => 'required',
+                    'assignedClass' => 'required',
+                    'subject_amount' => 'required',
+                    'description' => 'required',
+                    'why_learn' => 'required',
+                    'image_url' => 'mimes:jpg,png,jpeg',
+                    'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg',
+                    'video_url' => 'mimes:mp4,WEBM,MOV',
+
+                ],
+                [
+                    'subjectName.required' => 'Subject name is required',
+                    'assignedClass.required' => 'Subject class is required',
+                    'subject_amount.required' => 'Amount filed is required',
+                    'description.required' => 'Subject descripttion filed is required',
+                    'why_learn.required' => 'Why learn filed is required',
+                ]
+            );
+
+            if ($validate->fails()) {
+                Toastr::error('Something Want wrong', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+
             $split_assignedClass = str_split($request->assignedClass);
 
             $assignedClass = $split_assignedClass[0];
@@ -41,60 +72,83 @@ class AssignSubjectController extends Controller
 
             if (!empty($document)) {
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
-
+                $image_path = $image_path;
+            } else {
+                if ($request->subject_id == null) {
+                    $image_path = '/files/subject/placeholder.jpg';
+                    $image_path = $image_path;
+                } else {
+                    $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                    $image_path = $assign_subject->subjectAttachment->img_url;
+                }
             }
-            if (!empty($videoThumbnailImageUrl)) {
-                $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
 
-            }
             if (!empty($lessonVideo)) {
-                $video_path = $request->video_url->store('public');
+                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video");
+                $video_path = $video_path;
+                if (!empty($videoThumbnailImageUrl)) {
+                    $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
+                    $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                } else {
+                    if ($request->subject_id == null) {
+                        $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
+                        $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                    } else {
+                        $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                        $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                    }
+                }
+            } else {
+                if ($request->subject_id == null) {
+                    $video_path = null;
+                    $video_thumbnail_image_url_path = null;
+                } else {
+                    $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                    $video_path=$assign_subject->attachment_origin_url;
+                    $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                }
             }
+
             $data = [
                 'subject_name' => ucfirst($request->subjectName),
-                'image' => $image_path,
+                'image' =>  $image_path,
                 'teacher_id' => $request->teacher_id,
-                'subject_amount' => $request->subjectAmount,
+                'subject_amount' => $request->subject_amount,
                 'assign_class_id' => $assignedClass,
                 'board_id' => $assignedBoard,
                 'is_activate' => 0, //initially subject not active
                 'description' => $request->description,
                 'why_learn' => $request->why_learn,
             ];
-            $assign_subject = AssignSubject::create($data);
+            if ($request->subject_id == null) {
+                $assign_subject = AssignSubject::create($data);
+            } else {
+                $assign_subject = AssignSubject::find($request->subject_id);
+                $assign_subject->update($data);
+            }
+
 
             // $video_path=str_replace("public/", "",$video_path);
             $data_attachment = [
                 'subject_lesson_id' =>  $assign_subject->id,
                 'img_url' => $image_path,
-                'origin_video_url' => $video_path,
+                'attachment_origin_url' => $video_path,
                 'video_thumbnail_image' => $video_thumbnail_image_url_path,
                 'type' => 1,
 
             ];
-
-            $lesson_attachment = LessonAttachment::create($data_attachment);
-            $resizes = ["480", "720", "1080"];
-            foreach ($resizes as $key => $resize) {
-                if ($resize == 480) {
-                    $x_dimension = 640;
-                    $y_dimension = 480;
-                }
-                if ($resize == 720) {
-                    $x_dimension = 1280;
-                    $y_dimension = 720;
-                }
-                // if($resize==1080){
-                //     $x_dimension=1920;
-                //     $y_dimension =1080;  
-                // }
-                $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension));
+            if ($request->subject_id == null) {
+                $lesson_attachment = LessonAttachment::create($data_attachment);
+            } else {
+                $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                $assign_subject->subjectAttachment->update($data_attachment);
             }
-
-
-
-            $request->session()->flash('subject_created', 'Subject created successfully');
-            return \redirect()->back();
+            if ($request->subject_id == null) {
+                Toastr::success('Subject created successfully', '', ["positionClass" => "toast-top-right"]);
+            } else {
+                Toastr::success('Subject updated successfully', '', ["positionClass" => "toast-top-right"]);
+            }
+            return redirect()->route('admin.course.management.subject.all');
         } catch (\Throwable $th) {
             dd($th);
         }
@@ -162,5 +216,22 @@ class AssignSubjectController extends Controller
         )->get();
 
         return view('admin.course-management.subjects.create')->with(['subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers]);
+    }
+    public function edit($id)
+    {
+        $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $teachers = $students = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'Teacher');
+            }
+        )->get();
+
+        $subject_id = Crypt::decrypt($id);
+        $subject = AssignSubject::with('subjectAttachment')->where('id', $subject_id)->first();
+        $classBoard = $subject->assign_class_id . $subject->board_id;
+
+        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard]);
     }
 }

@@ -107,6 +107,25 @@
                 }
             });
         });
-        
+        $(document.body).on('change', '#isPublish', function() {
+        var status = $(this).prop('checked') == true ? 1 : 0;
+        var subject_id = $(this).data('id');
+        // console.log(status);
+        var formDat = {
+            subjectId: subject_id,
+            active: status
+        }
+        // console.log(formDat);
+        $.ajax({
+            type: "post",
+
+            url: "{{ route('admin.active.subject') }}",
+            data: formDat,
+
+            success: function(data) {
+                toastr.success(data.message);
+            }
+        });
+    });
 </script>
 @endsection

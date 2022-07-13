@@ -20,9 +20,9 @@ class AuthController extends Controller
           'email' => 'required',
           'password' => 'required',
         ]);
-
-        if (Auth::attempt(['email' => $request->email,  'password' => $request->password])) {
-
+          
+        if (Auth::attempt(['email' => $request->email,'password' => $request->password])) {
+         
           if (Auth::user()->type_id == 1 || Auth::user()->type_id == 3) {
             return redirect()->route('admin.dashboard')
               ->withSuccess('Signed in');
@@ -32,7 +32,7 @@ class AuthController extends Controller
         } else {
           return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
         }
-      
+       return redirect()->back();
     } catch (\Throwable $th) {
       //throw $th;
     }

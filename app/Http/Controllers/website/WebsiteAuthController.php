@@ -195,7 +195,12 @@ class WebsiteAuthController extends Controller
             if ($details == null) {
                 return response()->json(['message' => 'Something went wrong. Signup failed.', 'status' => 0]);
             } else {
-                $roles = 2;
+                if (getPrefix($request) == "teacher") {
+                    $roles = 3;
+                } else {
+                    $roles = 2;
+                }
+
                 $details->assignRole($roles);
                 $details->password = Hash::make($request->password);
                 $details->is_activate = 1;
@@ -205,13 +210,13 @@ class WebsiteAuthController extends Controller
                 if (getPrefix($request) == "api") {
                     return response()->json([
                         'status' => 1,
-                        'message' => "Student Signup successful",
+                        'message' => "Signed up successfully",
                         'data' => $details,
                         'access_token' => $token,
                         'token_type' => 'Bearer',
                     ]);
                 } else {
-                    return response()->json(['message' => 'Signup successful', 'status' => 1]);
+                    return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
                 }
             }
         } catch (\Throwable $th) {
@@ -223,6 +228,7 @@ class WebsiteAuthController extends Controller
     public function login(Request $request)
     {
         try {
+          
             if (getPrefix($request) == "api") {
                 $type = Type::User;
             } elseif (getPrefix($request) == "teacher") {
@@ -255,7 +261,7 @@ class WebsiteAuthController extends Controller
                 return response()->json([
                     'code' => 200,
                     'status' => 1,
-                    'message' => "Student Signin Successfully",
+                    'message' => "Signed in successfully",
                     'data' => $user,
                     'access_token' => $token,
                     'token_type' => 'Bearer',
@@ -268,17 +274,16 @@ class WebsiteAuthController extends Controller
                     'email' => 'required',
                     'password' => 'required'
                 ]);
-                
-                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'type_id' => $type, 'is_activate' => Activation::Activate])) {
-                    if ($request->current_route == null) {
 
-                        Auth::LogoutOtherDevices($password);
-                        if(auth()->user()->type_id==2){
-                            return redirect()->route('website.dashboard');
-                        }else{
+                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
+                   
+                    if ($request->current_route == null) {
+                        if (auth()->user()->hasRole('Teacher')) {
                             return redirect()->route('admin.dashboard');
                         }
-                       
+                        if (auth()->user()->hasRole('Student')) {
+                            return redirect()->route('website.dashboard');
+                        }
                     } else {
                         return redirect($request->current_route);
                     }
@@ -312,6 +317,52 @@ class WebsiteAuthController extends Controller
         } else {
             $prefix = "user";
         }
-        return view('website.auth.login',compact('prefix'));
+        return view('website.auth.login', compact('prefix'));
+    }
+    public function mobileSignUp(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
+
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            }
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'otp' => 00000,
+                'verify_otp' => 1,
+                'type_id' => 2,
+                'password' => Hash::make($request->password),
+                'is_active' => 1,
+            ];
+            $user = User::create($data);
+            $assign_role = $user->assignRole(2);
+            $token = $user->createToken('auth_token')->plainTextToken;
+            $userDetails = UserDetails::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'user_id' => $user->id,
+            ]);
+            $user = User::where('email', $request['email'])->select('id', 'email', 'phone', 'name', 'is_activate', 'created_at')->first();
+            return response()->json([
+                'status' => 1,
+                'message' => "Signed up successfully",
+                'data' => $user,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Whoops! Something Went Wrong', 'status' => 0]);
+        }
     }
 }

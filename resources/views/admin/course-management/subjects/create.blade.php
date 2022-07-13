@@ -22,152 +22,42 @@
 
 <div class="card">
     <div class="card-body">
-        <form enctype="multipart/form-data" method="post" id="addSubject">
+        <form enctype="multipart/form-data" id="addSubject" action="{{route('admin.course.management.subject.store')}}" method="POST">
             @csrf
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="">Subject Name<span class="text-danger">*</span></label>
-                        <input type="text" name="subjectName" class="form-control" id="subjectName"
-                            placeholder="e.g Science, Math etc.">
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="">Belongs to Class</label>
-                        <select name="assignedClass" id="assignedClass" class="form-control">
-                            <option value="">-- Select -- </option>
-                            @forelse ($classes as $key => $item)
-
-                            <option value="{{$item->id}}{{$item->boards->id}}"> Class - {{$item->class}} --
-                                {{$item->boards->exam_board}} Board -- </option>
-                            @empty
-                            <option disabled>No Class to show</option>
-                            @endforelse
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="">Upload Subject Cover Picture<span class="text-danger">*</span></label>
-                        <div class="file-upload">
-                            <div class="file-select">
-                                <div class="file-select-button" id="fileName">Choose File</div>
-                                <div class="file-select-name" id="noImageFile">No file chosen...</div>
-                                <input type="file" id='imageUpload' onchange="changeCoverImage(this);" name="image_url">
-                            </div>
-                        </div>
-                        <span id="imageUrlError"></span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label for="">Upload Subject Promo Video Thumbnail Image<span
-                                class="text-danger">*</span></label>
-                        <div class="file-upload">
-                            <div class="file-select">
-                                <div class="file-select-button" id="fileName">Choose File</div>
-                                <div class="file-select-name" id="noImageFile">No file chosen...</div>
-                                <input type="file" id='videoThumbnailImageUpload' onchange="changeVideoImage(this);"
-                                    name="video_thumbnail_image_url">
-                            </div>
-                        </div>
-                        <span id="imageUrlError"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <img id="blah" src="#" alt="your image" height="200" width="350" controls style="display: none;" />
-                </div>
-                <div class="col-6">
-                    <img id="videothumbnailimagepreview" src="#" alt="your image" height="200" width="350" controls
-                        style="display: none;" />
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">Upload Subject Promo Video<span class="text-danger">*</span></label>
-                        <div class="file-upload">
-                            <div class="file-select">
-                                <div class="file-select-button" id="fileName">Choose File</div>
-                                <div class="file-select-name" id="noFile">No file chosen...</div>
-                                <input type="file" id='videoUpload' name="video_url"
-                                    accept="video/mp4,video/x-m4v,video/*" onchange="changeVideoUpload(this);">
-                            </div>
-                        </div>
-                        <span id="videoUrlError"></span>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <video width="600" height="250" id='videoPriview' controls style="display: none;">
-
-                        </video>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">Subject Description<span class="text-danger">*</span></label>
-                        <textarea class="ckeditor form-control" name="description" id="content">
-
-                </textarea>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">Why will students learn this subject?<span class="text-danger">*</span></label>
-                        <textarea class="ckeditor form-control" name="why_learn" id="content">
-
-                </textarea>
-                    </div>
-                </div>
-
-            </div>
+             @include('admin.course-management.subjects.form')
             <div style="float: right;">
                 <button type="button" class="btn btn-md btn-default" id="assignSubjectCancelBtn">Cancel</button>
-                <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn" data-toggle="modal"
-                    data-target="#progressModal">Submit</button>
+                <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">Submit</button>
             </div>
         </form>
-    </div>
-</div>
-
-<div id="progressModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-    aria-hidden="true">
-    <div class="modal-dialog modal-m">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 style="margin:0;">Loading...</h3>
-            </div>
-            <div class="modal-body">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 100%"
-                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                {{-- <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                </div> --}}
-            </div>
-        </div>
     </div>
 </div>
 
 @endsection
 
 @section('scripts')
+
+<script>
+
+    CKEDITOR.replace( 'description', {
+	toolbar: [
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+	]
+}); 
+	
+</script>
+<script>
+    CKEDITOR.replace( 'why_learn', {
+	toolbar: [
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+	]
+    });
+</script>
 <script>
     $(document).ready(function () {
+
     $('#addSubject').validate({
         rules: {
             subjectName: {
@@ -176,15 +66,12 @@
             assignedClass:{
                 required:true
             },
-            image_url:{
-                required:true,
-                extension: "png,jpg,jpeg,svg,webp",
-                filesize: 5,
+            description:{
+                required:true
             },
-            video_thumbnail_image_url:{
+            why_learn:{
                 required:true
             }
-           
         },
         messages: {
             subjectName: {
@@ -193,84 +80,41 @@
             assignedClass:{
                 required:"Please Select Class."
             },
-            image_url:{
-                required:"Subject's cover image is required.",
-                extension: "File extension not supported."
+            description:{
+                required:"Subject Description Filed is required.",
             },
-            video_thumbnail_image_url:{
-                required:"Video Thumbnail image is required."
+            why_learn:{
+                required:"This Filed is required.",
             }
         },
-        //Submit Handler Function
-        submitHandler: function (form) {
-            e.preventDefault();        
-            $('#assignSubjectSubmitBtn').attr('disabled', true);
-            $('#assignSubjectSubmitBtn').text('Please wait...');
-            $('#assignSubjectCancelBtn').attr('disabled', true);
-
-
-            let formData = new FormData(this);
-        $.ajax({
-                url:"{{route('admin.course.management.subject.store')}}",
-                type:"POST",
-                processData:false,
-                contentType:false,
-                data:formData,
-                success:function(data, textStatus, jqXHR) {
-                    if(data.error != null){
-                        $.each(data.error, function(key, val){
-                            toastr.error(val[0]);
-                        });
-                        $('#assignClassSubmitBtn').attr('disabled', false);
-                        $('#assignClassSubmitBtn').text('Submit');
-                        $('#assignClassCancelBtn').attr('disabled', false);
-                    }
-                    if(data.status == 1){
-                        toastr.success(data.message);
-                        location.reload(true);
-                    }else{
-                        toastr.error(data.message);
-                        $('#assignClassSubmitBtn').attr('disabled', false);
-                        $('#assignClassSubmitBtn').text('Submit');
-                        $('#assignClassCancelBtn').attr('disabled', false);
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    if(xhr.status == 500 || xhr.status == 422){
-                        toastr.error('Whoops! Something went wrong failed to assign class');
-                    }
-
-                    $('#assignClassSubmitBtn').attr('disabled', false);
-                    $('#assignClassSubmitBtn').text('Submit');
-                    $('#assignClassCancelBtn').attr('disabled', false);
-                }
-            });
-        }
-    }); //<----missing ; in original code
+      });
 });
-</script>
-<script>
-    function changeCoverImage(){
-        const [file] = imageUpload.files;
+
+    imageUpload.onchange = evt => {
+        const [file] = imageUpload.files
         if (file) {
             blah.style.display = "block";
-            blah.src = URL.createObjectURL(file)
-
-        } 
+            blah.src = URL.createObjectURL(file);
+            var input=evt.srcElement;
+            $("#noCoverImage").html(input.files[0].name);
+        }
     }
-    function changeVideoImage(){
+    videoThumbnailImageUpload.onchange = evt =>{
         const [file] = videoThumbnailImageUpload.files
         if (file) {
             videothumbnailimagepreview.style.display = "block";
             videothumbnailimagepreview.src = URL.createObjectURL(file)
-
+            var input=evt.srcElement;
+            $("#noImageFilePromoVideo").html(input.files[0].name);
         }
     }
-   function changeVideoUpload(){
+    videoUpload.onchange = evt =>{
     videoPriview.style.display = "block";
-        let file = event.target.files[0];
+        let file = evt.target.files[0];
         let blobURL = URL.createObjectURL(file);
         document.querySelector("video").src = blobURL;
+        var input=evt.srcElement;
+            $("#noFileVideo").html(input.files[0].name);
    }
     
        

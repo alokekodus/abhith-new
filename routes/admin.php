@@ -10,14 +10,17 @@ use App\Http\Controllers\admin\BlogController;
 use App\Http\Controllers\admin\BoardController;
 use App\Http\Controllers\admin\AssignClassController;
 use App\Http\Controllers\admin\AssignSubjectController;
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\admin\LessonController;
+use App\Http\Controllers\teacher\TeacherController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\AssignSubject;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +38,9 @@ use App\Models\AssignSubject;
 Route::group(['middleware' => ['auth'] ],function(){
     Route::get('logout',[AuthController::class,'logout'])->name('log.out');
 
-    Route::get('dashboard', function () {
-        return view('admin.dashboard.dashboard');
-    })->name('admin.dashboard')->middleware('admin');
+    Route::get('dashboard',[DashboardController::class,'index'])->name('admin.dashboard')->middleware('admin');
+    //     return view('admin.dashboard.dashboard');
+    // })->name('admin.dashboard')->middleware('admin');
 
     /* ------------------------------- COURSE ------------------------------------ */
     // Route::prefix('course')->group(function () {
@@ -60,7 +63,11 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
             Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
         });
-
+        Route::prefix('teacher')->group(function(){
+            Route::get('', [TeacherController::class, 'index'])->name('admin.teacher.all');
+            Route::get('/{teacher_id}',[TeacherController::class,'details'])->name('admin.teacher.details');
+            Route::get('approved/{userdetails_id}',[TeacherController::class,'approvedApplication'])->name('approved.teacher');
+        });
         Route::prefix('class')->group(function(){
             Route::get('', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
             Route::post('assign', [AssignClassController::class, 'assignClass'])->name('admin.course.management.class.assign');
@@ -70,8 +77,10 @@ Route::group(['middleware' => ['auth'] ],function(){
         Route::prefix('subject')->group(function(){
             Route::get('/', [AssignSubjectController::class, 'allSubjects'])->name('admin.course.management.subject.all');
             Route::get('create', [AssignSubjectController::class, 'create'])->name('admin.course.management.subject.create');
+            Route::get('edit/{subject_id}', [AssignSubjectController::class, 'edit'])->name('admin.course.management.subject.edit');
             Route::post('store', [AssignSubjectController::class, 'store'])->name('admin.course.management.subject.store');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
+            Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
@@ -79,8 +88,8 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
             Route::get('edit/{lesson_slug}', [LessonController::class,'edit'])->name('admin.course.management.lesson.edit');
             // Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');
-            Route::get('{lesson_slug}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
-            Route::get('topic/{lesson_slug}', [LessonController::class,'topicView'])->name('admin.course.management.lesson.view');
+            Route::get('{lesson_id}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
+            Route::get('view/{lesson_id}', [LessonController::class,'topicView'])->name('admin.course.management.lesson.view');
             Route::get('subtopic/{lesson_slug}/{topic_slug}', [LessonController::class,'subTopicCreate'])->name('admin.course.management.lesson.subtopic.create');
             Route::get('attachment/{lesson_id}/{url_type}', [LessonController::class,'displayAttachment'])->name('admin.course.management.lesson.attachment');
         });

@@ -193,7 +193,7 @@
                 <div class="course-pic">
                     <img src="{{asset($subject->image)}}" class="w100">
                     <div class="course-image-overlay">
-                        <a href="#" class="btn btn-default course-image-overlay-eye-icon text-white">View</a>
+                        <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}" class="btn btn-default course-image-overlay-eye-icon text-white">View</a>
                         <!-- <i class="fa fa-eye course-image-overlay-eye-icon text-white"  aria-hidden="true"></i> -->
                     </div>
                 </div>

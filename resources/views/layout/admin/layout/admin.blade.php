@@ -35,7 +35,7 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css">
-
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet"
         href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
     <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
@@ -77,6 +77,7 @@
     <script src="{{ asset('asset_admin/vendors/chart.js/Chart.min.js') }}"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
+    <script src="{{ asset('asset_admin/js/file-upload.js') }}"></script>
     <script src="{{ asset('asset_admin/js/off-canvas.js') }}"></script>
     <script src="{{ asset('asset_admin/js/hoverable-collapse.js') }}"></script>
     <script src="{{ asset('asset_admin/js/misc.js') }}"></script>
@@ -84,7 +85,7 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('asset_admin/js/dashboard.js') }}"></script>
     <script src="{{ asset('asset_admin/js/todolist.js') }}"></script>
-   
+
     <!-- End custom js for this page -->
     <script>
         $(function () {
@@ -150,6 +151,8 @@
     <script src="https://vjs.zencdn.net/7.18.1/video.min.js"></script>
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
     @yield('scripts')
 </body>
 

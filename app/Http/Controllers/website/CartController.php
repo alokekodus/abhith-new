@@ -34,15 +34,14 @@ class CartController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back();
         }
-
+      
         return view('website.cart.cart')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $totalPrice]);
     }
 
     public function addToCart(Request $request)
     {
         try {
-
-
+              
             if (!Auth::check()) {
 
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
@@ -57,10 +56,8 @@ class CartController extends Controller
             } else {
                 $all_subjects = $request->subjects;
             }
-
-            $check_item_exists_inside_cart = Cart::with(['assignSubject' => function ($q) use ($all_subjects) {
-                $q->whereIn('assign_subject_id', $all_subjects);
-            }])->where('user_id', Auth::user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where([['is_paid', '=', 0], ['is_remove_from_cart', '=', 0]])->get();
+           
+            $check_item_exists_inside_cart = Cart::with('assignSubject')->where('user_id', Auth::user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where([['is_paid', '=', 0], ['is_remove_from_cart', '=', 0]])->where('is_full_course_selected',1)->get();
            
             if ($all_subjects == null) {
                 Toastr::error('Please select subject for proccess !', '', ["positionClass" => "toast-top-right"]);
@@ -71,7 +68,7 @@ class CartController extends Controller
                 Toastr::error('Package already in Cart!', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             } else {
-
+               
                 $cart = Cart::create([
                     'user_id' => auth()->user()->id,
                     'board_id' => $board_id, //board_id
@@ -106,11 +103,18 @@ class CartController extends Controller
 
     public function removeFromCart(Request $request)
     {
-        if (Auth::check()) {
-            Cart::where('user_id', Auth::user()->id)->where('is_paid', 0)->where('chapter_id', $request->chapter_id)->update([
-                'is_remove_from_cart' => 1
-            ]);
-            return response()->json(['message' => 'Item removed successfully']);
+        try {
+            if (Auth::check()) {
+                $cart=Cart::find($request->cart_id);
+                $cart->update([ 'is_remove_from_cart' => 1]);
+                $cart->assignSubject()->delete();
+                return response()->json(['message' => 'Item removed successfully']);
+            }else{
+                return response()->json(['message' => ' Something want wrong']);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => ' Something want wrong']);
         }
+
     }
 }

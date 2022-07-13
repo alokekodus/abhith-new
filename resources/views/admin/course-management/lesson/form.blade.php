@@ -2,7 +2,7 @@
     <div class="col-4">
         <div class="form-group">
             <label for="">Select Board<span class="text-danger">*</span></label>
-            <select name="board_id" id="assignedBoard" class="form-control" onchange="changeBoard()">
+            <select name="board_id" id="assignedBoard" class="form-control">
                 <option value="">-- Select -- </option>
                 @forelse ($boards as $item)
                 <option value="{{$item->id}}" @isset($lesson)@if($lesson->board_id==$item->id) selected @endif

@@ -14,25 +14,15 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> Add Topic
+        </span> Add Topic/{{$lesson->name}}
     </h3>
 </div>
 
 <div class="card">
     <div class="card-body">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0"><a href="{{route('admin.course.management.lesson.view',$lesson->slug)}}"
-                    class="btn btn-gradient-primary p-2" title="View Lesson Details"> Lesson
-                    Name:{{$lesson->name}}</a>
 
-
-                <div class="float-right"> All Lesson [Total lesson:
-                    {{$lesson->topics->count()}}]</div>
-
-            </h5>
-        </div>
         <div class="row">
-            <div class="col-8 p-4">
+            <div class="col-12">
                 <div class="card">
                     <form id="assignTopicForm" enctype="multipart/form-data" method="post">
                         @csrf
@@ -48,22 +38,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col-4 p-4 dyn-height">
-                <br>
-                @if($lesson->topics()->exists())
-                @include('admin.course-management.lesson.topic.all')
-                @else
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-
-                            Topic Not Added yet
-
-                        </h5>
-                    </div>
-                </div>
-                @endif
-            </div>
+         
         </div>
     </div>
 </div>
@@ -75,108 +50,108 @@
 
 @section('scripts')
 <script>
-     $(document).ready(function () {
-        // jQuery.validator.addMethod('name_rule', function (value, element) {
-        //     if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     };
-        // });
-        jQuery.validator.addMethod("img_extension", function (value, element, param) {
-            param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-            return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
-        });
-        jQuery.validator.addMethod('maxfilesize', function (value, element, param) {
-            var length = (element.files.length);
+    // $(document).ready(function () {
+    //     // jQuery.validator.addMethod('name_rule', function (value, element) {
+    //     //     if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
+    //     //         return true;
+    //     //     } else {
+    //     //         return false;
+    //     //     };
+    //     // });
+    //     jQuery.validator.addMethod("img_extension", function (value, element, param) {
+    //         param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
+    //         return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+    //     });
+    //     jQuery.validator.addMethod('maxfilesize', function (value, element, param) {
+    //         var length = (element.files.length);
 
-            var fileSize = 0;
+    //         var fileSize = 0;
 
-            if (length > 0) {
-                for (var i = 0; i < length; i++) {
-                    fileSize = element.files[i].size;
+    //         if (length > 0) {
+    //             for (var i = 0; i < length; i++) {
+    //                 fileSize = element.files[i].size;
 
 
-                    fileSize = fileSize / 1024; //file size in Kb
-                    fileSize = fileSize / 1024; //file size in Mb
+    //                 fileSize = fileSize / 1024; //file size in Kb
+    //                 fileSize = fileSize / 1024; //file size in Mb
 
-                    return this.optional(element) || fileSize <= param;
-                }
+    //                 return this.optional(element) || fileSize <= param;
+    //             }
 
-            }
-            else {
-                return this.optional(element) || fileSize <= param;
+    //         }
+    //         else {
+    //             return this.optional(element) || fileSize <= param;
 
-            }
-        });
-        $("#assignTopicForm").validate({
-            rules: {
-                board_id: {
-                    required: true,
-                },
-                assign_class_id: {
-                    required: true,
-                },
-                assign_subject_id: {
-                    required: true,
-                },
-                name: {
-                    required: true,
-                    // name_rule: true,
-                    minlength: 10,
-                },
-                image_url: {
-                    required: true,
-                    img_extension: true,
-                    img_maxfilesize: 2,
+    //         }
+    //     });
+    //     $("#assignTopicForm").validate({
+    //         rules: {
+    //             board_id: {
+    //                 required: true,
+    //             },
+    //             assign_class_id: {
+    //                 required: true,
+    //             },
+    //             assign_subject_id: {
+    //                 required: true,
+    //             },
+    //             name: {
+    //                 required: true,
+    //                 // name_rule: true,
+    //                 minlength: 10,
+    //             },
+    //             image_url: {
+    //                 required: true,
+    //                 img_extension: true,
+    //                 img_maxfilesize: 2,
 
-                },
+    //             },
                
-                content: {
-                    required: true,
-                },
+    //             content: {
+    //                 required: true,
+    //             },
 
-            },
-            messages: {
-                board_id: {
-                    required: "Board name is required",
-                },
-                assign_class_id: {
-                    required: "Class name is required",
-                    // maxlength: "Last name cannot be more than 20 characters"
-                },
-                assign_subject_id: {
-                    required: "Subject is required",
-                },
-                name: {
-                    required: "Lesson Name is required",
-                    name_rule: "Please insert a valid name",
-                    minlength: "The name should greater than or equal to 50 characters"
-                },
-                image_url: {
-                    required: "Image is required",
-                    img_extension: "The Image should be in jpg|jpeg|png|gif format",
-                    maxfilesize: "File size must not be more than 1 MB."
-                },
-                content: {
-                    required: "Content is required",
-                },
+    //         },
+    //         messages: {
+    //             board_id: {
+    //                 required: "Board name is required",
+    //             },
+    //             assign_class_id: {
+    //                 required: "Class name is required",
+    //                 // maxlength: "Last name cannot be more than 20 characters"
+    //             },
+    //             assign_subject_id: {
+    //                 required: "Subject is required",
+    //             },
+    //             name: {
+    //                 required: "Lesson Name is required",
+    //                 name_rule: "Please insert a valid name",
+    //                 minlength: "The name should greater than or equal to 50 characters"
+    //             },
+    //             image_url: {
+    //                 required: "Image is required",
+    //                 img_extension: "The Image should be in jpg|jpeg|png|gif format",
+    //                 maxfilesize: "File size must not be more than 1 MB."
+    //             },
+    //             content: {
+    //                 required: "Content is required",
+    //             },
 
-            },
-            errorPlacement: function (error, element) {
-                console.log(element.attr("name"));
-                if (element.attr("name") == "image_url") {
-                    error.appendTo("#imageUrlError");
-                } else if (element.attr("name") == "video_url") {
-                    error.appendTo("#videoUrlError");
-                } else {
-                    error.insertAfter(element)
-                }
+    //         },
+    //         errorPlacement: function (error, element) {
+    //             console.log(element.attr("name"));
+    //             if (element.attr("name") == "image_url") {
+    //                 error.appendTo("#imageUrlError");
+    //             } else if (element.attr("name") == "video_url") {
+    //                 error.appendTo("#videoUrlError");
+    //             } else {
+    //                 error.insertAfter(element)
+    //             }
 
 
-            }
-        });
-    });
+    //         }
+    //     });
+    // });
 
     // For datatable
     $(document).ready(function () {
@@ -207,8 +182,8 @@
     imageUpload.onchange = evt => {
         const [file] = imageUpload.files
         if (file) {
-            blah.style.display = "block";
-            blah.src = URL.createObjectURL(file)
+            var input=evt.srcElement;
+            $("#noCoverImage").html(input.files[0].name);
 
         }
     }
@@ -217,7 +192,8 @@
         if (file) {
             videothumbnailimagepreview.style.display = "block";
             videothumbnailimagepreview.src = URL.createObjectURL(file)
-
+            var input=evt.srcElement;
+            $("#noImageFilePromoVideo").html(input.files[0].name);
         }
     }
     videoUpload.onchange = function (event) {
@@ -225,8 +201,31 @@
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
         document.querySelector("video").src = blobURL;
+        var input=evt.srcElement;
+            $("#noFileVideo").html(input.files[0].name);
     }
-    
+    function showDiv(){
+   var showDivId= document.getElementById("content_type").value;
+  
+   if(showDivId==1){
+          $('#fileattachment').show();
+            $('#video').hide();
+            $('#article').hide();
+   }else if(showDivId==2){
+            $('#fileattachment').hide();
+            $('#video').show();
+            $('#article').hide();
+   }else if(showDivId==3){
+            $('#fileattachment').hide();
+            $('#video').hide();
+            $('#article').show();
+   }else{
+     $('#fileattachment').hide();
+            $('#video').hide();
+            $('#article').hide();
+   }
+   
+ }
     //For hiding modal
     $('#assignTopicCancelBtn').on('click', function () {
         $('#assignLessonModal').modal('hide');

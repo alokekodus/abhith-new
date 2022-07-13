@@ -15,11 +15,15 @@ class LessonAttachment extends Model
         'subject_lesson_id',
         'img_url',
         'video_thumbnail_image',
-        'origin_video_url',
+        'attachment_origin_url',
         'video_resize_480',
         'video_resize_720',
         'video_resize_1080',
-        'type'
+        'video_origin_url',
+        'video_duration',
+        'attachment_type',
+        'type',
+        'progress_status'
 
     ];
 

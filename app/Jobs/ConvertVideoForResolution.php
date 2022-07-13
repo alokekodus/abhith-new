@@ -23,12 +23,15 @@ class ConvertVideoForResolution implements ShouldQueue
     public $lesson_attachment;
     public $x_dimension;
     public $y_dimension;
-    public function __construct(LessonAttachment $lesson_attachment,$x_dimension,$y_dimension)
+    public $slug;
+  
+    public function __construct(LessonAttachment $lesson_attachment,$x_dimension,$y_dimension,$slug)
     {
         
        $this->lesson_attachment=$lesson_attachment;
        $this->x_dimension=$x_dimension;
        $this->y_dimension=$y_dimension;
+      
     }
 
     /**
@@ -42,7 +45,7 @@ class ConvertVideoForResolution implements ShouldQueue
         $lowBitrateFormat = (new X264())->setKiloBitrate(500);
 
         // open the uploaded video from the right disk...
-        FFMpeg::open($this->lesson_attachment->origin_video_url)
+        FFMpeg::open($this->lesson_attachment->attachment_origin_url)
 
             // add the 'resize' filter...
             ->addFilter(function ($filters) {
@@ -57,19 +60,19 @@ class ConvertVideoForResolution implements ShouldQueue
             ->inFormat($lowBitrateFormat)
 
             // call the 'save' method with a filename...
-            ->save($this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4');
+            ->save($this->lesson_attachment->id.'_'.$this->slug.'_'.$this->y_dimension .'.mp4');
             
             if($this->y_dimension==480){
                 $this->lesson_attachment->update([
-                    'video_resize_480' => $this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
+                    'video_resize_480' => $this->lesson_attachment->id.'_'.$this->slug.'_'.$this->y_dimension .'.mp4',
                 ]);
             }elseif($this->y_dimension==720){
                 $this->lesson_attachment->update([
-                    'video_resize_720' => $this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
+                    'video_resize_720' => $this->lesson_attachment->id.'_'.$this->slug.'_'.$this->y_dimension .'.mp4',
                 ]);
             }else{
                 $this->lesson_attachment->update([
-                    'video_resize_1080' => $this->lesson_attachment->id.'_'.$this->y_dimension .'.mp4',
+                    'video_resize_1080' => $this->lesson_attachment->id.'_'.$this->slug.'_'.$this->y_dimension .'.mp4',
                 ]);
             }
            

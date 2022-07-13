@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\admin\BoardController;
+use App\Http\Controllers\api\BannerController;
+use App\Http\Controllers\api\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
+use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\website\WebsiteAuthController;
 
 /*
@@ -21,15 +25,43 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //singup api
-Route::post('signup', [WebsiteAuthController::class, 'signup']);
+// Route::post('signup', [WebsiteAuthController::class, 'signup']);
 Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp']);
-Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup']);
+Route::post('signup', [WebsiteAuthController::class, 'mobileSignUp']);
 Route::post('login', [WebsiteAuthController::class, 'login']);
 
 
 
-
-
+Route::get('/video-url', function () {
+    $path = storage_path('app/public/1_480.mp4');
+    return response()->json($path); 
+});
+//get banner
+Route::get('/banner',[BannerController::class,'index']);
 Route::post('get-course-details', [CourseController::class, 'index']);
-Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
+//courses
+Route::prefix('homepage')->group(function(){
+    //homepage courses
+    Route::get('courses',[CourseController::class,'allCourses']);
+    //homepage  upcomming courses
+    Route::get('upcomming',[CourseController::class,'allUpcommingCourses']);
+    Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
+   
+});
+Route::prefix('subjects')->group(function(){
+    Route::post('',[SubjectController::class,'findSubject']);
+});
+
+
+//get board
+Route::get('/board',[BoardController::class,'index']);
+
+
 Route::post('board-class-subject', [CourseController::class, 'findBoardClassSubject'])->name('board.class.subject');
+
+//laravel cart
+Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
+    Route::get('/',[CartController::class,'index']);
+    Route::post('/store', [CartController::class,'store']);
+    Route::get('/remove/{cart_id}', [CartController::class,'remove']);
+});

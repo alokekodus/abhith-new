@@ -1,0 +1,149 @@
+@extends('layout.admin.layout.admin')
+
+@section('title','Applied Teacher')
+
+@section('head')
+<style>
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css");
+
+    .padding-1 {
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+</style>
+
+@endsection
+
+@section('content')
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-format-list-bulleted"></i>
+        </span>Teacher Details
+    </h3>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <strong>Promo Video</strong>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div id="videoAttach" class="tabcontent">
+                            <video id="teacher-promo-video" class="video-js" controls preload="auto" width="900"
+                                height="400" data-setup="{}">
+                                <source src="{{asset($user_details->teacherdemovideo_url)}}" type="video/mp4" />
+                            </video>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <a href="{{asset($user_details->resume_url)}}" class="btn btn-primary" data-toggle="modal"
+                    data-target=".bd-example-modal-lg">View Resume</a>
+                @if($user_details->status==1 && (auth()->user()->hasRole('Admin')))
+                <a href="{{route('approved.teacher',Crypt::encrypt($user_details->id))}}"
+                    class="btn btn-inverse-success btn-fw" style="float: right"
+                    onclick="return confirm('Are you sure you would like to approve this application for Teacher Role?');"><i
+                        class="mdi mdi-check-all"></i>
+                    Approved For Become a Teacher</a>
+                @endif
+                @if($user_details->status==2)
+                <div class="btn btn-gradient-success" style="float:right!important;">Referral Code :
+                    {{$user_details->referral_id}}</div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4 text-primary padding-1">
+
+                        <span class="font-weight-bold">Name:</span> <span>{{$user_details->name}} </span><br>
+
+                        <span class="font-weight-bold"> E-mail :</span><span> {{$user_details->email}}</span><br>
+
+                        <span class="font-weight-bold"> Phone :</span><span>{{$user_details->phone}} </span><br>
+
+                        <span class="font-weight-bold"> Gender :</span><span> {{$user_details->gender}}</span><br>
+
+                        <span class="font-weight-bold"> DOB :</span><span> {{$user_details->dob}} </span>
+
+
+                    </div>
+                    <div class="col-4 text-primary padding-1">
+
+
+                        <span class="font-weight-bold"> Apply For : </span><span>
+                            {{$user_details->board->exam_board}}--Class{{$user_details->assignClass->class}}--{{$user_details->assignSubject}}
+                        </span><br>
+                        <span class="font-weight-bold"> Highest Qualification:
+                        </span><span>{{$user_details->education}}</span> <br>
+                        <span class="font-weight-bold"> Class 10th Percentage :
+                        </span><span>{{$user_details->hslc_percentage}}% </span> <br>
+                        <span class="font-weight-bold"> Class 12th Percentage:
+                        </span><span>{{$user_details->hs_percentage}}% </span> <br>
+                        <span class="font-weight-bold">Total Exprience:
+                        </span><span>{{$user_details->total_experience_year??0}} YEAR
+                            {{$user_details->total_experience_month??0}} Month</span> <br>
+
+
+                    </div>
+                    <div class="col-4 text-primary padding-1 ">
+                        <span class="font-weight-bold"> Current Organization : </span><span>
+                            {{$user_details->current_organization??"NA"}}
+                        </span><br>
+                        <span class="font-weight-bold"> Current Designation : </span><span>
+                            {{$user_details->current_designation??"NA"}}
+                        </span><br>
+                        <span class="font-weight-bold"> Current CTC : </span><span>
+                            {{$user_details->ctc??"NA"}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready( function () {
+            $('#all_applied_teacher').DataTable({
+                "processing": true,
+                dom: 'Bfrtip',
+                buttons: [ 
+                    'excel', 'pdf', 'print'
+                ]
+            });
+        });
+</script>
+@endsection
