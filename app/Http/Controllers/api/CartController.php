@@ -13,15 +13,15 @@ class CartController extends Controller
 {
     public function index(){
         
-        $cart = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
+        $cart = Cart::select('id','user_id','is_full_course_selected','assign_class_id','board_id','is_paid','is_remove_from_cart')->with('assignClass:id,class','board:id,exam_board','assignSubject:cart_id,assign_subject_id,amount')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
        
         if (!$cart->isEmpty()) {
 
             $data = [
                 "code" => 200,
                 "status" => 1,
-                "message" => "Your Cart is empty",
-
+                "message" => "All cart items",
+                "carts"=>$cart,
 
             ];
             return response()->json(['status' => 1, 'result' => $data]);
