@@ -11,7 +11,7 @@
     </div>
     <div class="col-5">
         <h6> Course Type: @if($item->is_full_course_selected==1)Full Course @else Custom Package
-            @endif <span data-toggle="tooltip" data-html="true" title="<ol> @foreach($item->assignSubject as $key=>$subject)<li>{{$subject->subject->subject_name}} (RS:  {{number_format($subject->amount,2,'.','')}} )</li> @endforeach </ol>">
+            @endif <span data-toggle="tooltip" data-html="true" title="<ol> @foreach($item->assignSubject as $key=>$subject)<li>{{$subject->subject->subject_name??''}} (RS:  {{number_format($subject->amount,2,'.','')}} )</li> @endforeach </ol>">
                 <i class="fa fa-info-circle" aria-hidden="true" style="color:#076fef"></i>
             </span></h6>
         <h6>Board: {{$item->board->exam_board??''}}<br>Class: {{$item->assignClass->class??''}}</h6>

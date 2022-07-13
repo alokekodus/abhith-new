@@ -34,7 +34,7 @@ class CartController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back();
         }
-
+      
         return view('website.cart.cart')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $totalPrice]);
     }
 
