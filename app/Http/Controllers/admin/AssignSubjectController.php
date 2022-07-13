@@ -61,6 +61,7 @@ class AssignSubjectController extends Controller
                 Toastr::error('Something Want wrong', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
+
             $split_assignedClass = str_split($request->assignedClass);
 
             $assignedClass = $split_assignedClass[0];
@@ -73,8 +74,13 @@ class AssignSubjectController extends Controller
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
                 $image_path = $image_path;
             } else {
-                $image_path = '/files/subject/placeholder.jpg';
-                $image_path = $image_path;
+                if ($request->subject_id == null) {
+                    $image_path = '/files/subject/placeholder.jpg';
+                    $image_path = $image_path;
+                } else {
+                    $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                    $image_path = $assign_subject->subjectAttachment->img_url;
+                }
             }
 
             if (!empty($lessonVideo)) {
@@ -84,12 +90,23 @@ class AssignSubjectController extends Controller
                     $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
                     $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
                 } else {
-                    $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
-                    $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                    if ($request->subject_id == null) {
+                        $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
+                        $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                    } else {
+                        $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                        $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                    }
                 }
             } else {
-                $video_path = null;
-                $video_thumbnail_image_url_path = null;
+                if ($request->subject_id == null) {
+                    $video_path = null;
+                    $video_thumbnail_image_url_path = null;
+                } else {
+                    $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                    $video_path=$assign_subject->attachment_origin_url;
+                    $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                }
             }
 
             $data = [
@@ -103,7 +120,13 @@ class AssignSubjectController extends Controller
                 'description' => $request->description,
                 'why_learn' => $request->why_learn,
             ];
-            $assign_subject = AssignSubject::create($data);
+            if ($request->subject_id == null) {
+                $assign_subject = AssignSubject::create($data);
+            } else {
+                $assign_subject = AssignSubject::find($request->subject_id);
+                $assign_subject->update($data);
+            }
+
 
             // $video_path=str_replace("public/", "",$video_path);
             $data_attachment = [
@@ -114,28 +137,17 @@ class AssignSubjectController extends Controller
                 'type' => 1,
 
             ];
-
-            $lesson_attachment = LessonAttachment::create($data_attachment);
-            // if ($video_path != null) {
-            //     $resizes = ["480", "720", "1080"];
-            //     foreach ($resizes as $key => $resize) {
-            //         if ($resize == 480) {
-            //             $x_dimension = 640;
-            //             $y_dimension = 480;
-            //         }
-            //         if ($resize == 720) {
-            //             $x_dimension = 1280;
-            //             $y_dimension = 720;
-            //         }
-            //         // if($resize==1080){
-            //         //     $x_dimension=1920;
-            //         //     $y_dimension =1080;  
-            //         // }
-            //         $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension));
-            //     }
-            // }
-
-            Toastr::success('Subject created successfully', '', ["positionClass" => "toast-top-right"]);
+            if ($request->subject_id == null) {
+                $lesson_attachment = LessonAttachment::create($data_attachment);
+            } else {
+                $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                $assign_subject->subjectAttachment->update($data_attachment);
+            }
+            if ($request->subject_id == null) {
+                Toastr::success('Subject created successfully', '', ["positionClass" => "toast-top-right"]);
+            } else {
+                Toastr::success('Subject updated successfully', '', ["positionClass" => "toast-top-right"]);
+            }
             return redirect()->route('admin.course.management.subject.all');
         } catch (\Throwable $th) {
             dd($th);
@@ -218,6 +230,8 @@ class AssignSubjectController extends Controller
 
         $subject_id = Crypt::decrypt($id);
         $subject = AssignSubject::with('subjectAttachment')->where('id', $subject_id)->first();
-        return view('admin.course-management.subjects.edit')->with(['subject'=>$subject,'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers]);
+        $classBoard = $subject->assign_class_id . $subject->board_id;
+
+        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard]);
     }
 }
