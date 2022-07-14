@@ -267,6 +267,16 @@
         margin-right: 30px;
         width: 70%;
     }
+
+    .login-details-1 {
+        float: left;
+        width: 100%;
+        padding: 3px 10px;
+    }
+    .login-details-1 li:first-child {
+        margin-right: 40px;
+        width: 50%;
+    }
     /* .login-details li:nth-child(2) {
         margin-right: 40px;
     } */

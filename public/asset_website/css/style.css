@@ -491,6 +491,19 @@ main {
     margin: 0px;
     float: right;
 }
+.login-details-1 {
+    display: flex;
+    margin: 0px;
+    float: right;
+}
+.login-details-1 li:first-child {
+    margin-right: 35px;
+    position: relative;
+}
+.login-details-1 li:nth-child(2) {
+    margin-right: 30px;
+    position: relative;
+}
 
 .login-details li:first-child {
     margin-right: 35px;
