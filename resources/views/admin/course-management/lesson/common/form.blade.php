@@ -40,6 +40,7 @@
     </div>
 </div>
 <div class="blockquote blockquote-primary video" id="video" style="display:none;">
+    <input type="hidden" name="duration" id="duration">
     <div class="row">
         <div class="col-6">
             <div class="form-group">

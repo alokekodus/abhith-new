@@ -68,6 +68,7 @@
       
         for (var i = 0; i < myVideos.length; i++) {
             var duration= myVideos[i].duration/60;
+            ocument.getElementById('duration').value= duration;
         }
       }
 </script>

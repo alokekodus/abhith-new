@@ -34,6 +34,7 @@ class LessonController extends Controller
     {
        
         try {
+            dd($request->all());
             $slug=Str::slug($request->name);
             if($request->has('parent_id')){
                 $lesson=Lesson::find($request->parent_id);
