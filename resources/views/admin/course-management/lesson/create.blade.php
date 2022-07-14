@@ -46,9 +46,10 @@
     var myVideos = [];
 
     window.URL = window.URL || window.webkitURL;
-    document.getElementById('videoUpload').onchange = setFileInfo;
+    document.getElementById("videoUpload").onchange = setFileInfo;
 
         function setFileInfo() {
+            console.log("click here");
         var files = this.files;
         myVideos.push(files[0]);
         var video = document.createElement('video');
@@ -68,7 +69,8 @@
       
         for (var i = 0; i < myVideos.length; i++) {
             var duration= myVideos[i].duration/60;
-            ocument.getElementById('duration').value= duration;
+            document.getElementById('duration').value= duration;
+            console.log(duration);
         }
       }
 </script>

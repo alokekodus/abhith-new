@@ -6,6 +6,7 @@ use App\Http\Controllers\api\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
+use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\website\WebsiteAuthController;
 
@@ -52,7 +53,7 @@ Route::prefix('subjects')->group(function(){
     Route::post('',[SubjectController::class,'findSubject']);
 });
 
-
+Route::get('/gallery',[GalleryController::class,'index']);
 //get board
 Route::get('/board',[BoardController::class,'index']);
 
