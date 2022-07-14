@@ -21,7 +21,7 @@
         <div class="col-lg-4 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
             <div style="box-shadow: 0px 6px 10px #d1d1d1;">
                 @if($subject->subjectAttachment->attachment_origin_url!=null)
-                <video id="player" class="video-js" controls preload="auto"
+                <video id="player" class="video-js vjs-big-play-centered" controls preload="auto"
                     poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" data-setup="{}">
                     <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4" class="w100"/>
                 </video>
@@ -109,7 +109,7 @@
             </ul>
             <!-- Tab panes -->
             <div class="tab-content mt-3">
-                <div class="tab-pane container fade" id="whylearn">
+                <div class="tab-pane container fade show active" id="whylearn">
                     <h6> {!!$subject->why_learn!!} </h6>
                 </div>
             </div>

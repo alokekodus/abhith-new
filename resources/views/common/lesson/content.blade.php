@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="container demo">
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="container">
+        <div class="panel-group subject-content" id="accordion" role="tablist" aria-multiselectable="true">
             @foreach($subject->lesson as $key=>$lesson)
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">

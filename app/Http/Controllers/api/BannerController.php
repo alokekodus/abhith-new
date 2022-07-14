@@ -12,7 +12,7 @@ class BannerController extends Controller
     {
         try {
             $banner = Banner::select('name', 'banner_image', 'description')->where('is_activate', 1)->get();
-            $result = ['banner' => $banner];
+            $result = ["banner" => $banner];
             if (!$banner->isEmpty()) {
                 $data = [
                     "code" => 200,

@@ -146,10 +146,22 @@ $prefix = Request::route()->getPrefix();
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
   }
-  .video-js{
-    height: 300px;
+
+  /* video js css */
+  .video-js {
+    height: 280px;
     width: 365px;
+    top: 0%;
+    border-style: double;
+    border-width: thick;
+    border-color: black;
   }
+
+  .video-js .vjs-play-progress {
+    background-color: #007bff;
+  }
+
+  
 </style>
 
 
