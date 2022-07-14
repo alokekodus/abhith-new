@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\UserDetails;
 use Illuminate\Http\Request;
 
-class BannerController extends Controller
+class UserController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         try {
-            $banner = Banner::select('name', 'banner_image', 'description')->where('is_activate', 1)->get();
-            $result = ['banner' => $banner];
-            if (!$banner->isEmpty()) {
+            $user_details = UserDetails::select('name','email','phone','education','gender','image')->where('email',auth()->user()->email)->first();
+            
+            $result = ["user_details" => $user_details];
+            if (!$user_details=null) {
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "all banners",
+                    "message" => "Your Details",
                     "result" => $result,
 
                 ];
@@ -31,6 +31,7 @@ class BannerController extends Controller
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
             }
+
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
@@ -40,5 +41,6 @@ class BannerController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
+       
     }
 }

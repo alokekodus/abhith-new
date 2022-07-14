@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\SubjectController;
+use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\website\WebsiteAuthController;
 
 /*
@@ -65,4 +66,7 @@ Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[CartController::class,'index']);
     Route::post('/store', [CartController::class,'store']);
     Route::get('/remove/{cart_id}', [CartController::class,'remove']);
+});
+Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
+    Route::get('/',[UserController::class,'index']);
 });

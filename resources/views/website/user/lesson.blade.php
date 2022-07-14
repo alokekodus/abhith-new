@@ -146,6 +146,10 @@ $prefix = Request::route()->getPrefix();
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
   }
+  .video-js{
+    height: 300px;
+    width: 365px;
+  }
 </style>
 
 
@@ -167,46 +171,7 @@ $prefix = Request::route()->getPrefix();
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
   $(document).ready(function() {
-    var Subject=@json($subject);
-        var subject_attachment=Subject.subject_attachment;
-        var storagePath = "{!! storage_path() !!}";
-        var FULLHD= subject_attachment['origin_video_url'] ;
-        var SD= subject_attachment['video_resize_480'] ;
-        var HD= subject_attachment['video_resize_720'] ;
-        var player = videojs('player', {
-        fluid: true,
-        plugins: {
-            videoJsResolutionSwitcher: {
-            default: '480px',
-            dynamicLabel: true
-            }
-        }
-        });
-        player.updateSrc([
-        {
-            src: 'http://localhost/abhith-new/public/storage/'+SD,
-            type: 'video/mp4',
-            res: 480,
-            label: '480px'
-        },
-        {
-            src: 'http://localhost/abhith-new/public/storage/'+HD,
-            type: 'video/mp4',
-            res: 720,
-            label: '720px'
-        },
-            {
-            src: 'http://localhost/abhith-new/public/storage/'+FULLHD,
-            type: 'video/mp4',
-            res: 1080,
-            label: '1080px'
-        },
-        
-        ]);
-        player.watermark({
-            file: 'watermarks.png',
-           
-        });
+    var myPlayer = videojs('player');
    });
    
   
