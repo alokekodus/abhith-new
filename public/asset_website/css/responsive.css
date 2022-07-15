@@ -20,21 +20,53 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .login-details li:first-child {
+    /* .login-details li:first-child {
         margin-right: 100px;
         position: relative;
     }
     .login-details li:nth-child(2) {
         margin-right: 100px;
+    } */
+    .login-details {
+        /* float: left; */
+        width: 100%;
+        padding: 6px 0px;
+        justify-content: space-around;
+    }
+    .login-details-1 {
+        float: none;
+        padding: 6px 0px;
+        justify-content: space-between;
+    }
+    .login-details-icon {
+        font-size: 25px;
+    }
+    .login-text{
+        font-size: 20px;
     }
     .mobile-nav-toggle {
-        top: 100px;
+        top: 115px;
     }
     #header {
-        top: 75px;
+        top: 88px;
     }
     .mobile-nav-toggle {
-        right: 100px;
+        right: 110px;
+    }
+    .home-slide {
+        /* height: 520px; */
+        height: 100%;
+        margin-top: 45px;
+    }
+    .home-banner .owl-dots {
+        left: 39%;
+    }
+    .about-us {
+        margin: 30px 80px 0px 80px;
+        padding: 30px 0px;
+    }
+    .about-us .about-left{
+        margin-bottom: 25px;
     }
     .home-courses {
         padding-top: 50px;
@@ -118,19 +150,24 @@
     }
     .testimonial,
     .professionals {
-        margin: 0px 15px;
+        margin: 10px 15px;
         padding: 15px 0px;
     }
 
     .about-us,
     .home-courses,
     .subheader {
-        margin: 0px 0px;
-        padding: 15px 0px;
+        margin: 30px 0px;
+        padding: 0px;
+    }
+
+    .home-banner .owl-dots {
+        left: 30%;
+        bottom: -95px;
     }
 
     .blogs {
-        margin: 15px 0px;
+        margin: 30px 0px;
     }
 
     .about-us1,
@@ -168,7 +205,7 @@
 
     #header {
         padding: 0px 15px;
-        top: 95px;
+        top: 65px;
         box-shadow: 1px 2px 1px #eee !important;
     }
 
@@ -258,12 +295,25 @@
     }
 
     .login-details {
-        float: left;
         width: 100%;
-        padding: 3px 10px;
+        /* padding: 3px 10px; */
+        justify-content: space-around;
+    }
+    .login-details-1 {
+        float: none;
+        justify-content: space-between;
+    }
+    .login-details-1 li:first-child {
+        margin-right: 0px;
+    }
+    .login-details-1 li:nth-child(2) {
+        margin-right: 5px;
+    }
+    .account-list li {
+        margin-left: 15px;
     }
 
-    .login-details li:first-child {
+    /* .login-details li:first-child {
         margin-right: 30px;
         width: 70%;
     }
@@ -276,10 +326,27 @@
     .login-details-1 li:first-child {
         margin-right: 40px;
         width: 50%;
-    }
+    } */
     /* .login-details li:nth-child(2) {
         margin-right: 40px;
     } */
+
+    .login-details li:nth-child(1) {
+        margin-right: 10px;
+        position: relative;
+    }
+    .login-details li:nth-child(2) {
+        margin-right: 10px;
+        position: relative;
+    }
+    .login-details-icon {
+        font-size: 17px;
+        margin-right: 2px;
+        padding-top: 4px;
+    }
+    .login-text{
+        font-size: 13px;
+    }
     .courseRightBlock {
         padding-top: 0px;
         margin-bottom: 25px;
@@ -303,7 +370,7 @@
 
     #carousel-banner .home-slide {
         height: 100%;
-        margin-top: 15px;
+        margin-top: 0px;
     }
 
     .home-desc {
@@ -572,7 +639,7 @@
     }
 
     .block-ellipsis2 {
-        height: 73px;
+        height: auto;
     }
 
     .knowledge-forum {
