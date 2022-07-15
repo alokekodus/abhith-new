@@ -65,9 +65,10 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function subjectDetails($id)
+    public function subjectDetails(Request $request)
     {
         try {
+            $id=$_GET['subject_id'];
             $subject = AssignSubject::select('id', 'subject_name', 'subject_amount', 'assign_class_id', 'board_id', 'description', 'why_learn', 'created_at')->with(['assignClass:id,class', 'boards:id,exam_board', 'lesson', 'lesson.topics', 'subjectAttachment'])->where('id', $id)->first();
             $subject_promo_video = $subject->subjectAttachment->attachment_origin_url;
             if($subject_promo_video!=null){

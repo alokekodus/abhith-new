@@ -52,7 +52,7 @@ Route::prefix('homepage')->group(function(){
 });
 
     Route::post('subjects',[SubjectController::class,'findSubject']);
-    Route::get('subject-details/{subject_id}',[SubjectController::class,'subjectDetails']);
+    Route::get('subject-details',[SubjectController::class,'subjectDetails']);
 
 
 Route::get('/gallery',[GalleryController::class,'index']);
