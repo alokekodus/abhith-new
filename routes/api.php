@@ -50,10 +50,10 @@ Route::prefix('homepage')->group(function(){
     Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
    
 });
-Route::prefix('subjects')->group(function(){
-    Route::post('',[SubjectController::class,'findSubject']);
-    Route::get('/{subject_id}',[SubjectController::class,'subjectDetails']);
-});
+
+    Route::post('subjects',[SubjectController::class,'findSubject']);
+    Route::get('subject-details/{subject_id}',[SubjectController::class,'subjectDetails']);
+
 
 Route::get('/gallery',[GalleryController::class,'index']);
 //get board
