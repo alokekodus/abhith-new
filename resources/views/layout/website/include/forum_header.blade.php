@@ -4,7 +4,7 @@
             <div class="col-lg-5">
                 <div class="knowledge-logo">
                     <a href="{{route('website.dashboard')}}">
-                        <img src="{{asset('asset_website/img/home/logo_.png')}}" class="w100">
+                        <img src="{{asset('asset_website/img/home/logo_.png')}}" class="">
                     </a>
                 </div>
             </div>
@@ -24,12 +24,17 @@
             </div>
             @endguest
             @auth
-            <div class="col-lg-7 p0">
+            <div class="col-lg-7 ">
                 <ul class="list-inline knowledge-header-list">
-                    <li><a href="{{route('website.dashboard')}}">Home</a></li>
-                    <li id="forum-search-bar"><input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search Course">
+                    <li>
+                        <a href="{{route('website.dashboard')}}">Home</a>
                     </li>
-                    <li><a data-toggle="modal" data-target="#add-question-modal" class="add-post" style="cursor: pointer">Add Post</a></li>
+                    <li id="forum-search-bar">
+                        <input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search Course">
+                    </li>
+                    <li>
+                        <a data-toggle="modal" data-target="#add-question-modal" class="add-post" style="cursor: pointer">Add Post</a>
+                    </li>
                 </ul>
             </div>
             @endauth
