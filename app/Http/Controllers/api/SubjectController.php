@@ -69,10 +69,25 @@ class SubjectController extends Controller
     {
         try {
             $subject = AssignSubject::select('id', 'subject_name', 'subject_amount', 'assign_class_id', 'board_id', 'description', 'why_learn', 'created_at')->with(['assignClass:id,class', 'boards:id,exam_board', 'lesson', 'lesson.topics', 'subjectAttachment'])->where('id', $id)->first();
-
-            $subject_image = $subject->subjectAttachment->img_url;
-            $subject_video_thumbnail_image = $subject->subjectAttachment->video_thumbnail_image;
             $subject_promo_video = $subject->subjectAttachment->attachment_origin_url;
+            if($subject_promo_video!=null){
+                $attachment_type="video";
+                $subject_video_thumbnail_image = $subject->subjectAttachment->video_thumbnail_image;
+                $subject_attachment = $subject->subjectAttachment->attachment_origin_url;
+             
+             }else{
+                $attachment_type="image";
+                $subject_video_thumbnail_image=null;
+                $subject_attachment = $subject->subjectAttachment->img_url;
+             }
+            $subject_attachment=[
+                'attachment_type'=> $attachment_type,
+                'subject_attachment'=>$subject_attachment,
+                'subject_video_thumbnail_image'=>$subject_video_thumbnail_image,
+
+            ];
+           
+           
             $total_lesson = $subject->lesson->count();
             $total_topic = Lesson::where('assign_subject_id', $id)->where('parent_id', '!=', null)->get()->count();
             $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->get()->count();
@@ -85,9 +100,6 @@ class SubjectController extends Controller
                 'description' => $subject->description,
                 'why_learn' => $subject->why_learn,
                 'created_at' => $subject->created_at,
-                'subject_image' => $subject->subject_image,
-                'subject_video_thumbnail_image' => $subject->subject_video_thumbnail_image,
-                'subject_promo_video' => $subject->subject_promo_video,
                 'board_id' => $subject->boards->id,
                 'board_name' => $subject->boards->exam_board,
                 'class_id' => $subject->assignClass->id,
@@ -99,13 +111,14 @@ class SubjectController extends Controller
                 'total_article' => $total_article,
 
             ];
-
+           
            
 
             if (!$subject == null) {
                 $result = [
                     
                     'subject_details' => $subject_details,
+                    'subject_attachment'=>$subject_attachment,
                     
                 ];
                 $data = [
