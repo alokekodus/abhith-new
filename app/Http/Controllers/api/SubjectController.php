@@ -72,18 +72,16 @@ class SubjectController extends Controller
             $subject_promo_video = $subject->subjectAttachment->attachment_origin_url;
             if($subject_promo_video!=null){
                 $attachment_type="video";
-                $subject_video_thumbnail_image = $subject->subjectAttachment->video_thumbnail_image;
                 $subject_attachment = $subject->subjectAttachment->attachment_origin_url;
              
              }else{
                 $attachment_type="image";
-                $subject_video_thumbnail_image=null;
                 $subject_attachment = $subject->subjectAttachment->img_url;
              }
             $subject_attachment=[
                 'attachment_type'=> $attachment_type,
-                'subject_attachment'=>$subject_attachment,
-                'subject_video_thumbnail_image'=>$subject_video_thumbnail_image,
+                'attachment'=>$subject_attachment,
+                
 
             ];
            
