@@ -52,6 +52,7 @@ Route::prefix('homepage')->group(function(){
 });
 Route::prefix('subjects')->group(function(){
     Route::post('',[SubjectController::class,'findSubject']);
+    Route::get('/{subject_id}',[SubjectController::class,'subjectDetails']);
 });
 
 Route::get('/gallery',[GalleryController::class,'index']);
