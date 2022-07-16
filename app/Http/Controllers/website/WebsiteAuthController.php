@@ -458,7 +458,7 @@ class WebsiteAuthController extends Controller
             }
             
             $mobile_email_verification_data=MobileAndEmailVerification::where('mobile',$request->phone)->where('mobile_email_otp',$request->otp)->first();
-            return response()->json(['status' => false, 'message' => $mobile_email_verification_data]);
+            return response()->json(['status' => false, 'message' => $request->phone]);
             if($mobile_email_verification_data){
                 $mobile_email_verification_data->update(['mobile_email_verification'=>1]);
                 $data = [
