@@ -49,6 +49,7 @@
     }
     #header {
         top: 88px;
+        background: none;
     }
     .mobile-nav-toggle {
         right: 110px;
@@ -152,6 +153,26 @@
     }
     .profile-form{
         margin-top: 30px;
+    }
+    .knowledge-header-section {
+        top: 88px;
+        padding: 5px 65px;
+    }
+    .knowledge-forum{
+        margin-top: 250px;
+    }
+    .knowledge-header-list {
+        display: flex;
+    }
+    .knowledge-forum-profile-top img{
+        height: 175px;
+    }
+    .add-post {
+        padding: 10px 15px;
+    }
+    .time-table{
+        margin-top: 215px;
+        margin-bottom: 50px;
     }
 }
 @media (max-width: 767px) {
@@ -324,6 +345,9 @@
     }
     .account-list li {
         margin-left: 15px;
+    }
+    .account-list li a{
+        font-size: 16px;
     }
 
     /* .login-details li:first-child {
@@ -737,6 +761,9 @@
 
     .knowledge-forum-right1 {
         margin-bottom: 30px;
+    }
+    .knowledge-forum-profile-top img{
+        height: 125px;
     }
 
     .profile-form .pl10 {

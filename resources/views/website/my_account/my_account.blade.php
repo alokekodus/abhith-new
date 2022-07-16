@@ -13,8 +13,9 @@
         <div class="row">
             <div class="col-lg-4 col-12">
                 <div class="knowledge-forum-right1 sidebar">
-                    <div class="knowledge-forum-profile-top"><img
-                            src="{{asset('asset_website/img/knowladge-forum/bg.png')}}" class="w100"></div>
+                    <div class="knowledge-forum-profile-top">
+                        <img src="{{asset('asset_website/img/knowladge-forum/bg.png')}}" class="w100">
+                    </div>
                     <div class="knowledge-forum-profile-bottom1">
                         <div class="knowledge-pic">
                             @if($user_details != null)
