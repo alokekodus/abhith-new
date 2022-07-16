@@ -37,6 +37,7 @@ Route::post('login', [WebsiteAuthController::class, 'login']);
 //singup verify otp
 Route::post('send-mobile-otp', [WebsiteAuthController::class, 'sendMobileOtp']);
 Route::post('verify-mobile-otp', [WebsiteAuthController::class, 'verifyMobileOtp']);
+Route::get('send-email-otp', [WebsiteAuthController::class, 'sendEmailOtp']);
 
 
 Route::get('/video-url', function () {

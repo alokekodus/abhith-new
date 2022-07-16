@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Common\Activation;
 use App\Common\Type;
+use App\Mail\OtpVerfication;
 use App\Models\MobileAndEmailVerification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class WebsiteAuthController extends Controller
@@ -371,6 +373,14 @@ class WebsiteAuthController extends Controller
         try {
             if($request->has('phone')){
                
+                
+
+                $validator = Validator::make($request->all(), [
+                    'phone' => 'required|numeric',
+                ]);
+                if ($validator->fails()) {
+                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
+                }
                 $user=User::where('phone',$request->phone)->where('is_activate',1)->first();
               
                 if($user!=null){
@@ -380,13 +390,6 @@ class WebsiteAuthController extends Controller
                         "message" => "Oops! User already exists",
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                }
-
-                $validator = Validator::make($request->all(), [
-                    'phone' => 'required|numeric',
-                ]);
-                if ($validator->fails()) {
-                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
                 }
                
                 $phone = $request->phone;
@@ -479,6 +482,57 @@ class WebsiteAuthController extends Controller
             }
 
         } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function sendEmailOtp(Request $request){
+        try {
+            
+            $user=User::where('email',"islogicormagic@gmail.com")->where('is_activate',1)->first();
+              
+            if($user!=null){
+                $data = [
+                    "code" => 400,
+                    "status" => 0,
+                    "message" => "Oops! User already exists",
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+            $email = "islogicormagic@gmail.com";
+            $otp = rand(100000, 999999);
+
+            $mobile_email_verification_data=MobileAndEmailVerification::where('email',$email)->first();
+           
+            $data=[
+                'otp'=>$otp,
+                'email'=>$email,
+            ];
+            $details = [
+                'otp' => $otp,
+               
+            ];
+            
+            Mail::to($request->email)->send(new OtpVerfication($details));
+            
+           
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "Otp sent successfully",
+                    'data'=>$data
+                    
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);     
+           
+        } catch (\Throwable $th) {
+            dd($th);
             $data = [
                 "code" => 400,
                 "status" => 0,
