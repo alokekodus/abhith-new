@@ -56,13 +56,13 @@
                 autoStart: true
             }
         });
-        $('[data-fancybox="images1"]').fancybox({
-            beforeShow : function(){
-                this.title =  $(this.element).data("caption");
-            },
-            thumbs: {
-                autoStart: true
-            }
-        });
+        // $('[data-fancybox="images1"]').fancybox({
+        //     beforeShow : function(){
+        //         this.title =  $(this.element).data("caption");
+        //     },
+        //     thumbs: {
+        //         autoStart: true
+        //     }
+        // });
     </script>
 @endsection

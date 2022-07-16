@@ -8,7 +8,7 @@
                     </a>
                 </div>
             </div>
-            @guest
+           
             <div class="col-lg-7">
                 <ul class="list-inline knowledge-header-list">
                     <li>
@@ -18,12 +18,12 @@
                         <input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search Course">
                     </li>
                     <li>
-                        <a data-toggle="modal" data-target="#login-modal" class="add-post" style="cursor: pointer">Add Post</a>
+                        <a data-toggle="modal" @guest data-target="#login-modal" @endguest  @auth data-target="#add-question-modal" @endauth class="add-post" style="cursor: pointer">Add Post</a>
                     </li>
                 </ul>
             </div>
-            @endguest
-            @auth
+           
+            {{-- @auth
             <div class="col-lg-7 p0">
                 <ul class="list-inline knowledge-header-list">
                     <li><a href="{{route('website.dashboard')}}">Home</a></li>
@@ -32,7 +32,7 @@
                     <li><a data-toggle="modal" data-target="#add-question-modal" class="add-post" style="cursor: pointer">Add Post</a></li>
                 </ul>
             </div>
-            @endauth
+            @endauth --}}
         </div>
     </div>
 </section>
