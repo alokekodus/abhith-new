@@ -3,17 +3,7 @@
 @section('title', 'My Account')
 
 @section('head')
-<style>
-        #header {
-            display: none;
-        }
-
-        .sidebar {
-            position: sticky;
-            top: 150px;
-        }
-
-    </style>
+<link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')

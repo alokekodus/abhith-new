@@ -2,18 +2,16 @@
 <html lang="en">
 {{-- head --}}
 @include('layout.website.include.head')
-@php
-$prefix = Request::route()->getPrefix();
-@endphp
+
 
 <body>
 
     <!-- ======= Header ======= -->
     @include('layout.website.include.header')
     
-    @if($prefix!='/account')
+   
     @include('layout.website.include.navbar')
-    @endif
+    
     <!-- End Header -->
 
 
