@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
 use App\Http\Controllers\api\GalleryController;
+use App\Http\Controllers\Api\MobileEmailVerificationController;
 use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\website\WebsiteAuthController;
+use App\Models\MobileAndEmailVerification;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,9 @@ Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp']);
 Route::post('signup', [WebsiteAuthController::class, 'mobileSignUp']);
 Route::post('login', [WebsiteAuthController::class, 'login']);
 
+//singup verify otp
+Route::post('send-mobile-otp', [MobileEmailVerificationController::class, 'sendMobileOtp']);
+Route::post('verify-mobile-otp', [MobileEmailVerificationController::class, 'verifyMobileOtp']);
 
 
 Route::get('/video-url', function () {
@@ -51,8 +56,9 @@ Route::prefix('homepage')->group(function(){
    
 });
 
-    Route::post('subjects',[SubjectController::class,'findSubject']);
-    Route::get('subject-details',[SubjectController::class,'subjectDetails']);
+Route::post('subjects',[SubjectController::class,'findSubject']);
+Route::get('subject-details',[SubjectController::class,'subjectDetails']);
+Route::get('subject/lessons',[SubjectController::class,'LessonDetails']);
 
 
 Route::get('/gallery',[GalleryController::class,'index']);

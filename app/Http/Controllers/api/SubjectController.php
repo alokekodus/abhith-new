@@ -139,4 +139,36 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function LessonDetails(Request $request){
+        try {
+            $id=$_GET['subject_id'];
+            $subject = Lesson::with('topics','subTopics','lessonAttachment','assignTeacher')->where('assign_subject_id',$id)->get();
+            if (!$subject == null) {
+                $result = [
+                    
+                    'subject_details' => $subject,
+                    
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "all board",
+                    "result" => $result,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+
+
+
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
 }

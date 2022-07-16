@@ -96,6 +96,7 @@ class WebsiteAuthController extends Controller
         }
     }
 
+   
 
     public function otpSend($phone, $otp)
     {
@@ -228,7 +229,7 @@ class WebsiteAuthController extends Controller
     public function login(Request $request)
     {
         try {
-          
+
             if (getPrefix($request) == "api") {
                 $type = Type::User;
             } elseif (getPrefix($request) == "teacher") {
@@ -276,7 +277,7 @@ class WebsiteAuthController extends Controller
                 ]);
 
                 if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
-                   
+
                     if ($request->current_route == null) {
                         if (auth()->user()->hasRole('Teacher')) {
                             return redirect()->route('admin.dashboard');
