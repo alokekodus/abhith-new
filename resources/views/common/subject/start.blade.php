@@ -1,110 +1,76 @@
 <div class="container-fluid">
     <p class="cross-line">
-    <h2 class="heading-black">{{$subject->boards->exam_board}} > Class {{$subject->assignClass->class}} > {{$subject->subject_name}}</h2>
+    <h2 class="heading-black">{{$subject->boards->exam_board}} > Class {{$subject->assignClass->class}} >
+        {{$subject->subject_name}}</h2>
     </p>
     <div class="row">
 
-        <div class="col-lg-8 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
+        <div class="col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
 
             <p class="cross-line">
                 <span>All Content</span>
             </p>
-            @include('common.lesson.content')
-        </div>
+            <div class="row">
+                <div class="container">
+                    <div class="panel-group subject-content" id="accordion" role="tablist" aria-multiselectable="true">
+                        @foreach($subject->lesson as $key=>$lesson)
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h5 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseLesson{{$key}}" @if($key==0) aria-expanded="true" @else
+                                        aria-expanded="false" @endif aria-controls="collapseLesson{{$key}}">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        {{$key+1}}. Lesson : {{$lesson->name}}
+                                    </a>
 
-        <div class="col-lg-4 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
-            <div style="box-shadow: 0px 6px 10px #d1d1d1;">
-                @if($subject->subjectAttachment->attachment_origin_url!=null)
-                <video id="player" class="video-js vjs-big-play-centered" controls preload="auto"
-                    poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" data-setup="{}">
-                    <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4" class="w100"/>
-                </video>
-                {{-- <video id="player" data-setup="{}" controls="">
-                    <source src="{{asset($subject->subjectAttachment->attachment_origin_ur)}}" type="video/mp4">
-                </video> --}}
-                @else
-                <img src="{{asset($subject->image)}}" class="w100">
-                @endif
-                <div class="course-desc1">
-                    <h4 class="small-heading-black">
-                        <span class="d-flex  course-header-and-back-to-pckg-btn">
-                            {{$subject->subject_name}}
-                            @guest
-                            <a href="#">
-                                <i class="fa fa-reply"></i> &nbsp;Package
-                            </a>
-                            @endguest
-                        </span>
-                    </h4>
-                    <span>Created by : Demo Teacher</span><br>
-                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span>
-                    {{-- <a
-                        href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
-                        class="enroll">View Details</a> --}}
+                                </h5>
+                            </div>
 
-                    @if(auth()->check())
-                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
-                        class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
-                        Course</a>
-                    @else
-                    <div class="d-flex card-button mb-2">
-                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn"><i
-                                class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
-                        <!-- <a class="btn btn-primary btn-lg btn-block mt-2">Go to Package</a> -->
-                    </div>
-                    @endif
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-lg-7 col-md-12">
-
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h5 class="panel-title">
-                            <a href="{{route('website.subject.mcq',Crypt::encrypt($subject->id))}}" role="button"
-                                data-toggle="collapse" data-parent="#accordion" href="#collapseLesson"
-                                aria-expanded="true" aria-controls="collapseLesson">
-                                <i class="more-less glyphicon glyphicon-plus"></i>
-                                ALL MCQ'S QUESTION SET
-                            </a>
-                        </h5>
-                    </div>
-                </div>
-            </div><!-- panel-group -->
-        </div>
-    </div>
-</div>
+                            <div id="collapseLesson{{$key}}" @if($key==0) class="panel-collapse collapse show" @else
+                                class="panel-collapse collapse" @endif role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body" style="position:relative; left:40px;">
+                                    @if($lesson->type==1)
+                                    <i class="fa fa-file" aria-hidden="true"></i> {{$lesson->name}}<br>
+                                    <a href="https://source.unsplash.com/cZVthlrnlnQ/1500x1000" data-fancybox="group"
+                                        data-caption="This image has a caption 2">
+                                        <img src="https://source.unsplash.com/cZVthlrnlnQ/240x160" />
+                                    </a><br>
+                                    @elseif($lesson->type==2)
+                                    <i class="fa fa-play" aria-hidden="true"></i> {{$lesson->name}}<br>
+                                    @else
+                                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> {{$lesson->name}}<br>
+                                    @endif
+                                    @if($lesson->topics->count()>0)
+                                    @foreach($lesson->topics as $key=>$topic)
+                                    <u>{{$key+1}}. {{$topic->name}}</u><br>
+                                    @if($topic->type==1)
+                                    <i class="fa fa-file" aria-hidden="true"></i> {{$topic->name}}<br>
+                                    @elseif($topic->type==2)
+                                    <i class="fa fa-play" aria-hidden="true"></i> {{$topic->name}}<br>
+                                    @else
+                                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> {{$topic->name}}<br>
+                                    @endif
+                                    @if($topic->subTopics->count()>0)
+                                    @foreach($topic->subTopics as $key=>$sub_topic)
+                                    @if($sub_topic->type==1)
+                                    <i class="fa fa-file" aria-hidden="true"></i> {{$sub_topic->name}}<br>
+                                    @elseif($sub_topic->type==2)
+                                    <i class="fa fa-play" aria-hidden="true"></i> {{$sub_topic->name}}<br>
+                                    @else
+                                    <i class="fa fa-newspaper-o" aria-hidden="true"></i> {{$sub_topic->name}}<br>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div><!-- panel-group -->
 
 
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-md-7">
-            <ul class="nav nav-tabs">
-                <!-- <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#teacher">
-                        <h4 class="small-heading-black">Teacher</h4>
-                    </a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#whylearn">
-                        <h4 class="small-heading-black">What you'll learn</h4>
-                    </a>
-                </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content mt-3">
-                <div class="tab-pane container fade show active" id="whylearn">
-                    <h6> {!!$subject->why_learn!!} </h6>
                 </div>
             </div>
         </div>

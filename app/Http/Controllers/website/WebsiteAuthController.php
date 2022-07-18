@@ -346,7 +346,7 @@ class WebsiteAuthController extends Controller
                     "status" => 0,
                     "message" => "Please verify your mobile number",
                 ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                return response()->json(['status' => 0, 'result' => $data]);
             }
             if($is_email_verified==null){
                 $data = [
@@ -354,7 +354,7 @@ class WebsiteAuthController extends Controller
                     "status" => 0,
                     "message" => "Please verify your email address",
                 ];
-                return response()->json(['status' => 1, 'result' => $data]); 
+                return response()->json(['status' => 0, 'result' => $data]); 
             }
             $data = [
                 'name' => $request->name,

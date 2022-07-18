@@ -7,7 +7,7 @@ $prefix = Request::route()->getPrefix();
 
 @section('head')
 <link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
-
+<link href="{{ asset('asset_website/css/jquery.fancybox.css') }}" rel="stylesheet">
 <style>
   .panel-default>.panel-heading {
     color: #333;
@@ -181,6 +181,25 @@ $prefix = Request::route()->getPrefix();
 @section('scripts')
 <script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
+<script src="{{ asset('asset_website/js/jquery.fancybox.js') }}"></script>
+<script type="text/javascript">
+    $('[data-fancybox="group"]').fancybox({
+        beforeShow : function(){
+        this.title =  $(this.element).data("caption");
+        },
+        thumbs: {
+            autoStart: true
+        }
+    });
+    // $('[data-fancybox="images1"]').fancybox({
+    //     beforeShow : function(){
+    //         this.title =  $(this.element).data("caption");
+    //     },
+    //     thumbs: {
+    //         autoStart: true
+    //     }
+    // });
+</script>
 <script>
   $(document).ready(function() {
     var myPlayer = videojs('player');
