@@ -163,7 +163,13 @@ class SubjectController extends Controller
             }
             $total_video = Lesson::with(['lessonAttachment'])->where('type',2)->where('parent_id',$lesson->id)->get()->count();
             $total_article = Lesson::with(['lessonAttachment'])->where('type',3)->where('parent_id',$lesson->id)->get()->count();
-          
+            $subject_content=
+            [
+                'total_pdf'=>$pdf,
+                'total_image'=>$img,
+                'total_video'=>$total_video,
+                'total_article'=>$total_article,
+            ];
             
             $lesson=[
                 'id'=>$lesson->id,
@@ -174,31 +180,31 @@ class SubjectController extends Controller
                 'class_name'=>$lesson->assignClass->class,
                 'subject_id'=>$lesson->assignSubject->id,
                 'subject_name'=>$lesson->assignSubject->subject_name,
-                'total_content'=>$topic,
+                'total_content'=>$subject_content,
                
              ];
              $lessonData[] = $lesson;
            
            }
+            if (!$lessonData == null) {
+                
+                $data = [
+                    "code" => 200,
+                    "message" => "all board",
+                    "result" => $lessonData,
 
-           return response()->json($lessonData);
-          
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+                $data = [
+                    "code" => 200,
+                    "message" => "No record found",
 
-            // if (!$subject == null) {
-            //     $result = [
-                    
-            //         'subject_details' => $subject,
-                    
-            //     ];
-            //     $data = [
-            //         "code" => 200,
-            //         "status" => 1,
-            //         "message" => "all board",
-            //         "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
 
-            //     ];
-            //     return response()->json(['status' => 1, 'result' => $data]);
-            // }
+
+            }
 
 
 
