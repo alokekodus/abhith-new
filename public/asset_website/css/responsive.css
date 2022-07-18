@@ -834,6 +834,9 @@
     .mobile-nav-close-btn {
         display: none;
     } */
+    .counter-list-img{
+        display: none;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
