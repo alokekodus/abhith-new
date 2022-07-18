@@ -475,7 +475,7 @@ class WebsiteAuthController extends Controller
                 $data = [
                     "code" => 400,
                     "status" => 0,
-                    "message" => "OTP verification Miamatch",    
+                    "message" => "OTP verification Mismatch",    
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
@@ -577,7 +577,7 @@ class WebsiteAuthController extends Controller
                 $data = [
                     "code" => 400,
                     "status" => 0,
-                    "message" => "OTP verification Miamatch",    
+                    "message" => "OTP verification Mismatch",    
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
