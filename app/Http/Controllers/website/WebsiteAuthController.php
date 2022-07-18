@@ -496,7 +496,7 @@ class WebsiteAuthController extends Controller
                     "message" => "OTP verification Mismatch",    
 
                 ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                return response()->json(['status' => 0, 'result' => $data]);
             }
 
         } catch (\Throwable $th) {
@@ -598,7 +598,7 @@ class WebsiteAuthController extends Controller
                     "message" => "OTP verification Mismatch",    
 
                 ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                return response()->json(['status' => 0, 'result' => $data]);
             }
 
         } catch (\Throwable $th) {

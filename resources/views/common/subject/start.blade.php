@@ -1,171 +1,112 @@
-<!-- Sidebar -->
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand" style="padding: 19px;">
-                <a href="#">
-                    <span>{{$subject->subject_name}}</span>
-                </a>
-            </li>
-            <div class="accordion" id="accordionExample" style="background-color: white;">
-                @foreach($lessons as $key=>$lesson)
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseLesson{{$key}}"
-                                    aria-expanded="true" aria-controls="collapseOne">
-                                    <span class="lesson-small-heading-black">{{$key+1}} . Lesson: {{$lesson->name}}
-                                    </span>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseLesson{{$key}}" class="panel-collapse collapse in" role="tabpanel"
-                            aria-labelledby="headingOne">
-                            <div class="panel-body" style="background-color: white;">
+<div class="container-fluid">
+    <p class="cross-line">
+    <h2 class="heading-black">{{$subject->boards->exam_board}} > Class {{$subject->assignClass->class}} > {{$subject->subject_name}}</h2>
+    </p>
+    <div class="row">
 
-                                <a class="topic-small-heading-black lesson-attach"
-                                    onclick="displayAttachment('content',{{$lesson->id}})"
-                                    value="{{$lesson->id}}"><span>{{$lesson->name}}</span></a><br>
+        <div class="col-lg-8 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
 
-                                @if($lesson->lessonAttachment!=null)
-                                @if($lesson->lessonAttachment->img_url!=null)
-                                <span class="topic-small-heading-black lesson-attach"><a id="displayAttachment"
-                                        onclick="displayAttachment('imageAttach',{{$lesson->id}})"><i
-                                            class="fa fa-picture-o" style="font-size:18px;color:#0770EF"></i>
-                                        {{$lesson->name}}</a></span><br>
-                                @endif
-                                @if($lesson->lessonAttachment->origin_video_url!=null)
-                                <span class="topic-small-heading-black lesson-attach"><a
-                                        onclick="displayAttachment('videoAttach',{{$lesson->id}})"><i
-                                            class="fa fa-play-circle" style="font-size:20px;color:#0770EF"></i>
-                                        {{$lesson->name}}</span></a>
-                                @endif
-                                @endif
-                                @foreach($lesson->topics as $topickey=>$topic)
-                                <div class="panel-group topic" id="accordion" role="tablist"
-                                    aria-multiselectable="true">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading" role="tab" id="headingOne">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                                                    aria-expanded="true" aria-controls="collapseOne"
-                                                    onclick="displayAttachment('Content',{{$topic->id}})"
-                                                    value="{{$topic->id}}">
-                                                    <span class="topic-small-heading-black">{{$topickey+1}} .Topic:
-                                                        {{$topic->name}} </span>
-                                                    <a class="topic-small-heading-black lesson-attach"
-                                                        onclick="displayAttachment('Content',{{$topic->id}})"><span>{{$topic->name}}</span></a>
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
-                                            aria-labelledby="headingOne">
-                                            <div class="panel-body">
-                                                @if($topic->lessonAttachment!=null)
-                                                @if($topic->lessonAttachment->img_url!=null)
-                                                <a class="topic-small-heading-black lesson-attach"
-                                                    id="displayAttachment"
-                                                    onclick="displayAttachment('imageAttach',{{$topic->id}})"
-                                                    value="{{$topic->id}}"><i class="fa fa-picture-o"
-                                                        style="font-size:18px;color:#0770EF"></i>
-                                                    {{$topic->name}}</a><br>
-                                                @endif
-                                                @if($topic->lessonAttachment->origin_video_url!=null)
-                                                <a class="topic-small-heading-black lesson-attach"
-                                                    onclick="displayAttachment('videoAttach',{{$topic->id}})"><i
-                                                        class="fa fa-play-circle"
-                                                        style="font-size:20px;color:#0770EF"></i>
-                                                    {{$topic->name}}</a>
-                                                @endif
-                                                @endif
-                                                @foreach($topic->subTopics as $subtopickey=>$subtopic)
-                                                <div class="panel-group sub-topic" id="accordion" role="tablist"
-                                                    aria-multiselectable="true">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading" role="tab" id="headingOne">
-                                                            <h4 class="panel-title">
-                                                                <a data-toggle="collapse" data-parent="#accordion"
-                                                                    href="#collapseSubTopic{{$key}}"
-                                                                    aria-expanded="true" aria-controls="collapseOne">
-                                                                    <span class="subtopic-small-heading-black">Sub
-                                                                        Topic: {{$subtopic->name}} </span>
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapseSubTopic{{$key}}"
-                                                            class="panel-collapse collapse in" role="tabpanel"
-                                                            aria-labelledby="headingOne">
-                                                            <div class="panel-body">
-                                                                <a class="topic-small-heading-black lesson-attach"
-                                                                    onclick="displayAttachment('Content',{{$subtopic->id}}">{{$key+1}}.
-                                                                    {{$subtopic->name}}</a><br>
+            <p class="cross-line">
+                <span>All Content</span>
+            </p>
+            @include('common.lesson.content')
+        </div>
 
-                                                                @if($subtopic->lessonAttachment!=null)
-                                                                @if($subtopic->lessonAttachment->img_url!=null)
-                                                                <a class="topic-small-heading-black lesson-attach"
-                                                                    onclick="displayAttachment('imageAttach',{{$subtopic->id}})"><i
-                                                                        class="fa fa-picture-o"
-                                                                        style="font-size:18px;color:#0770EF"></i>
-                                                                    {{$subtopic->name}}</a><br>
-                                                                @endif
-                                                                @if($subtopic->lessonAttachment->origin_video_url!=null)
-                                                                <a class="topic-small-heading-black lesson-attach"
-                                                                    onclick="displayAttachment('videoAttach',{{$subtopic->id}}"><i
-                                                                        class="fa fa-play-circle"
-                                                                        style="font-size:20px;color:#0770EF"></i>
-                                                                    {{$subtopic->name}}</a><br>
-                                                                @endif
-                                                                @endif
+        <div class="col-lg-4 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
+            <div style="box-shadow: 0px 6px 10px #d1d1d1;">
+                @if($subject->subjectAttachment->attachment_origin_url!=null)
+                <video id="player" class="video-js vjs-big-play-centered" controls preload="auto"
+                    poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" data-setup="{}">
+                    <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4" class="w100"/>
+                </video>
+                {{-- <video id="player" data-setup="{}" controls="">
+                    <source src="{{asset($subject->subjectAttachment->attachment_origin_ur)}}" type="video/mp4">
+                </video> --}}
+                @else
+                <img src="{{asset($subject->image)}}" class="w100">
+                @endif
+                <div class="course-desc1">
+                    <h4 class="small-heading-black">
+                        <span class="d-flex  course-header-and-back-to-pckg-btn">
+                            {{$subject->subject_name}}
+                            @guest
+                            <a href="#">
+                                <i class="fa fa-reply"></i> &nbsp;Package
+                            </a>
+                            @endguest
+                        </span>
+                    </h4>
+                    <span>Created by : Demo Teacher</span><br>
+                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span>
+                    {{-- <a
+                        href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
+                        class="enroll">View Details</a> --}}
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
+                    @if(auth()->check())
+                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+                        class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
+                        Course</a>
+                    @else
+                    <div class="d-flex card-button mb-2">
+                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn"><i
+                                class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
+                        <!-- <a class="btn btn-primary btn-lg btn-block mt-2">Go to Package</a> -->
                     </div>
-
+                    @endif
                 </div>
-                @endforeach
 
             </div>
-        </ul>
+
+        </div>
     </div>
-    <!-- /#sidebar-wrapper -->
+</div>
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <a href="#menu-toggle" class="btn btn-secondary float-right" id="menu-toggle">{{$subject->subject_name}}
-                Contents</a>
-            <h1>{{$subject->subject_name}}</h1>
-            <div class="content-div">
-                <div id="Content" class="tabcontent">
-                    <span id="displayContent"></span>
 
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-7 col-md-12">
+
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h5 class="panel-title">
+                            <a href="{{route('website.subject.mcq',Crypt::encrypt($subject->id))}}" role="button"
+                                data-toggle="collapse" data-parent="#accordion" href="#collapseLesson"
+                                aria-expanded="true" aria-controls="collapseLesson">
+                                <i class="more-less glyphicon glyphicon-plus"></i>
+                                ALL MCQ'S QUESTION SET
+                            </a>
+                        </h5>
+                    </div>
                 </div>
+            </div><!-- panel-group -->
+        </div>
+    </div>
+</div>
 
-                <div id="imageAttach" class="tabcontent">
-                    <span id="displayImage"></span>
-                </div>
 
-                <div id="videoAttach" class="tabcontent">
-                    <video id="player" class="video-js" controls preload="auto" autoplay loop muted
-                        poster="{{asset($lesson->lessonAttachment->video_thumbnail_image)}}" loading="lazy">
-                    </video>
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-md-7">
+            <ul class="nav nav-tabs">
+                <!-- <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#teacher">
+                        <h4 class="small-heading-black">Teacher</h4>
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#whylearn">
+                        <h4 class="small-heading-black">What you'll learn</h4>
+                    </a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content mt-3">
+                <div class="tab-pane container fade show active" id="whylearn">
+                    <h6> {!!$subject->why_learn!!} </h6>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
-
 </div>

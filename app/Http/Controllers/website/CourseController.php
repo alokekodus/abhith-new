@@ -123,7 +123,7 @@ class CourseController extends Controller
 
         $subject = AssignSubject::with(['lesson' => function ($query) {
             $query->with('lessonAttachment');
-        }, 'subjectAttachment'])->where('id', $subject_id)->first();
+        }, 'subjectAttachment','assignClass','boards'])->where('id', $subject_id)->first();
         $lessons = $subject->lesson;
 
         return view('website.user.lesson-details', compact('lessons', 'subject'));
