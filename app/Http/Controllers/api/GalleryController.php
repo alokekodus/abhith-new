@@ -55,9 +55,14 @@ class GalleryController extends Controller
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
             }
+            $uploaded_data=[
+                'title'=>$request['title'],
+                'description'=>$request['description'],
+            ];
             $data = [
                 "code" => 200,
                 "message" => "Note uploaded successfully",
+                "data"=>$uploaded_data,
             
             ];
             return response()->json(['status' => 1, 'result' => $data]);
