@@ -142,22 +142,56 @@ class SubjectController extends Controller
     public function LessonDetails(Request $request){
         try {
             $id=$_GET['subject_id'];
-            $subject = Lesson::with('topics','subTopics','lessonAttachment','assignTeacher')->where('assign_subject_id',$id)->get();
-            if (!$subject == null) {
-                $result = [
-                    
-                    'subject_details' => $subject,
-                    
-                ];
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "all board",
-                    "result" => $result,
+            $lessons = Lesson::select('id', 'name','assign_class_id', 'board_id','assign_subject_id','created_at')->with(['assignClass:id,class','board:id,exam_board','assignSubject:id,subject_name','topics','lessonAttachment'])->where('assign_subject_id',$id)->where('parent_id',null)->get();
+            $lessonData=[];
+           foreach($lessons as $key=>$lesson){
+            $topic=$lesson->topics->count();
+            $total_image_pdfs = Lesson::with(['lessonAttachment'])->where('type',1)->where('parent_id',$lesson->id)->get();
+            if($total_image_pdfs!=null){
+                foreach($total_image_pdfs as $key=>$data){
+                    $data->lessonAttachment->img_url;
+                }
 
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);
             }
+            
+            
+            // $total_video = Lesson::where('assign_subject_id', $id)->where('type', 2)->get()->count();
+            // $total_article = Lesson::where('assign_subject_id', $id)->where('type', 3)->get()->count();
+            
+            $lesson=[
+                'id'=>$lesson->id,
+                'name'=>$lesson->name,
+                'board_id'=>$lesson->board->id,
+                'board_name'=>$lesson->board->exam_board,
+                'class_id'=>$lesson->assignClass->id,
+                'class_name'=>$lesson->assignClass->class,
+                'subject_id'=>$lesson->assignSubject->id,
+                'subject_name'=>$lesson->assignSubject->subject_name,
+                'total_content'=>$topic,
+                'total_image'=>$total_image_pdf,
+             ];
+             $lessonData[] = $lesson;
+           
+           }
+
+           return response()->json($lessonData);
+          
+
+            // if (!$subject == null) {
+            //     $result = [
+                    
+            //         'subject_details' => $subject,
+                    
+            //     ];
+            //     $data = [
+            //         "code" => 200,
+            //         "status" => 1,
+            //         "message" => "all board",
+            //         "result" => $result,
+
+            //     ];
+            //     return response()->json(['status' => 1, 'result' => $data]);
+            // }
 
 
 

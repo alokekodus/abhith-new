@@ -79,3 +79,4 @@ Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
 Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[UserController::class,'index']);
 });
+Route::get('/upload-note',[GalleryController::class,'testapi']);

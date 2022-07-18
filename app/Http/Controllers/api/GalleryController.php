@@ -40,4 +40,25 @@ class GalleryController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function testapi(){
+        try {
+            $data="hello";
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "successfully hit on the api",
+                "data" => $data,
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 200,
+                "status" => 0,
+                "message" => "No record found",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
 }
