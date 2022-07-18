@@ -494,7 +494,7 @@ class WebsiteAuthController extends Controller
     public function sendEmailOtp(Request $request){
         try {
             
-            $user=User::where('email',"islogicormagic@gmail.com")->where('is_activate',1)->first();
+            $user=User::where('email',$request->email)->where('is_activate',1)->first();
               
             if($user!=null){
                 $data = [
@@ -504,21 +504,28 @@ class WebsiteAuthController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-            $email = "islogicormagic@gmail.com";
+            $email = $request->email;
             $otp = rand(100000, 999999);
 
             $mobile_email_verification_data=MobileAndEmailVerification::where('email',$email)->first();
            
             $data=[
-                'otp'=>$otp,
+                'mobile_email_otp'=>$otp,
                 'email'=>$email,
+                'mobile_email_verification'=>0,
             ];
             $details = [
                 'otp' => $otp,
                
             ];
-            
-            Mail::to($request->email)->send(new OtpVerfication($details));
+            if($mobile_email_verification_data!=null){
+                $mobile_email_verification_data->update($data);
+                
+            }else{
+                MobileAndEmailVerification::create($data);
+            }
+           
+            // Mail::to($request->email)->send(new OtpVerfication($details));
             
            
                 $data = [
@@ -532,7 +539,51 @@ class WebsiteAuthController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);     
            
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function verifyEmailOtp(Request $request){
+        try {
+        
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'otp' => 'required|numeric',
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => false, 'message' => $validator->errors()]);
+            }
+            
+            $mobile_email_verification_data=MobileAndEmailVerification::where('email',$request->email)->where('mobile_email_otp',$request->otp)->first();
+            
+            if($mobile_email_verification_data){
+                $mobile_email_verification_data->update(['mobile_email_verification'=>1]);
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "Your Email address Verified successfully",    
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+                $data = [
+                    "code" => 400,
+                    "status" => 0,
+                    "message" => "OTP verification Miamatch",    
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+
+        } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
                 "status" => 0,
