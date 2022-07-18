@@ -338,6 +338,24 @@ class WebsiteAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
+            $is_mobile_verified=MobileAndEmailVerification::where('mobile',$request->phone)->where('mobile_email_verification',1)->first();
+            $is_email_verified=MobileAndEmailVerification::where('email',$request->email)->where('mobile_email_verification',1)->first();
+            if($is_mobile_verified==null){
+                $data = [
+                    "code" => 400,
+                    "status" => 0,
+                    "message" => "Please verify your mobile number",
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+            if($is_email_verified==null){
+                $data = [
+                    "code" => 400,
+                    "status" => 0,
+                    "message" => "Please verify your email address",
+                ];
+                return response()->json(['status' => 1, 'result' => $data]); 
+            }
             $data = [
                 'name' => $request->name,
                 'email' => $request->email,
