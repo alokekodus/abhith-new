@@ -31,10 +31,10 @@
                                 class="panel-collapse collapse" @endif role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body" style="position:relative; left:40px;">
                                     @if($lesson->type==1)
-                                    <i class="fa fa-file" aria-hidden="true"></i> {{$lesson->name}}<br>
-                                    <a href="https://source.unsplash.com/cZVthlrnlnQ/1500x1000" data-fancybox="group"
+                                    <i class="fa fa-file" aria-hidden="true"></i>
+                                    <a href="{{$lesson->lessonAttachment->img_url}}" data-fancybox="pdf"
                                         data-caption="This image has a caption 2">
-                                        <img src="https://source.unsplash.com/cZVthlrnlnQ/240x160" />
+                                        {{$lesson->name}}
                                     </a><br>
                                     @elseif($lesson->type==2)
                                     <i class="fa fa-play" aria-hidden="true"></i> {{$lesson->name}}<br>

@@ -183,13 +183,14 @@ $prefix = Request::route()->getPrefix();
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script src="{{ asset('asset_website/js/jquery.fancybox.js') }}"></script>
 <script type="text/javascript">
-    $('[data-fancybox="group"]').fancybox({
+    $('[data-fancybox="pdf"]').fancybox({
         beforeShow : function(){
         this.title =  $(this.element).data("caption");
         },
         thumbs: {
             autoStart: true
-        }
+        },
+        type   :'iframe'
     });
     // $('[data-fancybox="images1"]').fancybox({
     //     beforeShow : function(){
