@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class GalleryController extends Controller
 {
     public function index()
@@ -40,22 +40,32 @@ class GalleryController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function testapi(){
+    public function testapi(Request $request){
         try {
-            $data="hello";
+            
+            $validator = Validator::make($request->all(), [
+                'title' => 'string|required',
+                'description' => 'string|required',
+            ]);
+            if ($validator->fails()) {
+                $data = [
+                    "code" => 400,
+                    "message" => $validator->errors(),
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
             $data = [
                 "code" => 200,
-                "status" => 1,
-                "message" => "successfully hit on the api",
-                "data" => $data,
-
+                "message" => "Note uploaded successfully",
+            
             ];
             return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
             $data = [
                 "code" => 200,
                 "status" => 0,
-                "message" => "No record found",
+                "message" => "something went wrong",
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);

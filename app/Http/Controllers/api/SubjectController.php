@@ -145,18 +145,25 @@ class SubjectController extends Controller
             $lessons = Lesson::select('id', 'name','assign_class_id', 'board_id','assign_subject_id','created_at')->with(['assignClass:id,class','board:id,exam_board','assignSubject:id,subject_name','topics','lessonAttachment'])->where('assign_subject_id',$id)->where('parent_id',null)->get();
             $lessonData=[];
            foreach($lessons as $key=>$lesson){
+            $pdf=0;
+            $img=0;
+           
             $topic=$lesson->topics->count();
             $total_image_pdfs = Lesson::with(['lessonAttachment'])->where('type',1)->where('parent_id',$lesson->id)->get();
             if($total_image_pdfs!=null){
                 foreach($total_image_pdfs as $key=>$data){
-                    $data->lessonAttachment->img_url;
+                    $ext = pathinfo( $data->lessonAttachment->img_url, PATHINFO_EXTENSION);
+                   if($ext=="pdf"){
+                    $pdf+=1;
+                   }else{
+                    $img+=1;
+                   }
                 }
 
             }
-            
-            
-            // $total_video = Lesson::where('assign_subject_id', $id)->where('type', 2)->get()->count();
-            // $total_article = Lesson::where('assign_subject_id', $id)->where('type', 3)->get()->count();
+            $total_video = Lesson::with(['lessonAttachment'])->where('type',2)->where('parent_id',$lesson->id)->get()->count();
+            $total_article = Lesson::with(['lessonAttachment'])->where('type',3)->where('parent_id',$lesson->id)->get()->count();
+          
             
             $lesson=[
                 'id'=>$lesson->id,
@@ -168,7 +175,7 @@ class SubjectController extends Controller
                 'subject_id'=>$lesson->assignSubject->id,
                 'subject_name'=>$lesson->assignSubject->subject_name,
                 'total_content'=>$topic,
-                'total_image'=>$total_image_pdf,
+               
              ];
              $lessonData[] = $lesson;
            
