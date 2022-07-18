@@ -192,26 +192,27 @@
                         <div class="account-form">
                             <form class="row" id="updatePasswordForm">
                                 @csrf
-                                <div class="col-lg-12 col-6">
+                                <div class="col-lg-12 col-6 mb-2">
                                     <h4 class="small-heading-black">Password</h4>
                                 </div>
 
-                                <div class="form-group col-lg-12">
+                                <div class="form-group col-lg-7">
                                     <input type="password" class="form-control" name="currentPassword"
                                         placeholder="Enter Current Password" id="currentPassword" required>
                                 </div>
-                                <div class="form-group col-lg-12">
+                                <div class="form-group col-lg-7">
                                     <input type="password" class="form-control" name="newPassword"
                                         placeholder="Enter New Password" id="newPassword" required>
                                 </div>
-                                <div class="form-group col-lg-12">
+                                <div class="form-group col-lg-7">
                                     <input type="password" class="form-control" name="confirmPassword"
                                         placeholder="Confirm Password" id="confirmPassword" required>
                                 </div>
-                                <div class="form-group col-lg-12">
-                                    <div class="button-div1"><button type="submit"
-                                            class="btn btn-block knowledge-link change-password-btn">Change
-                                            Password</button></div>
+                                <div class="form-group col-lg-6">
+                                    <div class="button-div1">
+                                        <button type="submit" class="btn btn-block knowledge-link change-password-btn">Change
+                                            Password</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
