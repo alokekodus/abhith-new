@@ -89,7 +89,7 @@
                     <li>
                         <img src="{{asset('asset_website/img/about/image1.jpg')}}" class="w100" alt="">
                     </li>
-                    <li class="counter-list-img">
+                    <li>
                         <img src="{{asset('asset_website/img/about/image2.jpg')}}" class="w100" alt="">
                     </li>
                     <li>
