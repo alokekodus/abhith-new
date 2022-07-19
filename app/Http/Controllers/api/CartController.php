@@ -108,9 +108,10 @@ class CartController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function remove($id)
+    public function remove(Request $request)
     {
         try {
+            $id = $_GET['cart_id'];
             $cart = Cart::find($id);
             $cart->update(['is_remove_from_cart' => 1]);
             $cart->assignSubject()->delete();

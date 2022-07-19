@@ -75,7 +75,7 @@ Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[CartController::class,'index']);
     Route::get('/cart-details',[CartController::class,'cartDetails']);
     Route::post('/store', [CartController::class,'store']);
-    Route::get('/remove/{cart_id}', [CartController::class,'remove']);
+    Route::get('/remove', [CartController::class,'remove']);
 });
 Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[UserController::class,'index']);
