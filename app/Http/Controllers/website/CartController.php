@@ -75,12 +75,12 @@ class CartController extends Controller
                     'assign_class_id' => $class_id, //class_id
                     'is_full_course_selected' => $course_type
                 ]);
-
+               
                 foreach ($all_subjects as $key => $subject) {
                     if ($course_type == 1) {
                         $subject = AssignSubject::find($subject->id);
                     } else {
-                        $subject = AssignSubject::find($subject[$key]);
+                        $subject = AssignSubject::find($all_subjects[$key]);
                     }
 
                     $data = [
@@ -95,6 +95,7 @@ class CartController extends Controller
             Toastr::success('Item added to cart successfully.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         } catch (\Throwable $th) {
+            
             Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
