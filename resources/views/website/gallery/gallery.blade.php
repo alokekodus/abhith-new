@@ -54,7 +54,8 @@
             },
             thumbs: {
                 autoStart: true
-            }
+            },
+           
         });
         // $('[data-fancybox="images1"]').fancybox({
         //     beforeShow : function(){

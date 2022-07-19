@@ -184,13 +184,15 @@ $prefix = Request::route()->getPrefix();
 <script src="{{ asset('asset_website/js/jquery.fancybox.js') }}"></script>
 <script type="text/javascript">
     $('[data-fancybox="pdf"]').fancybox({
+        protect    : true,
         beforeShow : function(){
         this.title =  $(this.element).data("caption");
         },
         thumbs: {
             autoStart: true
         },
-        type   :'iframe'
+        type   :'iframe',
+       
     });
     // $('[data-fancybox="images1"]').fancybox({
     //     beforeShow : function(){
