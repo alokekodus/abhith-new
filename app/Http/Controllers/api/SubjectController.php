@@ -142,9 +142,9 @@ class SubjectController extends Controller
     public function LessonDetails(Request $request){
         try {
             $id=$_GET['subject_id'];
-            return response()->json($id);
+            
             $lessons = Lesson::select('id', 'name','assign_class_id', 'board_id','assign_subject_id','created_at')->with(['assignClass:id,class','board:id,exam_board','assignSubject:id,subject_name','topics','lessonAttachment'])->where('assign_subject_id',$id)->where('parent_id',null)->get();
-           
+            return response()->json($lessons);
             $lessonData=[];
            foreach($lessons as $key=>$lesson){
             $pdf=0;
