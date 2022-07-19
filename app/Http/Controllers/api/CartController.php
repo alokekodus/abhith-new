@@ -79,17 +79,14 @@ class CartController extends Controller
 
             foreach ($all_subjects as $key => $subject) {
 
-                if ($course_type == 1) {
-                    $subject = AssignSubject::find($subject->id);
-                } else {
-
+               
                     $subject = AssignSubject::find($all_subjects[$key]);
-                }
+                
                 $data = [
                     'cart_id' => $cart->id,
                     'assign_subject_id' => $subject->id,
                     'amount' => $subject->subject_amount,
-                    'type' => 1,
+                    'type' => $course_type,
                 ];
                 $assign_subject = CartOrOrderAssignSubject::create($data);
             }
