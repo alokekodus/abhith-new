@@ -124,11 +124,11 @@ class Lesson extends Model
     }
     public function assignClass()
     {
-        return $this->belongsTo(assignClass::class);
+        return $this->belongsTo(AssignClass::class);
     }
     public function assignSubject()
     {
-        return $this->belongsTo(assignSubject::class);
+        return $this->belongsTo(AssignSubject::class);
     }
     public function topics()
     {
