@@ -150,7 +150,8 @@ $prefix = Request::route()->getPrefix();
   /* video js css */
   .video-js {
     height: 280px;
-    width: 365px;
+    /* width: 365px; */
+    width: 100%;
     top: 0%;
     border-style: double;
     border-width: thick;
