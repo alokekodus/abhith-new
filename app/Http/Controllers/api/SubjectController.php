@@ -143,7 +143,7 @@ class SubjectController extends Controller
         try {
             $id=$_GET['subject_id'];
             
-            $lessons = Lesson::where('assign_subject_id',$id)->where('parent_id',null)->get();
+            $lessons = Lesson::with(['assignClass:id,class','board:id,exam_board'])->where('assign_subject_id',$id)->where('parent_id',null)->get();
             return response()->json($lessons);
             $lessonData=[];
            foreach($lessons as $key=>$lesson){
