@@ -11,22 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function index(){
-        
-        $cart = Cart::select('id','user_id','is_full_course_selected','assign_class_id','board_id','is_paid','is_remove_from_cart')
-        ->with(['assignClass:id,class','board:id,exam_board','assignSubject:id,cart_id,assign_subject_id,amount','assignSubject.subject:id,subject_name'])
-        ->where('user_id', Auth::user()->id)
-        ->where('is_paid', 0)
-        ->where('is_remove_from_cart', 0)
-        ->get();
-       
+    public function index()
+    {
+
+        $cart = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
+            ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
+            ->where('user_id', Auth::user()->id)
+            ->where('is_paid', 0)
+            ->where('is_remove_from_cart', 0)
+            ->get();
+
         if (!$cart->isEmpty()) {
 
             $data = [
                 "code" => 200,
                 "status" => 1,
                 "message" => "All cart items",
-                "carts"=>$cart,
+                "carts" => $cart,
 
             ];
             return response()->json(['status' => 1, 'result' => $data]);
@@ -44,7 +45,7 @@ class CartController extends Controller
     {
         try {
             $all_subjects = $request->subjects;
-            if($all_subjects==null){
+            if ($all_subjects == null) {
                 $data = [
                     "code" => 400,
                     "message" => "Please select subject",
@@ -66,8 +67,8 @@ class CartController extends Controller
             // //     ];
             // //     return response()->json(['status' => 0, 'result' => $data]);
             // // }
-             
-            
+
+
 
             $cart = Cart::create([
                 'user_id' => auth()->user()->id,
@@ -96,7 +97,7 @@ class CartController extends Controller
                 "code" => 200,
                 "status" => 1,
                 "message" => "Subjects was successfully added to your cart",
-                "cart_id"=>$cart->id,
+                "cart_id" => $cart->id,
             ];
             return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
@@ -104,7 +105,7 @@ class CartController extends Controller
                 "code" => 400,
                 "status" => 0,
                 "message" => "Something went wrong",
-               
+
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
@@ -116,7 +117,7 @@ class CartController extends Controller
             $cart = Cart::find($id);
             $cart->update(['is_remove_from_cart' => 1]);
             $cart->assignSubject()->delete();
-            
+
             $data = [
                 "code" => 200,
                 "status" => 1,
@@ -125,6 +126,57 @@ class CartController extends Controller
             ];
 
             return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function cartDetails(Request $request)
+    {
+        try {
+
+            $id = $_GET['cart_id'];
+
+            $cart = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
+                ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name,image'])
+                ->where('id', $id)
+                ->where('is_paid', 0)
+                ->where('is_remove_from_cart', 0)
+                ->first();
+            if (!$cart == null) {
+                $cart_total_amount = $cart->assignSubject->sum("amount");
+               
+                $cart_details = [
+                    'id' => $cart->id,
+                    'user_id' => $cart->user_id,
+                    'type' => $cart->is_full_course_selected,
+                    'board' => $cart->board->exam_board,
+                    'class_name' => $cart->assignClass->class,
+                    'total_amount' => $cart_total_amount,
+                    'cart_subject_details' => $cart->assignSubject,
+
+                ];
+               
+                $data = [
+                    "code" => 200,
+                    "message" => "Cart Details",
+                    "carts" => $cart_details,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "message" => "No data found",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,

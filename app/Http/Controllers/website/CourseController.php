@@ -103,7 +103,9 @@ class CourseController extends Controller
         $subject = AssignSubject::find(Crypt::decrypt($subject_id));
         $subject_id=$subject->id;
         $board = Board::find($subject->board_id);
-        $class = AssignClass::with('boards','subjects')->where('id',$subject->assign_class_id)->first();
+        $class = AssignClass::with(['boards','subjects'=>function($q){
+            $q->where('is_activate',1);
+        }])->where('id',$subject->assign_class_id)->first();
         $subjects = $class->subjects;
         $total_subject=$subjects->count();
       

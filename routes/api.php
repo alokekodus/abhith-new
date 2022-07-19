@@ -73,6 +73,7 @@ Route::post('board-class-subject', [CourseController::class, 'findBoardClassSubj
 //laravel cart
 Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[CartController::class,'index']);
+    Route::get('/cart-details',[CartController::class,'cartDetails']);
     Route::post('/store', [CartController::class,'store']);
     Route::get('/remove/{cart_id}', [CartController::class,'remove']);
 });
