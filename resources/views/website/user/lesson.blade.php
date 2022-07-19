@@ -153,9 +153,9 @@ $prefix = Request::route()->getPrefix();
     /* width: 365px; */
     width: 100%;
     top: 0%;
-    border-style: double;
-    border-width: thick;
-    border-color: black;
+    /* border-style: double;
+    border-width: thick; */
+    /* border-color: black; */
   }
 
   .video-js .vjs-play-progress {
