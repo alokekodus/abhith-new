@@ -14,38 +14,59 @@ class CartController extends Controller
     public function index()
     {
 
-        $cart = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
+        $carts = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
             ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
             ->where('user_id', Auth::user()->id)
             ->where('is_paid', 0)
             ->where('is_remove_from_cart', 0)
             ->get();
 
-        if (!$cart->isEmpty()) {
-
-            $data = [
-                "code" => 200,
-                "status" => 1,
-                "message" => "All cart items",
-                "carts" => $cart,
-
-            ];
-            return response()->json(['status' => 1, 'result' => $data]);
-        } else {
-            $data = [
-                "code" => 200,
-                "status" => 0,
-                "message" => "Your cart is empty",
-
-            ];
-            return response()->json(['status' => 0, 'result' => $data]);
-        }
+            if (!$carts == null) {
+                $cart_items = [];
+                foreach ($carts as $key => $cart) {
+                    
+                    $subject_tmp = '';
+                   
+                    foreach ($cart->assignSubject as $key => $assignSubject) {
+                        
+                        $subject_tmp .= $assignSubject->subject->subject_name .',';
+                    }
+                   
+                    $subject_tmp = trim($subject_tmp, ',');
+                    $cart = [
+                        'id' => $cart->id,
+                        'course_type' => $cart->is_full_course_selected,
+                        'assign_class' => $cart->assignClass->class,
+                        'board' => $cart->board->exam_board,
+                        'cart_total_amount' => $cart->assignSubject->sum("amount"),
+                        'assign_subject' => $subject_tmp,
+            
+                    ];
+                    $cart_items[] = $cart;
+                }
+            
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All cart items",
+                    "carts" => $cart_items,
+            
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "status" => 0,
+                    "message" => "Your cart is empty",
+            
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
     }
     public function store(Request $request)
     {
         try {
             $all_subjects = $request->subjects;
-
             if ($all_subjects == null) {
                 $data = [
                     "code" => 400,
