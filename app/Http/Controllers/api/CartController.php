@@ -21,7 +21,7 @@ class CartController extends Controller
             ->where('is_remove_from_cart', 0)
             ->get();
 
-            if (!$carts == null) {
+            if ($carts->count()> 0) {
                 $cart_items = [];
                 foreach ($carts as $key => $cart) {
                     
@@ -29,7 +29,7 @@ class CartController extends Controller
                    
                     foreach ($cart->assignSubject as $key => $assignSubject) {
                         
-                        $subject_tmp .=$assignSubject->subject->subject_name.',';
+                        $subject_tmp .= ucfirst(strtolower($assignSubject->subject->subject_name) ).',';
                     }
                    
                     $subject_tmp = trim($subject_tmp, ',');
