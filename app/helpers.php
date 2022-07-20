@@ -91,10 +91,10 @@ function isSubjectAlreadyInCart($check_item_exists_inside_cart, $all_subjects)
 }
 function isTeacherApply()
 {
-     $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->count();
-    if($user_details==0){
+    $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->count();
+    if ($user_details == 0) {
         return false;
-    }else{
+    } else {
         return true;
     }
 }
@@ -104,67 +104,69 @@ function userFirstName()
 
     return $words[0];
 }
-function teacherReferralId(){
-    
+function teacherReferralId()
+{
+
     $referralId         = 'ABHITHSIKSHA' . date('dmY') . '/' . random_int(10000000, 99999999);
     return $referralId;
 }
-function getlessonAttachment($lesson_id){
- $lesson=Lesson::with('lessonAttachment')->where('id',$lesson_id)->first();
- if($lesson->type==1){
-    $url_name=$lesson->lessonAttachment->img_url;
-    $type=1;
-    $extension=pathinfo($url_name, PATHINFO_EXTENSION);
-    return $data=[
-        'url_name'=>$url_name,
-        'type'=>$type,
-        'extension'=>$extension,
-    ];
- }
+function getlessonAttachment($lesson_id)
+{
+    $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
+    if ($lesson->type == 1) {
+        $url_name = $lesson->lessonAttachment->img_url;
+        $type = 1;
+        $extension = pathinfo($url_name, PATHINFO_EXTENSION);
+        return $data = [
+            'url_name' => $url_name,
+            'type' => $type,
+            'extension' => $extension,
+        ];
+    }
 }
 function otpSend($phone, $otp)
-    {
-        $isError = 0;
-        $errorMessage = true;
+{
+    $isError = 0;
+    $errorMessage = true;
 
-        //Your message to send, Adding URL encoding.
-        $message = urlencode("<#> Use $otp as your verification code. The OTP expires within 10 mins. Do not share it with anyone. -regards Abhith Siksha");
+    //Your message to send, Adding URL encoding.
+    $message = urlencode("<#> Use $otp as your verification code. The OTP expires within 10 mins. Do not share it with anyone. -regards Abhith Siksha");
 
 
-        //Preparing post parameters
-        $postData = array(
-            'authkey' => '19403ARfxb6xCGLJ619221c6P15',
-            'mobiles' => $phone,
-            'message' => $message,
-            'sender' => 'ABHSKH',
-            'DLT_TE_ID' => 1207164006513329391,
-            'route' => 4,
-            'response' => 'json'
-        );
+    //Preparing post parameters
+    $postData = array(
+        'authkey' => '19403ARfxb6xCGLJ619221c6P15',
+        'mobiles' => $phone,
+        'message' => $message,
+        'sender' => 'ABHSKH',
+        'DLT_TE_ID' => 1207164006513329391,
+        'route' => 4,
+        'response' => 'json'
+    );
 
-        $url = "http://login.yourbulksms.com/api/sendhttp.php";
+    $url = "http://login.yourbulksms.com/api/sendhttp.php";
 
-        $ch = curl_init();
-        curl_setopt_array($ch, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $postData
-        ));
-        //Ignore SSL certificate verification
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        //get response
-        $output = curl_exec($ch);
-        //Print error if any
-        if (curl_errno($ch)) {
-            $isError = true;
-            $errorMessage = curl_error($ch);
-        }
-        curl_close($ch);
-        if ($isError) {
-            return false;
-        } else {
-            return true;
-        }
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $postData
+    ));
+    //Ignore SSL certificate verification
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    //get response
+    $output = curl_exec($ch);
+    //Print error if any
+    if (curl_errno($ch)) {
+        $isError = true;
+        $errorMessage = curl_error($ch);
     }
+    curl_close($ch);
+    if ($isError) {
+        return false;
+    } else {
+        return true;
+    }
+}
