@@ -27,6 +27,19 @@
     .login-details li:nth-child(2) {
         margin-right: 100px;
     } */
+    .heading-black {
+        font-size: 26px;
+    }
+    .small-heading-black {
+        font-size: 20px;
+    }
+    .subheader-image-desc .heading-black {
+        font-size: 20px;
+    }
+    .cart {
+        margin: 25px 80px;
+        padding: 70px 10px 0px 10px;
+    }
     .login-details {
         /* float: left; */
         width: 100%;
@@ -145,8 +158,9 @@
         padding: 10px;
     }
     .knowledge-pic {
-        top: -60%;
-        left: 40%;
+        width: 22%;
+        top: -46%;
+        left: 37%;
     }
     .knowledge-forum-profile-bottom1 {
         padding: 45px 0px 0px 0px;
@@ -159,13 +173,13 @@
         padding: 5px 65px;
     }
     .knowledge-forum{
-        margin-top: 250px;
+        margin-top: 200px;
     }
     .knowledge-header-list {
         display: flex;
     }
     .knowledge-forum-profile-top img{
-        height: 175px;
+        height: 125px;
     }
     .add-post {
         padding: 10px 15px;
@@ -221,7 +235,7 @@
         padding-top: 50px;
     }
     .heading-blue {
-        font-size: 32px;
+        font-size: 18px;
     }
     .enroll {
         padding: 8px 8px;
