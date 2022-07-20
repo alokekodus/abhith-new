@@ -29,7 +29,7 @@ class CartController extends Controller
                    
                     foreach ($cart->assignSubject as $key => $assignSubject) {
                         
-                        $subject_tmp .= ucfirst(strtolower($assignSubject->subject->subject_name) ).',';
+                        $subject_tmp .=$assignSubject->subject->subject_name.',';
                     }
                    
                     $subject_tmp = trim($subject_tmp, ',');
