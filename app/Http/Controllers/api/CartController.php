@@ -45,6 +45,7 @@ class CartController extends Controller
     {
         try {
             $all_subjects = $request->subjects;
+
             if ($all_subjects == null) {
                 $data = [
                     "code" => 400,
@@ -86,7 +87,7 @@ class CartController extends Controller
                     'cart_id' => $cart->id,
                     'assign_subject_id' => $subject->id,
                     'amount' => $subject->subject_amount,
-                    'type' => $course_type,
+                    'type' => 1,
                 ];
                 $assign_subject = CartOrOrderAssignSubject::create($data);
             }

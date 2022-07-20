@@ -30,6 +30,7 @@
                             <div id="collapseLesson{{$key}}" @if($key==0) class="panel-collapse collapse show" @else
                                 class="panel-collapse collapse" @endif role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body" style="position:relative; left:40px;">
+                                    
                                     @if($lesson->type==1)
                                     <i class="fa fa-file" aria-hidden="true"></i>
                                     <a href="{{$lesson->lessonAttachment->img_url}}" data-fancybox="pdf"
