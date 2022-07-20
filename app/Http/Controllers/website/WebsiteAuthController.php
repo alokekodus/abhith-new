@@ -540,7 +540,7 @@ class WebsiteAuthController extends Controller
                 MobileAndEmailVerification::create($data);
             }
            
-            // Mail::to($request->email)->send(new OtpVerfication($details));
+             Mail::to($request->email)->send(new OtpVerfication($details));
             
            
                 $data = [
