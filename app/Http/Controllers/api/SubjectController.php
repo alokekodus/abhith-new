@@ -226,7 +226,8 @@ class SubjectController extends Controller
                     $query->with("lessonAttachment");
                 }]);
             }])->where('id', $id)->first();
-            $lesson_pdf = [];
+           return response()->json($lesson);
+            $topic_pdf = [];
             $lesson_video = [];
             $lesson_content = [];
 
@@ -235,22 +236,21 @@ class SubjectController extends Controller
                     foreach ($lesson->topics as $key => $topic) {
                         if ($topic->type == 1) {
 
-                            $lesson_pdf_data =
+                            $topic_pdf_data =
                                 [
                                     'id' => $topic->id,
                                     'title' => $topic->name,
                                     'file_path' => $topic->lessonAttachment->img_url,
 
                                 ];
-                            $lesson_pdf['lesson_data'] = $lesson_pdf_data;
+                            $topic_pdf['lesson_data'] = $topic_pdf_data;
                         }
                         if ($topic->type == 2) {
                             $lesson_video_data =
                                 [
                                     'id' => $topic->id,
                                     'title' => $topic->name,
-                                    'img_url' => $topic->lessonAttachment->img_url,
-                                    'video_thumbnail_image' => $topic->lessonAttachment->video_thumbnail_image,
+                                    
                                     'original_video_path' => $topic->lessonAttachment->attachment_origin_url,
                                     'video_size_480' => $topic->lessonAttachment->video_resize_480,
                                     'video_size_720' => $topic->lessonAttachment->video_resize_720,
@@ -270,30 +270,32 @@ class SubjectController extends Controller
                             $lesson_content['lesson_data'] = $lesson_content_data;
                         }
                         if ($topic->subTopics) {
+                           
                             foreach ($topic->subTopics as $key => $sub_topic) {
                                 if ($sub_topic->type == 1) {
-                                    $lesson_pdf_data =
+                                    $topic_pdf_data =
                                         [
                                             'id' => $sub_topic->id,
                                             'title' => $sub_topic->name,
                                             'file_path' => $sub_topic->lessonAttachment->img_url,
 
                                         ];
-                                    $lesson_pdf['lesson_data'] = $lesson_pdf_data;
+                                    $topic_pdf['lesson_data'] = $topic_pdf_data;
                                 }
                                 if ($sub_topic->type == 2) {
                                     $lesson_video_data =
                                         [
                                             'id' => $sub_topic->id,
                                             'title' => $sub_topic->name,
-                                            'img_url' => $sub_topic->lessonAttachment->img_url,
-                                            'video_thumbnail_image' => $sub_topic->lessonAttachment->video_thumbnail_image,
-                                            'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url,
-                                            'video_size_480' => $sub_topic->lessonAttachment->video_resize_480,
-                                            'video_size_720' => $sub_topic->lessonAttachment->video_resize_720,
+                                            'img_url' => $sub_topic->lessonAttachment,
+                                            'video_thumbnail_image' => $sub_topic->lessonAttachment->video_thumbnail_image??'',
+                                            'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url??'',
+                                            'video_size_480' => $sub_topic->lessonAttachment->video_resize_480??'',
+                                            'video_size_720' => $sub_topic->lessonAttachment->video_resize_720??'',
 
                                         ];
                                     $lesson_video['lesson_data'] = $lesson_video_data;
+                                   
                                 }
                                 if ($sub_topic->type == 3) {
                                     $lesson_content_data =
@@ -312,7 +314,7 @@ class SubjectController extends Controller
 
                     $all_content = [
 
-                        'lesson_pdf' => $lesson_pdf,
+                        'lesson_pdf' => $topic_pdf,
                         'lesson_video' => $lesson_video,
                         'lesson_content' => $lesson_content,
 
@@ -352,6 +354,7 @@ class SubjectController extends Controller
             ];
             return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
+            dd($th);
             $data = [
                 "code" => 400,
                 "status" => 0,

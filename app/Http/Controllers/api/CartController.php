@@ -56,11 +56,11 @@ class CartController extends Controller
             } else {
                 $data = [
                     "code" => 200,
-                    "status" => 0,
+                    "status" => 1,
                     "message" => "Your cart is empty",
-            
+                    "carts" => $carts,
                 ];
-                return response()->json(['status' => 0, 'result' => $data]);
+                return response()->json(['status' => 1, 'result' => $data]);
             }
     }
     public function store(Request $request)
