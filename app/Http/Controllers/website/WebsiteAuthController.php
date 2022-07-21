@@ -340,6 +340,8 @@ class WebsiteAuthController extends Controller
             }
             $is_mobile_verified=MobileAndEmailVerification::where('mobile',$request->phone)->where('mobile_email_verification',1)->first();
             $is_email_verified=MobileAndEmailVerification::where('email',$request->email)->where('mobile_email_verification',1)->first();
+            $user_mobile_in_use=User::where('mobile',$request->phone)->where('is_activate',1)->first();
+            $user_email_in_use=User::where('email',$request->phone)->where('is_activate',1)->first();
             if($is_mobile_verified==null){
                 return response()->json([
                     'status' => 0,
@@ -351,6 +353,18 @@ class WebsiteAuthController extends Controller
                 return response()->json([
                     'status' => 0,
                     'message' => "Please verify your email address",
+                ]); 
+            }
+            if($user_mobile_in_use!=null){
+                return response()->json([
+                    'status' => 0,
+                    'message' => "This mobile number already exists",
+                ]); 
+            }
+            if($user_email_in_use!=null){
+                return response()->json([
+                    'status' => 0,
+                    'message' => "This email address already exists",
                 ]); 
             }
             $data = [

@@ -68,25 +68,24 @@ class SubjectController extends Controller
     public function subjectDetails(Request $request)
     {
         try {
-            $id=$_GET['subject_id'];
+            $id = $_GET['subject_id'];
             $subject = AssignSubject::select('id', 'subject_name', 'subject_amount', 'assign_class_id', 'board_id', 'description', 'why_learn', 'created_at')->with(['assignClass:id,class', 'boards:id,exam_board', 'lesson', 'lesson.topics', 'subjectAttachment'])->where('id', $id)->first();
             $subject_promo_video = $subject->subjectAttachment->attachment_origin_url;
-            if($subject_promo_video!=null){
-                $attachment_type="video";
+            if ($subject_promo_video != null) {
+                $attachment_type = "video";
                 $subject_attachment = $subject->subjectAttachment->attachment_origin_url;
-             
-             }else{
-                $attachment_type="image";
+            } else {
+                $attachment_type = "image";
                 $subject_attachment = $subject->subjectAttachment->img_url;
-             }
-            $subject_attachment=[
-                'attachment_type'=> $attachment_type,
-                'attachment'=>$subject_attachment,
-                
+            }
+            $subject_attachment = [
+                'attachment_type' => $attachment_type,
+                'attachment' => $subject_attachment,
+
 
             ];
-           
-           
+
+
             $total_lesson = $subject->lesson->count();
             $total_topic = Lesson::where('assign_subject_id', $id)->where('parent_id', '!=', null)->get()->count();
             $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->get()->count();
@@ -110,15 +109,15 @@ class SubjectController extends Controller
                 'total_article' => $total_article,
 
             ];
-           
-           
+
+
 
             if (!$subject == null) {
                 $result = [
-                    
+
                     'subject_details' => $subject_details,
-                    'subject_attachment'=>$subject_attachment,
-                    
+                    'subject_attachment' => $subject_attachment,
+
                 ];
                 $data = [
                     "code" => 200,
@@ -139,77 +138,218 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function LessonDetails(Request $request){
+    public function LessonDetails(Request $request)
+    {
         try {
-            $id=$_GET['subject_id'];
-            
-            $lessons = Lesson::select('id', 'name','assign_class_id', 'board_id','assign_subject_id','created_at')->with(['assignClass:id,class','board:id,exam_board','assignSubject:id,subject_name','topics','lessonAttachment'])->where('assign_subject_id',$id)->where('parent_id',null)->get();
-            
-            $lessonData=[];
-           foreach($lessons as $key=>$lesson){
-            $pdf=0;
-            $img=0;
-           
-            $topic=$lesson->topics->count();
-            $total_image_pdfs = Lesson::with(['lessonAttachment'])->where('type',1)->where('parent_id',$lesson->id)->get();
-            if($total_image_pdfs!=null){
-                foreach($total_image_pdfs as $key=>$data){
-                    $ext = pathinfo( $data->lessonAttachment->img_url, PATHINFO_EXTENSION);
-                   if($ext=="pdf"){
-                    $pdf+=1;
-                   }else{
-                    $img+=1;
-                   }
-                }
+            $id = $_GET['subject_id'];
 
-            }
-            $total_video = Lesson::with(['lessonAttachment'])->where('type',2)->where('parent_id',$lesson->id)->get()->count();
-            $total_article = Lesson::with(['lessonAttachment'])->where('type',3)->where('parent_id',$lesson->id)->get()->count();
-            $subject_content=
-            [
-                'total_pdf'=>$pdf,
-                'total_image'=>$img,
-                'total_video'=>$total_video,
-                'total_article'=>$total_article,
-            ];
-            
-            $lesson=[
-                'id'=>$lesson->id,
-                'name'=>$lesson->name,
-                'board_id'=>$lesson->board->id,
-                'board_name'=>$lesson->board->exam_board,
-                'class_id'=>$lesson->assignClass->id,
-                'class_name'=>$lesson->assignClass->class,
-                'subject_id'=>$lesson->assignSubject->id,
-                'subject_name'=>$lesson->assignSubject->subject_name,
-                'total_content'=>$subject_content,
+            $lessons = Lesson::select('id', 'name', 'assign_class_id', 'board_id', 'assign_subject_id', 'created_at')->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,subject_name', 'topics', 'lessonAttachment'])->where('assign_subject_id', $id)->where('parent_id', null)->paginate(15);
+            $total_lesson=Lesson::select('id', 'name', 'assign_class_id', 'board_id', 'assign_subject_id', 'created_at')->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,subject_name', 'topics', 'lessonAttachment'])->where('assign_subject_id', $id)->where('parent_id', null)->get()->count();
+            $lessonData = [];
+            $lessons->getCollection()->transform(function($lesson) {
+                $pdf = 0;
+                $img = 0;
+
+                $topic = $lesson->topics->count();
+                $total_image_pdfs = Lesson::with(['lessonAttachment'])->where('type', 1)->where('parent_id', $lesson->id)->get();
+                if ($total_image_pdfs != null) {
+                    foreach ($total_image_pdfs as $key => $data) {
+                        $ext = pathinfo($data->lessonAttachment->img_url, PATHINFO_EXTENSION);
+                        if ($ext == "pdf") {
+                            $pdf += 1;
+                        } else {
+                            $img += 1;
+                        }
+                    }
+                }
+                $total_video = Lesson::with(['lessonAttachment'])->where('type', 2)->where('parent_id', $lesson->id)->get()->count();
+                $total_article = Lesson::with(['lessonAttachment'])->where('type', 3)->where('parent_id', $lesson->id)->get()->count();
+                $subject_content =
+                    [
+                        'total_pdf' => $pdf,
+                        'total_image' => $img,
+                        'total_video' => $total_video,
+                        'total_article' => $total_article,
+                    ];
+
+                $lesson = [
+                    'id' => $lesson->id,
+                    'name' => $lesson->name,
+                    'board_id' => $lesson->board->id,
+                    'board_name' => $lesson->board->exam_board,
+                    'class_id' => $lesson->assignClass->id,
+                    'class_name' => $lesson->assignClass->class,
+                    'subject_id' => $lesson->assignSubject->id,
+                    'subject_name' => $lesson->assignSubject->subject_name,
+                    'total_content' => $subject_content,
+
+                ];
+               return $lessonData[] = $lesson;
+            });
+            // foreach ($lessons as $key => $lesson) {
                
-             ];
-             $lessonData[] = $lesson;
-           
-           }
-            if (!$lessonData == null) {
-                
+            // }
+            if (!$lessons == null) {
+
                 $data = [
                     "code" => 200,
-                    "message" => "all board",
-                    "result" => $lessonData,
+                    "message" => "All Lesson",
+                    "result" => $lessons,
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
+            } else {
                 $data = [
                     "code" => 200,
                     "message" => "No record found",
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function LessonContentDetails(Request $request)
+    {
+        try {
+            $id = $_GET['lesson_id'];
+            $lesson = Lesson::with(["lessonAttachment", "topics" => function ($q) {
+                $q->with(["lessonAttachment", "subTopics" => function ($query) {
+                    $query->with("lessonAttachment");
+                }]);
+            }])->where('id', $id)->first();
+            $lesson_pdf = [];
+            $lesson_video = [];
+            $lesson_content = [];
+
+            if ($lesson != null) {
+                if ($lesson->topics) {
+                    foreach ($lesson->topics as $key => $topic) {
+                        if ($topic->type == 1) {
+
+                            $lesson_pdf_data =
+                                [
+                                    'id' => $topic->id,
+                                    'title' => $topic->name,
+                                    'file_path' => $topic->lessonAttachment->img_url,
+
+                                ];
+                            $lesson_pdf['lesson_data'] = $lesson_pdf_data;
+                        }
+                        if ($topic->type == 2) {
+                            $lesson_video_data =
+                                [
+                                    'id' => $topic->id,
+                                    'title' => $topic->name,
+                                    'img_url' => $topic->lessonAttachment->img_url,
+                                    'video_thumbnail_image' => $topic->lessonAttachment->video_thumbnail_image,
+                                    'original_video_path' => $topic->lessonAttachment->attachment_origin_url,
+                                    'video_size_480' => $topic->lessonAttachment->video_resize_480,
+                                    'video_size_720' => $topic->lessonAttachment->video_resize_720,
+
+                                ];
+                            $lesson_video['lesson_data'] = $lesson_video_data;
+                        }
+                        if ($topic->type == 3) {
+
+                            $lesson_content_data =
+                                [
+                                    'id' => $topic->id,
+                                    'title' => $topic->name,
+                                    'content' => $topic->content,
+
+                                ];
+                            $lesson_content['lesson_data'] = $lesson_content_data;
+                        }
+                        if ($topic->subTopics) {
+                            foreach ($topic->subTopics as $key => $sub_topic) {
+                                if ($sub_topic->type == 1) {
+                                    $lesson_pdf_data =
+                                        [
+                                            'id' => $sub_topic->id,
+                                            'title' => $sub_topic->name,
+                                            'file_path' => $sub_topic->lessonAttachment->img_url,
+
+                                        ];
+                                    $lesson_pdf['lesson_data'] = $lesson_pdf_data;
+                                }
+                                if ($sub_topic->type == 2) {
+                                    $lesson_video_data =
+                                        [
+                                            'id' => $sub_topic->id,
+                                            'title' => $sub_topic->name,
+                                            'img_url' => $sub_topic->lessonAttachment->img_url,
+                                            'video_thumbnail_image' => $sub_topic->lessonAttachment->video_thumbnail_image,
+                                            'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url,
+                                            'video_size_480' => $sub_topic->lessonAttachment->video_resize_480,
+                                            'video_size_720' => $sub_topic->lessonAttachment->video_resize_720,
+
+                                        ];
+                                    $lesson_video['lesson_data'] = $lesson_video_data;
+                                }
+                                if ($sub_topic->type == 3) {
+                                    $lesson_content_data =
+                                        [
+                                            'id' => $sub_topic->id,
+                                            'title' => $sub_topic->name,
+                                            'content' => $sub_topic->content,
+
+                                        ];
+                                    $lesson_content['lesson_data'] = $lesson_content_data;
+                                }
+                            }
+                        }
+                    }
 
 
+                    $all_content = [
+
+                        'lesson_pdf' => $lesson_pdf,
+                        'lesson_video' => $lesson_video,
+                        'lesson_content' => $lesson_content,
+
+                    ];
+                }
+                $data = [
+                    "code" => 400,
+                    "status" => 0,
+                    "message" => "All lesson content",
+                    "result" => $all_content,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+
+                $data = [
+                    "code" => 400,
+                    "status" => 0,
+                    "message" => "No Records found",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
             }
 
 
 
+
+
+
+
+            $data = [
+                "code" => 200,
+                "status" => 0,
+                "message" => "Lesson-Details",
+                "result" => $lesson,
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
