@@ -194,6 +194,7 @@ class SubjectController extends Controller
                 $data = [
                     "code" => 200,
                     "message" => "All Lesson",
+                    "total_lesson"=>$total_lesson,
                     "result" => $lessons,
 
                 ];
