@@ -19,6 +19,7 @@ class CartController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('is_paid', 0)
             ->where('is_remove_from_cart', 0)
+            ->where('is_buy',0)
             ->get();
 
             if ($carts->count()> 0) {
@@ -79,6 +80,7 @@ class CartController extends Controller
             $board_id = $subject->board_id;
             $class_id = $subject->assign_class_id;
             $course_type = $request->course_type;
+            $isBuy=$request->is_buy;
             // $already_in_cart = Cart::where('user_id', auth()->user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_full_course_selected', 1)->get();
             // // if ($already_in_cart->count() > 0) {
             // //     $data = [
@@ -96,7 +98,8 @@ class CartController extends Controller
                 'user_id' => auth()->user()->id,
                 'board_id' => $board_id, //board_id
                 'assign_class_id' => $class_id, //class_id
-                'is_full_course_selected' => $course_type
+                'is_full_course_selected' => $course_type,
+                'is_buy'=>$isBuy
             ]);
 
             foreach ($all_subjects as $key => $subject) {
