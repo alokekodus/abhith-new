@@ -3,6 +3,7 @@
 use App\Models\AssignSubject;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
+use App\Models\Order;
 use App\Models\SubjectLessonVisitor;
 use App\Models\User;
 use App\Models\UserDetails;
@@ -168,5 +169,17 @@ function otpSend($phone, $otp)
         return false;
     } else {
         return true;
+    }
+}
+function isUserBuy($subject_id)
+{
+
+    $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
+        $q->where('assign_subject_id', $subject_id);
+    })->where("user_id", auth()->user()->id)->get();
+    if ($isBuy) {
+        return true;
+    } else {
+        return false;
     }
 }

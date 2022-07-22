@@ -89,7 +89,7 @@
                         <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
                             <option value="">-- Select -- </option>
                             @forelse ($boards as $item)
-                            <option value="{{$item->id}}">{{$item->exam_board}}</option>
+                            <option value="{{$item->id}}" {{request()->assignedBoard == $item->id ? 'selected':''}}>{{$item->exam_board}}</option>
                             @empty
                             <option>No boards to show</option>
                             @endforelse
@@ -169,7 +169,6 @@
     function changeBoard()
 {
     let board_id=$("#assignedBoard").val();
-    
     $.ajax({
                 url:"{{route('board.class')}}",
                 type:"post",
