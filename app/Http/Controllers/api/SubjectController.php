@@ -226,7 +226,7 @@ class SubjectController extends Controller
                     $query->with("lessonAttachment");
                 }]);
             }])->where('id', $id)->first();
-           return response()->json($lesson);
+         
             $topic_pdf = [];
             $lesson_video = [];
             $lesson_content = [];

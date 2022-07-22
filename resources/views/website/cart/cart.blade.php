@@ -35,47 +35,43 @@
 <section class="cart-describtion">
     <div class="container-fluid">
         <div class="row">
-
-            <ul class="list-inline cart-course-list1">
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-                @endif
-                @if ($message = Session::get('error'))
-                <div class="alert alert-danger alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{{ $message }}</strong>
-                </div>
-                @endif
-                @forelse ($cart as $item)
-                @include('website.cart.cart-items')
-                @empty
-                <h4 class="text-center pb-3">Cart empty !</h4>
-                @endforelse
-            </ul>
-            <div class="shipping-div text-center"><a href="{{route('website.course')}}" class="shipping-btn">Continue
-                    Enrolling</a></div>
-
-
-
-            @auth
-            {{-- <div class="cart-checkout"> --}}
-                {{-- <label class="bold-600">Total:</label>
-                <h2 class="heading-black mb20"><i class="fa fa-inr" aria-hidden="true"></i>
-                    {{number_format($countPrice,2,'.','')}}</h2> --}}
-                {{-- <label class="bold-600">Apply Promo Code If Any Available:</label> --}}
-                {{-- @if ($countPrice == 0)
-                <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a> --}}
-                {{-- @else
-                <button class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn"
-                    data-checkout="{{number_format($countPrice,2,'.','')}}">Checkout</button>
-                @endif --}}
-                {{--
-            </div> --}}
-            @endauth
-
+            <div class="col-lg-8">
+                <ul class="list-inline cart-course-list1">
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>    
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @if ($message = Session::get('error'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>    
+                            <strong>{{ $message }}</strong>
+                        </div>
+                    @endif
+                    @forelse ($cart as $item)
+                    @include('website.cart.cart-items')
+                    @empty
+                        <h4 class="text-center pb-3">Cart empty !</h4>
+                    @endforelse
+                </ul>
+                <div class="shipping-div text-center"><a href="{{route('website.course')}}" class="shipping-btn">Continue Enrolling</a></div>
+                
+            </div>
+            <div class="col-lg-4">
+                @auth   
+                    <div class="cart-checkout">
+                        <label class="bold-600">Total:</label>
+                        <h2 class="heading-black mb20"><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($countPrice,2,'.','')}}</h2>
+                        {{-- <label class="bold-600">Apply Promo Code If Any Available:</label> --}}
+                        @if ($countPrice == 0)
+                            <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a>
+                        @else
+                            <button class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn" data-checkout="{{number_format($countPrice,2,'.','')}}">Checkout</button>
+                        @endif
+                    </div>
+                @endauth
+            </div>
         </div>
     </div>
 </section>

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-3">
+    <div class="col-4">
         <h6>Board: {{$item->board->exam_board??''}} Class: {{$item->assignClass->class??''}}</h6>
         <h6> Course Type:
             @if($item->is_full_course_selected==1)Full Course
@@ -13,16 +13,12 @@
             </span>
         </h6>
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <i class="fa fa-inr" aria-hidden="true"></i>
         {{number_format($item->assignSubject->sum('amount')??'00',2,'.','')}}
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <a href="#" class="remove removeCartItem" data-id="{{$item->id??''}}">Remove</a>
-    </div>
-    <div class="col-3">
-        <button class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn"
-            data-checkout="{{number_format($item->amount,2,'.','')}}">Checkout</button>
     </div>
 </div>
 {{-- <div class="col-lg-4">
@@ -51,4 +47,4 @@
 </div> --}}
 <div class="col-lg-4 col-md-4 rightBlock">
 
-</div> --}}
+</div> 

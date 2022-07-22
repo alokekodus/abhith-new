@@ -112,10 +112,15 @@ class CartController extends Controller
                 ];
                 $assign_subject = CartOrOrderAssignSubject::create($data);
             }
+            if($request->is_buy==1){
+                 $message="Continue for buy subject";
+            }else{
+                $message="Subjects was successfully added to your cart";
+            }
             $data = [
                 "code" => 200,
                 "status" => 1,
-                "message" => "Subjects was successfully added to your cart",
+                "message" =>$message,
                 "cart_id" => $cart->id,
             ];
             return response()->json(['status' => 1, 'result' => $data]);
