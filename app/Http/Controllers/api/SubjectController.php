@@ -462,4 +462,54 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function LessonTopics(Request $request){
+        try {
+            $id = $_GET['lesson_id'];
+            $page = $_GET['page'];
+          
+            $lesson = Lesson::with(['topics:parent_id,name','subTopics'])->where('id', $id)->first();
+           
+            if($lesson->topics){
+                $lesson_topic=$lesson->topics()->paginate();
+                $topics=[];
+                foreach($lesson_topic as $key=>$topic){
+                    $sub_topic_count=$topic->subTopics->count();
+                    $topic=[
+                        'id'=>$topic->id,
+                        'name'=>$topic->name,
+                        'sub_topic_count'=>$sub_topic_count,
+                        
+                    ];
+                    $topics[]=$topic;
+                }
+                  $total_topic=count($topics);
+                  $topics['total']=$total_topic;
+                
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All Topics",
+                    "result"=>$topics,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Data Available",
+    
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
 }

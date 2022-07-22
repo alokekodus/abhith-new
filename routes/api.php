@@ -61,6 +61,7 @@ Route::prefix('homepage')->group(function(){
 Route::post('subjects',[SubjectController::class,'findSubject']);
 Route::get('subject-details',[SubjectController::class,'subjectDetails']);
 Route::get('subject/lessons',[SubjectController::class,'LessonDetails']);
+Route::get('subject/lesson/topic',[SubjectController::class,'LessonTopics']);
 Route::get('subject/lesson/video',[SubjectController::class,'LessonVideoDetails']);
 Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
 
