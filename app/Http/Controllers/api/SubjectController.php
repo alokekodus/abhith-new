@@ -369,58 +369,63 @@ class SubjectController extends Controller
     public function LessonVideoDetails(Request $request)
     {
         try {
-            $topic_video = [];
+
+
             $id = $_GET['lesson_id'];
+            $sub_topic_video = [];
             $lesson = Lesson::with(["lessonAttachment", "topics" => function ($q) {
                 $q->with(["lessonAttachment", "subTopics" => function ($query) {
                     $query->with("lessonAttachment");
                 }]);
             }])->where('id', $id)->first();
             if ($lesson != null) {
+
                 if ($lesson->topics) {
-                    foreach ($lesson->topics as $key => $topic) {
+                    $topic_video = [];
+                    foreach ($lesson->topics->where('type', 2) as $key => $topic) {
 
-                        if ($topic->type == 2) {
-                            $topic_video_data =
-                                [
-                                    'id' => $topic->id,
-                                    'title' => $topic->name,
 
-                                    'original_video_path' => $topic->lessonAttachment->attachment_origin_url,
-                                    'video_size_480' => $topic->lessonAttachment->video_resize_480,
-                                    'video_size_720' => $topic->lessonAttachment->video_resize_720,
+                        $topic_video_data =
+                            [
+                                'id' => $topic->id,
+                                'title' => $topic->name,
 
-                                ];
-                            $topic_video['lesson_data'] = $topic_video_data;
-                        }
+                                'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
+                                'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
+                                'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
 
-                        if ($topic->subTopics) {
+                            ];
+                       
 
-                            foreach ($topic->subTopics as $key => $sub_topic) {
+                        if ($topic->subTopics->where('type', 2)) {
+                           
+                            foreach ($topic->subTopics->where('type',2) as $key => $sub_topic) {
 
-                                if ($sub_topic->type == 2) {
-                                    $topic_video_data =
-                                        [
-                                            'id' => $sub_topic->id,
-                                            'title' => $sub_topic->name,
-                                            'img_url' => $sub_topic->lessonAttachment,
-                                            'video_thumbnail_image' => $sub_topic->lessonAttachment->video_thumbnail_image ?? '',
-                                            'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? '',
-                                            'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? '',
-                                            'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? '',
 
-                                        ];
-                                    $topic_video['lesson_data'] = $topic_video_data;
-                                }
+                                $sub_topic_video =
+                                    [
+                                        'id' => $sub_topic->id,
+                                        'title' => $sub_topic->name,
+
+                                        'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
+                                        'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
+                                        'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
+
+                                    ];
+                                
                             }
                         }
+                        $topic_video[] = $topic_video_data;
+                        $topic_video["sub_topic_video"]=$sub_topic_video;
                     }
 
-
+                   
 
                     $topic_video["total_video"] = count($topic_video);
+                   
                     $all_content = [
                         'lesson_video' => $topic_video,
+
                     ];
                 }
                 if ($all_content['lesson_video']['total_video'] == 0) {
@@ -447,6 +452,7 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
+            dd($th);
             $data = [
                 "code" => 400,
                 "status" => 0,
