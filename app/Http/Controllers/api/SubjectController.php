@@ -452,7 +452,7 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
-            dd($th);
+          
             $data = [
                 "code" => 400,
                 "status" => 0,
