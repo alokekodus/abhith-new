@@ -371,86 +371,82 @@ class SubjectController extends Controller
         try {
             $id = $_GET['lesson_id'];
             $sub_topic_video = [];
-            $lesson = Lesson::with(["lessonAttachment", "topics" => function ($q) {
-                $q->with(["lessonAttachment", "subTopics" => function ($query) {
-                    $query->with("lessonAttachment");
-                }]);
-            }])->where('id', $id)->first();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('type', 2)->get();
+
             if ($lesson != null) {
 
-                if ($lesson->topics) {
-                    $topic_video = [];
-                    foreach ($lesson->topics->where('type', 2) as $key => $topic) {
+                $topic_video = [];
+
+                foreach ($lesson as $key => $topic) {
 
 
-                        $topic_video_data =
-                            [
-                                'id' => $topic->id,
-                                'title' => $topic->name,
+                    $topic_video_data =
+                        [
+                            'id' => $topic->id,
+                            'title' => $topic->name,
+                            'video_thumbnail_image' => $topic->lessonAttachment->video_thumbnail_image ?? null,
+                            'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
+                            'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
+                            'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
 
-                                'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
-                                'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
-                                'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
-
-                            ];
-
-
-                        if ($topic->subTopics->where('type', 2)) {
-
-                            foreach ($topic->subTopics->where('type', 2) as $key => $sub_topic) {
+                        ];
 
 
-                                $sub_topic_video =
-                                    [
-                                        'id' => $sub_topic->id,
-                                        'title' => $sub_topic->name,
+                    if ($topic->subTopics->where('type', 2)) {
 
-                                        'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
-                                        'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
-                                        'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
+                        foreach ($topic->subTopics->where('type', 2) as $key => $sub_topic) {
 
-                                    ];
-                                $topic_video[] = $topic_video_data;
-                            }
+
+                            $sub_topic_video =
+                                [
+                                    'id' => $sub_topic->id,
+                                    'title' => $sub_topic->name,
+
+                                    'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
+                                    'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
+                                    'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
+
+                                ];
+                            $topic_video[] = $topic_video_data;
                         }
-
-                        $topic_video[] = $sub_topic_video;
                     }
-                    $array = array_filter($topic_video, function ($x) {
-                        return !empty($x);
-                    });
-                    if (sizeof($array) > 0) {
-                        $all_videos = [];
-                        foreach ($array as $key => $data) {
-                            $all_videos[] = $data;
-                        }
-                        $count = sizeof($array);
-                        $video_details = [
-                            'videos' => $all_videos,
-                            'total_videos' => $count,
 
-                        ];
-                        $data = [
-                            "code" => 200,
-                            "status" => 1,
-                            "message" => "All Videos",
-                            "result" => $video_details,
-                        ];
-                        return response()->json(['status' => 1, 'result' => $data]);
-                    } else {
-                        $video_details = [
-                            'videos' => [],
-                            'total_videos' => 0,
-
-                        ];
-                        $data = [
-                            "code" => 200,
-                            "status" => 1,
-                            "message" => "No Records found",
-                            "result" => $video_details,
-                        ];
-                        return response()->json(['status' => 1, 'result' => $data]);
+                    $topic_video[] = $sub_topic_video;
+                }
+                $array = array_filter($topic_video, function ($x) {
+                    return !empty($x);
+                });
+                if (sizeof($array) > 0) {
+                    $all_videos = [];
+                    foreach ($array as $key => $data) {
+                        $all_videos[] = $data;
                     }
+                    $count = sizeof($array);
+                    $video_details = [
+                        'videos' => $all_videos,
+                        'total_videos' => $count,
+
+                    ];
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "All Videos",
+                        "result" => $video_details,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                } else {
+                    $video_details = [
+                        'videos' => [],
+                        'total_videos' => 0,
+
+                    ];
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "No Records found",
+                        "result" => $video_details,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
                 }
             } else {
                 $video_details = [
@@ -467,7 +463,7 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
-
+            dd($th);
             $data = [
                 "code" => 400,
                 "status" => 0,
