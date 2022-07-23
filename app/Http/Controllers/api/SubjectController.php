@@ -369,8 +369,6 @@ class SubjectController extends Controller
     public function LessonVideoDetails(Request $request)
     {
         try {
-
-
             $id = $_GET['lesson_id'];
             $sub_topic_video = [];
             $lesson = Lesson::with(["lessonAttachment", "topics" => function ($q) {
@@ -415,32 +413,40 @@ class SubjectController extends Controller
                                 
                             }
                         }
-                        $topic_video["topic_video"] = $topic_video_data;
-                        $topic_video["sub_topic_video"]=$sub_topic_video;
+                        $topic_video[] = $topic_video_data;
+                        $topic_video[]=$sub_topic_video;
                     }
-
-                   
-
-                    $topic_video["total_video"] = count($topic_video);
-                   
-                    $all_content = [
-                        'lesson_video' => $topic_video,
-
+                    $array = array_filter($topic_video, function($x) { 
+                        return !empty($x);
+                    });
+            
+                   $count = sizeof($array);
+                    $video_details=[
+                        'videos'=>$topic_video,
+                        'total_videos'=>$count,
+                        
                     ];
-                }
-                if ($all_content['lesson_video']['total_video'] == 0) {
-                    $message = "Video Not Available";
-                } else {
-                    $message = "All lesson content";
-                }
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => $message,
-                    "result" => $all_content,
 
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                }
+                if($count>0){
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "All Videos",
+                        "result"=>$video_details,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }else{
+
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "No Records found",
+                        "result"=>$video_details,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }
+               
             } else {
 
                 $data = [
@@ -461,6 +467,107 @@ class SubjectController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
+    }
+    public function LessonPdfDetails(Request $request){
+        try {
+            $id = $_GET['lesson_id'];
+            $sub_topic_pdf = [];
+            $lesson = Lesson::with(["lessonAttachment", "topics" => function ($q) {
+                $q->with(["lessonAttachment", "subTopics" => function ($query) {
+                    $query->with("lessonAttachment");
+                }]);
+            }])->where('id', $id)->first();
+            if ($lesson != null) {
+ 
+                if ($lesson->topics) {
+                    $topic_pdf = [];
+                    foreach ($lesson->topics->where('type', 1) as $key => $topic) {
+
+
+                        $topic_pdf_data =
+                            [
+                                'id' => $topic->id,
+                                'title' => $topic->name,
+
+                                'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
+                                'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
+                                'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
+
+                            ];
+                       
+
+                        if ($topic->subTopics->where('type', 1)) {
+                           
+                            foreach ($topic->subTopics->where('type',1) as $key => $sub_topic) {
+
+
+                                $sub_topic_pdf =
+                                    [
+                                        'id' => $sub_topic->id,
+                                        'title' => $sub_topic->name,
+
+                                        'pdf_path' => $sub_topic->lessonAttachment->img ?? null,
+                                      
+
+                                    ];
+                                
+                            }
+                        }
+                        $topic_pdf[] = $sub_topic_pdf;
+                        $topic_pdf[]=$sub_topic_pdf;
+                    }
+                    $array = array_filter($topic_pdf, function($x) { 
+                        return !empty($x);
+                    });
+            
+                   $count = sizeof($array);
+                    $pdf_details=[
+                        'pdf'=>$topic_pdf,
+                        'total_videos'=>$count,
+                        
+                    ];
+
+                }
+                if($count>0){
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "All Videos",
+                        "result"=>$pdf_details,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }else{
+
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "No Records found",
+                        "result"=>$pdf_details,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }
+               
+            } else {
+
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Records found",
+                    "result" => null,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+          
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+
     }
     public function LessonTopics(Request $request){
         try {
