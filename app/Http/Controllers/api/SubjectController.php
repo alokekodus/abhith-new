@@ -393,11 +393,11 @@ class SubjectController extends Controller
                                 'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
 
                             ];
-                       
+
 
                         if ($topic->subTopics->where('type', 2)) {
-                           
-                            foreach ($topic->subTopics->where('type',2) as $key => $sub_topic) {
+
+                            foreach ($topic->subTopics->where('type', 2) as $key => $sub_topic) {
 
 
                                 $sub_topic_video =
@@ -410,51 +410,43 @@ class SubjectController extends Controller
                                         'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
 
                                     ];
-                                    $topic_video[] = $topic_video_data;
+                                $topic_video[] = $topic_video_data;
                             }
                         }
-                      
-                        $topic_video[]=$sub_topic_video;
+
+                        $topic_video[] = $sub_topic_video;
                     }
-                    $array = array_filter($topic_video, function($x) { 
+                    $array = array_filter($topic_video, function ($x) {
                         return !empty($x);
                     });
-                    if(sizeof($array)>0){
+                    if (sizeof($array) > 0) {
                         $all_videos = [];
-                         foreach($array as $key=>$data){
-                              $all_videos[]=$data;
-                         }
+                        foreach ($array as $key => $data) {
+                            $all_videos[] = $data;
+                        }
+                        $count = sizeof($array);
+                        $video_details = [
+                            'videos' => $all_videos,
+                            'total_videos' => $count,
 
+                        ];
+                        $data = [
+                            "code" => 200,
+                            "status" => 1,
+                            "message" => "All Videos",
+                            "result" => $video_details,
+                        ];
+                        return response()->json(['status' => 1, 'result' => $data]);
+                    } else {
+                        $data = [
+                            "code" => 200,
+                            "status" => 1,
+                            "message" => "No Records found",
+                            "result" => null,
+                        ];
+                        return response()->json(['status' => 1, 'result' => $data]);
                     }
-                    
-                    
-                   $count = sizeof($array);
-                    $video_details=[
-                        'videos'=>$all_videos,
-                        'total_videos'=>$count,
-                        
-                    ];
-
                 }
-                if($count>0){
-                    $data = [
-                        "code" => 200,
-                        "status" => 1,
-                        "message" => "All Videos",
-                        "result"=>$video_details,
-                    ];
-                    return response()->json(['status' => 1, 'result' => $data]);
-                }else{
-
-                    $data = [
-                        "code" => 200,
-                        "status" => 1,
-                        "message" => "No Records found",
-                        "result"=>$video_details,
-                    ];
-                    return response()->json(['status' => 1, 'result' => $data]);
-                }
-               
             } else {
 
                 $data = [
@@ -466,7 +458,7 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
-          
+
             $data = [
                 "code" => 400,
                 "status" => 0,
@@ -476,7 +468,8 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function LessonPdfDetails(Request $request){
+    public function LessonPdfDetails(Request $request)
+    {
         try {
             $id = $_GET['lesson_id'];
             $sub_topic_pdf = [];
@@ -486,7 +479,7 @@ class SubjectController extends Controller
                 }]);
             }])->where('id', $id)->first();
             if ($lesson != null) {
- 
+
                 if ($lesson->topics) {
                     $topic_pdf = [];
                     foreach ($lesson->topics->where('type', 1) as $key => $topic) {
@@ -502,11 +495,11 @@ class SubjectController extends Controller
                                 'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
 
                             ];
-                       
+
 
                         if ($topic->subTopics->where('type', 1)) {
-                           
-                            foreach ($topic->subTopics->where('type',1) as $key => $sub_topic) {
+
+                            foreach ($topic->subTopics->where('type', 1) as $key => $sub_topic) {
 
 
                                 $sub_topic_pdf =
@@ -515,46 +508,43 @@ class SubjectController extends Controller
                                         'title' => $sub_topic->name,
 
                                         'pdf_path' => $sub_topic->lessonAttachment->img ?? null,
-                                      
+
 
                                     ];
-                                
                             }
                         }
                         $topic_pdf[] = $sub_topic_pdf;
-                        $topic_pdf[]=$sub_topic_pdf;
+                        $topic_pdf[] = $sub_topic_pdf;
                     }
-                    $array = array_filter($topic_pdf, function($x) { 
+                    $array = array_filter($topic_pdf, function ($x) {
                         return !empty($x);
                     });
-            
-                   $count = sizeof($array);
-                    $pdf_details=[
-                        'pdf'=>$topic_pdf,
-                        'total_videos'=>$count,
-                        
-                    ];
 
+                    $count = sizeof($array);
+                    $pdf_details = [
+                        'pdf' => $topic_pdf,
+                        'total_videos' => $count,
+
+                    ];
                 }
-                if($count>0){
+                if ($count > 0) {
                     $data = [
                         "code" => 200,
                         "status" => 1,
                         "message" => "All Videos",
-                        "result"=>$pdf_details,
+                        "result" => $pdf_details,
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                }else{
+                } else {
 
                     $data = [
                         "code" => 200,
                         "status" => 1,
                         "message" => "No Records found",
-                        "result"=>$pdf_details,
+                        "result" => $pdf_details,
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
                 }
-               
             } else {
 
                 $data = [
@@ -565,7 +555,6 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-          
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
@@ -575,48 +564,47 @@ class SubjectController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
-
     }
-    public function LessonTopics(Request $request){
+    public function LessonTopics(Request $request)
+    {
         try {
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
-          
-            $lesson = Lesson::with(['topics:parent_id,name','subTopics'])->where('id', $id)->first();
-           
-            if($lesson->topics){
-                $lesson_topic=$lesson->topics()->paginate();
-                $topics=[];
-                foreach($lesson_topic as $key=>$topic){
-                    $sub_topic_count=$topic->subTopics->count();
-                    $topic=[
-                        'id'=>$topic->id,
-                        'name'=>$topic->name,
-                        'sub_topic_count'=>$sub_topic_count
-                        
+
+            $lesson = Lesson::with(['topics:parent_id,name', 'subTopics'])->where('id', $id)->first();
+
+            if ($lesson->topics) {
+                $lesson_topic = $lesson->topics()->paginate();
+                $topics = [];
+                foreach ($lesson_topic as $key => $topic) {
+                    $sub_topic_count = $topic->subTopics->count();
+                    $topic = [
+                        'id' => $topic->id,
+                        'name' => $topic->name,
+                        'sub_topic_count' => $sub_topic_count
+
                     ];
                     $topics[] = $topic;
                 }
 
-               
-                 
+
+
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "All Topics",
-                    "result"=>$topics,
+                    "result" => $topics,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
+            } else {
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "No Data Available",
-    
+
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
