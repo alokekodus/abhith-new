@@ -410,20 +410,27 @@ class SubjectController extends Controller
                                         'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
 
                                     ];
-                                
+                                    $topic_video[] = $topic_video_data;
                             }
                         }
-                        $topic_video[] = $topic_video_data;
+                      
                         $topic_video[]=$sub_topic_video;
                     }
                     $array = array_filter($topic_video, function($x) { 
                         return !empty($x);
                     });
-                    $videos=$array;
+                    if(sizeof($array)>0){
+                        $all_videos = [];
+                         foreach($array as $key=>$data){
+                              $all_videos[]=$data;
+                         }
+
+                    }
+                    
                     
                    $count = sizeof($array);
                     $video_details=[
-                        'videos'=>$videos,
+                        'videos'=>$all_videos,
                         'total_videos'=>$count,
                         
                     ];
