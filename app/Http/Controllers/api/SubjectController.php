@@ -442,7 +442,7 @@ class SubjectController extends Controller
                             "code" => 200,
                             "status" => 1,
                             "message" => "No Records found",
-                            "result" => null,
+                            "result" => [],
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
                     }
