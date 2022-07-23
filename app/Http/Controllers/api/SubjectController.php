@@ -438,22 +438,31 @@ class SubjectController extends Controller
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
                     } else {
+                        $video_details = [
+                            'videos' => [],
+                            'total_videos' => 0,
+
+                        ];
                         $data = [
                             "code" => 200,
                             "status" => 1,
                             "message" => "No Records found",
-                            "result" => [],
+                            "result" => $video_details,
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
                     }
                 }
             } else {
+                $video_details = [
+                    'videos' => [],
+                    'total_videos' => 0,
 
+                ];
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "No Records found",
-                    "result" => null,
+                    "result" => $video_details,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
