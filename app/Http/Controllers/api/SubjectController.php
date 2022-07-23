@@ -419,11 +419,11 @@ class SubjectController extends Controller
                     $array = array_filter($topic_video, function($x) { 
                         return !empty($x);
                     });
-                    
+                    $videos=$array;
                     
                    $count = sizeof($array);
                     $video_details=[
-                        'videos'=>$array,
+                        'videos'=>$videos,
                         'total_videos'=>$count,
                         
                     ];
