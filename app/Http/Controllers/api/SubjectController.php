@@ -415,7 +415,7 @@ class SubjectController extends Controller
                                 
                             }
                         }
-                        $topic_video[] = $topic_video_data;
+                        $topic_video["topic_video"] = $topic_video_data;
                         $topic_video["sub_topic_video"]=$sub_topic_video;
                     }
 
@@ -477,14 +477,14 @@ class SubjectController extends Controller
                     $topic=[
                         'id'=>$topic->id,
                         'name'=>$topic->name,
-                        'sub_topic_count'=>$sub_topic_count,
+                        'sub_topic_count'=>$sub_topic_count
                         
                     ];
-                    $topics[]=$topic;
+                    $topics[] = $topic;
                 }
-                  $total_topic=count($topics);
-                  $topics['total']=$total_topic;
-                
+
+               
+                 
                 $data = [
                     "code" => 200,
                     "status" => 1,
