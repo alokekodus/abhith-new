@@ -110,7 +110,7 @@
                 <h1>Come teach with us</h1>
                 <p>Become an instructor and change <br> lives  — including your own</p>
                 <div class="hero-header-btn">
-                    <a href="{{route('website.login')}}" class="btn knowledge-link-1">Get Started</a>
+                    <a href="{{route('teacher.login')}}" class="btn knowledge-link-1">Get Started</a>
                 </div>
             </div>
             {{-- <div class="hero-header1">
@@ -316,7 +316,7 @@
                 <p>Our <b>Instructor Support Team</b> is here to answer your questions and review your test video, while our <b>Teaching Center</b> gives you plenty of resources to help you through the process. Plus, get the support of experienced instructors in our <b>online community</b>.</p>
             </div>
             <div class="support-team-icon2">
-                <img src="{{asset('asset_website/img/becomeTeacher/support-2-v3.jpg')}}" alt="">
+                <img class="w-100" src="{{asset('asset_website/img/becomeTeacher/support-2-v3.jpg')}}" alt="">
             </div>
         </div>
         <!-- ENd Support Team -->
@@ -327,7 +327,7 @@
                 <h2>Become an instructor today</h2>
                 <p>Join one of the world’s largest online learning marketplaces.</p>
                 <div class="teacher-btn">
-                    <a href="{{route('website.login')}}" class="btn knowledge-link">Get Started</a>
+                    <a href="{{route('teacher.login')}}" class="btn knowledge-link">Get Started</a>
                 </div>
             </div>
         </div>
