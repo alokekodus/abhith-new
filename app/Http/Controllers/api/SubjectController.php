@@ -361,11 +361,12 @@ class SubjectController extends Controller
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
 
                                 ];
-                            $topic_video[] = $topic_video_data;
+                                $topic_video[] = $sub_topic_video;
+                           
                         }
                     }
-
-                    $topic_video[] = $sub_topic_video;
+                    $topic_video[] = $topic_video_data;
+                   
                 }
                 $array = array_filter($topic_video, function ($x) {
                     return !empty($x);
