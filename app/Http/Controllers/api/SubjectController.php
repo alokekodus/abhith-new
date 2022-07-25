@@ -463,7 +463,6 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
-            dd($th);
             $data = [
                 "code" => 400,
                 "status" => 0,
@@ -478,61 +477,55 @@ class SubjectController extends Controller
         try {
             $id = $_GET['lesson_id'];
             $sub_topic_pdf = [];
-            $lesson = Lesson::with(["lessonAttachment", "topics" => function ($q) {
-                $q->with(["lessonAttachment", "subTopics" => function ($query) {
-                    $query->with("lessonAttachment");
-                }]);
-            }])->where('id', $id)->first();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('parent_id','!=',null)->where('type',1)->get();
+            
             if ($lesson != null) {
 
-                if ($lesson->topics) {
-                    $topic_pdf = [];
-                    foreach ($lesson->topics->where('type', 1) as $key => $topic) {
+                $topic_pdf = [];
+
+                foreach ($lesson as $key => $topic) {
 
 
-                        $topic_pdf_data =
-                            [
-                                'id' => $topic->id,
-                                'title' => $topic->name,
+                    $topic_pdf_data =
+                        [
+                            'id' => $topic->id,
+                            'title' => $topic->name,
+                            'pdf_url' => $topic->lessonAttachment->img_url ?? null,
+                        ];
 
-                                'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
-                                'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
-                                'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
+                     
+                    if ($topic->subTopics->where('type', 1)) {
+                          
+                        foreach ($topic->subTopics->where('type',1) as $key => $sub_topic) {
+                           
+                            $sub_topic_pdf =
+                                [
+                                    'id' => $sub_topic->id,
+                                    'title' => $sub_topic->name,
+                                    'pdf_url' => $topic->lessonAttachment->img_url ?? null,
 
-                            ];
-
-
-                        if ($topic->subTopics->where('type', 1)) {
-
-                            foreach ($topic->subTopics->where('type', 1) as $key => $sub_topic) {
-
-
-                                $sub_topic_pdf =
-                                    [
-                                        'id' => $sub_topic->id,
-                                        'title' => $sub_topic->name,
-
-                                        'pdf_path' => $sub_topic->lessonAttachment->img ?? null,
-
-
-                                    ];
-                            }
+                                ];
+                                $topic_pdf[] = $sub_topic_pdf;
                         }
-                        $topic_pdf[] = $sub_topic_pdf;
-                        $topic_pdf[] = $sub_topic_pdf;
                     }
-                    $array = array_filter($topic_pdf, function ($x) {
-                        return !empty($x);
-                    });
-
+                    $topic_pdf[] = $topic_pdf_data;
+                    
+                }
+                
+                $array = array_filter($topic_pdf, function ($x) {
+                    return !empty($x);
+                });
+                if (sizeof($array) > 0) {
+                    $all_pdfs = [];
+                    foreach ($array as $key => $data) {
+                        $all_pdfs[] = $data;
+                    }
                     $count = sizeof($array);
                     $pdf_details = [
-                        'pdf' => $topic_pdf,
-                        'total_videos' => $count,
+                        'pdfs' => $all_pdfs,
+                        'total_pdfs' => $count,
 
                     ];
-                }
-                if ($count > 0) {
                     $data = [
                         "code" => 200,
                         "status" => 1,
@@ -541,7 +534,11 @@ class SubjectController extends Controller
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
                 } else {
+                    $pdf_details = [
+                        'pdfs' => [],
+                        'total_pdfs' => 0,
 
+                    ];
                     $data = [
                         "code" => 200,
                         "status" => 1,
@@ -551,12 +548,16 @@ class SubjectController extends Controller
                     return response()->json(['status' => 1, 'result' => $data]);
                 }
             } else {
+                $pdf_details = [
+                    'pdfs' => [],
+                    'total_pdfs' => 0,
 
+                ];
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "No Records found",
-                    "result" => null,
+                    "result" => $pdf_details,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
