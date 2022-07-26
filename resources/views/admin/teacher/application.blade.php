@@ -34,13 +34,12 @@
                 <div class="row mt-3">
                     <div class="col-12">
                         <div id="videoAttach" class="tabcontent">
-                            <video id="teacher-promo-video" class="video-js" controls preload="auto" width="900"
+                            <video id="teacher-promo-video" class="video-js vjs-big-play-centered w-100" controls preload="auto" width="900"
                                 height="400" data-setup="{}">
                                 <source src="{{asset($user_details->teacherdemovideo_url)}}" type="video/mp4" />
                             </video>
                         </div>
                     </div>
-
                 </div>
 
             </div>

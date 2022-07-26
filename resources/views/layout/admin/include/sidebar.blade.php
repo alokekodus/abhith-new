@@ -17,7 +17,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route('admin.dashboard')}}">
-                <span class="menu-title">@if(isTeacherApply())Dashboard @else Become a Teacher @endif</span>
+                <span class="menu-title">@if(isTeacherApply()&& auth()->user()->hasRole('Teacher') )Become a Teacher @else Dashboard @endif</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
