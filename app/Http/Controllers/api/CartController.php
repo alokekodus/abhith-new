@@ -16,12 +16,12 @@ class CartController extends Controller
 
         $carts = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
             ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
-            ->where('user_id', Auth::user()->id)
-            ->where('is_paid', 0)
+            ->where('user_id', auth()->user()->id)
+            ->where('is_paid',0)
             ->where('is_remove_from_cart',0)
             ->where('is_buy',0)
             ->get();
-
+         return response()->json($carts);
         if ($carts->count() > 0) {
             $cart_items = [];
             foreach ($carts as $key => $cart) {
