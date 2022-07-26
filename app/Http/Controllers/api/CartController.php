@@ -21,7 +21,7 @@ class CartController extends Controller
             ->where('is_remove_from_cart',0)
             ->where('is_buy',0)
             ->get();
-         return response()->json($carts);
+         
         if ($carts->count() > 0) {
             $cart_items = [];
             foreach ($carts as $key => $cart) {
