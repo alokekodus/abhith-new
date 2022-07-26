@@ -19,50 +19,50 @@ class CartController extends Controller
             ->where('user_id', Auth::user()->id)
             ->where('is_paid', 0)
             ->where('is_remove_from_cart', 0)
-            ->where('is_buy',0)
+            ->where('is_buy', 0)
             ->get();
 
-            if ($carts->count()> 0) {
-                $cart_items = [];
-                foreach ($carts as $key => $cart) {
-                    
-                    $subject_tmp = '';
-                   
-                    foreach ($cart->assignSubject as $key => $assignSubject) {
-                        
-                        $subject_tmp .= ucfirst(strtolower($assignSubject->subject->subject_name) ).',';
-                    }
-                   
-                    $subject_tmp = trim($subject_tmp, ',');
-                    $cart = [
-                        'id' => $cart->id,
-                        'course_type' => $cart->is_full_course_selected,
-                        'assign_class' => $cart->assignClass->class,
-                        'board' => $cart->board->exam_board,
-                        'cart_total_amount' => $cart->assignSubject->sum("amount"),
-                        'assign_subject' => $subject_tmp,
-            
-                    ];
-                    $cart_items[] = $cart;
+        if ($carts->count() > 0) {
+            $cart_items = [];
+            foreach ($carts as $key => $cart) {
+
+                $subject_tmp = '';
+
+                foreach ($cart->assignSubject as $key => $assignSubject) {
+
+                    $subject_tmp .= ucfirst(strtolower($assignSubject->subject->subject_name)) . ',';
                 }
-            
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "All cart items",
-                    "carts" => $cart_items,
-            
+
+                $subject_tmp = trim($subject_tmp, ',');
+                $cart = [
+                    'id' => $cart->id,
+                    'course_type' => $cart->is_full_course_selected,
+                    'assign_class' => $cart->assignClass->class,
+                    'board' => $cart->board->exam_board,
+                    'cart_total_amount' => $cart->assignSubject->sum("amount"),
+                    'assign_subject' => $subject_tmp,
+
                 ];
-                return response()->json(['status' => 1, 'result' => $data]);
-            } else {
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "Your cart is empty",
-                    "carts" => $carts,
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                $cart_items[] = $cart;
             }
+
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "All cart items",
+                "carts" => $cart_items,
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        } else {
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Your cart is empty",
+                "carts" => $carts,
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        }
     }
     public function store(Request $request)
     {
@@ -80,7 +80,7 @@ class CartController extends Controller
             $board_id = $subject->board_id;
             $class_id = $subject->assign_class_id;
             $course_type = $request->course_type;
-            $isBuy=$request->is_buy;
+            $isBuy = $request->is_buy;
             // $already_in_cart = Cart::where('user_id', auth()->user()->id)->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_full_course_selected', 1)->get();
             // // if ($already_in_cart->count() > 0) {
             // //     $data = [
@@ -92,21 +92,28 @@ class CartController extends Controller
             // //     return response()->json(['status' => 0, 'result' => $data]);
             // // }
 
-
+            $cart_check = Cart::whereHas('assignSubject', function ($q) use ($all_subjects) {
+                $q->whereIn('assign_subject_id', $all_subjects);
+            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->first();
+            
+            if ($cart_check) {
+                $cart_check->assignSubject()->delete();
+                $cart_check->update(['is_remove_from_cart'=>1]);
+            }
 
             $cart = Cart::create([
                 'user_id' => auth()->user()->id,
                 'board_id' => $board_id, //board_id
                 'assign_class_id' => $class_id, //class_id
                 'is_full_course_selected' => $course_type,
-                'is_buy'=>$isBuy
+                'is_buy' => $isBuy
             ]);
 
             foreach ($all_subjects as $key => $subject) {
 
-               
-                    $subject = AssignSubject::find($all_subjects[$key]);
-                
+
+                $subject = AssignSubject::find($all_subjects[$key]);
+
                 $data = [
                     'cart_id' => $cart->id,
                     'assign_subject_id' => $subject->id,
@@ -115,15 +122,15 @@ class CartController extends Controller
                 ];
                 $assign_subject = CartOrOrderAssignSubject::create($data);
             }
-            if($request->is_buy==1){
-                 $message="Continue for buy subject";
-            }else{
-                $message="Subjects was successfully added to your cart";
+            if ($request->is_buy == 1) {
+                $message = "Continue for buy subject";
+            } else {
+                $message = "Subjects was successfully added to your cart";
             }
             $data = [
                 "code" => 200,
                 "status" => 1,
-                "message" =>$message,
+                "message" => $message,
                 "cart_id" => $cart->id,
             ];
             return response()->json(['status' => 1, 'result' => $data]);
@@ -178,7 +185,7 @@ class CartController extends Controller
                 ->first();
             if (!$cart == null) {
                 $cart_total_amount = $cart->assignSubject->sum("amount");
-               
+
                 $cart_details = [
                     'id' => $cart->id,
                     'user_id' => $cart->user_id,
@@ -189,7 +196,7 @@ class CartController extends Controller
                     'cart_subject_details' => $cart->assignSubject,
 
                 ];
-               
+
                 $data = [
                     "code" => 200,
                     "message" => "Cart Details",
