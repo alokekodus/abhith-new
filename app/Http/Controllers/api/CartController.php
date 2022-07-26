@@ -94,12 +94,12 @@ class CartController extends Controller
 
             $cart_check = Cart::whereHas('assignSubject', function ($q) use ($all_subjects) {
                 $q->whereIn('assign_subject_id', $all_subjects);
-            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->first();
+            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->first();
             
             if ($cart_check) {
                 $cart_check->assignSubject()->delete();
                 $cart_check->update(['is_remove_from_cart'=>1]);
-                $cart_check->delete();
+             
             }
 
             $cart = Cart::create([
