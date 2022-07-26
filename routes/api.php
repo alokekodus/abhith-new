@@ -57,7 +57,7 @@ Route::prefix('homepage')->group(function(){
     Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
    
 });
-
+Route::get('all-class', [CourseController::class, 'findAllClass']);
 Route::post('subjects',[SubjectController::class,'findSubject']);
 Route::get('subject-details',[SubjectController::class,'subjectDetails']);
 Route::get('subject/lessons',[SubjectController::class,'LessonDetails']);

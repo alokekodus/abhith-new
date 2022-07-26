@@ -11,6 +11,7 @@ use App\Models\Subject;
 use App\Models\Chapter;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
+use App\Models\Board;
 use Carbon\Carbon;
 
 class CourseController extends Controller
@@ -162,5 +163,52 @@ class CourseController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }  
+    }
+    public function findAllClass(Request $request){
+        try {
+            $board_name=$_GET['board_name'];
+            $board=Board::where('exam_board',$board_name)->first();
+           
+            if($board){
+                $assign_class=AssignClass::select('id','class','board_id')->where('board_id',$board->id)->get();
+                if($assign_class){
+                    $all_class=[];
+                    $all_class[0]="Select class";
+                    foreach($assign_class as $key=>$board){
+                        
+                         $all_class[$key+1]=$board->class;
+                    }
+                    $result = ["all_class" => $all_class];
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "all Class",
+                        "result" => $result,
+    
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                    
+                }
+                
+            }
+            $result = ["all_class" => []];
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "No Recored Found",
+                "result" => $result,
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+         
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
     }
 }
