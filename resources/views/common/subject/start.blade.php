@@ -18,8 +18,8 @@
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h5 class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                        href="#collapseLesson{{$key}}" @if($key==0) aria-expanded="true" @else
-                                        aria-expanded="false" @endif aria-controls="collapseLesson{{$key}}">
+                                        href="#collapseLesson{{$key}}" aria-expanded="false"
+                                        aria-controls="collapseLesson{{$key}}">
                                         <i class="more-less glyphicon glyphicon-plus"></i>
                                         {{$key+1}}. Lesson : {{$lesson->name}}
                                     </a>
@@ -27,10 +27,10 @@
                                 </h5>
                             </div>
 
-                            <div id="collapseLesson{{$key}}" @if($key==0) class="panel-collapse collapse show" @else
-                                class="panel-collapse collapse" @endif role="tabpanel" aria-labelledby="headingOne">
+                            <div id="collapseLesson{{$key}}" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne">
                                 <div class="panel-body" style="position:relative; left:40px;">
-                                    
+
                                     @if($lesson->type==1)
                                     <i class="fa fa-file" aria-hidden="true"></i>
                                     <a href="{{$lesson->lessonAttachment->img_url}}" data-fancybox="pdf"
@@ -76,4 +76,47 @@
             </div>
         </div>
     </div>
+    @if($subject->sets->where('is_activate',1)->count()>0)
+    <div class="row">
+
+        <div class="col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
+
+            <p class="cross-line">
+                <span>MCQ question-answer</span>
+            </p>
+            <div class="row">
+                <div class="container">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h5 class="panel-title">
+                                    <a href="{{route('website.subject.mcq',Crypt::encrypt($subject->id))}}"
+                                        role="button" data-toggle="collapse" data-parent="#accordion"
+                                        href="#collapseLesson" aria-expanded="true" aria-controls="collapseLesson">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                        ALL MCQ'S QUESTION SET
+                                    </a>
+                                </h5>
+                            </div>
+                            <div id="collapseLesson" class="panel-collapse collapse show" role="tabpanel"
+                                aria-labelledby="headingOne">
+                                <div class="panel-body" style="position:relative; left:40px;">
+                                    @foreach($subject->sets as $key=>$set)
+                                    <i class="fa fa-file" aria-hidden="true"></i> &nbsp; {{$set->set_name}} <span
+                                        class="badge badge-info">Total Questions:
+                                        {{$set->question->where('is_activate',1)->count()}}</span>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>

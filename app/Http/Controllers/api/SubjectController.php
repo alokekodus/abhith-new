@@ -283,8 +283,8 @@ class SubjectController extends Controller
                     return response()->json(['status' => 1, 'result' => $data]);
                 } else {
                     $content_details = [
-                        'videos' => [],
-                        'total_videos' => 0,
+                        'contents' => [],
+                        'total_contents' => 0,
 
                     ];
                     $data = [

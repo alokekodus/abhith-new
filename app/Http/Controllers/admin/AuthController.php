@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Common\Role;
 use App\Common\Type;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 
 class AuthController extends Controller
 {
@@ -24,8 +25,11 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email,'password' => $request->password])) {
          
           if (Auth::user()->type_id == 1 || Auth::user()->type_id == 3) {
-            return redirect()->route('admin.dashboard')
-              ->withSuccess('Signed in');
+            
+            
+            return redirect()->route('admin.dashboard');
+           
+              
           } else {
             return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
           }

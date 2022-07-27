@@ -12,6 +12,7 @@ use App\Common\Activation;
 use App\Common\Type;
 use App\Mail\OtpVerfication;
 use App\Models\MobileAndEmailVerification;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -286,7 +287,10 @@ class WebsiteAuthController extends Controller
                             return redirect()->route('admin.dashboard');
                         }
                         if (auth()->user()->hasRole('Student')) {
+                            
+                            Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right"]);
                             return redirect()->route('website.dashboard');
+                          
                         }
                     } else {
                         return redirect($request->current_route);
@@ -311,6 +315,7 @@ class WebsiteAuthController extends Controller
             ];
         } else {
             Auth::logout();
+            Toastr::success('Logged out successfully.', '', ["positionClass" => "toast-top-right"]);
             return redirect('');
         }
     }

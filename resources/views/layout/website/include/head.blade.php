@@ -30,7 +30,7 @@
     <link href="{{asset('asset_website/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('asset_website/svg/icomoon/style.css')}}" rel="stylesheet">
     <link src="{{asset('asset_website/css/videojs.watermark.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    
     <link rel="stylesheet"
         href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
     <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css">
     <link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
     <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     @yield('head')
 
 </head>

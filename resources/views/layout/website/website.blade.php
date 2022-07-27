@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {{-- head --}}
+
 @include('layout.website.include.head')
 
 
@@ -28,7 +29,7 @@
     @include('layout.website.include.script')
 
 
-
+    
     @yield('scripts')
 
 </body>

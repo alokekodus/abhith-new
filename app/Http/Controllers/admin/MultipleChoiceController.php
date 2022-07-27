@@ -33,6 +33,7 @@ class MultipleChoiceController extends Controller
     public function insertQuestions(Request $request)
     {
         try {
+          
             $setName = $request->setName;
             $board_id = $request->subject_id;
             $assign_class_id = $request->assign_class_id;

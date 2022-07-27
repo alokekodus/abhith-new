@@ -23,7 +23,8 @@
                 @if($subject->subjectAttachment->attachment_origin_url!=null)
                 <video id="player" class="video-js vjs-big-play-centered" controls preload="auto"
                     poster="{{asset($subject->subjectAttachment->video_thumbnail_image)}}" data-setup="{}">
-                    <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4" class="w100"/>
+                    <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4"
+                        class="w100" />
                 </video>
                 {{-- <video id="player" data-setup="{}" controls="">
                     <source src="{{asset($subject->subjectAttachment->attachment_origin_ur)}}" type="video/mp4">
@@ -67,10 +68,10 @@
     </div>
 </div>
 
-
+@if($subject->sets->where('is_activate',1)->count()>0)
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-lg-7 col-md-12">
+        <div class="col-lg-8 col-md-12">
 
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -85,12 +86,21 @@
                             </a>
                         </h5>
                     </div>
+                    <div id="collapseLesson" class="panel-collapse collapse show" role="tabpanel"
+                        aria-labelledby="headingOne">
+                        <div class="panel-body" style="position:relative; left:40px;">
+                            @foreach($subject->sets as $key=>$set)
+                            <i class="fa fa-file" aria-hidden="true"></i> &nbsp; {{$set->set_name}} <span class="badge badge-info">Total Questions: {{$set->question->where('is_activate',1)->count()}}</span>
+                            @endforeach
+
+                        </div>
+                    </div>
                 </div>
             </div><!-- panel-group -->
         </div>
     </div>
 </div>
-
+@endif
 
 <div class="container-fluid mt-4">
     <div class="row">
