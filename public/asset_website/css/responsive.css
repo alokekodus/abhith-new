@@ -68,8 +68,7 @@
         right: 110px;
     }
     .home-slide {
-        /* height: 520px; */
-        height: 100%;
+        height: 400px;
         margin-top: 45px;
     }
     .home-banner .owl-dots {
@@ -242,6 +241,9 @@
         bottom: 5px;
         font-size: 14px;
     }
+    .account-section h2{
+        margin-top: 35px;
+    }
 }
 @media (max-width: 767px) {
     a {
@@ -262,7 +264,7 @@
 
     .home-banner .owl-dots {
         left: 30%;
-        bottom: -95px;
+        bottom: -110px;
     }
 
     .blogs {
@@ -474,7 +476,7 @@
     }
 
     #carousel-banner .home-slide {
-        height: 100%;
+        height: 230px;
         margin-top: 0px;
     }
 
