@@ -585,8 +585,8 @@ class SubjectController extends Controller
             $mcq_sets=AssignSubject::with(['sets'=>function($q){
                 $q->with('question')->where('is_activate',1);
             }])->where('id',$id)->first();
-            return response()->json($mcq_sets);
-            if($mcq_sets->sets!=null){
+            
+            if(!$mcq_sets->sets->isEmpty()){
                 $mcq_set=[];
                 foreach($mcq_sets->sets as $key=>$mcq_set){
                    $data=[
@@ -607,9 +607,10 @@ class SubjectController extends Controller
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "All MCQ Set",
+                    "message" => "No record found",
                     "result" => [],
                 ];
+                return response()->json(['status' => 1, 'result' => $data]);
             }
 
         } catch (\Throwable $th) {
