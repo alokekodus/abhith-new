@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
 use App\Models\Lesson;
+use App\Models\Set;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -537,7 +538,7 @@ class SubjectController extends Controller
             $lesson = Lesson::with(['topics:parent_id,name', 'subTopics'])->where('id', $id)->first();
 
             if ($lesson->topics) {
-                $lesson_topic = $lesson->topics()->paginate();
+                $lesson_topic = $lesson->topics()->paginate(10);
                 $topics = [];
                 foreach ($lesson_topic as $key => $topic) {
                     $sub_topic_count = $topic->subTopics->count();
@@ -612,6 +613,44 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
+
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function LessonMcqQuestion(Request $request){
+        try {
+            
+            $set_id=$_GET['set_id'];
+            $set_question=Set::with('question')->where('id',$set_id)->first();
+           
+            if(!$set_question->question->isEmpty()){
+                $all_questions=$set_question->question()->paginate(1);
+                foreach($all_questions as $key=>$question){
+                    $data=[
+                        'id'=>$question->id,
+                        'question'=>$request->question,
+                        'option_1'=>$request->option_1,
+                        'option_2'=>$request->option_2,
+                        'option_3'=>$request->option_3,
+                        'option_4'=>$request->option_4,
+                        'correct_answer'=>$request->correct_answer,
+           
+                    ];
+                    $result=[
+                        'set_name'=>$set_question->set_name,
+                        'total_question'=>$set_question->question->count(),
+                        'mcq_question'=>$data,
+                    ];
+                }
+            }
+           
 
         } catch (\Throwable $th) {
             $data = [
