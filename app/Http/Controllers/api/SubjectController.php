@@ -585,7 +585,7 @@ class SubjectController extends Controller
             $mcq_sets=AssignSubject::with(['sets'=>function($q){
                 $q->with('question')->where('is_activate',1);
             }])->where('id',$id)->first();
-            
+            return response()->json($mcq_sets);
             if($mcq_sets->sets!=null){
                 $mcq_set=[];
                 foreach($mcq_sets->sets as $key=>$mcq_set){
