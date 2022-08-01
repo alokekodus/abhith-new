@@ -65,6 +65,7 @@ Route::get('subject/lesson/topic',[SubjectController::class,'LessonTopics']);
 Route::get('subject/lesson/video',[SubjectController::class,'LessonVideoDetails']);
 Route::get('subject/lesson/pdf',[SubjectController::class,'LessonPdfDetails']);
 Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
+Route::get('subject/mcq',[SubjectController::class,'LessonMCQ']);
 
 
 Route::get('/gallery',[GalleryController::class,'index']);

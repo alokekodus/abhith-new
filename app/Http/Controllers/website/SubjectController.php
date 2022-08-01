@@ -32,7 +32,7 @@ class SubjectController extends Controller
     public function mcqStart($set_id){
         try {
             $set=Set::with('board','assignClass','assignSubject','question')->where('id',decrypt($set_id))->first();
-           return view('website.my_account.mcq_start',compact('set'));
+            return view('website.my_account.mcq_start',compact('set'));
         } catch (\Throwable $th) {
             //throw $th;
         }

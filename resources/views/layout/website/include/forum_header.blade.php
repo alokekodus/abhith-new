@@ -17,9 +17,9 @@
                     <li>
                         <input type="text" class="form-control" id="search" onkeyup="myFunction()" placeholder="Search Course">
                     </li>
-                    <li>
+                    {{-- <li>
                         <a data-toggle="modal" @guest data-target="#login-modal" @endguest  @auth data-target="#add-question-modal" @endauth class="add-post" style="cursor: pointer">Add Post</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
           

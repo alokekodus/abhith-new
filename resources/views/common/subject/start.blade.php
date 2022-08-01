@@ -103,9 +103,9 @@
                                 aria-labelledby="headingOne">
                                 <div class="panel-body" style="position:relative; left:40px;">
                                     @foreach($subject->sets as $key=>$set)
-                                    <i class="fa fa-file" aria-hidden="true"></i> &nbsp; {{$set->set_name}} <span
+                                    <a href="{{route('website.subject.mcqstart',Crypt::encrypt($set->id))}}"><i class="fa fa-file" aria-hidden="true"></i> &nbsp; {{$set->set_name}} <span
                                         class="badge badge-info">Total Questions:
-                                        {{$set->question->where('is_activate',1)->count()}}</span>
+                                        {{$set->question->where('is_activate',1)->count()}}</span></a>
                                     @endforeach
 
                                 </div>

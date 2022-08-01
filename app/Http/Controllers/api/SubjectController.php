@@ -441,12 +441,13 @@ class SubjectController extends Controller
 
                 foreach ($lesson as $key => $topic) {
 
-
-                    $topic_pdf_data =
+                        $path= basename($topic->lessonAttachment->img_url);
+                        $topic_pdf_data =
                         [
                             'id' => $topic->id,
                             'title' => $topic->name,
                             'pdf_url' => $topic->lessonAttachment->img_url ?? null,
+                            'pdf_name'=>$path,
                         ];
 
                      
@@ -567,6 +568,44 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function LessonMCQ(Request $request){
+        try {
+            $id = $_GET['subject_id'];
+            
+            $mcq_sets=AssignSubject::with(['sets'=>function($q){
+                $q->with('question')->where('is_activate',1);
+            }])->where('id',$id)->first();
+            if($mcq_sets->sets!=null){
+                $mcq_set=[];
+                foreach($mcq_sets->set as $key=>$mcq_set){
+                   $data=[
+                   'id'=>$mcq_set->id,
+                   'name'=>$mcq_set->set_name,
+                   'total_question'=>$mcq_set->question->count(),
+                   ];
+                }
+                $mcq_set=$data;
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All MCQ Set",
+                    "result" => $mcq_set,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+
+            }
+
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,

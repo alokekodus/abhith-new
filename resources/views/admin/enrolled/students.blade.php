@@ -58,7 +58,7 @@
                             <td>{{$key + 1}}</td>
                             <td>{{$item->user->name??"NA"}}</td>
                             <td>{{$item->user->email}}</td>
-                            <td>{{$item->board->exam_board??"NA"}} -- Class {{$item->assignClass->class??''}}</td>
+                            <td>{{$item->board->exam_board??"NA"}} -- Class {{$item->assignClass->class}}</td>
                             <td>@foreach($item->assignSubject as $assignSubject)
 
                                 {{$assignSubject->subject->subject_name??"NA"}} <span
