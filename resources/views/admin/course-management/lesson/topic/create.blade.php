@@ -14,7 +14,7 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> Add Topic/{{$lesson->name}}
+        </span> Add Topic/Practice Test
     </h3>
 </div>
 
@@ -38,7 +38,7 @@
                     </form>
                 </div>
             </div>
-         
+
         </div>
     </div>
 </div>
@@ -211,14 +211,22 @@
           $('#fileattachment').show();
             $('#video').hide();
             $('#article').hide();
+            $('#practice-test').hide();
    }else if(showDivId==2){
             $('#fileattachment').hide();
             $('#video').show();
             $('#article').hide();
+            $('#practice-test').hide();
    }else if(showDivId==3){
             $('#fileattachment').hide();
             $('#video').hide();
             $('#article').show();
+            $('#practice-test').hide();
+   }else if(showDivId==4){
+            $('#practice-test').show();
+            $('#fileattachment').hide();
+            $('#video').hide();
+            $('#article').hide();
    }else{
      $('#fileattachment').hide();
             $('#video').hide();

@@ -538,7 +538,7 @@ class SubjectController extends Controller
             $lesson = Lesson::with(['topics:parent_id,name', 'subTopics'])->where('id', $id)->first();
 
             if ($lesson->topics) {
-                $lesson_topic = $lesson->topics()->paginate(10);
+                $lesson_topic = $lesson->topics()->paginate(5);
                 $topics = [];
                 foreach ($lesson_topic as $key => $topic) {
                     $sub_topic_count = $topic->subTopics->count();

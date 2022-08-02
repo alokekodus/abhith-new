@@ -112,6 +112,9 @@ class LessonController extends Controller
                 $lesson->update(['content'=>$request->content]);
                 return response()->json(['message' => 'Lesson Created successfully.', 'status' => 1]);
              }
+             if($request->content_type==4){
+                dd($request->all());
+             }
 
         } catch (\Throwable $th) {
             dd($th);
