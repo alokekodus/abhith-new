@@ -581,27 +581,26 @@ class SubjectController extends Controller
     }
     public function LessonMCQ(Request $request){
         try {
-            $id = $_GET['subject_id'];
+            $id = $_GET['lesson_id'];
             
-            $mcq_sets=AssignSubject::with(['sets'=>function($q){
-                $q->with('question')->where('is_activate',1);
-            }])->where('id',$id)->first();
+            $mcq_sets=Lesson::with('activeSets')->where('id',$id)->first();
             
-            if(!$mcq_sets->sets->isEmpty()){
-                $mcq_set=[];
-                foreach($mcq_sets->sets as $key=>$mcq_set){
+            if(!$mcq_sets->activeSets->isEmpty()){
+                $all_mcq_set=[];
+                foreach($mcq_sets->activeSets as $key=>$mcq_set){
                    $data=[
                    'id'=>$mcq_set->id,
                    'name'=>$mcq_set->set_name,
                    'total_question'=>$mcq_set->question->count(),
                    ];
+                   $all_mcq_set[]=$data;
                 }
-                $mcq_set=$data;
+               
                 $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "All MCQ Set",
-                    "result" => $mcq_set,
+                    'code' => 200,
+                    'status' => 1,
+                    'message' => "All MCQ Set",
+                    'result' =>$all_mcq_set,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }else{
@@ -615,6 +614,7 @@ class SubjectController extends Controller
             }
 
         } catch (\Throwable $th) {
+            
             $data = [
                 "code" => 400,
                 "status" => 0,
@@ -628,27 +628,41 @@ class SubjectController extends Controller
         try {
             
             $set_id=$_GET['set_id'];
+            $page = $_GET['page'];
             $set_question=Set::with('question')->where('id',$set_id)->first();
            
             if(!$set_question->question->isEmpty()){
                 $all_questions=$set_question->question()->paginate(1);
                 foreach($all_questions as $key=>$question){
+                    
                     $data=[
                         'id'=>$question->id,
-                        'question'=>$request->question,
-                        'option_1'=>$request->option_1,
-                        'option_2'=>$request->option_2,
-                        'option_3'=>$request->option_3,
-                        'option_4'=>$request->option_4,
-                        'correct_answer'=>$request->correct_answer,
+                        'question'=>$question->question,
+                        'option_1'=>$question->option_1,
+                        'option_2'=>$question->option_2,
+                        'option_3'=>$question->option_3,
+                        'option_4'=>$question->option_4,
+                        'correct_answer'=>$question->correct_answer,
            
                     ];
-                    $result=[
-                        'set_name'=>$set_question->set_name,
-                        'total_question'=>$set_question->question->count(),
-                        'mcq_question'=>$data,
-                    ];
+                  
+                    
                 }
+                $result=[
+                    'set_name'=>$set_question->set_name,
+                    'total_question'=>$set_question->question->count(),
+                    'mcq_question'=>$data,
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All MCQ Questions",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+
+
             }
            
 

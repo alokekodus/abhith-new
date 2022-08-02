@@ -143,8 +143,15 @@ class Lesson extends Model
     {
         return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',2);
     }
+
     
     public function assignTeacher(){
         return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
+    public function Sets(){
+        return $this->hasMany(Set::class,'lesson_id','id');
+    }
+    public function activeSets(){
+        return $this->hasMany(Set::class,'lesson_id','id')->where('is_activate',1);
     }
 }

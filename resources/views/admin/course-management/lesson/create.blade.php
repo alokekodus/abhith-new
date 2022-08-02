@@ -247,7 +247,7 @@
                     $('#assignLessonCancelBtn').attr('disabled', false);
                 }
                 if (data.status == 1) {
-                    console.log(data);
+                    
                     toastr.success(data.message);
                     location.reload(true);
                 } else {

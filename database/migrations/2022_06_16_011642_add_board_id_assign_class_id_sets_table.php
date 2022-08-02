@@ -19,6 +19,7 @@ class AddBoardIdAssignClassIdSetsTable extends Migration
             $table->unsignedBigInteger('assign_class_id')->after('board_id');
             $table->unsignedBigInteger('assign_subject_id')->after('assign_class_id');
             $table->foreign('board_id')->references('id')->on('boards')->onDelete('cascade');
+            $table->unsignedBigInteger('lesson_id')->after('assign_subject_id');
             $table->foreign('assign_class_id')->references('id')->on('assign_classes')->onDelete('cascade');
             $table->foreign('assign_subject_id')->references('id')->on('assign_subjects')->onDelete('cascade');
             
