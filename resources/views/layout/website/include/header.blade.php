@@ -31,7 +31,7 @@
                             <li class="ac-list">
                                 <form action="{{route('website.auth.logout')}}" method="POST">
                                     @csrf
-                                    <button class="btn btn-sm btn-default" style="margin-left:-10px;color:black;font-weight:500;border:none;font-size:13px;">Sign Out</button>
+                                    <button class="btn btn-sm btn-default" style="margin-left:-10px;color:black;font-weight:500;border:none;font-size:15px;">Sign Out</button>
                                 </form>
                             </li>
                         </ul>

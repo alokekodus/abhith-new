@@ -7,10 +7,10 @@
         height: auto;
     } */
 
-    .counter-list li:nth-child(1) img{
+    /* .counter-list li:nth-child(1) img{
         border-top-left-radius: 0;
         border-bottom-left-radius: 0; 
-    }
+    } */
 
     /* .about-view {
         margin: 0 5px;
@@ -79,24 +79,24 @@
     }
 
     .number {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .icon1 {
-        left: 60%;
-        top: 4px;
+        left: 55%;
+        top: 6px;
     }
     .icon2 {
         left: 60%;
-        top: 4px;
+        top: 6px;
     }    
     .icon3 {
-        left: 60%;
-        top: 4px;
+        left: 80%;
+        top: 6px;
     }
 
     .number-icon {
-        font-size: 20px;
+        font-size: 16px;
     }
 
     .footer-image-list {

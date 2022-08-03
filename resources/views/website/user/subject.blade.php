@@ -21,8 +21,9 @@
             @foreach($subjects as $key=>$subject)
     
             <div class="col-md-4">
-           
-                <div class="course-pic"><img src="{{asset($subject->image)}}" class="w100"></div>
+                <div class="course-pic">
+                    <img src="{{asset($subject->image)}}" class="w100">
+                </div>
                 <div class="course-desc">
                     <h4 class="small-heading-black">{{$subject->subject_name}}</h4>
                     Board:{{$order->board->exam_board}} Class:{{$order->assignClass->class}}<br>
