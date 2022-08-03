@@ -630,12 +630,25 @@ class SubjectController extends Controller
             $set_id=$_GET['set_id'];
             $page = $_GET['page'];
             $set_question=Set::with('question')->where('id',$set_id)->first();
-           
+           if(!$set_question){
+            $result=[
+                'set_name'=>null,
+                'total_question'=>0,
+                'mcq_question'=>[],
+            ];
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "No Record Found",
+                "result" => $result,
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+           }
             if(!$set_question->question->isEmpty()){
                 $all_questions=$set_question->question()->paginate(1);
                 foreach($all_questions as $key=>$question){
                     
-                    $data=[
+                    $data[]=[
                         'id'=>$question->id,
                         'question'=>$question->question,
                         'option_1'=>$question->option_1,
@@ -648,6 +661,7 @@ class SubjectController extends Controller
                   
                     
                 }
+                
                 $result=[
                     'set_name'=>$set_question->set_name,
                     'total_question'=>$set_question->question->count(),
@@ -661,8 +675,18 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }else{
-
-
+                $result=[
+                    'set_name'=>null,
+                    'total_question'=>0,
+                    'mcq_question'=>[],
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Record Found",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
             }
            
 
