@@ -134,7 +134,7 @@
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
                     <h4 class="subject-heading-black">
                         {{$subject->subject_name}}
-                        (Class-{{$subject->assignClass->class}},{{$subject->boards->exam_board}})
+                        (Class-{{$subject->assignClass->class}}, {{$subject->boards->exam_board}})
                     </h4>
                     <span>
                         <h6><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($subject->subject_amount,
