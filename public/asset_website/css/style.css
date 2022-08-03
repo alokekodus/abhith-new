@@ -730,13 +730,21 @@ main {
 }
 
 .course-desc {
-    background: #ececec;
+    background: white;
     padding: 15px 20px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     position: relative;
+    /* box-shadow: 0px 0px 10px #d4d3d3; */
+    border: 1px solid rgb(238, 238, 238);
 }
-
+.course-desc h6{
+    font-weight: 600;
+}
+.course-desc .fa-inr{
+    color: #07a807;
+    font-weight: 600;
+}
 .course-desc1 {
     background: #ffffff;
     position: relative;
@@ -3483,3 +3491,14 @@ input {
     margin-bottom: 60px;
 }
 
+.hover-effect-custom:hover{
+    transform: scale(1.04);
+    transition: 0.4s;
+    /* box-shadow: 0px 0px 10px #d4d3d3; */
+}
+
+.hover-effect-custom:hover .course-desc{
+    /* transform: scale(1.04);
+    transition: 0.4s; */
+    box-shadow: 0px 0px 10px #d4d3d3;
+}

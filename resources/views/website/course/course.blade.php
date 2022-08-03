@@ -24,12 +24,16 @@
     }
 
     .reset-form-btn {
-        padding: 0px 3px !important;
+        /* padding: 0px 3px !important;
         width: 55px !important;
         position: absolute;
         top: 0;
         right: 0;
-        border-radius: 0;
+        border-radius: 0; */
+        background-image: linear-gradient(to right, #e9e5e5, #e1dedf, #d9d8d9, #d2d2d2, #cbcbcb);
+        color: black;
+        font-weight: 500;
+        border: 1px solid #f3f0f0;
     }
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
@@ -74,7 +78,7 @@
         </div>
     </div>
 </section>
-
+{{-- class="row mt-2 justify-content-center"  --}}
 <section class="home-courses">
     <div class="container-fluid">
         <div class="row">
@@ -82,31 +86,34 @@
                 <h5 class="heading-black">All Courses</h5>
             </div>
             <div class="col-lg-12">
-                <form class="row mt-2 justify-content-center" method="get">
+                <form method="get">
                     @csrf
-                    <div class="col-lg-4 col-md-6">
-                        <label>Select Board</label>
-                        <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
-                            <option value="">-- Select -- </option>
-                            @forelse ($boards as $item)
-                            <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                            @empty
-                            <option>No boards to show</option>
-                            @endforelse
-                        </select>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6">
+                            <label>Select Board</label>
+                            <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
+                                <option value="">-- Select -- </option>
+                                @forelse ($boards as $item)
+                                <option value="{{$item->id}}">{{$item->exam_board}}</option>
+                                @empty
+                                <option>No boards to show</option>
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <label class="selectClass">Select Class</label>
+                            <select id="board-class-dd" class="form-control" name="class_id">
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-12 py-4 submitBtn">
+                            <button type="submit" id="submitWebsiteFilterCourseForm" class="btn knowledge-link enquiry-form-btn">Submit</button>
+                            <a href="{{request()->url()}}" class="btn btn-default reset-form-btn"><i class="fa fa-refresh" aria-hidden="true"></i> &nbsp; Reset Filter</a>
+                        </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <label class="selectClass">Select Class</label>
-                        <select id="board-class-dd" class="form-control" name="class_id">
-                        </select>
-                    </div>
-                    <div class="col-lg-4 col-md-12 py-4 submitBtn">
-                        <button type="submit" id="submitWebsiteFilterCourseForm"
-                            class="btn knowledge-link enquiry-form-btn">Submit</button>
-                    </div>
-                    <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn">
+                    
+                    {{-- <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn">
                         <i class="fa fa-refresh" aria-hidden="true"></i> 
-                    </a>
+                    </a> --}}
                 </form>
             </div>
         </div>
@@ -115,7 +122,7 @@
         <div class="row">
             @foreach($subjects as $key=>$subject)
 
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-3 hover-effect-custom">
                 <div class="course-pic">
                     <img src="{{asset($subject->image)}}" class="w100">
                     <div class="course-image-overlay">
