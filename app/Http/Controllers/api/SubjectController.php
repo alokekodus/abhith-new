@@ -642,13 +642,13 @@ class SubjectController extends Controller
                 "message" => "No Record Found",
                 "result" => $result,
             ];
-            return response()->json(['status' => 1, 'result' => $data]);
+          return response()->json(['status' => 1, 'result' => $data]);
            }
             if(!$set_question->question->isEmpty()){
                 $all_questions=$set_question->question()->paginate(1);
                 foreach($all_questions as $key=>$question){
                     
-                    $data[]=[
+                    $data=[
                         'id'=>$question->id,
                         'question'=>$question->question,
                         'option_1'=>$question->option_1,
