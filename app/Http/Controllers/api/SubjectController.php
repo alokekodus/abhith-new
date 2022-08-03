@@ -5,7 +5,10 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
 use App\Models\Lesson;
+use App\Models\Question;
 use App\Models\Set;
+use App\Models\UserPracticeTest;
+use App\Models\UserPracticeTestAnswer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -222,10 +225,10 @@ class SubjectController extends Controller
     {
         try {
             $id = $_GET['lesson_id'];
-            $page=$_GET['page'];
+            $page = $_GET['page'];
             $sub_topic_content = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('type',3)->paginate();
-            
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('type', 3)->paginate();
+
             if ($lesson != null) {
 
                 $topic_content = [];
@@ -254,8 +257,7 @@ class SubjectController extends Controller
                                     'content' => $topic->content ?? null,
 
                                 ];
-                                $topic_content[] = $sub_topic_content;
-                           
+                            $topic_content[] = $sub_topic_content;
                         }
                     }
 
@@ -324,7 +326,7 @@ class SubjectController extends Controller
     {
         try {
             $id = $_GET['lesson_id'];
-            $page=$_GET['page'];
+            $page = $_GET['page'];
             $sub_topic_video = [];
             $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('type', 2)->paginate();
 
@@ -362,12 +364,10 @@ class SubjectController extends Controller
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
 
                                 ];
-                                $topic_video[] = $sub_topic_video;
-                           
+                            $topic_video[] = $sub_topic_video;
                         }
                     }
                     $topic_video[] = $topic_video_data;
-                   
                 }
                 $array = array_filter($topic_video, function ($x) {
                     return !empty($x);
@@ -432,30 +432,30 @@ class SubjectController extends Controller
     {
         try {
             $id = $_GET['lesson_id'];
-            $page=$_GET['page'];
+            $page = $_GET['page'];
             $sub_topic_pdf = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('parent_id','!=',null)->where('type',1)->paginate();
-            
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('parent_id', '!=', null)->where('type', 1)->paginate();
+
             if ($lesson != null) {
 
                 $topic_pdf = [];
 
                 foreach ($lesson as $key => $topic) {
 
-                        $path= basename($topic->lessonAttachment->img_url);
-                        $topic_pdf_data =
+                    $path = basename($topic->lessonAttachment->img_url);
+                    $topic_pdf_data =
                         [
                             'id' => $topic->id,
                             'title' => $topic->name,
                             'pdf_url' => $topic->lessonAttachment->img_url ?? null,
-                            'pdf_name'=>$path,
+                            'pdf_name' => $path,
                         ];
 
-                     
+
                     if ($topic->subTopics->where('type', 1)) {
-                          
-                        foreach ($topic->subTopics->where('type',1) as $key => $sub_topic) {
-                           
+
+                        foreach ($topic->subTopics->where('type', 1) as $key => $sub_topic) {
+
                             $sub_topic_pdf =
                                 [
                                     'id' => $sub_topic->id,
@@ -463,13 +463,12 @@ class SubjectController extends Controller
                                     'pdf_url' => $topic->lessonAttachment->img_url ?? null,
 
                                 ];
-                                $topic_pdf[] = $sub_topic_pdf;
+                            $topic_pdf[] = $sub_topic_pdf;
                         }
                     }
                     $topic_pdf[] = $topic_pdf_data;
-                    
                 }
-                
+
                 $array = array_filter($topic_pdf, function ($x) {
                     return !empty($x);
                 });
@@ -579,31 +578,32 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function LessonMCQ(Request $request){
+    public function LessonMCQ(Request $request)
+    {
         try {
             $id = $_GET['lesson_id'];
-            
-            $mcq_sets=Lesson::with('activeSets')->where('id',$id)->first();
-            
-            if(!$mcq_sets->activeSets->isEmpty()){
-                $all_mcq_set=[];
-                foreach($mcq_sets->activeSets as $key=>$mcq_set){
-                   $data=[
-                   'id'=>$mcq_set->id,
-                   'name'=>$mcq_set->set_name,
-                   'total_question'=>$mcq_set->question->count(),
-                   ];
-                   $all_mcq_set[]=$data;
+
+            $mcq_sets = Lesson::with('activeSets')->where('id', $id)->first();
+
+            if (!$mcq_sets->activeSets->isEmpty()) {
+                $all_mcq_set = [];
+                foreach ($mcq_sets->activeSets as $key => $mcq_set) {
+                    $data = [
+                        'id' => $mcq_set->id,
+                        'name' => $mcq_set->set_name,
+                        'total_question' => $mcq_set->question->count(),
+                    ];
+                    $all_mcq_set[] = $data;
                 }
-               
+
                 $data = [
                     'code' => 200,
                     'status' => 1,
                     'message' => "All MCQ Set",
-                    'result' =>$all_mcq_set,
+                    'result' => $all_mcq_set,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
+            } else {
                 $data = [
                     "code" => 200,
                     "status" => 1,
@@ -612,9 +612,8 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-
         } catch (\Throwable $th) {
-            
+
             $data = [
                 "code" => 400,
                 "status" => 0,
@@ -624,61 +623,18 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function LessonMcqQuestion(Request $request){
+    public function LessonMcqQuestion(Request $request)
+    {
         try {
-            
-            $set_id=$_GET['set_id'];
+
+            $set_id = $_GET['set_id'];
             $page = $_GET['page'];
-            $set_question=Set::with('question')->where('id',$set_id)->first();
-           if(!$set_question){
-            $result=[
-                'set_name'=>null,
-                'total_question'=>0,
-                'mcq_question'=>[],
-            ];
-            $data = [
-                "code" => 200,
-                "status" => 1,
-                "message" => "No Record Found",
-                "result" => $result,
-            ];
-          return response()->json(['status' => 1, 'result' => $data]);
-           }
-            if(!$set_question->question->isEmpty()){
-                $all_questions=$set_question->question()->paginate(1);
-                foreach($all_questions as $key=>$question){
-                    
-                    $data=[
-                        'id'=>$question->id,
-                        'question'=>$question->question,
-                        'option_1'=>$question->option_1,
-                        'option_2'=>$question->option_2,
-                        'option_3'=>$question->option_3,
-                        'option_4'=>$question->option_4,
-                        'correct_answer'=>$question->correct_answer,
-           
-                    ];
-                  
-                    
-                }
-                
-                $result=[
-                    'set_name'=>$set_question->set_name,
-                    'total_question'=>$set_question->question->count(),
-                    'mcq_question'=>$data,
-                ];
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "All MCQ Questions",
-                    "result" => $result,
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);
-            }else{
-                $result=[
-                    'set_name'=>null,
-                    'total_question'=>0,
-                    'mcq_question'=>[],
+            $set_question = Set::with('question')->where('id', $set_id)->first();
+            if (!$set_question) {
+                $result = [
+                    'set_name' => null,
+                    'total_question' => 0,
+                    'mcq_question' => [],
                 ];
                 $data = [
                     "code" => 200,
@@ -688,8 +644,50 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-           
+            if (!$set_question->question->isEmpty()) {
+                $all_questions = $set_question->question()->paginate(1);
+                $options = [];
+                foreach ($all_questions as $key => $question) {
+                    
+                    $options[] = $question->option_1;
+                    $options[] = $question->option_2;
+                    $options[] = $question->option_3;
+                    $options[] = $question->option_4;
+                    $data = [
+                        'id' => $question->id,
+                        'question' => $question->question,
+                        'options' => $options,
+                        'correct_answer' => $question->correct_answer,
 
+                    ];
+                }
+
+                $result = [
+                    'set_name' => $set_question->set_name,
+                    'total_question' => $set_question->question->count(),
+                    'mcq_question' => $data,
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All MCQ Questions",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $result = [
+                    'set_name' => null,
+                    'total_question' => 0,
+                    'mcq_question' => [],
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Record Found",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
@@ -698,6 +696,41 @@ class SubjectController extends Controller
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function startMcq(Request $request)
+    {
+        try {
+            $set_id = $request->set_id;
+            $strat_time = $request->start_time;
+            $end_time = $request->endtime;
+            $findSet = Set::with('question')->where('id', $set_id)->first();
+            $total_question = $findSet->question->count();
+            $answers = $request->answers;
+            $user_practice_test = [
+                'user_id' => auth()->user()->id,
+                'set_id' => $findSet->id,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+            ];
+            $user_practice_test_store = UserPracticeTest::create($user_practice_test);
+            foreach ($answers as $key => $answer) {
+                $is_correct = 0;
+                $question = Question::find($answer['question']);
+                if ($question->correct_answer == $answer['user_answer']) {
+                    $is_correct = 1;
+                }
+                $data = [
+                    'user_practice_test_id' => $user_practice_test_store->id,
+                    'question_id' => $question->id,
+                    'answer' => $question->correct_answer,
+                    'user_answer' => $answer['user_answer'],
+                    'is_correct' => $is_correct
+                ];
+                $user_pract_test_answer = UserPracticeTestAnswer::create($data);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }
