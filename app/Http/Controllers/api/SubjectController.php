@@ -729,6 +729,13 @@ class SubjectController extends Controller
                 ];
                 $user_pract_test_answer = UserPracticeTestAnswer::create($data);
             }
+            $user_practice_test=UserPracticeTest::with('userPracticeTestAnswer')->where('id',$user_practice_test_store->id)->first();
+            $update_user_practice_test_store=
+               [
+                'total_attempts'=>$user_practice_test->UserPracticeTestAnswer->count(),
+                'total_correct_count'=>$user_practice_test->correctAnswer->count(),
+               ];
+            $user_practice_test->update($update_user_practice_test_store);
         } catch (\Throwable $th) {
             //throw $th;
         }

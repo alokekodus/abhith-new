@@ -16,6 +16,7 @@ class UserPracticeTest extends Model
         'start_time',
         'end_time',
         'total_correct_count',
+        'total_attempts',
         'total_duration'
     ];
     public function userPracticeTestAnswer(){
