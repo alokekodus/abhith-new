@@ -910,7 +910,44 @@
     .mobile-nav-close-btn {
         display: none;
     } */
+
+
+    /* Description page css */
     
+    .learningBox2{
+        display: none;
+    }
+    .description{
+        display: none;
+    }
+    #description-accordion{
+        display: block;
+        padding: 0px;
+    }
+
+    #description-accordion .card {
+        border: none;
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
+    }
+    #description-accordion .accordion>.card:not(:last-of-type){
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
+    }
+    #description-accordion .btn:focus{
+        border-color: #fff;
+        outline: none;
+    }
+    #description-accordion .card-header p{
+        color: black;
+        font-weight: 600;
+        font-size: 20px;
+        padding-top: 10px;
+    }
+    #description-accordion .card-header {
+        background-color: none;
+        border-bottom: none;
+        /* background: transparent; */
+        padding: 0px;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
