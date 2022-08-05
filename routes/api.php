@@ -67,7 +67,7 @@ Route::get('subject/lesson/pdf',[SubjectController::class,'LessonPdfDetails']);
 Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
 Route::get('subject/mcq',[SubjectController::class,'LessonMCQ']);
 Route::get('subject/mcq-question',[SubjectController::class,'LessonMcqQuestion']);
-Route::middleware('auth:sanctum')->post('subject/mcq/start',[SubjectController::class,'startMcq']);
+Route::middleware('auth:sanctum')->post('subject/mcq/submit',[SubjectController::class,'startMcq']);
 
 Route::get('/gallery',[GalleryController::class,'index']);
 //get board

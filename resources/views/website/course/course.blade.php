@@ -88,18 +88,6 @@
             <div class="col-lg-12">
                 <form method="get">
                     @csrf
-<<<<<<< HEAD
-                    <div class="col-lg-4 col-md-6">
-                        <label>Select Board</label>
-                        <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
-                            <option value="">-- Select -- </option>
-                            @forelse ($boards as $item)
-                            <option value="{{$item->id}}" {{request()->assignedBoard == $item->id ? 'selected':''}}>{{$item->exam_board}}</option>
-                            @empty
-                            <option>No boards to show</option>
-                            @endforelse
-                        </select>
-=======
                     <div class="row">
                         <div class="col-lg-4 col-md-6">
                             <label>Select Board</label>
@@ -121,7 +109,6 @@
                             <button type="submit" id="submitWebsiteFilterCourseForm" class="btn knowledge-link enquiry-form-btn">Submit</button>
                             <a href="{{request()->url()}}" class="btn btn-default reset-form-btn"><i class="fa fa-refresh" aria-hidden="true"></i> &nbsp; Reset Filter</a>
                         </div>
->>>>>>> 8738248573ed7cbd9eb8f79a620374d511957b58
                     </div>
                     
                     {{-- <a href="{{request()->url()}}" class="btn btn-block  reset-form-btn">
