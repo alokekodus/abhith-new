@@ -183,3 +183,10 @@ function isUserBuy($subject_id)
         return false;
     }
 }
+function timeDifference($from, $to)
+{
+    $to   = new DateTime($to);
+    $from = new DateTime($from);
+    $diff = $to->diff($from);
+    return $diff->format('%H:%I:%S');
+}

@@ -141,6 +141,12 @@ select.form-control{
 
 .submitBtn{
     margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.submitBtn .btn{
+    width: 48%;
 }
 
 .subject-heading-black {

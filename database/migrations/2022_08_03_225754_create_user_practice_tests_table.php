@@ -17,10 +17,10 @@ class CreateUserPracticeTestsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('set_id');
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->integer('total_correct_count')->default(0);
-            $table->timestamp('total_duration')->nullable();
+            $table->string('total_duration')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

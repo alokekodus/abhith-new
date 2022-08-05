@@ -701,22 +701,27 @@ class SubjectController extends Controller
     public function startMcq(Request $request)
     {
         try {
+           
             $set_id = $request->set_id;
             $strat_time = $request->start_time;
             $end_time = $request->endtime;
+            $total_duration=timeDifference($strat_time, $end_time);
             $findSet = Set::with('question')->where('id', $set_id)->first();
             $total_question = $findSet->question->count();
             $answers = $request->answers;
+            
             $user_practice_test = [
-                'user_id' => auth()->user()->id,
+                 'user_id' => auth()->user()->id,
                 'set_id' => $findSet->id,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
+                'total_duration'=>$total_duration,
             ];
+           
             $user_practice_test_store = UserPracticeTest::create($user_practice_test);
             foreach ($answers as $key => $answer) {
                 $is_correct = 0;
-                $question = Question::find($answer['question']);
+                $question = Question::find($answer['question_id']);
                 if ($question->correct_answer == $answer['user_answer']) {
                     $is_correct = 1;
                 }
@@ -736,8 +741,29 @@ class SubjectController extends Controller
                 'total_correct_count'=>$user_practice_test->correctAnswer->count(),
                ];
             $user_practice_test->update($update_user_practice_test_store);
+            $data=[
+               
+                'set_title'=>$user_practice_test->set->set_name,
+                'total_question'=>$user_practice_test->set->question->count(),
+                'attempted_question'=>$user_practice_test->userPracticeTestAnswer->count(),
+                'correct_attempted'=>$user_practice_test->correctAnswer->count(),
+                'incorrect_attempted'=>$user_practice_test->incorrectAnswer->count(),
+            ];
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Result Report",
+                "result" => $data,
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
-            //throw $th;
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+                "result" => [],
+            ];
+            return response()->json(['status' => 1, 'result' => $th]);
         }
     }
 }
