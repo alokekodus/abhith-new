@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-4">
+    <div class="col-6">
         <div class="form-group">
             <label for="">Select Board<span class="text-danger">*</span></label>
             <select name="board_id" id="assignedBoard" class="form-control">
@@ -14,7 +14,7 @@
            <span></span>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-6">
         <div class="form-group">
             <label for="">Select Class<span class="text-danger">*</span></label>
             <select name="assign_class_id" id="board-class-dd" class="form-control">
@@ -24,7 +24,9 @@
            
         </div>
     </div>
-    <div class="col-4">
+</div>
+<div class="row">
+    <div class="col-6">
         <div class="form-group">
             <label for="">Select Subject<span class="text-danger">*</span></label>
             <select name="assign_subject_id" id="board-subject-dd" class="form-control">
@@ -33,6 +35,12 @@
             </select>
         </div>
     </div>
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">@yield('lesson-type') Name<span class="text-danger">*</span></label>
+            <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="">
+            <span class="text-danger">{{ $errors->first('board_id') }}</span>
+        </div>
+    </div>
 </div>
 
-@include('admin.course-management.lesson.common.form')

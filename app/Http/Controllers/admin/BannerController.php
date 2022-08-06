@@ -20,7 +20,7 @@ class BannerController extends Controller
 
         $this->validate($request,[
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'string',
             'pic' => 'required',
 
         ],[

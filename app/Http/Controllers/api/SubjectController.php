@@ -701,7 +701,7 @@ class SubjectController extends Controller
     public function startMcq(Request $request)
     {
         try {
-           
+             
             $set_id = $request->set_id;
             $strat_time = $request->start_time;
             $end_time = $request->endtime;

@@ -32,9 +32,7 @@ class LessonController extends Controller
     }
     public function store(Request $request)
     {
-        return response()->json($request->all());
-       
-        try {
+     try {
           
             $slug=Str::slug($request->name);
             if($request->has('parent_id')){

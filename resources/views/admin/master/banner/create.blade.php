@@ -41,7 +41,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 
                     <div class="form-group">
                         <label for="exampleTextarea1">Description</label>
-                        <textarea class="form-control" id="" name="description" maxlength="80" rows="4" placeholder="Describe banner here." required></textarea>
+                        <textarea class="form-control" id="" name="description" maxlength="80" rows="4" placeholder="Describe banner here."></textarea>
                         <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
                         <span class="text-danger" id="description_error"></span>
                     </div>
