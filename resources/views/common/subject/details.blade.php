@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <p class="cross-line">
-    <h2 class="heading-black">{{$subject->subject_name}}</h2>
+    <h2 class="heading-black mx-2">{{$subject->subject_name}}</h2>
     </p>
     <div class="row">
 
@@ -17,6 +17,29 @@
             </p>
             @include('common.lesson.content') --}}
 
+            <div class="col-lg-6 mt-3">
+                <div class="board-class-div d-flex justify-content-between">
+                    <div>
+                        <h5>SEBA</h5>
+                        <p>Board</p>
+                    </div>
+                    <div>
+                        <h5>6</h5>
+                        <p>Class</p>
+                    </div>
+                    <div>
+                        <h5>Rating</h5>
+                        <p>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i> &nbsp;
+                            <span>9.45 (9.8k+ reviews)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="description">
                 <nav class="mt-4">
                     <div class="nav" id="nav-tab" role="tablist">
@@ -153,7 +176,7 @@
             <div class="mt-5" id="learning">
                 <h4>What you'll learn</h4>
                 <div class="d-flex justify-content-between mt-4">
-                    <div class="learningBox1">
+                    <div class="learningBox1 mx-4">
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
@@ -161,7 +184,7 @@
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                     </div>
-                    <div class="learningBox2">
+                    <div class="learningBox2 mx-4">
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
@@ -211,8 +234,16 @@
                             @endguest
                         </span>
                     </h4>
-                    <span>Created by : Demo Teacher</span><br>
-                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span>
+                    {{-- <span>Created by : Demo Teacher</span><br> --}}
+                    {{-- <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
+                    <div class="d-flex justify-content-between align-items-center mx-4" style="margin-bottom: -15px; margin-top:15px" >
+                        <p>
+                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span> &nbsp; 
+                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
+                        </p>
+                        <p class="discount-percentage">91% Off</p>
+                    </div>
+                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2 days left at this price!</span>
                     {{-- <a
                         href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                         class="enroll">View Details</a> --}}
@@ -223,32 +254,38 @@
                         Course</a>
                     @else
                     <div class="d-flex card-button mb-2 mx-4">
-                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn"><i
-                                class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
+                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
+                            <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
                         <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration</p>
                         <p>60 Minutes</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson</p>
                         <p>32</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by</p>
                         <p>1982 students</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language</p>
                         <p>English</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate</p>
                         <p>Yes</p>
                     </div>
                     <div class="text-center pb-3">
-                        <a href="#" target="_blank"><i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>  
+                        <a href="#" target="_blank">
+                            <i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>  
                     </div>
                     @endif
                 </div>

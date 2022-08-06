@@ -3410,7 +3410,7 @@ input {
 }
 
 #nav-tab .nav-link.active {
-    color: #0178ee;
+    color: black;
     background-color: #fff;
     border-bottom: 3px solid;
     /* border-color: #ebeaea #f1f1f1 #ffffff;
@@ -3576,4 +3576,22 @@ input {
 }
 .course-duration-div i{
     margin-bottom: 20px;
+}
+
+.discount-percentage{
+    font-size: 12px;
+    color: white;
+    background: #80808094;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight:600;
+}
+.board-class-div h5{
+    font-weight: 600;
+}
+.board-class-div i{
+    color: orange;
+}
+.board-class-div p, .board-class-div span{
+    color: rgba(133, 133, 133, 0.952);
 }
