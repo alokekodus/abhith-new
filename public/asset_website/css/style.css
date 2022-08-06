@@ -779,7 +779,7 @@ main {
 
 .course-details-add-to-cart-btn{
     box-shadow: 0px 10px 15px #09bf1836;
-    border-radius: 0px 0px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .course-details-start-course-btn{
@@ -3412,15 +3412,16 @@ input {
 #nav-tab .nav-link.active {
     color: #0178ee;
     background-color: #fff;
-    border-color: #ebeaea #f1f1f1 #ffffff;
+    border-bottom: 3px solid;
+    /* border-color: #ebeaea #f1f1f1 #ffffff;
     border-radius: 7px 7px 0px 0px;
-    box-shadow: -5px -10px 10px #f2f2f2;
+    box-shadow: -5px -10px 10px #f2f2f2; */
 }
 #nav-tab .nav-link {
     margin-bottom: -1px;
-    border: 2px solid transparent;
+    /* border: 2px solid transparent;
     border-top-left-radius: 1.25rem;
-    border-top-right-radius: 1.25rem;
+    border-top-right-radius: 1.25rem; */
 }
 #nav-tab {
     border-bottom: 1px solid #e0e0e0;
@@ -3501,4 +3502,78 @@ input {
     /* transform: scale(1.04);
     transition: 0.4s; */
     box-shadow: 0px 0px 10px #d4d3d3;
+}
+
+
+/* Description page css */
+#learning i{
+    color: #076fef;
+}
+.card-button {
+    flex-direction: column;
+}
+.details-bottom{
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(207, 207, 207, 0.747);
+}
+.details-bottom-text{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#description-accordion{
+    display: none;
+}
+
+#lesson .card {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+#lesson .accordion>.card:not(:last-of-type){
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+#lesson .btn:focus{
+    border-color: #fff;
+    outline: none;
+}
+#lesson .card-header p{
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+    padding-top: 10px;
+}
+#lesson .card-header {
+    background-color: none;
+    border-bottom: none;
+    /* background: transparent; */
+    padding: 0px;
+}
+
+.lesson-content{
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(207, 207, 207, 0.747);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.course-duration-div p:nth-child(1){
+    margin-right: 15px;
+    font-size: 12px;
+    padding: 10px;
+    background: rgb(255 95 0 / 10%);
+    font-weight: 600;
+    border-radius: 5px;
+    color: #d30808c2;
+}
+.course-duration-div p:nth-child(2){
+    margin-right: 15px;
+    font-size: 12px;
+    padding: 10px;
+    background: rgb(0 112 255 / 14%);
+    font-weight: 600;
+    border-radius: 5px;
+    color: rgb(0 112 255 / 72%);
+}
+.course-duration-div i{
+    margin-bottom: 20px;
 }
