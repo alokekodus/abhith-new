@@ -3,7 +3,6 @@
     <h2 class="heading-black mx-2">{{$subject->subject_name}}</h2>
     </p>
     <div class="row">
-
         <div class="col-lg-8 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
 
             {{-- <p class="cross-line">
@@ -17,13 +16,13 @@
             </p>
             @include('common.lesson.content') --}}
 
-            <div class="col-lg-6 mt-3">
-                <div class="board-class-div d-flex justify-content-between">
-                    <div>
+            <div class="col-lg-12 col-md-8 mt-3">
+                <div class="board-class-div d-flex">
+                    <div class="mr-5">
                         <h5>SEBA</h5>
                         <p>Board</p>
                     </div>
-                    <div>
+                    <div class="mr-5">
                         <h5>6</h5>
                         <p>Class</p>
                     </div>
@@ -197,7 +196,7 @@
             <!-- End What u'll learb -->
 
             <!-- Requirements -->
-            <div class="mt-5">
+            <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
                 <div class="mt-3">
                     <ul class="">
@@ -241,7 +240,7 @@
                             <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span> &nbsp; 
                             <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
                         </p>
-                        <p class="discount-percentage">91% Off</p>
+                        <p class="discount-percentage">87% Off</p>
                     </div>
                     <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2 days left at this price!</span>
                     {{-- <a
@@ -295,7 +294,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Lessons -->
 <div class="container-fluid mt-4" id="lesson">
@@ -375,7 +373,6 @@
 </div>
 <!-- End Lessons -->
 
-
 {{-- <div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-7">
@@ -400,3 +397,65 @@
         </div>
     </div>
 </div> --}}
+
+<!-- Student Feedback -->
+
+<div class="container-fluid mt-5" id="student-feedback">
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
+            <h4>Students Feedback</h4>
+            <div class="d-md-flex mt-4">
+                <div class="studentImageBox mr-4">
+                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                </div>
+                <div class="studentReviewBox">
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="studentName">
+                            <h5>Oscar Cafeo</h5>
+                            <p>Beautiful Course</p>
+                        </div>
+                        <div class="studentrating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="studentReview">
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-md-flex mt-4">
+                <div class="studentImageBox mr-4">
+                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                </div>
+                <div class="studentReviewBox">
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="studentName">
+                            <h5>Alex Morgan</h5>
+                            <p>Beautiful Course</p>
+                        </div>
+                        <div class="studentrating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="studentReview">
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Student Feedback -->
