@@ -762,7 +762,7 @@ class SubjectController extends Controller
     public function practiceTestReport(Request $request)
     {
         try {
-            $id = $_GET['user_practice_test_id'];
+            $id = $_GET['id'];
             $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
             $update_user_practice_test_store =
                 [
