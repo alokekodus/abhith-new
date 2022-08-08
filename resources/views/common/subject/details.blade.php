@@ -320,8 +320,8 @@
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none">
-                                <div class="ml-3 pt-3">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none; border-bottom: 1px solid #d5d5d5;" >
+                                <div class="ml-3">
                                     <p><i class="fa fa-plus"></i> &nbsp; Lesson 1</p>
                                 </div>
                             </button>

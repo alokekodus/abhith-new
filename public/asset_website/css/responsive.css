@@ -241,9 +241,9 @@
         bottom: 5px;
         font-size: 14px;
     }
-    .account-section h2{
+    /* .account-section h2{
         margin-top: 35px;
-    }
+    } */
 }
 @media (max-width: 767px) {
     a {
@@ -953,6 +953,12 @@
         border-bottom: none;
         /* background: transparent; */
         padding: 0px;
+    }
+    .studentImageBox img{
+        width: 30%;
+    }
+    .studentReviewBox .studentReview p {
+        font-size: 14px;
     }
 }
 

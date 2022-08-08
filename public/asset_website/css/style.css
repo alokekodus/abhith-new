@@ -3526,6 +3526,9 @@ input {
     display: none;
 }
 
+#lesson .accordion{
+    border: 1px solid #c9c9c994;
+}
 #lesson .card {
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, .125);
@@ -3541,7 +3544,7 @@ input {
     color: black;
     font-weight: 600;
     font-size: 18px;
-    padding-top: 10px;
+    padding-top: 20px;
 }
 #lesson .card-header {
     background-color: none;
