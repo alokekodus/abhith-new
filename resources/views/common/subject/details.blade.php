@@ -17,13 +17,38 @@
             </p>
             @include('common.lesson.content') --}}
 
+            <div class="col-lg-12 col-md-8 mt-3">
+                <div class="board-class-div d-flex">
+                    <div class="mr-5">
+                        <h5>SEBA</h5>
+                        <p>Board</p>
+                    </div>
+                    <div class="mr-5">
+                        <h5>6</h5>
+                        <p>Class</p>
+                    </div>
+                    <div>
+                        <h5>Rating</h5>
+                        <p>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i> &nbsp;
+                            <span>9.45 (9.8k+ reviews)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
             <div class="description">
                 <nav class="mt-4">
                     <div class="nav" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active mr-4" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                        <a class="nav-item nav-link active mr-4" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                            role="tab" aria-controls="nav-home" aria-selected="true">
                             <h4>Overview</h4>
                         </a>
-                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                            role="tab" aria-controls="nav-contact" aria-selected="false">
                             <h4>Reviews</h4>
                         </a>
                     </div>
@@ -44,8 +69,13 @@
                             <div class="row">
                                 <div class="mt-5">
                                     <h4>Reviews</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae? Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente quibusdam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
+                                        expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
+                                        Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente
+                                        quibusdam.</p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas
+                                        perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit.
+                                        Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
                                 </div>
                             </div>
                         </div>
@@ -56,81 +86,100 @@
             <div class="container mt-5" id="description-accordion">
                 <div class="accordion">
                     <div class="card">
-                      <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none;">
-                                <div class="d-flex justify-content-between">
-                                    <p>Overview</p>
-                                    <p><i class="fa fa-plus"></i></p>
-                                </div>
-                        </button>
-                        </h5>
-                      </div>
-                  
-                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#description-accordion">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
-                                    <h4>Course Description</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae? Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente quibusdam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                                    style="text-decoration: none;">
+                                    <div class="d-flex justify-content-between">
+                                        <p>Overview</p>
+                                        <p><i class="fa fa-plus"></i></p>
+                                    </div>
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            data-parent="#description-accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
+                                        <h4>Course Description</h4>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
+                                            expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
+                                            Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos
+                                            sapiente quibusdam.</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
+                                            voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
+                                            velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                      </div>
                     </div>
                     <div class="card">
-                      <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                aria-controls="collapseTwo" style="text-decoration: none;">
-                                <div class="d-flex justify-content-between">
-                                    <p>Curriculum</p>
-                                    <p><i class="fa fa-plus"></i></p>
-                                </div>
-                            </button>
-                        </h5>
-                      </div>
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#description-accordion">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
-                                    <h4>Course Description</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae? Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente quibusdam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                    data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo" style="text-decoration: none;">
+                                    <div class="d-flex justify-content-between">
+                                        <p>Curriculum</p>
+                                        <p><i class="fa fa-plus"></i></p>
+                                    </div>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                            data-parent="#description-accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
+                                        <h4>Course Description</h4>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
+                                            expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
+                                            Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos
+                                            sapiente quibusdam.</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
+                                            voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
+                                            velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                      </div>
                     </div>
                     <div class="card">
-                      <div class="card-header" id="headingThree">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
-                                aria-controls="collapseThree" style="text-decoration: none;">    
-                                <div class="d-flex justify-content-between">
-                                    <p>Reviews</p>
-                                    <p><i class="fa fa-plus"></i></p>
-                                </div>
-                            </button>
-                        </h5>
-                      </div>
-                      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#description-accordion">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
-                                    <h4>Course Description</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae? Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente quibusdam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                        <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                    data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree" style="text-decoration: none;">
+                                    <div class="d-flex justify-content-between">
+                                        <p>Reviews</p>
+                                        <p><i class="fa fa-plus"></i></p>
+                                    </div>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                            data-parent="#description-accordion">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
+                                        <h4>Course Description</h4>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
+                                            expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
+                                            Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos
+                                            sapiente quibusdam.</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
+                                            voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
+                                            velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
+                </div>
             </div>
             <!-- End Responsive view -->
 
@@ -141,17 +190,20 @@
                     <div class="learningBox1">
                         {!!$subject->why_learn!!}
                     </div>
-                  
+
                 </div>
             </div>
             <!-- End What u'll learb -->
 
-            {{-- <!-- Requirements -->
+            {{--
+            <!-- Requirements -->
             <div class="mt-5">
                 <h4>Requirements</h4>
                 <div class="mt-3">
                     <ul class="">
-                        <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias inventore adipisci id, iure excepturi nostrum ex voluptatum totam omnis vitae amet neque at reiciendis dolore minus ab reprehenderit tempora quae tempore harum saepe distinctio. Sapiente.</li>
+                        <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias inventore adipisci id,
+                            iure excepturi nostrum ex voluptatum totam omnis vitae amet neque at reiciendis dolore minus
+                            ab reprehenderit tempora quae tempore harum saepe distinctio. Sapiente.</li>
                         <li>A computer, cellphone with a good internet connection</li>
                         <li>Notebook, pen</li>
                     </ul>
@@ -159,7 +211,7 @@
             </div> --}}
             <!-- End Requirements -->
         </div>
-        
+
         <div class="col-lg-4 col-md-12 courseRightBlock order-1 order-lg-2 order-md-1 order-sm-2">
             <div style="box-shadow: 0px 6px 10px #d1d1d1;">
                 @if($subject->subjectAttachment->attachment_origin_url!=null)
@@ -185,11 +237,22 @@
                             @endguest
                         </span>
                     </h4>
-                    <span>Created by : Demo Teacher</span><br>
-                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span>
+                    {{-- <span>Created by : Demo Teacher</span><br>
+                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
                     {{-- <a
                         href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                         class="enroll">View Details</a> --}}
+                    <div class="d-flex justify-content-between align-items-center mx-4"
+                        style="margin-bottom: -15px; margin-top:15px">
+                        <p>
+                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span>
+                            &nbsp;
+                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
+                        </p>
+                        <p class="discount-percentage">91% Off</p>
+                    </div>
+                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2
+                        days left at this price!</span>
 
                     @if(auth()->check() && isUserBuy($subject->id))
                     <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
@@ -202,7 +265,8 @@
                         <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration</p>
+                        <p class="details-bottom-text"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration
+                        </p>
                         <p>60 Minutes</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
@@ -210,19 +274,23 @@
                         <p>32</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by</p>
+                        <p class="details-bottom-text"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by
+                        </p>
                         <p>1982 students</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language</p>
+                        <p class="details-bottom-text"><i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language
+                        </p>
                         <p>English</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate</p>
+                        <p class="details-bottom-text"><i class="fa fa-certificate" aria-hidden="true"></i> &nbsp;
+                            Certificate</p>
                         <p>Yes</p>
                     </div>
                     <div class="text-center pb-3">
-                        <a href="#" target="_blank"><i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>  
+                        <a href="#" target="_blank"><i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this
+                            Course</a>
                     </div>
                     @endif
                 </div>
@@ -256,27 +324,32 @@
                         aria-labelledby="headingOne">
                         <div class="panel-body" style="position:relative; left:40px;">
                             @foreach($subject->sets as $key=>$set)
-                            <i class="fa fa-file" aria-hidden="true"></i> &nbsp; {{$set->set_name}} <span class="badge badge-info">Total Questions: {{$set->question->where('is_activate',1)->count()}}</span>
+                            <i class="fa fa-file" aria-hidden="true"></i> &nbsp; {{$set->set_name}} <span
+                                class="badge badge-info">Total Questions:
+                                {{$set->question->where('is_activate',1)->count()}}</span>
                             @endforeach
 
                         </div>
                     </div>
                 </div>
-            </div><!-- panel-group -->  --}}
+            </div><!-- panel-group --> --}}
 
             <div class="accordion" id="accordionExample">
                 <div class="card">
                     @foreach($subject->lesson as $key=>$lesson)
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne{{$key}}" aria-expanded="true" aria-controls="collapseOne" style="text-decoration: none">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                data-target="#collapseOne{{$key}}" aria-expanded="true" aria-controls="collapseOne"
+                                style="text-decoration: none">
                                 <div class="ml-3 pt-3">
                                     <p><i class="fa fa-plus"></i> &nbsp;{{$lesson->name}}</p>
                                 </div>
                             </button>
                         </h2>
                     </div>
-                    <div id="collapseOne{{$key}}" @if($key==0) class="collapse show" @else class="collapse" @endif aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div id="collapseOne{{$key}}" @if($key==0) class="collapse show" @else class="collapse" @endif
+                        aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                             @foreach($lesson->topics as $topic)
                             <div class="lesson-content d-flex mx-3">

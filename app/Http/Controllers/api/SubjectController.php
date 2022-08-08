@@ -648,7 +648,7 @@ class SubjectController extends Controller
                 $all_questions = $set_question->question()->paginate(1);
                 $options = [];
                 foreach ($all_questions as $key => $question) {
-                    
+
                     $options[] = $question->option_1;
                     $options[] = $question->option_2;
                     $options[] = $question->option_3;
@@ -701,23 +701,23 @@ class SubjectController extends Controller
     public function startMcq(Request $request)
     {
         try {
-             
+
             $set_id = $request->set_id;
             $strat_time = $request->start_time;
             $end_time = $request->endtime;
-            $total_duration=timeDifference($strat_time, $end_time);
+            $total_duration = timeDifference($strat_time, $end_time);
             $findSet = Set::with('question')->where('id', $set_id)->first();
             $total_question = $findSet->question->count();
             $answers = $request->answers;
-            
+
             $user_practice_test = [
-                 'user_id' => auth()->user()->id,
+                'user_id' => auth()->user()->id,
                 'set_id' => $findSet->id,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
-                'total_duration'=>$total_duration,
+                'total_duration' => $total_duration,
             ];
-           
+
             $user_practice_test_store = UserPracticeTest::create($user_practice_test);
             foreach ($answers as $key => $answer) {
                 $is_correct = 0;
@@ -734,25 +734,54 @@ class SubjectController extends Controller
                 ];
                 $user_pract_test_answer = UserPracticeTestAnswer::create($data);
             }
-            $user_practice_test=UserPracticeTest::with('userPracticeTestAnswer')->where('id',$user_practice_test_store->id)->first();
-            $update_user_practice_test_store=
-               [
-                'total_attempts'=>$user_practice_test->UserPracticeTestAnswer->count(),
-                'total_correct_count'=>$user_practice_test->correctAnswer->count(),
-               ];
+            $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $user_practice_test_store->id)->first();
+            $update_user_practice_test_store =
+                [
+                    'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
+                    'total_correct_count' => $user_practice_test->correctAnswer->count(),
+                ];
             $user_practice_test->update($update_user_practice_test_store);
-            $data=[
-               
-                'set_title'=>$user_practice_test->set->set_name,
-                'total_question'=>$user_practice_test->set->question->count(),
-                'attempted_question'=>$user_practice_test->userPracticeTestAnswer->count(),
-                'correct_attempted'=>$user_practice_test->correctAnswer->count(),
-                'incorrect_attempted'=>$user_practice_test->incorrectAnswer->count(),
+            $data = ['user_practice_test_id' => $user_practice_test->id,];
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Practice Test submitted successfully",
+                "result" => $data,
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+                "result" => [],
+            ];
+            return response()->json(['status' => 1, 'result' => $th]);
+        }
+    }
+    public function practiceTestReport(Request $request)
+    {
+        try {
+            $id = $_GET['user_practice_test_id'];
+            $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
+            $update_user_practice_test_store =
+                [
+                    'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
+                    'total_correct_count' => $user_practice_test->correctAnswer->count(),
+                ];
+            $user_practice_test->update($update_user_practice_test_store);
+            $data = [
+
+                'set_title' => $user_practice_test->set->set_name,
+                'total_question' => $user_practice_test->set->question->count(),
+                'attempted_question' => $user_practice_test->userPracticeTestAnswer->count(),
+                'correct_attempted' => $user_practice_test->correctAnswer->count(),
+                'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
             ];
             $data = [
                 "code" => 200,
                 "status" => 1,
-                "message" => "Result Report",
+                "message" => "Practice Test Result",
                 "result" => $data,
             ];
             return response()->json(['status' => 1, 'result' => $data]);
