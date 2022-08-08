@@ -175,7 +175,7 @@
             <div class="mt-5" id="learning">
                 <h4>What you'll learn</h4>
                 <div class="d-flex justify-content-between mt-4">
-                    <div class="learningBox1 mx-4">
+                    <div class="learningBox1">
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
@@ -183,7 +183,7 @@
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                     </div>
-                    <div class="learningBox2 mx-4">
+                    <div class="learningBox2">
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
