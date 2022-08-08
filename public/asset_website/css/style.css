@@ -449,9 +449,6 @@ a:hover,
     width: 15%;
 }
 
-.courseLeftBox p{
-    text-align: justify;
-}
 .desc-text{
     margin-top: 0;
     line-height: 32px;
@@ -3506,6 +3503,10 @@ input {
 
 
 /* Description page css */
+
+.courseLeftBox p{
+    color: rgba(99, 99, 99, 0.993);
+}
 #learning i{
     color: #076fef;
 }
@@ -3622,5 +3623,8 @@ input {
     font-weight: 600;
 }
 #learning .learningBox2{
-    margin-right: 50px;
+    margin-left: 60px;
+}
+.learningBox1, .learningBox2{
+    width: 50%;
 }

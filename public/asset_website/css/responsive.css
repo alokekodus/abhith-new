@@ -914,8 +914,14 @@
 
     /* Description page css */
     
-    .learningBox2{
+    /* .learningBox2{
         display: none;
+    } */
+    #learning p{
+        font-size: 14px;
+    }
+    #learning .learningBox2{
+        margin-left: 50px;
     }
     .description{
         display: none;
