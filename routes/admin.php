@@ -174,6 +174,7 @@ Route::group(['middleware' => ['auth'] ],function(){
     /* ------------------------------- Enrolled Students ------------------------------------ */
     Route::prefix('enrolled')->group(function(){
         Route::get('students',[ EnrolledController::class, 'getEnrolledStudents'])->name('admin.get.enrolled.students');
+        Route::get('registerd/students',[ EnrolledController::class, 'getRegisterdStudents'])->name('admin.get.registered.students');
     });
 
     /* ------------------------------- Enquiry ------------------------------------ */

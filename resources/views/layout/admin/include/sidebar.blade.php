@@ -17,7 +17,8 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route('admin.dashboard')}}">
-                <span class="menu-title">@if(isTeacherApply()&& auth()->user()->hasRole('Teacher') )Become a Teacher @else Dashboard @endif</span>
+                <span class="menu-title">@if(isTeacherApply()&& auth()->user()->hasRole('Teacher') )Become a Teacher
+                    @else Dashboard @endif</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
@@ -108,9 +109,20 @@
                 <i class="mdi  mdi-alert menu-icon"></i></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{route('admin.get.enrolled.students')}}"><span class="menu-title">Enrolled
-                    Students</span>
-                <i class="mdi  mdi-account-multiple menu-icon"></i></a>
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic-student-details" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Student Details</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+            </a>
+            <div class="collapse" id="ui-basic-student-details">
+                <ul class="nav flex-column sub-menu">
+
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.enrolled.students')}}">Enrolled
+                            Students</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.registered.students')}}">All Registered
+                            Student</a></li>
+                </ul>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route('admin.get.enquiry.details')}}"><span class="menu-title">Enquiry
