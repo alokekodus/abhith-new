@@ -255,8 +255,8 @@
                     {{-- <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
                     <div class="d-flex justify-content-between align-items-center mx-4" style="margin-bottom: -15px; margin-top:15px" >
                         <p>
-                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span> &nbsp; 
-                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
+                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>{{$subject->subject_amount}}</span> &nbsp; 
+                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>{{$subject->subject_amount}}</s>
                         </p>
                         <p class="discount-percentage">87% Off</p>
                     </div>

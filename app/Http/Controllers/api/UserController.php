@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(){
         try {
-            $user_details = UserDetails::select('name','email','phone','education','gender','image')->where('email',auth()->user()->email)->first();
+            $user_details = UserDetails::select('name','email','phone','education','gender','image','address')->where('email',auth()->user()->email)->first();
             
             $result = ["user_details" => $user_details];
             if (!$user_details=null) {

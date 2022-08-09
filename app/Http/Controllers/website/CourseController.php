@@ -34,7 +34,7 @@ class CourseController extends Controller
             $subject_details =  AssignSubject::with('assignClass', 'boards')->where('assign_class_id', $request->class_id)->where('board_id', $request->assignedBoard)->where('is_activate', 1)->get();
         }
 
-
+            
         return view('website.course.course')->with(['boards' => $board_details, 'subjects' => $subject_details,'class_id'=>$class_id]);
     }
 

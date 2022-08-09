@@ -1,7 +1,5 @@
 @extends('layout.admin.layout.admin')
 @section('title', 'Course Management - Subjects')
-
-@section('content')
 @section('head')
 <style>
     .pagination {
@@ -14,26 +12,49 @@
     }
 </style>
 @endsection
+@section('content')
 <div class="page-header">
-    <h3 class="page-title">
-        <span class="page-title-icon bg-gradient-primary text-white mr-2">
-            <i class="mdi mdi-bulletin-board"></i>
-        </span> @if(auth()->user()->hasRole('Teacher')) All Assigned Subject @else All Subjects @endif
-    </h3>
-    @if(!auth()->user()->hasRole('Teacher'))
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{route('admin.course.management.subject.create')}}" class="btn btn-gradient-primary btn-fw"
-                    data-backdrop="static" data-keyboard="false">Add Subject</a>
-            </li>
-        </ul>
-    </nav>
-    @endif
+    <h3 class="page-title"> Subjects </h3>
 </div>
-
-@include('common.course.index')
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">All Subjects</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th> Image </th>
+                            <th> Name </th>
+                            <th> Amount </th>
+                            <th> Total Lesson </th>
+                            <th> Enrolled Student </th>
+                            <th>status</th>
+                            <th> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($subjects as $key=>$subject)
+                        <tr>
+                            <td class="py-1">
+                                <img src="{{asset($subject->image)}}" alt="image" />
+                            </td>
+                            <td> {{$subject->subject_name}} </td>
+                            <td><i class="fa fa-rupee"></i>{{$subject->subject_amount}}
+                            </td>
+                            <td> $ 77.99 </td>
+                            <td> May 15, 2015 </td>
+                            <td></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
 
 @section('scripts')
 <script>
