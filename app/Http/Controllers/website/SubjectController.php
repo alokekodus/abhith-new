@@ -37,4 +37,11 @@ class SubjectController extends Controller
             //throw $th;
         }
     }
+    public function topicDetails($topic_id){
+        try {
+            return view('website.my_account.lesson_details');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

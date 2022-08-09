@@ -709,7 +709,11 @@ class SubjectController extends Controller
             $findSet = Set::with('question')->where('id', $set_id)->first();
             $total_question = $findSet->question->count();
             $answers = $request->answers;
-
+            $user_practice_test=UserPracticeTest::where('set_id',$set_id)->where('user_id',auth()->user()->id)->first();
+            if($user_practice_test){
+                $user_practice_test->delete();
+                $user_practice_test->userPracticeTestAnswer()->delete();
+            }
             $user_practice_test = [
                 'user_id' => auth()->user()->id,
                 'set_id' => $findSet->id,
@@ -720,6 +724,7 @@ class SubjectController extends Controller
 
             $user_practice_test_store = UserPracticeTest::create($user_practice_test);
             foreach ($answers as $key => $answer) {
+                
                 $is_correct = 0;
                 $question = Question::find($answer['question_id']);
                 if ($question->correct_answer == $answer['user_answer']) {

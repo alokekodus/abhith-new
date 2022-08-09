@@ -14,6 +14,7 @@ class EnrolledController extends Controller
         return view('admin.enrolled.students')->with('details', $stu_details);
     }
     public function getRegisterdStudents(){
-        $students=User::where('type',2)->get();
+        $students=User::where('type_id',2)->where('verify_otp',1)->get();
+        return view('admin.registerd.students')->with('students', $students);
     }
 }

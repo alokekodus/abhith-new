@@ -20,7 +20,10 @@ class BoardController extends Controller
         $validator = Validator::make($request->all(),[
             'examBoard' => 'required'
         ]);
-
+        $board=Board::where('exam_board',$request->examBoard)->first();
+        if($board){
+            return response()->json(['message' => 'Exam Board name already in used', 'status' => 2]);
+        }
         if($validator->fails()){
             return response()->json(['message' => 'Whoops! Something went wrong', 'error' => $validator->errors()]);
         }else{

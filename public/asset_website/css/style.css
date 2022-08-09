@@ -3594,4 +3594,36 @@ input {
 }
 .board-class-div p, .board-class-div span{
     color: rgba(133, 133, 133, 0.952);
+<<<<<<< HEAD
+=======
+}
+.studentImageBox img{
+    width: 100%;
+}
+.studentReviewBox .studentName h5{
+    font-weight: 600;
+}
+.studentReviewBox .studentName p{
+    font-size: 14px;
+    color: rgba(133, 133, 133, 0.952);
+}
+.studentReviewBox .studentrating i{
+    color: orange;
+}
+.studentReviewBox .studentReview p{
+    font-size: 18px;
+    color: rgba(133, 133, 133, 0.952);
+    line-height: 32px;
+}
+
+.description h4, 
+#learning h4, 
+#requirements h4, 
+#student-feedback h4{
+    font-size: 22px;
+    font-weight: 600;
+}
+#learning .learningBox2{
+    margin-right: 50px;
+>>>>>>> 5fd4965dc0afc1581aacb2bff2ed30786500a260
 }

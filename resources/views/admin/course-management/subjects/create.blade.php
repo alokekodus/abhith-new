@@ -71,6 +71,9 @@
             },
             why_learn:{
                 required:true
+            },
+            subject_amount:{
+                required:true
             }
         },
         messages: {
@@ -85,6 +88,9 @@
             },
             why_learn:{
                 required:"This Filed is required.",
+            },
+            subject_amount:{
+                required:"Subject Amount is required.",
             }
         },
       });

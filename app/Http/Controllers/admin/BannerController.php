@@ -50,6 +50,11 @@ class BannerController extends Controller
         $banner = Banner::find($request->catId);
         $banner->is_activate = $request->active;
         $banner->save();
+        if($request->active == 0){
+            return response()->json(['status'=>1,'message' => 'Banner visibility changed from show to hide']);
+        }else{
+            return response()->json(['status'=>1,'message' => 'Banner visibility changed from hide to show']);
+        }
     }
 
     protected function editBanner($id) {

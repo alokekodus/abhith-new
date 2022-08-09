@@ -51,6 +51,7 @@ Route::prefix('subject')->group(function () {
     Route::prefix('mcq')->group(function () {
         Route::get('/{set_id}', [SubjectController::class, 'mcqStart'])->name('website.subject.mcqstart');
     });
+    Route::get('/topic/{topic_id}',[SubjectController::class,'topicDetails'])->name('subject.topic.details');
 });
 
 /* ------------------------------- Blog ------------------------------------ */

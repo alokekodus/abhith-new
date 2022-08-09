@@ -1,9 +1,8 @@
 <div class="container-fluid">
     <p class="cross-line">
-    <h2 class="heading-black">{{$subject->subject_name}}</h2>
+    <h2 class="heading-black mx-2">{{$subject->subject_name}}</h2>
     </p>
     <div class="row">
-
         <div class="col-lg-8 col-md-12 courseLeftBox order-2 order-lg-1 order-md-2 order-sm-1">
 
             {{-- <p class="cross-line">
@@ -195,9 +194,9 @@
             </div>
             <!-- End What u'll learb -->
 
-            {{--
+            
             <!-- Requirements -->
-            <div class="mt-5">
+            <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
                 <div class="mt-3">
                     <ul class="">
@@ -208,7 +207,7 @@
                         <li>Notebook, pen</li>
                     </ul>
                 </div>
-            </div> --}}
+            </div>
             <!-- End Requirements -->
         </div>
 
@@ -237,60 +236,59 @@
                             @endguest
                         </span>
                     </h4>
-                    {{-- <span>Created by : Demo Teacher</span><br>
-                    <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
+                    {{-- <span>Created by : Demo Teacher</span><br> --}}
+                    {{-- <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
+                    <div class="d-flex justify-content-between align-items-center mx-4" style="margin-bottom: -15px; margin-top:15px" >
+                        <p>
+                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span> &nbsp; 
+                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
+                        </p>
+                        <p class="discount-percentage">87% Off</p>
+                    </div>
+                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2 days left at this price!</span>
                     {{-- <a
                         href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                         class="enroll">View Details</a> --}}
-                    <div class="d-flex justify-content-between align-items-center mx-4"
-                        style="margin-bottom: -15px; margin-top:15px">
-                        <p>
-                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span>
-                            &nbsp;
-                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
-                        </p>
-                        <p class="discount-percentage">91% Off</p>
-                    </div>
-                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2
-                        days left at this price!</span>
-
+                    
+                    
                     @if(auth()->check() && isUserBuy($subject->id))
                     <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
                         class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
                         Course</a>
                     @else
                     <div class="d-flex card-button mb-2 mx-4">
-                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn"><i
-                                class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
+                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
+                            <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
                         <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration
-                        </p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration</p>
                         <p>60 Minutes</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson</p>
                         <p>32</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by
-                        </p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by</p>
                         <p>1982 students</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language
-                        </p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language</p>
                         <p>English</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
-                        <p class="details-bottom-text"><i class="fa fa-certificate" aria-hidden="true"></i> &nbsp;
-                            Certificate</p>
+                        <p class="details-bottom-text">
+                            <i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate</p>
                         <p>Yes</p>
                     </div>
                     <div class="text-center pb-3">
-                        <a href="#" target="_blank"><i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this
-                            Course</a>
+                        <a href="#" target="_blank">
+                            <i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>  
                     </div>
                     @endif
                 </div>
@@ -300,7 +298,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Lessons -->
 <div class="container-fluid mt-4" id="lesson">
@@ -353,7 +350,7 @@
                         <div class="card-body">
                             @foreach($lesson->topics as $topic)
                             <div class="lesson-content d-flex mx-3">
-                                <p><i class="fa fa-book"></i> &nbsp; {{$topic->name}}</p>
+                                <p><i class="fa fa-book"></i> &nbsp;<a href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
                                     <p>3 Questions</p>
                                     <p>30 mins</p>
@@ -370,7 +367,6 @@
     </div>
 </div>
 <!-- End Lessons -->
-
 
 {{-- <div class="container-fluid mt-4">
     <div class="row">
@@ -396,3 +392,65 @@
         </div>
     </div>
 </div> --}}
+
+<!-- Student Feedback -->
+
+<div class="container-fluid mt-5" id="student-feedback">
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
+            <h4>Students Feedback</h4>
+            <div class="d-md-flex mt-4">
+                <div class="studentImageBox mr-4">
+                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                </div>
+                <div class="studentReviewBox">
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="studentName">
+                            <h5>Oscar Cafeo</h5>
+                            <p>Beautiful Course</p>
+                        </div>
+                        <div class="studentrating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="studentReview">
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-md-flex mt-4">
+                <div class="studentImageBox mr-4">
+                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                </div>
+                <div class="studentReviewBox">
+                    <div class="d-flex justify-content-between mt-2">
+                        <div class="studentName">
+                            <h5>Alex Morgan</h5>
+                            <p>Beautiful Course</p>
+                        </div>
+                        <div class="studentrating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="studentReview">
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End Student Feedback -->
