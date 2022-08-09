@@ -185,9 +185,25 @@
             <!-- What u'll learn -->
             <div class="mt-5" id="learning">
                 <h4>What you'll learn</h4>
-                <div class="d-flex justify-content-between mt-4">
+                <div class="d-flex mt-4">
                     <div class="learningBox1">
                         {!!$subject->why_learn!!}
+{{-- =======
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
+                    </div>
+                    <div class="learningBox2">
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
+>>>>>>> f814824b2bab378cf05b10e58d8a1402d402aab3 --}}
                     </div>
 
                 </div>
@@ -199,13 +215,12 @@
             <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
                 <div class="mt-3">
+
                     <ul class="">
                         <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias inventore adipisci id,
                             iure excepturi nostrum ex voluptatum totam omnis vitae amet neque at reiciendis dolore minus
                             ab reprehenderit tempora quae tempore harum saepe distinctio. Sapiente.</li>
-                        <li>A computer, cellphone with a good internet connection</li>
-                        <li>Notebook, pen</li>
-                    </ul>
+
                 </div>
             </div>
             <!-- End Requirements -->
@@ -341,8 +356,7 @@
                                 style="text-decoration: none">
                                 <div class="ml-3 pt-3">
                                     <p><i class="fa fa-plus"></i> &nbsp;{{$lesson->name}}</p>
-                                </div>
-                            </button>
+
                         </h2>
                     </div>
                     <div id="collapseOne{{$key}}" @if($key==0) class="collapse show" @else class="collapse" @endif
