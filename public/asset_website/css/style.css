@@ -3695,7 +3695,7 @@ input {
 .lesson-details-sidebar button {
     /* display: block; */
     color: black;
-    padding: 18px 16px;
+    padding: 15px;
     width: 100%;
     cursor: pointer;
     transition: 0.3s;
@@ -3707,7 +3707,7 @@ input {
     font-size: 18px;
 }
 .lesson-sidebar-btn{
-    padding: 50px;
+    padding: 30px;
 }
 .lesson-details-sidebar button:hover {
     background-color: rgb(120, 172, 241);
@@ -3736,13 +3736,13 @@ input {
 }
 .topic-content-sub-heading h3{
     font-size: 18px;
-    font-weight: 600;
+    font-weight: bolder;
 }
 .topic-content-heading h2{
     color: white;
     padding: 20px;
     margin-left: 12px;
-    font-size: 24px;
+    font-size: 18px;
 }
 .topic-content-details{
     padding: 20px;
@@ -3755,10 +3755,11 @@ input {
 }
 .video-lesson-pic{
     border-radius: 10px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .video-lesson-pic img{
     height: 250px;
+    border-radius: 10px;
 }
 .video-lesson-overlay{
     position: absolute;
@@ -3766,7 +3767,7 @@ input {
     width: 347px;
     height: 250px;
     background-color: #00000079;    
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 10px;
     transition: 0.8s;
     cursor: pointer;
 }
@@ -3786,18 +3787,27 @@ input {
     color: #076fef;
 }
 .video-lesson-text{
-    background: white;
+    /* background: white;
     border: 1px solid rgba(235, 235, 235, 0.507);
     position: absolute;
     top: 84%;
     left: 10%;
     width: 305px;
     height: 75px;
-    border-radius: 10px;
+    border-radius: 10px; */
+
+
+    border-left: 7px solid #51aeed;
+    outline: none;
+    position: absolute;
+    top: 75%;
+    left: 10%;
+    padding: 12px;
+    background-image: linear-gradient(to right, #ffffff, #ffffff, #ffffff, #fefefe, #fefefe, #fafafa, #f5f5f5, #f1f1f1, #e8e8e8, #dfdfdf, #d6d6d6, #cdcdcd);
 }
 .video-lesson-text p{
     text-align: center;
-    padding-top: 20px;
+    margin-bottom: 0px;
     color: black;
     font-weight: 600;
 }
