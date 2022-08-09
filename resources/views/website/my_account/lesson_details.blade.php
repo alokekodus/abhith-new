@@ -1,0 +1,250 @@
+@extends('layout.website.website')
+
+@section('title', 'My Account')
+
+@section('head')
+<style>
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: rgb(190, 190, 190) rgb(238, 237, 236);
+    }
+
+    /* Works on Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: rgb(238, 237, 236);
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: rgb(190, 190, 190);
+        border-radius: 20px;
+        border: 3px solid rgb(231, 231, 230);
+    }
+  
+</style>
+@endsection
+
+@section('content')
+
+{{-- @include('layout.website.include.forum_header') --}}
+{{-- <div class="lesson-details-sidebar">
+    <a class="active" href="#videos">5 Videos</a>
+    <a href="#articles">12 Articles</a>
+    <a href="#documents">10 Documents</a>
+  </div>
+  
+  <!-- Page content -->
+  <div class="topic-content">
+    <div class="topic-content-heading">
+        <h2>Topic: Crossword Clues for Testing</h2>
+    </div>
+  </div> --}}
+  {{-- <div class="d-flex">
+    
+      <div class="topic-content">
+        <div class="topic-content-heading">
+            <h2>Topic: Crossword Clues for Testing</h2>
+        </div>
+        <div id="videos">
+            <p>casdcfdscfsf</p>
+        </div>
+        <div id="articles">
+            <p>chey
+
+            </p>
+        </div>
+      </div>
+  </div> --}}
+
+<div class="lesson-details-main-div">
+    <div class="lesson-details-sidebar">
+        <div class="lesson-sidebar-btn">
+            <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen" >5 Videos</button>
+            <button class="lessonLinks" onclick="openFile(event, 'articles')" >12 Articles</button>
+            <button class="lessonLinks" onclick="openFile(event, 'documents')" >10 Documents</button>
+        </div>
+    </div>
+    <div class="topic-content mb-5">
+        <div class="topic-content-heading">
+            <h2>Topic: Crossword Clues for Testing</h2>
+        </div>
+        <div class="topic-content-body">
+            <div class="container lessonContent" id="videos">
+                <div class="topic-content-sub-heading mt-4">
+                    <h3>Videos</h3>
+                </div>
+                <div class="row">     
+                    @php
+                        $test = 10;    
+                    @endphp        
+                    @for ($i = 0; $i < $test; $i++)
+                        <div class="col-lg-4 col-md-4">
+                            <div class="card video-lesson-pic">
+                                <img src="{{asset('asset_website/img/course/image1.png')}}" alt="">
+                                <div class="video-lesson-overlay">
+                                    <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <div class="video-lesson-text">
+                                <p>Lorem ipsum dolor sit amet.</p>
+                            </div>
+                        </div>
+                    @endfor 
+                </div>
+            </div>
+    
+            <div class="container lessonContent" id="articles">
+                <div class="topic-content-sub-heading mt-4">
+                    <h3>Articles</h3>
+                </div>
+                <div class="row">                
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image1.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image2.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image3.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image4.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image5.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="container lessonContent" id="documents">
+                <div class="topic-content-sub-heading mt-4">
+                    <h3>Documents</h3>
+                </div>
+                <div class="row">                
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image1.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image2.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image3.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image4.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset('asset_website/img/course/image5.png')}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="video-lesson-text">
+                            <p>Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openFile(evt, fileName) {
+        let i, lessonContent, lessonLinks;
+
+        lessonContent = document.getElementsByClassName("lessonContent");
+        for (i = 0; i < lessonContent.length; i++) {
+            
+            lessonContent[i].style.display = "none";
+        }
+        lessonLinks = document.getElementsByClassName("lessonLinks");
+        for (i = 0; i < lessonLinks.length; i++) {
+            lessonLinks[i].className = lessonLinks[i].className.replace(" active", "");
+        }
+        document.getElementById(fileName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+</script>
+
+  
+@endsection

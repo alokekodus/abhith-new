@@ -19,11 +19,10 @@
     <main>
 
         @yield('content')
-
-        @include('layout.website.include.footer')
-
-
+        
     </main>
+    @include('layout.website.include.footer')
+
 
     {{-- script --}}
     @include('layout.website.include.script')
