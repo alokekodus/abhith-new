@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\BoardController;
+use App\Http\Controllers\api\AccountController;
 use App\Http\Controllers\api\BannerController;
 use App\Http\Controllers\api\CartController;
 use Illuminate\Http\Request;
@@ -55,6 +56,12 @@ Route::prefix('homepage')->group(function(){
     //homepage  upcomming courses
     Route::get('upcomming',[CourseController::class,'allUpcommingCourses']);
     Route::post('get-class', [CourseController::class, 'findClass'])->name('board.class');
+   
+});
+Route::middleware('auth:sanctum')->prefix('account')->group(function(){
+    //homepage courses
+    Route::get('address',[AccountController::class,'getUserAddress']);
+   
    
 });
 Route::get('all-class', [CourseController::class, 'findAllClass']);
