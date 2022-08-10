@@ -92,5 +92,6 @@ Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
 });
 Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[UserController::class,'index']);
+    Route::post('/update',[UserController::class,'updateDetails']);
 });
 Route::post('/upload-note',[GalleryController::class,'testapi']);
