@@ -26,10 +26,12 @@
                         <tr>
                             <th> Image </th>
                             <th> Name </th>
+                            <th>Board/Class</th>
                             <th> Amount </th>
                             <th> Total Lesson </th>
                             <th> Enrolled Student </th>
-                            <th>status</th>
+                            <th>Publish</th>
+                            <th>Status</th>
                             <th> Action </th>
                         </tr>
                     </thead>
@@ -40,15 +42,44 @@
                                 <img src="{{asset($subject->image)}}" alt="image" />
                             </td>
                             <td> {{$subject->subject_name}} </td>
-                            <td><i class="fa fa-rupee"></i>{{$subject->subject_amount}}
+                            <td>Class -{{$subject->assignClass->class}} -- {{$subject->boards->exam_board}} Board</td>
+                            <td><i class="mdi mdi-currency-inr"></i> {{number_format((float)$subject->subject_amount, 2,
+                                '.', '') }}
                             </td>
-                            <td> $ 77.99 </td>
-                            <td> May 15, 2015 </td>
-                            <td></td>
+                            <td>@if($subject->lesson->count()==0)<span class="label label-success">Add Lesson</span>
+                                @else {{$subject->lesson->count()}} <span class="label label-success">Add More
+                                    Lesson</span>@endif</td>
+                            <td> @if($subject->lesson->count()==0) Not Yet Enrolled
+                                @else{{$subject->assignOrder->count()}} student Enrolled @endif</td>
+                            <td>
+                                @if ($subject->is_activate == 1)
+                                <label class="switch">
+                                    <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                @else
+                                <label class="switch">
+                                    <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}">
+                                    <span class="slider round"></span>
+                                </label>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($subject->is_activate == 1)
+                                <span class="label label-success">Active</span>
+                                @else
+                                <span class="label label-danger">In Active</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                <a href="" title="View Details"><i class="mdi mdi-application"></i></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+                {{$subjects->links() }}
             </div>
         </div>
     </div>
