@@ -3598,8 +3598,7 @@ input {
 }
 .board-class-div p, .board-class-div span{
     color: rgba(133, 133, 133, 0.952);
-<<<<<<< HEAD
-=======
+
 }
 .studentImageBox img{
     width: 100%;
@@ -3628,13 +3627,193 @@ input {
     font-weight: 600;
 }
 #learning .learningBox2{
-<<<<<<< HEAD
+
     margin-right: 50px;
->>>>>>> 5fd4965dc0afc1581aacb2bff2ed30786500a260
-=======
     margin-left: 60px;
 }
 .learningBox1, .learningBox2{
     width: 50%;
->>>>>>> f814824b2bab378cf05b10e58d8a1402d402aab3
+
 }
+
+/* Lesson Details Blade */
+
+/* The side navigation menu */
+/* .lesson-details-sidebar {
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100vh;
+    overflow-y: hidden;
+  } */
+  
+  /* Sidebar links */
+  /* .lesson-details-sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+    box-shadow: 1px 2px 1px #eee!important;
+  } */
+  
+  /* Active/current link */
+  /* .lesson-details-sidebar a.active {
+    background-color: #04AA6D;
+    color: white;
+  } */
+  
+  /* Links on mouse-over */
+  /* .lesson-details-sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+  }
+   */
+  /* Page content. The value of the margin-left property should match the value of the lesson-details-sidebar's width property */
+  /* .topic-content {
+    margin-left: 300px;
+    padding: 1px 16px;
+    height: 500px;
+  }
+  .topic-content-heading{
+    background-color: #0770EF;
+  }
+  .topic-content-heading h2{
+    color: white;
+    padding: 10px;
+  } */
+
+.lesson-details-sidebar{
+    float: left;
+    border: 1px solid rgba(194, 194, 194, 0.384);
+    /* box-shadow: 1px 2px 1px rgb(190, 190, 190)!important; */
+    /* background-color: #f1f1f1; */
+    width: 25%;
+    height: 100vh;
+}
+.lesson-details-sidebar button {
+    /* display: block; */
+    color: black;
+    padding: 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid rgba(167, 167, 167, 0.493);
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 5px;
+    font-size: 18px;
+}
+.lesson-sidebar-btn{
+    padding: 30px;
+}
+.lesson-details-sidebar button:hover {
+    background-color: rgb(120, 172, 241);
+    color: white;
+    border: 1px solid rgb(120, 172, 241);
+    /* box-shadow: 0px 0px 10px rgba(144, 182, 231, 0.753); */
+}
+.lesson-details-sidebar button.active {
+    background-color: rgba(31, 115, 226, 0.897);
+    color: white;
+    border: 1px solid rgba(31, 115, 226, 0.897);
+    box-shadow: 0px 0px 10px rgba(144, 182, 231, 0.753);
+}
+.topic-content {
+    float: left;
+    width: 75%;
+    border-left: none;
+    height: 100vh;
+    border: 1px solid rgba(194, 194, 194, 0.384);
+}
+.topic-content-heading{
+    background-image: linear-gradient(to left, #076fef, #01b9f1);
+}
+.topic-content-sub-heading{
+    /* margin-bottom: -25px; */
+}
+.topic-content-sub-heading h3{
+    font-size: 18px;
+    font-weight: bolder;
+}
+.topic-content-heading h2{
+    color: white;
+    padding: 20px;
+    margin-left: 12px;
+    font-size: 18px;
+}
+.topic-content-details{
+    padding: 20px;
+}
+.topic-content-body{
+    height: 660px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+.video-lesson-pic{
+    border-radius: 10px;
+    margin-top: 20px;
+}
+.video-lesson-pic img{
+    height: 250px;
+    border-radius: 10px;
+}
+.video-lesson-overlay{
+    position: absolute;
+    top: 0%;
+    width: 347px;
+    height: 250px;
+    background-color: #00000079;    
+    border-radius: 10px;
+    transition: 0.8s;
+    cursor: pointer;
+}
+.video-lesson-overlay .video-lesson-overlay-eye-icon{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    font-size: 50px;
+    opacity: 0;
+    color: white;
+    border-radius: 8px;
+    opacity: 1;
+}
+.video-lesson-overlay-eye-icon:hover{
+    color: #076fef;
+}
+.video-lesson-text{
+    /* background: white;
+    border: 1px solid rgba(235, 235, 235, 0.507);
+    position: absolute;
+    top: 84%;
+    left: 10%;
+    width: 305px;
+    height: 75px;
+    border-radius: 10px; */
+
+
+    border-left: 7px solid #51aeed;
+    outline: none;
+    position: absolute;
+    top: 75%;
+    left: 10%;
+    padding: 12px;
+    background-image: linear-gradient(to right, #ffffff, #ffffff, #ffffff, #fefefe, #fefefe, #fafafa, #f5f5f5, #f1f1f1, #e8e8e8, #dfdfdf, #d6d6d6, #cdcdcd);
+}
+.video-lesson-text p{
+    text-align: center;
+    margin-bottom: 0px;
+    color: black;
+    font-weight: 600;
+}
+/* End of lesson details */
+
+
+
+/* Css for custom scrollbar */
+
