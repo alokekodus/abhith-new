@@ -244,6 +244,35 @@
     /* .account-section h2{
         margin-top: 35px;
     } */
+    .lesson-details-main-div{
+        margin-top: 240px;
+    }
+    .lesson-details-sidebar button {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    .lesson-details-sidebar {
+        height: auto;
+        border-top: 1px solid rgba(194, 194, 194, 0.384);
+        border-bottom: none;
+        border-right: none;
+    }
+    .topic-content {
+        height: auto;
+        border-left: 1px solid rgba(194, 194, 194, 0.384);
+        border-bottom: none;
+    }
+    .video-lesson-overlay {
+        width: 100%;
+    }
+    .video-lesson-text {
+        top: 80%;
+        left: 12%;
+        padding: 10px;
+    }
+    .video-lesson-text p {
+        font-size: 14px;
+    }
 }
 @media (max-width: 767px) {
     a {
@@ -959,6 +988,20 @@
     }
     .studentReviewBox .studentReview p {
         font-size: 14px;
+    }
+    .lesson-details-sidebar {
+        float: none;
+        width: 100%;
+        height: auto;
+    }
+    .topic-content {
+        float: none;
+        width: 100%;
+        height: auto;
+    }
+    .video-lesson-overlay {
+        width: 100%;
+        height: 250px;
     }
 }
 

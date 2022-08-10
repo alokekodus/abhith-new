@@ -29,7 +29,7 @@
 
 @section('content')
 
-{{-- @include('layout.website.include.forum_header') --}}
+@include('layout.website.include.forum_header')
 
 <div class="lesson-details-main-div">
     <div class="lesson-details-sidebar">
@@ -53,7 +53,7 @@
                         $test = 6;    
                     @endphp        
                     @for ($i = 0; $i < $test; $i++)
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="card video-lesson-pic">
                                 <img src="{{asset('asset_website/img/course/image1.png')}}" alt="">
                                 <div class="video-lesson-overlay">
@@ -77,7 +77,7 @@
                         $test = 7;    
                     @endphp
                     @for ($i = 0; $i < $test; $i++)
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="card video-lesson-pic">
                                 <img src="{{asset('asset_website/img/course/image2.png')}}" alt="">
                                 <div class="video-lesson-overlay">
@@ -101,7 +101,7 @@
                         $test = 8;    
                     @endphp
                     @for ($i = 0; $i < $test; $i++)
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="card video-lesson-pic">
                                 <img src="{{asset('asset_website/img/course/image3.png')}}" alt="">
                                 <div class="video-lesson-overlay">
