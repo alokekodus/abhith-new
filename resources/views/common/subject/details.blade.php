@@ -187,8 +187,7 @@
                 <h4>What you'll learn</h4>
                 <div class="d-flex mt-4">
                     <div class="learningBox1">
-                        {!!$subject->why_learn!!}
-{{-- =======
+                        {{-- {!!$subject->why_learn!!} --}}
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
@@ -203,24 +202,22 @@
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
                         <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
->>>>>>> f814824b2bab378cf05b10e58d8a1402d402aab3 --}}
                     </div>
 
                 </div>
             </div>
-            <!-- End What u'll learb -->
-
+            <!-- End What u'll learn -->
             
             <!-- Requirements -->
             <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
                 <div class="mt-3">
-
                     <ul class="">
                         <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias inventore adipisci id,
                             iure excepturi nostrum ex voluptatum totam omnis vitae amet neque at reiciendis dolore minus
-                            ab reprehenderit tempora quae tempore harum saepe distinctio. Sapiente.</li>
-
+                            ab reprehenderit tempora quae tempore harum saepe distinctio. Sapiente.
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- End Requirements -->
