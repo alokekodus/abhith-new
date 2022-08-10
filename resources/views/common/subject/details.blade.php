@@ -353,7 +353,8 @@
                                 style="text-decoration: none">
                                 <div class="ml-3 pt-3">
                                     <p><i class="fa fa-plus"></i> &nbsp;{{$lesson->name}}</p>
-
+                                </div>
+                            </button>
                         </h2>
                     </div>
                     <div id="collapseOne{{$key}}" @if($key==0) class="collapse show" @else class="collapse" @endif
@@ -361,7 +362,7 @@
                         <div class="card-body">
                             @foreach($lesson->topics as $topic)
                             <div class="lesson-content d-flex mx-3">
-                                <p><i class="fa fa-book"></i> &nbsp;<a href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"> {{$topic->name}}</a></p>
+                                <p><i class="fa fa-book"></i> &nbsp;<a href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}" target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
                                     <p>3 Questions</p>
                                     <p>30 mins</p>
