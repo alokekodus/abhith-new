@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\ConvertVideoForResolution;
+use App\Models\AssignSubject;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -24,11 +25,12 @@ class LessonController extends Controller
 
         return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'all_lessons' => $all_lessons]);
     }
-    public function create()
+    //create lesson against subject
+    public function create($subject_id)
     {
-        $board_details = Board::where('is_activate', 1)->get();
-        $form_type = "Lesson";
-        return view('admin.course-management.lesson.create')->with(['boards' => $board_details, 'form_type' => $form_type]);
+        $assign_subject=AssignSubject::find(Crypt::decrypt($subject_id));
+        
+        return view('admin.course-management.lesson.create')->with(['subject' => $assign_subject]);
     }
     public function store(Request $request)
     {

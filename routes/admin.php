@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth'] ],function(){
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
-            Route::get('create', [LessonController::class,'create'])->name('admin.course.management.lesson.create');
+            Route::get('create/{subject_id}', [LessonController::class,'create'])->name('admin.course.management.lesson.create');
             Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
             Route::get('edit/{lesson_slug}', [LessonController::class,'edit'])->name('admin.course.management.lesson.edit');
             // Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');

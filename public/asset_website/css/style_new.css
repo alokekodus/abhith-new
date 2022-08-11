@@ -177,3 +177,7 @@ select.form-control{
     display: grid;
     place-items: center;
 }
+.slider:before{
+    height: 20px;
+    width: 20px;
+}
