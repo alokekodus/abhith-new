@@ -637,10 +637,7 @@ class WebsiteAuthController extends Controller
         try {
             auth()->user()->tokens()->delete();
     
-                return [
-                    'message' => 'Tokens Revoked'
-                ];
-                return response()->json(['message' => 'Loged out successfully.', 'status' => 1]);
+                return response()->json(['message' => 'Logged out successfully.', 'status' => 1]);
             
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Something went wrong.', 'status' => 0]);
