@@ -91,110 +91,7 @@
 
 @section('scripts')
 <script>
-    // $(document).ready(function () {
-    //     // jQuery.validator.addMethod('name_rule', function (value, element) {
-    //     //     if (/^[a-zA-Z]+(([',-][a-zA-Z ])?[a-zA-Z]*)*$/g.test(value)) {
-    //     //         return true;
-    //     //     } else {
-    //     //         return false;
-    //     //     };
-    //     // });
-    //     jQuery.validator.addMethod("img_extension", function (value, element, param) {
-    //         param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-    //         return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
-    //     });
-    //     jQuery.validator.addMethod('maxfilesize', function (value, element, param) {
-    //         var length = (element.files.length);
-
-    //         var fileSize = 0;
-
-    //         if (length > 0) {
-    //             for (var i = 0; i < length; i++) {
-    //                 fileSize = element.files[i].size;
-
-
-    //                 fileSize = fileSize / 1024; //file size in Kb
-    //                 fileSize = fileSize / 1024; //file size in Mb
-
-    //                 return this.optional(element) || fileSize <= param;
-    //             }
-
-    //         }
-    //         else {
-    //             return this.optional(element) || fileSize <= param;
-
-    //         }
-    //     });
-    //     $("#assignTopicForm").validate({
-    //         rules: {
-    //             board_id: {
-    //                 required: true,
-    //             },
-    //             assign_class_id: {
-    //                 required: true,
-    //             },
-    //             assign_subject_id: {
-    //                 required: true,
-    //             },
-    //             name: {
-    //                 required: true,
-    //                 // name_rule: true,
-    //                 minlength: 10,
-    //             },
-    //             image_url: {
-    //                 required: true,
-    //                 img_extension: true,
-    //                 img_maxfilesize: 2,
-
-    //             },
-               
-    //             content: {
-    //                 required: true,
-    //             },
-
-    //         },
-    //         messages: {
-    //             board_id: {
-    //                 required: "Board name is required",
-    //             },
-    //             assign_class_id: {
-    //                 required: "Class name is required",
-    //                 // maxlength: "Last name cannot be more than 20 characters"
-    //             },
-    //             assign_subject_id: {
-    //                 required: "Subject is required",
-    //             },
-    //             name: {
-    //                 required: "Lesson Name is required",
-    //                 name_rule: "Please insert a valid name",
-    //                 minlength: "The name should greater than or equal to 50 characters"
-    //             },
-    //             image_url: {
-    //                 required: "Image is required",
-    //                 img_extension: "The Image should be in jpg|jpeg|png|gif format",
-    //                 maxfilesize: "File size must not be more than 1 MB."
-    //             },
-    //             content: {
-    //                 required: "Content is required",
-    //             },
-
-    //         },
-    //         errorPlacement: function (error, element) {
-    //             console.log(element.attr("name"));
-    //             if (element.attr("name") == "image_url") {
-    //                 error.appendTo("#imageUrlError");
-    //             } else if (element.attr("name") == "video_url") {
-    //                 error.appendTo("#videoUrlError");
-    //             } else {
-    //                 error.insertAfter(element)
-    //             }
-
-
-    //         }
-    //     });
-    // });
-
-    // For datatable
+    
     $(document).ready(function () {
         $('#boardsTable').DataTable({
             "processing": true,
@@ -235,22 +132,19 @@
             videothumbnailimagepreview.src = URL.createObjectURL(file)
             var input=evt.srcElement;
             $("#noImageFilePromoVideo").html(input.files[0].name);
+            
         }
     }
-    var myVideos = [];
-    videoUpload.onchange = function (event) {
-        videoPriview.style.display = "block";
-        let file = event.target.files[0];
-        let blobURL = URL.createObjectURL(file);
-        document.querySelector("video").src = blobURL;
-        var files = this.files;
-        myVideos.push(files[0]);
-        var video = document.createElement('video');
-        video.preload = 'metadata';
-        
-        var input=evt.srcElement;
-            $("#noFileVideo").html(input.files[0].name);
-    }
+    
+    // videoUpload.onchange = function (event) { 
+    //     videoPriview.style.display = "block";
+    //     let file = event.target.files[0];
+    //     let blobURL = URL.createObjectURL(file);
+    //     document.querySelector("video").src = blobURL;
+    //     var input=event.srcElement;
+    //     $("#noFileVideo").html(input.files[0].name);
+       
+    // }
     
     function showDiv(){
    var showDivId= document.getElementById("content_type").value;
@@ -289,65 +183,37 @@
 
 
     });
-  
-
-   
-
-
-    $('#videoUpload').bind('change', function () {
-        var filename = $("#videoUpload").val();
-        if (/^\s*$/.test(filename)) {
-            $(".file-upload").removeClass('active');
-            $("#noFile").text("No file chosen...");
-        }
-        else {
-            $(".file-upload").addClass('active');
-            $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
-        }
-    });
-    $('#imageUpload').bind('change', function () {
-        var filename = $("#imageUpload").val();
-        if (/^\s*$/.test(filename)) {
-            $(".file-upload").removeClass('active');
-            $("#noImageFile").text("No file chosen...");
-        }
-        else {
-            $(".file-upload").addClass('active');
-            $("#noImageFile").text(filename.replace("C:\\fakepath\\", ""));
-        }
-    });
     //count video duration
+    var myVideos = [];
 
-//     var myVideos = [];
+window.URL = window.URL || window.webkitURL;
 
-// window.URL = window.URL || window.webkitURL;
+document.getElementById('videoUpload').onchange = setFileInfo;
 
-// document.getElementById('videoUpload').onchange = setFileInfo;
+function setFileInfo() {
+  var files = this.files;
+  videoPriview.style.display = "block";
+  let file = files[0];
+  let blobURL = URL.createObjectURL(file);
+  document.querySelector("video").src = blobURL;
+  $("#noFileVideo").html(file.name);
+  myVideos.push(files[0]);
+  var video = document.createElement('video');
+  video.preload = 'metadata';
 
-// function setFileInfo() {
-//   var files = this.files;
-//   myVideos.push(files[0]);
-//   var video = document.createElement('video');
-//   video.preload = 'metadata';
+  video.onloadedmetadata = function() {
+    window.URL.revokeObjectURL(video.src);
+    var duration = video.duration;
+    myVideos[myVideos.length - 1].duration = duration;
+    document.getElementById("duration").value=duration/60;
+    
+  }
 
-//   video.onloadedmetadata = function() {
-//     window.URL.revokeObjectURL(video.src);
-//     var duration = video.duration;
-//     myVideos[myVideos.length - 1].duration = duration;
-//     $("#video-duration").value=duration/60;
-   
-//   }
-
-//   video.src = URL.createObjectURL(files[0]);
-// }
+  video.src = URL.createObjectURL(files[0]);
+}
 
 
-// function updateInfos() {
-//   var infos = document.getElementById('infos');
-//   infos.textContent = "";
-//   for (var i = 0; i < myVideos.length; i++) {
-//     infos.textContent += myVideos[i].name + " duration: " + myVideos[i].duration + '\n';
-//   }
-// }
+
+
 </script>
 @endsection

@@ -48,7 +48,7 @@ class UserController extends Controller
             $user_details=UserDetails::where('user_id',auth()->user()->id)->first();
             $data=[
                 'education'=>$request->education??$user_details->education,
-                'gender'=>$request->gender??$user_details->gender,
+                'name'=>$request->name??$user_details->name,
                 'address'=>$request->address??$user_details->email,
             ];
             $user_details->update($data);

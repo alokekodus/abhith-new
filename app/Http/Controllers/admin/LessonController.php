@@ -224,7 +224,7 @@ class LessonController extends Controller
         return response()->json($data);
     }
     public function topicStore(Request $request)
-    {
+    { dd($request->all());
         try {
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
