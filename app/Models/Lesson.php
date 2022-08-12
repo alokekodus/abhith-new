@@ -154,4 +154,7 @@ class Lesson extends Model
     public function activeSets(){
         return $this->hasMany(Set::class,'lesson_id','id')->where('is_activate',1);
     }
+    public function parentLesson(){
+        return $this->belongsTo(Lesson::class,'parent_id','id');
+    }
 }

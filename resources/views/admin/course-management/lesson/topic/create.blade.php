@@ -14,35 +14,76 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> Add Topic/Practice Test
+        </span> Add Resources
     </h3>
 </div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
 
-<div class="card">
-    <div class="card-body">
-
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <form id="assignTopicForm" enctype="multipart/form-data" method="post">
-                        @csrf
-                        <input type="hidden" name="parent_id" value="{{$lesson->id}}">
-                        <input type="hidden" name="type" value="create-topic">
-                        @include('admin.course-management.lesson.common.form')
-                        <div style="float: right;">
-                            <button type="button" class="btn btn-md btn-default"
-                                id="assignTopicCancelBtn">Cancel</button>
-                            <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn" name="type"
-                                value="create-topic">Submit</button>
-                        </div>
-                    </form>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <form id="assignTopicForm" enctype="multipart/form-data" method="post"
+                            action="{{route('admin.course.management.lesson.topic.store')}}">
+                            @csrf
+                            <input type="hidden" name="parent_id" value="{{$lesson->id}}">
+                            <input type="hidden" name="type" value="create-topic">
+                            @include('admin.course-management.lesson.common.form')
+                            <div style="float: right;">
+                                <button type="button" class="btn btn-md btn-default"
+                                    id="assignTopicCancelBtn">Cancel</button>
+                                <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn"
+                                    name="type" value="create-topic">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
+            </div>
+        </div>
+    </div>
+</div>
+@if($lesson->topics()->exists())
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">All Recources</h4>
+            <table class="table table-striped" id="lessonTable">
+                <thead>
+                    <tr>
+                        <th>#No</th>
+                        <th> Lesson Name </th>
+                        <th> Recources Topics </th>
+                        <th> Type </th>
+                        <th> Recources Path </th>
+                        <th> Status </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($lesson->topics as $key=>$topic)
+                    <tr>
+                        <td>{{++$key}}</td>
+                        <td> {{$topic->parentLesson->name}}</td>
+                        <td> {{$topic->name}}</td>
+                        <td> @if($topic->type==1)pdf @elseif($topic->type==2) video @else article @endif </article>
+                        </td>
+                        <td> <a href="{{asset($topic->lessonAttachment->img_url)}}" target="_blank">
+                                {{basename($topic->lessonAttachment->img_url)}}</a></td>
+                        <td>@if($topic->status==1)Active @else InActive @endif</td>
+                        <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                            <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
+@endif
 
 <!-- Large modal -->
 
@@ -196,14 +237,21 @@
             $("#noImageFilePromoVideo").html(input.files[0].name);
         }
     }
+    var myVideos = [];
     videoUpload.onchange = function (event) {
         videoPriview.style.display = "block";
         let file = event.target.files[0];
         let blobURL = URL.createObjectURL(file);
         document.querySelector("video").src = blobURL;
+        var files = this.files;
+        myVideos.push(files[0]);
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+        
         var input=evt.srcElement;
             $("#noFileVideo").html(input.files[0].name);
     }
+    
     function showDiv(){
    var showDivId= document.getElementById("content_type").value;
   
@@ -241,61 +289,7 @@
 
 
     });
-    $('#assignTopicForm').on('submit', function (e) {
-        e.preventDefault();
-
-        $('#assignTopicSubmitBtn').attr('disabled', true);
-        $('#assignTopicSubmitBtn').text('Please wait...');
-        $('#assignTopicCancelBtn').attr('disabled', true);
-
-
-        let formData = new FormData(this);
-
-        var Content = CKEDITOR.instances['content'].getData();
-
-        formData.append('content', Content);
-
-        $.ajax({
-            url: "{{route('admin.course.management.lesson.store')}}",
-            type: "POST",
-            processData: false,
-            contentType: false,
-            data: formData,
-
-            success: function (data) {
-                console.log(data);
-                if (data.error != null) {
-                    $.each(data.error, function (key, val) {
-                        toastr.error(val[0]);
-                    });
-                    $('#assignTopicSubmitBtn').attr('disabled', false);
-                    $('#assignTopicSubmitBtn').text('Submit');
-                    $('#assignTopicCancelBtn').attr('disabled', false);
-                }
-                if (data.status == 1) {
-                    console.log(data);
-                    toastr.success(data.message);
-                    location.reload(true);
-                } else {
-
-                    toastr.error(data.message);
-                    $('#assignTopicSubmitBtn').attr('disabled', false);
-                    $('#assignTopicSubmitBtn').text('Submit');
-                    $('#assignTopicCancelBtn').attr('disabled', false);
-                }
-            },
-            error: function (xhr, status, error) {
-
-                if (xhr.status == 500 || xhr.status == 422) {
-                    toastr.error('Whoops! Something went wrong failed to assign lesson');
-                }
-
-                $('#assignTopicSubmitBtn').attr('disabled', false);
-                $('#assignTopicSubmitBtn').text('Submit');
-                $('#assignTopicCancelBtn').attr('disabled', false);
-            }
-        });
-    });
+  
 
    
 
@@ -322,5 +316,38 @@
             $("#noImageFile").text(filename.replace("C:\\fakepath\\", ""));
         }
     });
+    //count video duration
+
+//     var myVideos = [];
+
+// window.URL = window.URL || window.webkitURL;
+
+// document.getElementById('videoUpload').onchange = setFileInfo;
+
+// function setFileInfo() {
+//   var files = this.files;
+//   myVideos.push(files[0]);
+//   var video = document.createElement('video');
+//   video.preload = 'metadata';
+
+//   video.onloadedmetadata = function() {
+//     window.URL.revokeObjectURL(video.src);
+//     var duration = video.duration;
+//     myVideos[myVideos.length - 1].duration = duration;
+//     $("#video-duration").value=duration/60;
+   
+//   }
+
+//   video.src = URL.createObjectURL(files[0]);
+// }
+
+
+// function updateInfos() {
+//   var infos = document.getElementById('infos');
+//   infos.textContent = "";
+//   for (var i = 0; i < myVideos.length; i++) {
+//     infos.textContent += myVideos[i].name + " duration: " + myVideos[i].duration + '\n';
+//   }
+// }
 </script>
 @endsection
