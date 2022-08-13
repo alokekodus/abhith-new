@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\SubjectLessonVisitor;
 use App\Models\User;
 use App\Models\UserDetails;
+use App\Models\UserPracticeTest;
 
 function attachmenetPath($path)
 {
@@ -189,4 +190,12 @@ function timeDifference($from, $to)
     $from = new DateTime($from);
     $diff = $to->diff($from);
     return $diff->format('%H:%I:%S');
+}
+function isPracticeTestPlayed($set_id){
+    $user_practice_tests=UserPracticeTest::where('user_id',auth()->user()->id)->where('set_id',$set_id)->first();
+    if($user_practice_tests){
+        return 1;
+    }else{
+        return 0;
+    }
 }

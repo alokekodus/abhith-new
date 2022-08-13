@@ -592,6 +592,7 @@ class SubjectController extends Controller
                         'id' => $mcq_set->id,
                         'name' => $mcq_set->set_name,
                         'total_question' => $mcq_set->question->count(),
+                        'is_played'=>isPracticeTestPlayed($mcq_set->id),
                     ];
                     $all_mcq_set[] = $data;
                 }

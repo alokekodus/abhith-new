@@ -73,7 +73,7 @@ Route::get('subject/lesson/topic',[SubjectController::class,'LessonTopics']);
 Route::get('subject/lesson/video',[SubjectController::class,'LessonVideoDetails']);
 Route::get('subject/lesson/pdf',[SubjectController::class,'LessonPdfDetails']);
 Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
-Route::get('subject/mcq',[SubjectController::class,'LessonMCQ']);
+Route::middleware('auth:sanctum')->get('subject/mcq',[SubjectController::class,'LessonMCQ']);
 Route::get('subject/mcq-question',[SubjectController::class,'LessonMcqQuestion']);
 Route::middleware('auth:sanctum')->post('subject/mcq/submit',[SubjectController::class,'startMcq']);
 Route::middleware('auth:sanctum')->get('subject/mcq/result',[SubjectController::class,'practiceTestReport']);
