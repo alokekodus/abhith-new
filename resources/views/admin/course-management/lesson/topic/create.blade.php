@@ -57,6 +57,7 @@
                         <th> Recources Topics </th>
                         <th> Type </th>
                         <th> Recources Path </th>
+                        <th> Thumbnail image </th>
                         <th> Status </th>
                         <th>Action</th>
                     </tr>
@@ -69,8 +70,12 @@
                         <td> {{$topic->name}}</td>
                         <td> @if($topic->type==1)pdf @elseif($topic->type==2) video @else article @endif </article>
                         </td>
-                        <td> <a href="{{asset($topic->lessonAttachment->img_url)}}" target="_blank">
-                                {{basename($topic->lessonAttachment->img_url)}}</a></td>
+                        <td> @if($topic->type==1)<a href="{{asset($topic->lessonAttachment->img_url)}}" target="_blank">
+                                {{basename($topic->lessonAttachment->img_url)}}</a> @elseif($topic->type==2) <a
+                                href="{{asset($topic->lessonAttachment->video_origin_url)}}" target="_blank">
+                                {{ substr($topic->lessonAttachment->video_origin_url, 0,40) }}</a> @else NA @endif</td>
+                        <td> @if($topic->type==2)<a href="{{asset($topic->lessonAttachment->video_thumbnail_image)}}" target="_blank">
+                                {{substr($topic->lessonAttachment->video_thumbnail_image,0,10)}}</a> @else NA @endif</td>
                         <td>@if($topic->status==1)Active @else InActive @endif</td>
                         <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                             <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
@@ -91,7 +96,6 @@
 
 @section('scripts')
 <script>
-    
     $(document).ready(function () {
         $('#boardsTable').DataTable({
             "processing": true,

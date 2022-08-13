@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\QuestionImport;
 use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignSubject;
 use Illuminate\Support\Facades\Crypt;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
+use App\Models\Set;
 use App\Traits\LessonAttachmentTrait;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
@@ -122,7 +124,7 @@ class LessonController extends Controller
     public function topicCreate($id)
     {
         $lesson_id = Crypt::decrypt($id);
-        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject','lessonAttachment', 'topics' => function ($query) {
+        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics' => function ($query) {
             $query->with('subTopics');
         }])->where('id', $lesson_id)->first();
         return view('admin.course-management.lesson.topic.create', compact('lesson'));
@@ -224,8 +226,9 @@ class LessonController extends Controller
         return response()->json($data);
     }
     public function topicStore(Request $request)
-    { dd($request->all());
+    {
         try {
+
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
                 Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
@@ -256,7 +259,7 @@ class LessonController extends Controller
                     'board_id' => $lesson->board_id,
                     'assign_class_id' => $lesson->assign_class_id,
                     'assign_subject_id' => $lesson->assign_subject_id,
-                    'type' => $request->content_type,
+                    'type' => $request->resource_type,
                 ];
 
                 $resourceStore = Lesson::create($data);
@@ -265,7 +268,7 @@ class LessonController extends Controller
 
                 $data_attachment = [
                     'subject_lesson_id' =>  $resourceStore->id,
-                    'img_url' => url('') . $image_path,
+                    'img_url' => $image_path,
                     'type' => 2,
                     'attachment_type' => $request->resource_type,
 
@@ -274,7 +277,8 @@ class LessonController extends Controller
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
-            if($request->resource_type==2){
+            if ($request->resource_type == 2) {
+                // dd($request->all());
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
                 $data = [
@@ -284,26 +288,31 @@ class LessonController extends Controller
                     'board_id' => $lesson->board_id,
                     'assign_class_id' => $lesson->assign_class_id,
                     'assign_subject_id' => $lesson->assign_subject_id,
-                    'type' => $request->content_type,
+                    'type' => $request->resource_type,
                 ];
 
                 $resourceStore = Lesson::create($data);
                 $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
-                $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image",$name_slug);
-                // $origin_video = LessonAttachmentTrait::uploadAttachment($request->file('video_url'),"video");
-                $video_path=$request->video_url->store('public');
+                $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image", $name_slug);
+                $origin_video = LessonAttachmentTrait::uploadAttachment($request->file('video_url'), "video", $name_slug);
+                // $video_path=$request->video_url->store('public');
 
                 $data_attachment = [
-                    'subject_lesson_id' => $lesson->id,
-                    'attachment_origin_url' => $video_path,
-                    'video_thumbnail_image' => url('') . $video_thumbnail_image_url_path,
-                    'video_origin_url'=>$video_path,
+                    'subject_lesson_id' => $resourceStore->id,
+                    'attachment_origin_url' => $origin_video,
+                    'video_thumbnail_image' =>  $video_thumbnail_image_url_path,
+                    'video_origin_url' => $origin_video,
+                    'video_resize_480' => $origin_video,
+                    'video_resize_720' => $origin_video,
                     'type' => 2,
-                    'progress_status'=>1,
-
+                    'progress_status' => 1,
+                    'attachment_type' => $request->resource_type,
+                    'video_duration' => $request->duration,
                 ];
 
-                $lesson_attachment=LessonAttachment::create($data_attachment);
+                $lesson_attachment = LessonAttachment::create($data_attachment);
+                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
                 // $resizes = ["480", "720", "1080"];
                 // foreach ($resizes as $key => $resize) {
                 //     if ($resize == 480) {
@@ -320,16 +329,58 @@ class LessonController extends Controller
                 //     // }
                 //     $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension,$slug));
                 // }
-                
 
-                if ($request->resource_type == 3) {
-                    //             $lesson->update(['content'=>$request->content]);
-                    //             return response()->json(['message' => 'Lesson Created successfully.', 'status' => 1]);
-                    //          
+            }
+            if ($request->resource_type == 3) {
+                $lesson = Lesson::find($request->parent_id);
+                $name_slug = Str::slug($request->name);
+                $data = [
+                    'name' => ucfirst($request->name),
+                    'slug' => $name_slug,
+                    'parent_id' => $request->parent_id,
+                    'board_id' => $lesson->board_id,
+                    'assign_class_id' => $lesson->assign_class_id,
+                    'assign_subject_id' => $lesson->assign_subject_id,
+                    'type' => $request->resource_type,
+                    'content' => $request->content,
+                ];
+
+                $resourceStore = Lesson::create($data);
+                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+            if ($request->resource_type == 4) {
+                $lesson = Lesson::find($request->parent_id);
+                $setName = $request->name;
+                $board_id = $lesson->board_id;
+                $assign_class_id = $lesson->assign_class_id;
+                $assign_subject_id = $lesson->assign_subject_id;
+                $questionFile = $request->questionExcel;
+                if ($request->hasFile('questionExcel')) {
+
+                    $subject_id = $lesson->assign_subject_id;
+                    $board_id = $lesson->board_id;
+                    $assign_class_id = $lesson->assign_class_id;
+                    $new_excel_name = date('d-m-Y-H-i-s') . '_' . $questionFile->getClientOriginalName();
+                    $questionFileExtension = $questionFile->getClientOriginalExtension();
+
+                    if ($questionFileExtension != 'xlsx') {
+                        Toastr::error('Not a valid excel file.', '', ["positionClass" => "toast-top-right"]);
+                        return redirect()->back();
+                    } else {
+                        $questionFile = $request->file('questionExcel');
+
+                        $questionFile = $request->file('questionExcel')->store('imports');
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id);
+                        $import->import($questionFile);
+
+                        Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                        return redirect()->back();
+                    }
                 }
             }
         } catch (\Throwable $th) {
-            dd($th);
+            
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
