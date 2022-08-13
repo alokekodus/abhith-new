@@ -776,13 +776,17 @@ class SubjectController extends Controller
                     'total_correct_count' => $user_practice_test->correctAnswer->count(),
                 ];
             $user_practice_test->update($update_user_practice_test_store);
+            $attempted_question=$user_practice_test->userPracticeTestAnswer->count();
+            $correct_attempted= $user_practice_test->correctAnswer->count();
+            $analysis_on_attempted_question=($correct_attempted/$attempted_question)/100;
             $data = [
-
+                
                 'set_title' => $user_practice_test->set->set_name,
                 'total_question' => $user_practice_test->set->question->count(),
-                'attempted_question' => $user_practice_test->userPracticeTestAnswer->count(),
-                'correct_attempted' => $user_practice_test->correctAnswer->count(),
+                'attempted_question' => $attempted_question,
+                'correct_attempted' => $correct_attempted,
                 'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
+                'analysis_on_attempted_question'=>number_format((float)$analysis_on_attempted_question, 2, '.', ''),
             ];
             $data = [
                 "code" => 200,
