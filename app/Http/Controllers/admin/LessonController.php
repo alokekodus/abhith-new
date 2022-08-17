@@ -217,7 +217,7 @@ class LessonController extends Controller
     }
     public function lessonDetails($lesson_id)
     {
-        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'topics' => function ($query) {
+        $lesson = Lesson::with(['Sets','assignClass', 'board', 'assignSubject', 'topics' => function ($query) {
             $query->with('subTopics');
         }])->where('id', $lesson_id)->first();
         $data = [
@@ -247,7 +247,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    Toastr::success($validate->errors(), '', ["positionClass" => "toast-top-right"]);
+                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
                     return redirect()->back();
                 }
                 $lesson = Lesson::find($request->parent_id);
@@ -380,7 +380,7 @@ class LessonController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            
+           
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
