@@ -65,21 +65,24 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function(){
    
    
 });
-Route::get('all-class', [CourseController::class, 'findAllClass']);
-Route::post('subjects',[SubjectController::class,'findSubject']);
-Route::get('subject-details',[SubjectController::class,'subjectDetails']);
-Route::get('subject/lessons',[SubjectController::class,'LessonDetails']);
-Route::get('subject/lesson/topic',[SubjectController::class,'LessonTopics']);
-Route::get('subject/lesson/video',[SubjectController::class,'LessonVideoDetails']);
-Route::get('subject/lesson/pdf',[SubjectController::class,'LessonPdfDetails']);
-Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
-Route::middleware('auth:sanctum')->get('subject/mcq',[SubjectController::class,'LessonMCQ']);
-Route::get('subject/mcq-question',[SubjectController::class,'LessonMcqQuestion']);
-Route::middleware('auth:sanctum')->post('subject/mcq/submit',[SubjectController::class,'startMcq']);
-Route::middleware('auth:sanctum')->get('subject/mcq/result',[SubjectController::class,'practiceTestReport']);
-Route::get('/gallery',[GalleryController::class,'index']);
-//get board
-Route::get('/board',[BoardController::class,'index']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('all-class', [CourseController::class, 'findAllClass']);
+    Route::post('subjects',[SubjectController::class,'findSubject']);
+    Route::get('subject-details',[SubjectController::class,'subjectDetails']);
+    Route::get('subject/lessons',[SubjectController::class,'LessonDetails']);
+    Route::get('subject/lesson/topic',[SubjectController::class,'LessonTopics']);
+    Route::get('subject/lesson/video',[SubjectController::class,'LessonVideoDetails']);
+    Route::get('subject/lesson/pdf',[SubjectController::class,'LessonPdfDetails']);
+    Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
+    Route::get('subject/mcq',[SubjectController::class,'LessonMCQ']);
+    Route::get('subject/mcq-question',[SubjectController::class,'LessonMcqQuestion']);
+    Route::post('subject/mcq/submit',[SubjectController::class,'startMcq']);
+    Route::get('subject/mcq/result',[SubjectController::class,'practiceTestReport']);
+    Route::get('/gallery',[GalleryController::class,'index']);
+    //get board
+    Route::get('/board',[BoardController::class,'index']);
+});
+
 
 
 Route::post('board-class-subject', [CourseController::class, 'findBoardClassSubject'])->name('board.class.subject');
@@ -94,5 +97,6 @@ Route::group(['prefix' => 'cart','middleware' => ['auth:sanctum']], function() {
 Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[UserController::class,'index']);
     Route::post('/update',[UserController::class,'updateDetails']);
+    Route::post('/profile/update',[UserController::class,'profileUpdate']);
 });
 Route::post('/upload-note',[GalleryController::class,'testapi']);
