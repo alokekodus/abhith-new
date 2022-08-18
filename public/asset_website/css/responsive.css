@@ -951,6 +951,7 @@
     }
     #learning .learningBox2{
         margin-left: 50px;
+        margin-right: 0px;
     }
     .description{
         display: none;
