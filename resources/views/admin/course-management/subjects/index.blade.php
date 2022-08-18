@@ -18,7 +18,8 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{route('admin.course.management.subject.create')}}" class="btn btn-gradient-primary btn-fw" data-keyboard="false">Add Subject</a>
+                <a href="{{route('admin.course.management.subject.create')}}" class="btn btn-gradient-primary btn-fw"
+                    data-keyboard="false">Add Subject</a>
             </li>
         </ul>
     </nav>
@@ -29,69 +30,80 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">All Subjects</h4>
-                <table class="table table-striped" id="subjectTable">
-                    <thead>
-                        <tr>
-                            <th> Image </th>
-                            <th> Name </th>
-                            <th>Board/Class</th>
-                            <th> Amount </th>
-                            <th> Total Lesson </th>
-                            <th> Enrolled Student </th>
-                            <th>Publish</th>
-                            <th>Status</th>
-                            <th> Action </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($subjects as $key=>$subject)
-                        <tr>
-                            <td class="py-1">
-                                <img src="{{asset($subject->image)}}" alt="image" />
-                            </td>
-                            <td> {{$subject->subject_name}} </td>
-                            <td>Class -{{$subject->assignClass->class}} -- {{$subject->boards->exam_board}} Board</td>
-                            <td><i class="mdi mdi-currency-inr"></i> {{number_format((float)$subject->subject_amount, 2,
-                                '.', '') }}
-                            </td>
-                            <td>@if($subject->lesson->count()==0)<a href="{{route('admin.course.management.lesson.create',Crypt::encrypt($subject->id))}}">Add Lesson</a>
-                                @else <span
-                                    class="badge rounded-pill bg-danger">
-                                    {{$subject->lesson->count()}}
-                                </span> <a href="{{route('admin.course.management.lesson.create',Crypt::encrypt($subject->id))}}">
-                                    Add Lesson
-                                </a>@endif</td>
-                            <td> @if($subject->lesson->count()==0) Not Yet Enrolled
-                                @else <a href="{{route('teacher.subject.student',Crypt::encrypt($subject->id))}}"> {{$subject->assignOrder->count()}} student Enrolled </a>@endif</td>
-                            <td>
-                                @if ($subject->is_activate == 1)
-                                <label class="switch">
-                                    <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                                @else
-                                <label class="switch">
-                                    <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}">
-                                    <span class="slider round"></span>
-                                </label>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($subject->is_activate == 1)
-                                <span class="label label-success">Active</span>
-                                @else
-                                <span class="label label-danger">In Active</span>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{route('admin.course.management.subject.edit',Crypt::encrypt($subject->id))}}" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
-                                <a href="{{route('admin.course.management.subject.view',Crypt::encrypt($subject->id))}}" title="View Details"><i class="mdi mdi-eye"></i></a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{$subjects->links() }}
+                <div style="overflow-x:auto;">
+                    <table class="table table-striped" id="subjectTable">
+                        <thead>
+                            <tr>
+                                <th>#No</th>
+                                <th> Image </th>
+                                <th> Name </th>
+                                <th>Board/Class</th>
+                                <th> Amount </th>
+                                <th> Total Lesson </th>
+                                <th> Enrolled Student </th>
+                                <th>Publish</th>
+                                <th>Status</th>
+                                <th> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($subjects as $key=>$subject)
+                            <tr>
+                                <td>{{++$key}}</td>
+                                <td class="py-1">
+                                    <img src="{{asset($subject->image)}}" alt="image" />
+                                </td>
+                                <td> {{$subject->subject_name}} </td>
+                                <td>Class -{{$subject->assignClass->class}} -- {{$subject->boards->exam_board}} Board
+                                </td>
+                                <td><i class="mdi mdi-currency-inr"></i>
+                                    {{number_format((float)$subject->subject_amount, 2,
+                                    '.', '') }}
+                                </td>
+                                <td>@if($subject->lesson->count()==0)<a
+                                        href="{{route('admin.course.management.lesson.create',Crypt::encrypt($subject->id))}}">Add
+                                        Lesson</a>
+                                    @else <span class="badge rounded-pill bg-danger">
+                                        {{$subject->lesson->count()}}
+                                    </span> <a
+                                        href="{{route('admin.course.management.lesson.create',Crypt::encrypt($subject->id))}}">
+                                        Add Lesson
+                                    </a>@endif</td>
+                                <td> @if($subject->assignOrder->count()==0) Not Yet Enrolled
+                                    @else <a href="{{route('teacher.subject.student',Crypt::encrypt($subject->id))}}">
+                                        {{$subject->assignOrder->count()}} student Enrolled </a>@endif</td>
+                                <td>
+                                    @if ($subject->is_activate == 1)
+                                    <label class="switch">
+                                        <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                    @else
+                                    <label class="switch">
+                                        <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($subject->is_activate == 1)
+                                    <span class="label label-success">Active</span>
+                                    @else
+                                    <span class="label label-danger">In Active</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('admin.course.management.subject.edit',Crypt::encrypt($subject->id))}}"
+                                        title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                    <a href="{{route('admin.course.management.subject.view',Crypt::encrypt($subject->id))}}"
+                                        title="View Details"><i class="mdi mdi-eye"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    {{$subjects->links() }}
+                </div>
             </div>
         </div>
     </div>

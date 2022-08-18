@@ -21,11 +21,9 @@ class AssignSubjectController extends Controller
     {
 
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
-        if (auth()->user()->hasRole('Teacher')) {
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id', auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->paginate(4);
-        } else {
+        
             $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
-        }
+        
 
 
         return view('admin.course-management.subjects.index')->with(['subjects' => $assign_subject, 'classes' => $class_details]);

@@ -112,66 +112,45 @@ class UserController extends Controller
     {
         try {
             $carts = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
-                ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name,image'])
-                ->where('user_id', auth()->user()->id)
-                ->where('is_paid', 1)
-                ->where('is_remove_from_cart', 0)
-                ->get();
+            ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name,image'])
+            ->where('user_id', auth()->user()->id)
+            ->where('is_paid', 1)
+            ->where('is_remove_from_cart', 0)
+            ->get();
 
-            if (!$carts->isEmpty()) {
-                foreach ($carts as $key => $cart) {
-                    $subjects = [];
-                    foreach ($cart->assignSubject as $key => $assignSubject) {
-                        $subject = [
-                            'name' => $assignSubject->subject->subject_name,
-                            'image' => $assignSubject->subject->image,
-                            'amount' => $assignSubject->amount,
-                            'board' => $cart->board->exam_board,
-                            'class' => $cart->assignClass->class,
-                        ];
-                        $subjects[] = $subject;
-                    }
+        if (!$carts->isEmpty()) {
+            $all_courses = [];
+            foreach ($carts as $key => $cart) {
 
-                    $course_details = [
-                        'id' => $cart->id,
-                        'user_id' => $cart->user_id,
-                        'type' => $cart->is_full_course_selected,
-                        'board' => $cart->board->exam_board,
-                        'class_name' => $cart->assignClass->class,
-                        'total_subject'=>$cart->assignSubject->count(),
-                        'subject_details' => $subjects,
 
-                    ];
-                    $data = [
-                        "code" => 200,
-                        "message" => "Subject Details",
-                        "courses" => $course_details,
-
-                    ];
-                    return response()->json(['status' => 1, 'result' => $data]);
-                }
+                $course_details = [
+                    'id' => $cart->id,
+                    'user_id' => $cart->user_id,
+                    'type' => $cart->is_full_course_selected,
+                    'board' => $cart->board->exam_board,
+                    'class_name' => $cart->assignClass->class,
+                    'total_subject' => $cart->assignSubject->count(),
+                ];
+                $all_courses[] = $course_details;
             }
-
-
-           
             $data = [
                 "code" => 200,
-                "status" => 1,
-                "message" => "No Recored Found",
-                "all_subjects" => [],
+                "message" => "Courses Details",
+                "courses" => $all_courses,
 
             ];
             return response()->json(['status' => 1, 'result' => $data]);
-
+        }
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
                 "status" => 0,
                 "message" => "Something went wrong",
                 "all_subjects" => [],
-
+    
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
+      
     }
 }
