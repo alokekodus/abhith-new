@@ -112,7 +112,7 @@ class UserController extends Controller
             $orders = Order::with(['board','assignClass','assignSubject'=>function($q){
                 $q->with(['subject']);
             }])->where('user_id',auth()->user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
-            return response()->json(['status' => 1, 'result' => !$orders->isEmpty()]);
+            
             if(!$orders->isEmpty()){
                 foreach($orders as $key=>$order){
                     $subjects=[];
