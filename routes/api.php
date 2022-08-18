@@ -98,5 +98,6 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[UserController::class,'index']);
     Route::post('/update',[UserController::class,'updateDetails']);
     Route::post('/profile/update',[UserController::class,'profileUpdate']);
+    Route::get('/courses',[UserController::class,'allCourses']);
 });
 Route::post('/upload-note',[GalleryController::class,'testapi']);

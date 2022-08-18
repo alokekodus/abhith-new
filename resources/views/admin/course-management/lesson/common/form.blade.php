@@ -30,7 +30,21 @@
 
         </div>
     </div>
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">@yield('lesson-type') Assign Teacher<span class="text-danger">*</span></label>
+
+            <select  id="teacher_id" class="form-control" name="teacher_id">
+                <option value="">-- Select -- </option>
+                @foreach($teachers as $key=>$teacher)
+                <option value="{{$teacher->user_id}}">{{$teacher->name}}</option>
+                @endforeach
+            </select>
+
+        </div>
+    </div>
 </div>
+
 <div class="blockquote blockquote-primary fileattachment" id="fileattachment" style="display:none;">
     <div class="row">
         <div class="col-12">
@@ -74,7 +88,7 @@
             </div>
         </div>
     </div>
-   
+
     <div class="row">
         <div class="col-12">
             <div class="form-group">

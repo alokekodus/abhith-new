@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -102,6 +103,56 @@ class UserController extends Controller
                 "code" => 400,
                 "message" => "Something went wrong.",
                 
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function allCourses(Request $request){
+        try {
+            $orders = Order::with(['board','assignClass','assignSubject'=>function($q){
+                $q->with(['subject']);
+            }])->where('user_id',auth()->user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
+            
+            if($orders){
+                foreach($orders as $key=>$order){
+                    $subjects=[];
+                    foreach($order->assignSubject as $key=>$assignSubject){
+                        $subject=[
+                            'name'=>$assignSubject->subject->subject_name,
+                            'image'=>$assignSubject->subject->image,
+                            'amount'=>$assignSubject->amount,
+                            'board'=>$order->board->exam_board,
+                            'class'=>$order->assignClass->class,
+                        ];
+                        $subjects[]=$subject;
+                    }
+                }
+                
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All Subjects",
+                    "all_subjects" => $subjects
+    
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+           
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "No Recored Found",
+                "all_subjects" => [],
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+                "all_subjects" => [],
+
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }

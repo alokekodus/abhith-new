@@ -29,7 +29,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">All Subjects</h4>
-                <table class="table table-striped">
+                <table class="table table-striped" id="subjectTable">
                     <thead>
                         <tr>
                             <th> Image </th>
@@ -85,7 +85,7 @@
                             </td>
                             <td>
                                 <a href="{{route('admin.course.management.subject.edit',Crypt::encrypt($subject->id))}}" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
-                                <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
+                                <a href="{{route('admin.course.management.subject.view',Crypt::encrypt($subject->id))}}" title="View Details"><i class="mdi mdi-eye"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -101,6 +101,13 @@
 
 @section('scripts')
 <script>
+    $(document).ready(function () {
+        $('#subjectTable').DataTable({
+            "processing": true,
+            "searching": true,
+            "ordering": false
+        });
+    });
     $('#assignSubjectCancelBtn').on('click', function(){
             $('#assignSubjectModal').modal('hide');
             $('#assignSubjectForm')[0].reset();

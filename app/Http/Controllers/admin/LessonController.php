@@ -13,6 +13,8 @@ use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\Set;
+use App\Models\User;
+use App\Models\UserDetails;
 use App\Traits\LessonAttachmentTrait;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
@@ -124,10 +126,9 @@ class LessonController extends Controller
     public function topicCreate($id)
     {
         $lesson_id = Crypt::decrypt($id);
-        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics' => function ($query) {
-            $query->with('subTopics');
-        }])->where('id', $lesson_id)->first();
-        return view('admin.course-management.lesson.topic.create', compact('lesson'));
+        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
+        $teachers=UserDetails::where('assign_class_id',$lesson->assign_class_id)->where('assign_subject_id',$lesson->assign_subject_id)->where('status',2)->get();
+        return view('admin.course-management.lesson.topic.create', compact('lesson','teachers'));
     }
     public function subTopicCreate($lesson_slug, $topic_slug)
     {
@@ -228,7 +229,7 @@ class LessonController extends Controller
     public function topicStore(Request $request)
     {
         try {
-
+            // dd($request->all());
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
                 Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
@@ -260,6 +261,7 @@ class LessonController extends Controller
                     'assign_class_id' => $lesson->assign_class_id,
                     'assign_subject_id' => $lesson->assign_subject_id,
                     'type' => $request->resource_type,
+                    'teacher_id'=>$request->teacher_id,
                 ];
 
                 $resourceStore = Lesson::create($data);
