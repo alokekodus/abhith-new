@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
+use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -189,5 +190,9 @@ class AssignSubjectController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
+    }
+    public function assignSubjectLesson($lesson_id){
+        $lesson=Lesson::where('id',Crypt::decrypt($lesson_id))->first();
+        return view('admin.course-management.subjects.lesson')->with(['lesson' => $lesson]);
     }
 }
