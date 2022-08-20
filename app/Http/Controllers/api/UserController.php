@@ -117,9 +117,9 @@ class UserController extends Controller
                 ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
                 ->where('user_id', auth()->user()->id)
                 ->where('is_paid', 1)
-                ->where('is_remove_from_cart', 0)
+                ->where('is_remove_from_cart', 1)
                 ->get();
-            return response()->json(auth()->user()->id);
+           
             if (!$carts->isEmpty()) {
                 $all_courses = [];
                 $subject = [];
