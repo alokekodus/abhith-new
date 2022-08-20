@@ -119,7 +119,7 @@ class UserController extends Controller
                 ->where('is_paid', 1)
                 ->where('is_remove_from_cart', 0)
                 ->get();
-            return response()->json($carts);
+            return response()->json(!$carts->isEmpty());
             if (!$carts->isEmpty()) {
                 $all_courses = [];
                 $subject = [];
