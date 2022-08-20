@@ -168,6 +168,69 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function allSubject(Request $request){
+        try {
+
+            $id = $_GET['cart_id'];
+
+            $cart = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
+                ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject'])
+                ->where('id', $id)
+                ->where('is_paid', 1)
+                ->where('is_remove_from_cart', 1)
+                ->first();
+            if (!$cart == null) {
+                $cart_total_amount = $cart->assignSubject->sum("amount");
+                $subject_details=[];
+                foreach($cart->assignSubject as $key=>$assignSubject){
+                    $subject=[
+                        'id'=>$assignSubject->subject->id,
+                        'name'=>$assignSubject->subject->subject_name,
+                        'total_lesson'=>$assignSubject->subject->lesson->count(),
+                        'image'=>$assignSubject->subject->image,
+                        'total_video'=>subjectTotalVideo($assignSubject->subject->id),
+                        'total_document'=>subjectTotalDocument($assignSubject->subject->id),
+                        'total_article'=>subjectTotalArticle($assignSubject->subject->id)
+                    ];
+                    $subject_details[]=$subject;
+
+                }
+                $cart_details = [
+                    'id' => $cart->id,
+                    'user_id' => $cart->user_id,
+                    'type' => $cart->is_full_course_selected,
+                    'board' => $cart->board->exam_board,
+                    'class_name' => $cart->assignClass->class,
+                    'total_amount' => $cart_total_amount,
+                    'cart_subject_details' => $subject_details,
+
+                ];
+
+                $data = [
+                    "code" => 200,
+                    "message" => "Cart Details",
+                    "carts" => $cart_details,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "message" => "No data found",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
     public function resetPassword(Request $request)
     {
         try {

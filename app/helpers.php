@@ -199,3 +199,15 @@ function isPracticeTestPlayed($set_id){
         return 0;
     }
 }
+function subjectTotalVideo($subject_id){
+    $total_video=Lesson::where('assign_subject_id',$subject_id)->where('type',2)->get()->count();
+    return $total_video;
+}
+function subjectTotalArticle($subject_id){
+    $total_article=Lesson::where('assign_subject_id',$subject_id)->where('type',3)->get()->count();
+    return $total_article;
+}
+function subjectTotalDocument($subject_id){
+    $total_document=Lesson::where('assign_subject_id',$subject_id)->where('type',1)->get()->count();
+    return $total_document;
+}
