@@ -127,6 +127,7 @@ class LessonController extends Controller
     {
         $lesson_id = Crypt::decrypt($id);
         $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
+        
         $teachers=UserDetails::where('assign_class_id',$lesson->assign_class_id)->where('assign_subject_id',$lesson->assign_subject_id)->where('status',2)->get();
         return view('admin.course-management.lesson.topic.create', compact('lesson','teachers'));
     }
@@ -164,37 +165,9 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    public function lessonFunctionResponse($type)
-    {
-        if ($type == "lesson-create") {
-            return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
-        } elseif ($type == "create-topic") {
-            return response()->json(['message' => 'Topic Added Successfully', 'status' => 1]);
-        } elseif ($type == "create-sub-topic") {
-            return response()->json(['message' => 'Sub Topic Added Successfully', 'status' => 1]);
-        } elseif ($type == "update-lesson") {
-            return response()->json(['message' => 'Lesson Update Successfully', 'status' => 1]);
-        } else {
-            return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
-        }
-    }
+    
 
-    public function findFormType(Request $request)
-    {
-        if ($request->assign_class_id != null) {
-            return "create-lesson";
-        }
-
-        if ($request->parent_id != null &&  $request->parent_lesson_id == null) {
-            return "create-topic";
-        }
-        if ($request->parent_id != null &&  $request->parent_lesson_id != null) {
-            return "create-sub-topic";
-        }
-        if ($request->lesson_id != null && $request->parent_id == null &&  $request->parent_lesson_id == null) {
-            return "update-lesson";
-        }
-    }
+    
     public function displayAttachment($lesson_id, $url_type)
     {
         try {
@@ -230,6 +203,7 @@ class LessonController extends Controller
     {
         try {
             // dd($request->all());
+          
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
                 Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
@@ -263,7 +237,7 @@ class LessonController extends Controller
                     'type' => $request->resource_type,
                     'teacher_id'=>$request->teacher_id,
                 ];
-
+                 
                 $resourceStore = Lesson::create($data);
                 $document = $request->file('image_url');
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image", $name_slug);
@@ -291,6 +265,7 @@ class LessonController extends Controller
                     'assign_class_id' => $lesson->assign_class_id,
                     'assign_subject_id' => $lesson->assign_subject_id,
                     'type' => $request->resource_type,
+                    'teacher_id'=>$request->teacher_id,
                 ];
 
                 $resourceStore = Lesson::create($data);
@@ -345,6 +320,7 @@ class LessonController extends Controller
                     'assign_subject_id' => $lesson->assign_subject_id,
                     'type' => $request->resource_type,
                     'content' => $request->content,
+                    'teacher_id'=>$request->teacher_id,
                 ];
 
                 $resourceStore = Lesson::create($data);

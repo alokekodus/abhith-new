@@ -21,52 +21,9 @@
     </nav>
 </div>
 
-<div class="col-lg-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Subject Table</h4>
-            <table class="table table-bordered">
 
-                <tbody>
-                    <tr>
-                        <td> Subject Name: <b>{{$subject->subject_name}} </b> </td>
-                        <td>
-                            Board: <b>{{$subject->boards->exam_board}} </b>
-                        </td>
-                        <td> Class: <b>{{$subject->assignClass->class}} </b> </td>
-                    </tr>
-                    <tr>
-                        <td>Image: </td>
-                        <td colspan="2"><b><a href="{{asset($subject->image)}}">{{$subject->image}}</a></b></td>
-                    </tr>
-                    <tr>
-                        <td>Thumbnail Image: </td>
-                        <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                    href="{{asset($subject->subjectAttachment)}}">{{$subject->subjectAttachment->video_thumbnail_image??'NA'}}</a>
-                                @else NA @endif</b></td>
-                    </tr>
-                    <tr>
-                        <td>Promo Video: </td>
-                        <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                    href="{{asset($subject->subjectAttachment)}}">{{$subject->subjectAttachment->attachment_origin_url??'NA'}}</a>
-                                @else NA @endif</b></td>
+@include('admin.course-management.lesson.topic.all')
 
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-@if($subject->lesson()->exists())
-@include('admin.course-management.lesson.all')
-@else
-<div class="col-lg-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-        </div>
-    </div>
-</div>
-@endif
 
 
 

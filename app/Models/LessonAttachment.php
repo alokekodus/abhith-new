@@ -23,7 +23,8 @@ class LessonAttachment extends Model
         'video_duration',
         'attachment_type',
         'type',
-        'progress_status'
+        'progress_status',
+        'free_demo'
 
     ];
 

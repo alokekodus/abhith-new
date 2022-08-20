@@ -99,5 +99,6 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::post('/update',[UserController::class,'updateDetails']);
     Route::post('/profile/update',[UserController::class,'profileUpdate']);
     Route::get('/courses',[UserController::class,'allCourses']);
+    Route::post('/password-reset',[UserController::class,'resetPassword']);
 });
 Route::post('/upload-note',[GalleryController::class,'testapi']);

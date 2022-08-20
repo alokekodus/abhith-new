@@ -5,8 +5,10 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\UserDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -112,51 +114,82 @@ class UserController extends Controller
     {
         try {
             $carts = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
-            ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
-            ->where('user_id', auth()->user()->id)
-            ->where('is_paid', 1)
-            ->where('is_remove_from_cart', 0)
-            ->get();
+                ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
+                ->where('user_id', auth()->user()->id)
+                ->where('is_paid', 1)
+                ->where('is_remove_from_cart', 0)
+                ->get();
 
-        if (!$carts->isEmpty()) {
-            $all_courses = [];
-            $subject=[];
-            foreach ($carts as $key => $cart) {
-                foreach($cart->assignSubject as $key=>$assign_subject){
-                    $subject[]=$assign_subject->subject->subject_name;
+            if (!$carts->isEmpty()) {
+                $all_courses = [];
+                $subject = [];
+                foreach ($carts as $key => $cart) {
+                    foreach ($cart->assignSubject as $key => $assign_subject) {
+                        $subject[] = $assign_subject->subject->subject_name;
+                    }
+
+
+                    $course_details = [
+                        'id' => $cart->id,
+                        'user_id' => $cart->user_id,
+                        'type' => $cart->is_full_course_selected,
+                        'board' => $cart->board->exam_board,
+                        'class_name' => $cart->assignClass->class,
+                        'total_subject' => $cart->assignSubject->count(),
+                        'total_amount' => $cart->assignSubject->sum("amount"),
+                        'cart_subject_details' => $subject,
+                    ];
+                    $all_courses[] = $course_details;
                 }
-            
+                $data = [
+                    "code" => 200,
+                    "message" => "Courses Details",
+                    "courses" => $all_courses,
 
-                $course_details = [
-                    'id' => $cart->id,
-                    'user_id' => $cart->user_id,
-                    'type' => $cart->is_full_course_selected,
-                    'board' => $cart->board->exam_board,
-                    'class_name' => $cart->assignClass->class,
-                    'total_subject' => $cart->assignSubject->count(),
-                    'total_amount'=>$cart->assignSubject->sum("amount"),
-                    'cart_subject_details' => $subject,
                 ];
-                $all_courses[] = $course_details;
+                return response()->json(['status' => 1, 'result' => $data]);
             }
-            $data = [
-                "code" => 200,
-                "message" => "Courses Details",
-                "courses" => $all_courses,
-
-            ];
-            return response()->json(['status' => 1, 'result' => $data]);
-        }
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
                 "status" => 0,
                 "message" => "Something went wrong",
                 "all_subjects" => [],
-    
+
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
-      
+    }
+    public function resetPassword(Request $request)
+    {
+        try {
+            $user = User::find(auth()->user()->id);
+            if (Hash::check($request->old_password, $user->password)) {
+                $user->fill([
+                    'password' => Hash::make($request->new_password)
+                ])->save();
+
+                $data = [
+                    "code" => 200,
+                    "message" => "Password changed Successfully ",
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "message" => "Password does not match. ",
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
     }
 }

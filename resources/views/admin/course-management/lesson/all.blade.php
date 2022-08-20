@@ -8,7 +8,7 @@
                     <tr>
                         <th>#No</th>
                         <th> Lesson Name </th>
-                        <th> Total Topics </th>
+                        <th> Total Recources</th>
                         <th> Total Videos </th>
                         <th> Total Documents </th>
                         <th> Total Articles </th>
@@ -22,7 +22,7 @@
                         <td>{{$lesson->name}} </td>
                         <td>{{$lesson->topics->count()}}<a
                                 href="{{route('admin.course.management.lesson.topic.create',Crypt::encrypt($lesson->id))}}">
-                                Add Topics
+                                Add Recources
                             </a>
                         </td>
                         <td> {{$lesson->topics->where('type',2)->count()}} </td>

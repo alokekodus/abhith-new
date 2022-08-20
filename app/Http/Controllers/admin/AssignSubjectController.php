@@ -186,7 +186,10 @@ class AssignSubjectController extends Controller
     public function view($subject_id){
         try {
             $subject=AssignSubject::where('id',Crypt::decrypt($subject_id))->first();
-            return view('admin.course-management.subjects.view')->with(['subject' => $subject]);
+            $lesson_groupby_teachers=Lesson::where('assign_subject_id',$subject->id)->where('teacher_id','!=',null)
+            ->get()->groupBy('teacher_id');
+           
+            return view('admin.course-management.subjects.view')->with(['subject' => $subject,'lesson_groupby_teacher'=>$lesson_groupby_teachers]);
         } catch (\Throwable $th) {
             //throw $th;
         }
