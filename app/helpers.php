@@ -211,3 +211,7 @@ function subjectTotalDocument($subject_id){
     $total_document=Lesson::where('assign_subject_id',$subject_id)->where('type',1)->get()->count();
     return $total_document;
 }
+function totalTopicFindById($teacher_id){
+    $total_lesson=Lesson::where('teacher_id',$teacher_id)->get()->count();
+    return $total_lesson;
+}

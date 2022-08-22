@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\LessonAttachmentTrait;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Crypt;
+use Str;
 
 class AssignSubjectController extends Controller
 {
@@ -189,7 +190,7 @@ class AssignSubjectController extends Controller
             $lesson_groupby_teachers=Lesson::where('assign_subject_id',$subject->id)->where('teacher_id','!=',null)
             ->get()->groupBy('teacher_id');
            
-            return view('admin.course-management.subjects.view')->with(['subject' => $subject,'lesson_groupby_teacher'=>$lesson_groupby_teachers]);
+            return view('admin.course-management.subjects.view')->with(['subject' => $subject,'lesson_groupby_teachers'=>$lesson_groupby_teachers]);
         } catch (\Throwable $th) {
             //throw $th;
         }

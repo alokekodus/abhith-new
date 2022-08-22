@@ -186,28 +186,15 @@
             <div class="mt-5" id="learning">
                 <h4>What you'll learn</h4>
                 <div class="d-flex mt-4">
-                    <div class="learningBox1">
-                        {{-- {!!$subject->why_learn!!} --}}
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
+                    <div>
+                        {!!$subject->why_learn!!}
                     </div>
-                    <div class="learningBox2">
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                    </div>
+
 
                 </div>
             </div>
             <!-- End What u'll learn -->
-            
+
             <!-- Requirements -->
             <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
@@ -231,9 +218,6 @@
                     <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4"
                         class="w100" />
                 </video>
-                {{-- <video id="player" data-setup="{}" controls="">
-                    <source src="{{asset($subject->subjectAttachment->attachment_origin_ur)}}" type="video/mp4">
-                </video> --}}
                 @else
                 <img src="{{asset($subject->image)}}" class="w100">
                 @endif
@@ -250,19 +234,23 @@
                     </h4>
                     {{-- <span>Created by : Demo Teacher</span><br> --}}
                     {{-- <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
-                    <div class="d-flex justify-content-between align-items-center mx-4" style="margin-bottom: -15px; margin-top:15px" >
+                    <div class="d-flex justify-content-between align-items-center mx-4"
+                        style="margin-bottom: -15px; margin-top:15px">
                         <p>
-                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>{{$subject->subject_amount}}</span> &nbsp; 
-                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>{{$subject->subject_amount}}</s>
+                            <span style="font-weight:700; font-size: 18px"><i
+                                    class="fa fa-inr mr-1"></i>{{$subject->subject_amount}}</span> &nbsp;
+                            <s style="color: grey"><i class="fa fa-inr mr-1"
+                                    aria-hidden="true"></i>{{$subject->subject_amount}}</s>
                         </p>
                         <p class="discount-percentage">87% Off</p>
                     </div>
-                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2 days left at this price!</span>
+                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2
+                        days left at this price!</span>
                     {{-- <a
                         href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                         class="enroll">View Details</a> --}}
-                    
-                    
+
+
                     @if(auth()->check() && isUserBuy($subject->id))
                     <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
                         class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
@@ -275,32 +263,37 @@
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration</p>
+                            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration
+                        </p>
                         <p>60 Minutes</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson</p>
-                        <p>32</p>
+                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson
+                        </p>
+                        <p>{{$subject->lesson->count()}}</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by</p>
+                            <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by
+                        </p>
                         <p>1982 students</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language</p>
+                            <i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language
+                        </p>
                         <p>English</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate</p>
+                            <i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate
+                        </p>
                         <p>Yes</p>
                     </div>
                     <div class="text-center pb-3">
                         <a href="#" target="_blank">
-                            <i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>  
+                            <i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>
                     </div>
                     @endif
                 </div>
@@ -362,11 +355,13 @@
                         <div class="card-body">
                             @foreach($lesson->topics as $topic)
                             <div class="lesson-content d-flex mx-3">
-                                <p><i class="fa fa-book"></i> &nbsp;<a href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}" target="_blank"> {{$topic->name}}</a></p>
+                                <p> @if($topic->type==1) <i class="fa fa-file-pdf-o" aria-hidden="true"></i> @elseif($topic->type==2)<i class="fa fa-play-circle"></i>@else<i class="fa fa-book"></i>@endif &nbsp;<a
+                                        href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"
+                                        target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
-                                    <p>3 Questions</p>
-                                    <p>30 mins</p>
-                                    <i class="fa fa-play mt-2"></i>
+                                    {{-- <p>3 Questions</p> --}}
+                                    @if($topic->type==2) <p>{{round($topic->lessonAttachment->video_duration,2)}} mins</p> @endif
+                                    @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i class="fa fa-play mt-2"></i>@endif @endif
                                 </div>
                             </div>
                             @endforeach
@@ -413,7 +408,7 @@
             <h4>Students Feedback</h4>
             <div class="d-md-flex mt-4">
                 <div class="studentImageBox mr-4">
-                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                    <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
                 </div>
                 <div class="studentReviewBox">
                     <div class="d-flex justify-content-between mt-2">
@@ -431,14 +426,16 @@
                     </div>
                     <div class="studentReview">
                         <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed
+                            sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam.
+                            Aperiam, deserunt perferendis!
                         </p>
                     </div>
                 </div>
             </div>
             <div class="d-md-flex mt-4">
                 <div class="studentImageBox mr-4">
-                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                    <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
                 </div>
                 <div class="studentReviewBox">
                     <div class="d-flex justify-content-between mt-2">
@@ -456,7 +453,9 @@
                     </div>
                     <div class="studentReview">
                         <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed
+                            sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam.
+                            Aperiam, deserunt perferendis!
                         </p>
                     </div>
                 </div>

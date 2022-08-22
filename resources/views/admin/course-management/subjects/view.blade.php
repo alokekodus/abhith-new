@@ -67,7 +67,36 @@
     </div>
 </div>
 @endif
-
+@if($lesson_groupby_teachers)
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">All Assigned Teacher</h4>
+            <table class="table table-striped" id="teacherTable">
+                <thead>
+                    <tr>
+                        <th>#No</th>
+                        <th> Name </th>
+                        <th> Total Topic Assign </th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @php $no=1; @endphp
+                    @foreach($lesson_groupby_teachers as $key=>$teacher)
+                    <tr>
+                        <td>{{$no++}}</td>
+                        <td><a href="{{route('admin.teacher.details',Crypt::encrypt($teacher[0]->assignTeacher->id))}}"> {{$teacher[0]->assignTeacher->name}}</a>
+                        <td>{{totalTopicFindById($teacher[0]->assignTeacher->id)}} topics</td>
+                        
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endif
 
 
 

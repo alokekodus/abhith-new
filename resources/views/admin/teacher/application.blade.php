@@ -98,7 +98,7 @@
 
 
                         <span class="font-weight-bold"> Apply For : </span><span>
-                            {{$user_details->board->exam_board}}--Class{{$user_details->assignClass->class}}--{{$user_details->assignSubject}}
+                            {{$user_details->board->exam_board}}--Class{{$user_details->assignClass->class}}--{{$user_details->assignSubject->subject_name}}
                         </span><br>
                         <span class="font-weight-bold"> Highest Qualification:
                         </span><span>{{$user_details->education}}</span> <br>
