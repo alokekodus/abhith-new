@@ -101,7 +101,7 @@
                     @for ($i = 0; $i < $test; $i++)
                         
                     @endfor --}}
-                    <div class="document-content">
+                    <div class="document-content mx-4">
                         <h2>Lesson Web Designing Start</h2>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit aut veniam eum neque, sed ullam magni cum recusandae dicta atque et nihil repellendus porro maxime quibusdam commodi quaerat? Doloribus, maxime.</p>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione tempore impedit est neque officiis eius ipsum laudantium quaerat doloribus ad quam hic dolorum, voluptates architecto dolore vel voluptatibus quisquam, fuga fugit sint, magni veritatis tempora. Nihil voluptates aliquam, ea, maxime optio laudantium molestias commodi dolore necessitatibus quis sint dignissimos harum!</p>
