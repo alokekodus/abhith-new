@@ -50,7 +50,7 @@
                 </div>
                 <div class="row">     
                     @php
-                        $test = 6;    
+                        $test = 5;    
                     @endphp        
                     @for ($i = 0; $i < $test; $i++)
                         <div class="col-lg-4 col-md-6">
@@ -74,18 +74,16 @@
                 </div>
                 <div class="row"> 
                     @php
-                        $test = 7;    
+                        $test = 12;    
                     @endphp
                     @for ($i = 0; $i < $test; $i++)
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card video-lesson-pic">
-                                <img src="{{asset('asset_website/img/course/image2.png')}}" alt="">
-                                <div class="video-lesson-overlay">
-                                    <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
-                                </div>
+                        <div class="article-div d-flex">
+                            <div class="article-img">
+                                <img src="{{asset('asset_website/img/docs.png')}}" alt="">
                             </div>
-                            <div class="video-lesson-text">
-                                <p>Lorem ipsum dolor sit amet.</p>
+                            <div class="article-content">
+                                <h5>Giving kids and teens a safer experience online</h5>
+                                <p>Monday, 30 May 2022, 10:21 AM</p>
                             </div>
                         </div>
                     @endfor
@@ -94,25 +92,20 @@
     
             <div class="container lessonContent" id="documents">
                 <div class="topic-content-sub-heading mt-4">
-                    <h3>Documents</h3>
+                    {{-- <h3>Documents</h3> --}}
                 </div>
                 <div class="row">
-                    @php
+                    {{-- @php
                         $test = 8;    
                     @endphp
                     @for ($i = 0; $i < $test; $i++)
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card video-lesson-pic">
-                                <img src="{{asset('asset_website/img/course/image3.png')}}" alt="">
-                                <div class="video-lesson-overlay">
-                                    <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                            <div class="video-lesson-text">
-                                <p>Lorem ipsum dolor sit amet.</p>
-                            </div>
-                        </div>
-                    @endfor
+                        
+                    @endfor --}}
+                    <div class="document-content">
+                        <h2>Lesson Web Designing Start</h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit aut veniam eum neque, sed ullam magni cum recusandae dicta atque et nihil repellendus porro maxime quibusdam commodi quaerat? Doloribus, maxime.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione tempore impedit est neque officiis eius ipsum laudantium quaerat doloribus ad quam hic dolorum, voluptates architecto dolore vel voluptatibus quisquam, fuga fugit sint, magni veritatis tempora. Nihil voluptates aliquam, ea, maxime optio laudantium molestias commodi dolore necessitatibus quis sint dignissimos harum!</p>
+                    </div>
                 </div>
             </div>
         </div>

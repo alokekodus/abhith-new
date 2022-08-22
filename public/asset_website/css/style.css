@@ -3731,9 +3731,6 @@ input {
 .topic-content-heading{
     background-image: linear-gradient(to left, #076fef, #01b9f1);
 }
-.topic-content-sub-heading{
-    /* margin-bottom: -25px; */
-}
 .topic-content-sub-heading h3{
     font-size: 18px;
     font-weight: bolder;
@@ -3810,6 +3807,35 @@ input {
     margin-bottom: 0px;
     color: black;
     font-weight: 600;
+}
+
+/* #articles .card{
+    margin-bottom: 15px;
+    margin-right: 12px;
+    border-radius: 10px;
+} */
+#articles .article-div{
+    align-items: center;
+    border: 1px solid #bfbaba;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 15px;
+}
+
+#articles .article-div .article-img img{
+    width: 50px;
+}
+#articles .article-content{
+    margin-left: 15px;
+    padding-top: 20px;
+}
+#articles .article-content h5{
+    font-size: 18px;
+    font-weight: 600;
+}
+#articles .article-content p{
+    font-size: 14px;
+    color: rgb(143, 143, 143);
 }
 /* End of lesson details */
 

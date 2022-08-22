@@ -1010,6 +1010,18 @@
         width: 100%;
         height: 250px;
     }
+    #articles .article-div {
+        padding: 0px 10px;
+    }
+    #articles .article-div .article-img img {
+        width: 40px;
+    }
+    #articles .article-content {
+        padding-top: 15px;
+    }
+    #articles .article-content h5 {
+        font-size: 16px;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
