@@ -19,11 +19,11 @@
             <div class="col-lg-12 col-md-8 mt-3">
                 <div class="board-class-div d-flex">
                     <div class="mr-5">
-                        <h5>SEBA</h5>
+                        <h5>{{$subject->boards->exam_board??'NA'}}</h5>
                         <p>Board</p>
                     </div>
                     <div class="mr-5">
-                        <h5>6</h5>
+                        <h5>&nbsp;{{$subject->assignClass->class??'NA'}}</h5>
                         <p>Class</p>
                     </div>
                     <div>
