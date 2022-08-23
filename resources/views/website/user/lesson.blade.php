@@ -161,6 +161,8 @@ $prefix = Request::route()->getPrefix();
   .video-js .vjs-play-progress {
     background-color: #007bff;
   }
+
+  
 </style>
 
 
@@ -179,13 +181,13 @@ $prefix = Request::route()->getPrefix();
 @endsection
 @section('scripts')
 <script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
-
+<script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
   $(document).ready(function() {
     var myPlayer = videojs('player');
    });
+   
+  
 </script>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script>
 @endsection
