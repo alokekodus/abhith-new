@@ -67,14 +67,10 @@
                         <div class="container">
                             <div class="row">
                                 <div class="mt-5">
-                                    <h4>Reviews</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
-                                        expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
-                                        Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente
-                                        quibusdam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas
-                                        perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit.
-                                        Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                                    <h4>Write Review</h4>
+                                    <div class="container">
+                                        <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="2">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -355,13 +351,17 @@
                         <div class="card-body">
                             @foreach($lesson->topics as $topic)
                             <div class="lesson-content d-flex mx-3">
-                                <p> @if($topic->type==1) <i class="fa fa-file-pdf-o" aria-hidden="true"></i> @elseif($topic->type==2)<i class="fa fa-play-circle"></i>@else<i class="fa fa-book"></i>@endif &nbsp;<a
+                                <p> @if($topic->type==1) <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    @elseif($topic->type==2)<i class="fa fa-play-circle"></i>@else<i
+                                        class="fa fa-book"></i>@endif &nbsp;<a
                                         href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"
                                         target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
                                     {{-- <p>3 Questions</p> --}}
-                                    @if($topic->type==2) <p>{{round($topic->lessonAttachment->video_duration,2)}} mins</p> @endif
-                                    @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i class="fa fa-play mt-2"></i>@endif @endif
+                                    @if($topic->type==2) <p>{{round($topic->lessonAttachment->video_duration,2)}} mins
+                                    </p> @endif
+                                    @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i
+                                        class="fa fa-play mt-2"></i>@endif @endif
                                 </div>
                             </div>
                             @endforeach
