@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" id="detailsPage">
     <p class="cross-line">
     <h2 class="heading-black mx-2">{{$subject->subject_name}}</h2>
     </p>
