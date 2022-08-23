@@ -7,7 +7,7 @@ $prefix = Request::route()->getPrefix();
 
 @section('head')
 <link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+
 <style>
   .panel-default>.panel-heading {
     color: #333;
@@ -179,15 +179,13 @@ $prefix = Request::route()->getPrefix();
 @endsection
 @section('scripts')
 <script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
-<script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
+
 <script>
   $(document).ready(function() {
     var myPlayer = videojs('player');
    });
 </script>
 
-<script>
-  $("#input-id").rating();
-  </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script>
 @endsection
