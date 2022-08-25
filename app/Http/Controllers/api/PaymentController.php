@@ -81,7 +81,7 @@ class PaymentController extends Controller
             $order=Order::where('rzp_order_id',$razorpay_order_id)->first();
             $order_update_data=[
                 'payment_status'=>"paid",
-                'razorpay_payment_id'=>$razorpay_payment_id,
+                'rzp_payment_id'=>$razorpay_payment_id,
             ];
             $order_update=$order->update($order_update_data);
             $cart_assign_subjects = $cart->assignSubject;
