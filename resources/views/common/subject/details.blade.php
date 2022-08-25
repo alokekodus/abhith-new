@@ -26,17 +26,17 @@
                         <h5>&nbsp;{{$subject->assignClass->class??'NA'}}</h5>
                         <p>Class</p>
                     </div>
+                    @if($total_review!=0)
+                    @php $rating= round($rating_average); @endphp
                     <div>
-                        <h5>Rating</h5>
+                        <h5>Rating({{$rating}})</h5>
                         <p>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i> &nbsp;
-                            <span>9.45 (9.8k+ reviews)</span>
+                            @for ($i = 0; $i < $rating; $i++) <i class="fa fa-star"></i> @endfor
+                                &nbsp;
+                                <span> reviews</span>
                         </p>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="description">
@@ -64,16 +64,16 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="mt-5">
-                                    <h4>Write Review</h4>
-                                    <div class="container">
-                                        <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="2">
-                                    </div>
-                                </div>
+                        <div class="container p-2">
+
+                            <div class="form-group">
+                                <textarea name="review" placeholder="write your review here" class="form-control"
+                                    id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
+                            <button class="btn btn-success btn-lg btn-block">Post Review</button>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -100,10 +100,7 @@
                                 <div class="row">
                                     <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
                                         <h4>Course Description</h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
-                                            expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
-                                            Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos
-                                            sapiente quibusdam.</p>
+                                        <p>{{!!$subject->description!!}}</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
                                             voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
                                             velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
@@ -253,7 +250,7 @@
                         Course</a>
                     @else
                     <div class="d-flex card-button mb-2 mx-4">
-                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
+                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
                             <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
                         <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
@@ -357,8 +354,11 @@
                                         href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"
                                         target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
-                                    {{-- <p>3 Questions</p> --}}
-                                    @if($topic->type==2) <p>{{round($topic->lessonAttachment->video_duration,2)}} mins
+
+                                    @if($topic->type==2 && $topic->lessonAttachment->free_demo==1 ) <p data-toggle="modal" data-target="#exampleModalLong"
+                                        data-lesson="{{$topic->id}}" id="previewVideo">preview
+                                    </p>
+                                    <p>{{round($topic->lessonAttachment->video_duration,2)}} mins
                                     </p> @endif
                                     @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i
                                         class="fa fa-play mt-2"></i>@endif @endif
@@ -405,63 +405,77 @@
 <div class="container-fluid mt-5" id="student-feedback">
     <div class="row">
         <div class="col-lg-8 col-md-12">
-            <h4>Students Feedback</h4>
+
+            <h4>Students Reviews</h4>
+            @foreach($reviews as $key=>$review)
             <div class="d-md-flex mt-4">
                 <div class="studentImageBox mr-4">
-                    <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                    <img src="{{asset($review->user->userDetail->image)}}" alt="" style="height: 50px;width:50px;" />
                 </div>
                 <div class="studentReviewBox">
                     <div class="d-flex justify-content-between mt-2">
                         <div class="studentName">
-                            <h5>Oscar Cafeo</h5>
-                            <p>Beautiful Course</p>
+                            <h5>{{$review->user->userDetail->name}}</h5>
                         </div>
                         <div class="studentrating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            @for($i=0;$i<$review->rating;$i++)
+                                <i class="fa fa-star"></i>
+                                @endfor
                         </div>
                     </div>
                     <div class="studentReview">
                         <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed
-                            sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam.
-                            Aperiam, deserunt perferendis!
+                            {{$review->review??''}}
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="d-md-flex mt-4">
-                <div class="studentImageBox mr-4">
-                    <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
-                </div>
-                <div class="studentReviewBox">
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="studentName">
-                            <h5>Alex Morgan</h5>
-                            <p>Beautiful Course</p>
-                        </div>
-                        <div class="studentrating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="studentReview">
-                        <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed
-                            sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam.
-                            Aperiam, deserunt perferendis!
-                        </p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
 
 <!-- End Student Feedback -->
+{{-- demo vidio display subject --}}
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="box-shadow: 0px 6px 10px #d1d1d1;">
+                
+                <span class="demoVideoPlayer"></span>
+                
+                
+                <div class="course-desc1">
+                    <h4 class="small-heading-black">
+                        <span class="d-flex  course-header-and-back-to-pckg-btn">
+                            {{$subject->subject_name}}
+                        </span>
+                    </h4>
+                </div>
+
+                <span class="demoVideo"></span>
+                {{-- <div class="details-bottom d-flex justify-content-between mx-4">
+                    <p class="details-bottom-text">
+                        <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson
+                    </p>
+                    <p>{{$subject->lesson->count()}}</p>
+                </div> --}}
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+</div>

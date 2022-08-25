@@ -36,17 +36,17 @@ class SubjectController extends Controller
                 ];
                 $all_reviews[]=$review;
             }
-            $subject_review_details=[
-                'average_rating'=>$rating_average,
-                'reviews'=>$all_reviews,
-            ];
+            $total_review=$reviews->count();
+           
            
         }else{
-            $subject_review_details = null;
+            $reviews = null;
+            $total_review=0;
+            $rating_average=0;
             
         }
-          dd($subject_review_details['average_rating']);
-        return view('website.user.lesson', compact('lessons', 'subject','subject_review_details'));
+        
+        return view('website.user.lesson', compact('lessons', 'subject','reviews','total_review','rating_average'));
     }
     public function subjectMCQ($subject_id)
     {

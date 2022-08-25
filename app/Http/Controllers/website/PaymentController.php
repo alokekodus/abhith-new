@@ -102,7 +102,7 @@ class PaymentController extends Controller
                    foreach($order as $item){
                         $cart=Cart::where('user_id', Auth::user()->id)->where('board_id', $item->board_id)->where('assign_class_id',$item->assign_class_id)->where('course_id',$item->course_id)->first();
                         
-                        $cart_update=$cart->update(['is_paid'=>1]);
+                        $cart_update=$cart->update(['is_paid'=>1,'is_remove_from_cart'=>1]);
                        
                         $cart_assign_subjects=$cart->assignSubject;
                         foreach($cart_assign_subjects as $key=>$cart_assign_subject){

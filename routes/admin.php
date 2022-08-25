@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
             Route::get('lesson/{lesson_id}', [AssignSubjectController::class, 'assignSubjectLesson'])->name('admin.course.management.lesson.topic.display');
             Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
+           
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
@@ -197,7 +198,7 @@ Route::group(['middleware' => ['auth'] ],function(){
 
 
 });
-
+Route::get('course-management/subject/demovideo/{subject_id}',[SubjectController::class,'getDemoVideo'])->name('admin.subject.promovideo');
 
 /* ------------------------------- Enquiry Not Authenticated ------------------------------------ */
 Route::prefix('enquiry')->group(function(){

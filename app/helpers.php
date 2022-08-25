@@ -211,7 +211,19 @@ function subjectTotalDocument($subject_id){
     $total_document=Lesson::where('assign_subject_id',$subject_id)->where('type',1)->get()->count();
     return $total_document;
 }
-function totalTopicFindById($teacher_id){
-    $total_lesson=Lesson::where('teacher_id',$teacher_id)->get()->count();
+function lessonTotalVideo($parent_id){
+    $total_video=Lesson::where('parent_id',$parent_id)->where('type',2)->get()->count();
+    return $total_video;
+}
+function lessonTotalArticle($parent_id){
+    $total_article=Lesson::where('parent_id',$parent_id)->where('type',3)->get()->count();
+    return $total_article;
+}
+function lessonTotalDocument($parent_id){
+    $total_document=Lesson::where('parent_id',$parent_id)->where('type',1)->get()->count();
+    return $total_document;
+}
+function lessonTopicFindById($parent_id){
+    $total_lesson=Lesson::where('parent_id',$parent_id)->get()->count();
     return $total_lesson;
 }
