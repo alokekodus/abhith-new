@@ -75,19 +75,17 @@
                     <h3>Articles</h3>
                 </div>
                 <div class="row">
-                    @php
-                    $test = 12;
-                    @endphp
-                    @for ($i = 0; $i < $test; $i++) <div class="article-div d-flex">
+                  @foreach($topicArticles as $key=>$article)
+                    <div class="article-div d-flex">
                         <div class="article-img">
                             <img src="{{asset('asset_website/img/docs.png')}}" alt="">
                         </div>
                         <div class="article-content">
-                            <h5>Giving kids and teens a safer experience online</h5>
-                            <p>Monday, 30 May 2022, 10:21 AM</p>
+                            <h5>{{$article->name}}</h5>
+                            {{-- <p>Monday, 30 May 2022, 10:21 AM</p> --}}
                         </div>
                 </div>
-                @endfor
+                @endforeach
             </div>
         </div>
 
