@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\CourseController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\Api\MobileEmailVerificationController;
+use App\Http\Controllers\api\PaymentController;
 use App\Http\Controllers\api\ReviewController;
 use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\api\UserController;
@@ -106,5 +107,9 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
 Route::group(['prefix' => 'review','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[ReviewController::class,'index']);
     Route::post('/store', [ReviewController::class,'store']);
+});
+Route::group(['prefix' => 'payment','middleware' => ['auth:sanctum']], function() {
+      Route::get('/order-generate',[PaymentController::class,'paymentOrderGenerate']);
+      Route::post('/',[PaymentController::class,'paymentVerification']);
 });
 Route::post('/upload-note',[GalleryController::class,'testapi']);
