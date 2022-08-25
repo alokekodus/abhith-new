@@ -73,7 +73,7 @@ class PaymentController extends Controller
     {
         try {
             $cart_id = $request->cart_id;
-            $razorpay_order_id =  $request->rzp_order_id;
+            $razorpay_order_id =  $request->razorpay_order_id;
             $razorpay_payment_id = $request->razorpay_payment_id;
            
             $cart = Cart::find($cart_id);
