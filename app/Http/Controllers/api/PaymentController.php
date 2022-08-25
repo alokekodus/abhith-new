@@ -74,11 +74,11 @@ class PaymentController extends Controller
         try {
             $cart_id = $request->cart_id;
             $razorpay_order_id =  $request->razorpay_order_id;
-            $razorpay_payment_id = $request->razorpay_payment_id;
+            $razorpay_payment_id = $request->razorpay_payment_id??null;
            
             $cart = Cart::find($cart_id);
-            $cart_update = $cart->update(['is_paid' => 1, 'is_remove_from_cart' => 1]);
-            $order=Order::where('razorpay_order_id',$razorpay_order_id)->first();
+            
+            $order=Order::where('rzp_order_id',$razorpay_order_id)->first();
             $order_update_data=[
                 'payment_status'=>"paid",
                 'razorpay_payment_id'=>$razorpay_payment_id,
@@ -89,6 +89,7 @@ class PaymentController extends Controller
 
                 $cart_assign_subject_update = $cart_assign_subject->update(['order_id' => $order->id]);
             }
+            $cart_update = $cart->update(['is_paid' => 1, 'is_remove_from_cart' => 1]);
             $data = [
                 "code" => 200,
                 "status" => 1,
