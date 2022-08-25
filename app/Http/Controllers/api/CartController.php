@@ -186,7 +186,7 @@ class CartController extends Controller
                 ->first();
             if (!$cart == null) {
                 $cart_total_amount = $cart->assignSubject->sum("amount");
-
+                 
                 $cart_details = [
                     'id' => $cart->id,
                     'user_id' => $cart->user_id,

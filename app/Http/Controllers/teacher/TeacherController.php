@@ -122,10 +122,10 @@ class TeacherController extends Controller
     public function details($teacher_id)
     {
         try {
-            $user_details = UserDetails::with('user')->where('id', Crypt::decrypt($teacher_id))->first();
+          
+            $user_details = UserDetails::with('user')->where('user_id', Crypt::decrypt($teacher_id))->first();
             $resume = pathinfo(public_path($user_details->resume_url));
             $resume_extension = $resume['extension'];
-
             return view('admin.teacher.application', compact('user_details', 'resume_extension'));
         } catch (\Throwable $th) {
             //throw $th;

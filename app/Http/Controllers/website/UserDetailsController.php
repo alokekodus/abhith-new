@@ -35,13 +35,13 @@ class UserDetailsController extends Controller
         $education = $request->education;
         $gender = $request->gender;
         $user_id = Auth::user()->id;
-
+        $address=$request->address;
         $user_details = UserDetails::where('user_id',Auth::user()->id )->exists();
 
         if($user_details == true){
             UserDetails::where('user_id', Auth::user()->id)
                         ->update([
-                            'name' => $name,'email' => $email, 'phone' => $phone, 'education' => $education, 'gender' => $gender,
+                            'name' => $name,'email' => $email, 'phone' => $phone, 'education' => $education, 'gender' => $gender,'address'=>$address
                         ]);
         }else{
             UserDetails::create([
@@ -51,6 +51,7 @@ class UserDetailsController extends Controller
                 'education' => $education,
                 'gender' => $gender,
                 'user_id' => $user_id,
+                'address'=>$address
             ]);
         }
         User::where('email', Auth::user()->email)->update(['name' => $name,'email' => $email]);

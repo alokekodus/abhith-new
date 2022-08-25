@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
+use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\LessonAttachmentTrait;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Crypt;
+use Str;
 
 class AssignSubjectController extends Controller
 {
@@ -21,14 +23,12 @@ class AssignSubjectController extends Controller
     {
 
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
-        if (auth()->user()->hasRole('Teacher')) {
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->where('teacher_id', auth()->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->paginate(4);
-        } else {
+        
             $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
-        }
+        
 
 
-        return view('admin.course-management.subjects.subject')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
+        return view('admin.course-management.subjects.index')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
     public function store(Request $request)
     {
@@ -69,9 +69,9 @@ class AssignSubjectController extends Controller
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
             $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
-
+            $name_slug = Str::slug($request->subjectName);
             if (!empty($document)) {
-                $image_path = LessonAttachmentTrait::uploadAttachment($document, "image"); //lesson image store
+                $image_path = LessonAttachmentTrait::uploadAttachment($document, "image",$name_slug); //lesson image store
                 $image_path = $image_path;
             } else {
                 if ($request->subject_id == null) {
@@ -84,10 +84,10 @@ class AssignSubjectController extends Controller
             }
 
             if (!empty($lessonVideo)) {
-                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video");
+                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video",$name_slug);
                 $video_path = $video_path;
                 if (!empty($videoThumbnailImageUrl)) {
-                    $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image"); //lesson image store
+                    $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image",$name_slug); //lesson image store
                     $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
                 } else {
                     if ($request->subject_id == null) {
@@ -153,57 +153,7 @@ class AssignSubjectController extends Controller
             dd($th);
         }
     }
-    public function assignSubject(Request $request)
-    {
-
-        try {
-            $validator = Validator::make($request->all(), [
-                'subjectName' => 'required',
-                'subjectCoverPic' => 'required',
-                'assignedClass' => 'required',
-                'subjectAmount' => 'required'
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
-            } else {
-                $split_assignedClass = str_split($request->assignedClass);
-
-                $assignedClass = $split_assignedClass[0];
-                $assignedBoard = $split_assignedClass[1];
-
-                $is_subject_assigned_already = AssignSubject::where('subject_name', $request->subjectName)->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->exists();
-                if ($is_subject_assigned_already) {
-                    return response()->json(['message' => 'Whoops! Subject already assigned with the class.', 'status' => 2]);
-                } else {
-
-                    $document = $request->subjectCoverPic;
-                    $file = '';
-                    if (isset($document) && !empty($document)) {
-                        $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
-                        $document->move(public_path('/files/course/subject/'), $new_name);
-                        $file = '/files/course/subject/' . $new_name;
-                    }
-
-                    $create = AssignSubject::create([
-                        'subject_name' => strtoupper($request->subjectName),
-                        'image' => $file,
-                        'assign_class_id' => $assignedClass,
-                        'board_id' => $assignedBoard,
-                        'subject_amount' => $request->subjectAmount,
-                    ]);
-
-                    if ($create) {
-                        return response()->json(['message' => 'Subject assigned successfully', 'status' => 1]);
-                    } else {
-                        return response()->json(['message' => 'Whoops! Something went wrong. Failed to assign subject.', 'status' => 2]);
-                    }
-                }
-            }
-        } catch (\Throwable $th) {
-            return response()->json(['message' => 'Whoops! Something went wrong. Failed to assign subject.', 'status' => 2]);
-        }
-    }
+    
     public function create()
     {
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
@@ -233,5 +183,20 @@ class AssignSubjectController extends Controller
         $classBoard = $subject->assign_class_id . $subject->board_id;
 
         return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard]);
+    }
+    public function view($subject_id){
+        try {
+            $subject=AssignSubject::where('id',Crypt::decrypt($subject_id))->first();
+            $lesson_groupby_teachers=Lesson::where('assign_subject_id',$subject->id)->where('teacher_id','!=',null)
+            ->get()->groupBy('teacher_id');
+           
+            return view('admin.course-management.subjects.view')->with(['subject' => $subject,'lesson_groupby_teachers'=>$lesson_groupby_teachers]);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function assignSubjectLesson($lesson_id){
+        $lesson=Lesson::where('id',Crypt::decrypt($lesson_id))->first();
+        return view('admin.course-management.subjects.lesson')->with(['lesson' => $lesson]);
     }
 }

@@ -19,24 +19,24 @@
             <div class="col-lg-12 col-md-8 mt-3">
                 <div class="board-class-div d-flex">
                     <div class="mr-5">
-                        <h5>SEBA</h5>
+                        <h5>{{$subject->boards->exam_board??'NA'}}</h5>
                         <p>Board</p>
                     </div>
                     <div class="mr-5">
-                        <h5>6</h5>
+                        <h5>&nbsp;{{$subject->assignClass->class??'NA'}}</h5>
                         <p>Class</p>
                     </div>
+                    @if($total_review!=0)
+                    @php $rating= round($rating_average); @endphp
                     <div>
-                        <h5>Rating</h5>
+                        <h5>Rating({{$rating}})</h5>
                         <p>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i> &nbsp;
-                            <span>9.45 (9.8k+ reviews)</span>
+                            @for ($i = 0; $i < $rating; $i++) <i class="fa fa-star"></i> @endfor
+                                &nbsp;
+                                <span> reviews</span>
                         </p>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="description">
@@ -64,20 +64,16 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="mt-5">
-                                    <h4>Reviews</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
-                                        expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
-                                        Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos sapiente
-                                        quibusdam.</p>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente voluptas
-                                        perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa velit.
-                                        Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
-                                </div>
+                        <div class="container p-2">
+
+                            <div class="form-group">
+                                <textarea name="review" placeholder="write your review here" class="form-control"
+                                    id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
+                            <button class="btn btn-success btn-lg btn-block">Post Review</button>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -104,10 +100,7 @@
                                 <div class="row">
                                     <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
                                         <h4>Course Description</h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
-                                            expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
-                                            Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos
-                                            sapiente quibusdam.</p>
+                                        <p>{{!!$subject->description!!}}</p>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
                                             voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
                                             velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
@@ -186,28 +179,15 @@
             <div class="mt-5" id="learning">
                 <h4>What you'll learn</h4>
                 <div class="d-flex mt-4">
-                    <div class="learningBox1">
-                        {{-- {!!$subject->why_learn!!} --}}
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa.</p>
+                    <div>
+                        {!!$subject->why_learn!!}
                     </div>
-                    <div class="learningBox2">
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minima voluptas ut, maiores laborum ab culpa</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                        <p><i class="fa fa-check-circle"></i> &nbsp; Lorem ipsum dolor sit amet.</p>
-                    </div>
+
 
                 </div>
             </div>
             <!-- End What u'll learn -->
-            
+
             <!-- Requirements -->
             <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
@@ -231,9 +211,6 @@
                     <source src="{{asset($subject->subjectAttachment->attachment_origin_url)}}" type="video/mp4"
                         class="w100" />
                 </video>
-                {{-- <video id="player" data-setup="{}" controls="">
-                    <source src="{{asset($subject->subjectAttachment->attachment_origin_ur)}}" type="video/mp4">
-                </video> --}}
                 @else
                 <img src="{{asset($subject->image)}}" class="w100">
                 @endif
@@ -250,57 +227,66 @@
                     </h4>
                     {{-- <span>Created by : Demo Teacher</span><br> --}}
                     {{-- <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
-                    <div class="d-flex justify-content-between align-items-center mx-4" style="margin-bottom: -15px; margin-top:15px" >
+                    <div class="d-flex justify-content-between align-items-center mx-4"
+                        style="margin-bottom: -15px; margin-top:15px">
                         <p>
-                            <span style="font-weight:700; font-size: 18px"><i class="fa fa-inr mr-1"></i>449</span> &nbsp; 
-                            <s style="color: grey"><i class="fa fa-inr mr-1" aria-hidden="true"></i>3,499</s>
+                            <span style="font-weight:700; font-size: 18px"><i
+                                    class="fa fa-inr mr-1"></i>{{$subject->subject_amount}}</span> &nbsp;
+                            <s style="color: grey"><i class="fa fa-inr mr-1"
+                                    aria-hidden="true"></i>{{$subject->subject_amount}}</s>
                         </p>
                         <p class="discount-percentage">87% Off</p>
                     </div>
-                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2 days left at this price!</span>
+                    <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2
+                        days left at this price!</span>
                     {{-- <a
                         href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                         class="enroll">View Details</a> --}}
-                    
-                    
+
+
                     @if(auth()->check() && isUserBuy($subject->id))
                     <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
                         class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
                         Course</a>
                     @else
                     <div class="d-flex card-button mb-2 mx-4">
-                        <a href="#" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
+                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
                             <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
                         <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration</p>
+                            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp; Duration
+                        </p>
                         <p>60 Minutes</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson</p>
-                        <p>32</p>
+                            <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson
+                        </p>
+                        <p>{{$subject->lesson->count()}}</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by</p>
+                            <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by
+                        </p>
                         <p>1982 students</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language</p>
+                            <i class="fa fa-language" aria-hidden="true"></i> &nbsp; Language
+                        </p>
                         <p>English</p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
-                            <i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate</p>
+                            <i class="fa fa-certificate" aria-hidden="true"></i> &nbsp; Certificate
+                        </p>
                         <p>Yes</p>
                     </div>
                     <div class="text-center pb-3">
                         <a href="#" target="_blank">
-                            <i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>  
+                            <i class="fa fa-share-alt" aria-hidden="true"></i> &nbsp; Share this Course</a>
                     </div>
                     @endif
                 </div>
@@ -362,11 +348,20 @@
                         <div class="card-body">
                             @foreach($lesson->topics as $topic)
                             <div class="lesson-content d-flex mx-3">
-                                <p><i class="fa fa-book"></i> &nbsp;<a href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}" target="_blank"> {{$topic->name}}</a></p>
+                                <p> @if($topic->type==1) <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    @elseif($topic->type==2)<i class="fa fa-play-circle"></i>@else<i
+                                        class="fa fa-book"></i>@endif &nbsp;<a
+                                        href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"
+                                        target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
-                                    <p>3 Questions</p>
-                                    <p>30 mins</p>
-                                    <i class="fa fa-play mt-2"></i>
+
+                                    @if($topic->type==2 && $topic->lessonAttachment->free_demo==1 ) <p data-toggle="modal" data-target="#exampleModalLong"
+                                        data-lesson="{{$topic->id}}" id="previewVideo">preview
+                                    </p>
+                                    <p>{{round($topic->lessonAttachment->video_duration,2)}} mins
+                                    </p> @endif
+                                    @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i
+                                        class="fa fa-play mt-2"></i>@endif @endif
                                 </div>
                             </div>
                             @endforeach
@@ -410,59 +405,77 @@
 <div class="container-fluid mt-5" id="student-feedback">
     <div class="row">
         <div class="col-lg-8 col-md-12">
-            <h4>Students Feedback</h4>
+
+            <h4>Students Reviews</h4>
+            @foreach($reviews as $key=>$review)
             <div class="d-md-flex mt-4">
                 <div class="studentImageBox mr-4">
-                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
+                    <img src="{{asset($review->user->userDetail->image)}}" alt="" style="height: 50px;width:50px;" />
                 </div>
                 <div class="studentReviewBox">
                     <div class="d-flex justify-content-between mt-2">
                         <div class="studentName">
-                            <h5>Oscar Cafeo</h5>
-                            <p>Beautiful Course</p>
+                            <h5>{{$review->user->userDetail->name}}</h5>
                         </div>
                         <div class="studentrating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                            @for($i=0;$i<$review->rating;$i++)
+                                <i class="fa fa-star"></i>
+                                @endfor
                         </div>
                     </div>
                     <div class="studentReview">
                         <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
+                            {{$review->review??''}}
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="d-md-flex mt-4">
-                <div class="studentImageBox mr-4">
-                  <img src="{{asset('asset_website/img/Frame.png')}}" alt="" />
-                </div>
-                <div class="studentReviewBox">
-                    <div class="d-flex justify-content-between mt-2">
-                        <div class="studentName">
-                            <h5>Alex Morgan</h5>
-                            <p>Beautiful Course</p>
-                        </div>
-                        <div class="studentrating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="studentReview">
-                        <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, placeat veniam. A sed sit doloribus! Nemo ea error impedit. Tempora nostrum ab, fugit rem nesciunt error totam. Aperiam, deserunt perferendis!
-                        </p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
 
 <!-- End Student Feedback -->
+{{-- demo vidio display subject --}}
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="box-shadow: 0px 6px 10px #d1d1d1;">
+                
+                <span class="demoVideoPlayer"></span>
+                
+                
+                <div class="course-desc1">
+                    <h4 class="small-heading-black">
+                        <span class="d-flex  course-header-and-back-to-pckg-btn">
+                            {{$subject->subject_name}}
+                        </span>
+                    </h4>
+                </div>
+
+                <span class="demoVideo"></span>
+                {{-- <div class="details-bottom d-flex justify-content-between mx-4">
+                    <p class="details-bottom-text">
+                        <i class="fa fa-book" aria-hidden="true"></i> &nbsp; Lesson
+                    </p>
+                    <p>{{$subject->lesson->count()}}</p>
+                </div> --}}
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+</div>

@@ -306,18 +306,24 @@ class WebsiteAuthController extends Controller
 
     public function logout(Request $request)
     {
-        if (getPrefix($request) == "api") {
+        try {
+            if (getPrefix($request) == "api") {
 
-            auth()->user()->tokens()->delete();
-
-            return [
-                'message' => 'Tokens Revoked'
-            ];
-        } else {
-            Auth::logout();
-            Toastr::success('Logged out successfully.', '', ["positionClass" => "toast-top-right"]);
-            return redirect('');
+                auth()->user()->tokens()->delete();
+    
+                return [
+                    'message' => 'Tokens Revoked'
+                ];
+                return response()->json(['message' => 'Loged out successfully.', 'status' => 1]);
+            } else {
+                Auth::logout();
+                Toastr::success('Logged out successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect('');
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Something went wrong.', 'status' => 0]);
         }
+        
     }
     public function viewLogin(Request $request)
     {
@@ -627,4 +633,15 @@ class WebsiteAuthController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function userLogout(){
+        try {
+            auth()->user()->tokens()->delete();
+    
+                return response()->json(['message' => 'Logged out successfully.', 'status' => 1]);
+            
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Something went wrong.', 'status' => 0]);
+        }
+    }
+   
 }

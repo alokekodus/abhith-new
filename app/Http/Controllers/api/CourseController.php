@@ -167,7 +167,7 @@ class CourseController extends Controller
     public function findAllClass(Request $request){
         try {
             $board_name=$_GET['board_name'];
-            $board=Board::where('exam_board',$board_name)->first();
+            $board=Board::where('exam_board',$board_name)->where('is_activate',1)->first();
            
             if($board){
                 $assign_class=AssignClass::select('id','class','board_id')->where('board_id',$board->id)->get();

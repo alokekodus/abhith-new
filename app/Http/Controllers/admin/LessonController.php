@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\QuestionImport;
 use App\Jobs\ConvertVideoForResolution;
+use App\Models\AssignSubject;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
+use App\Models\Set;
+use App\Models\User;
+use App\Models\UserDetails;
 use App\Traits\LessonAttachmentTrait;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 use Str;
 
@@ -24,102 +30,91 @@ class LessonController extends Controller
 
         return view('admin.course-management.lesson.index')->with(['boards' => $board_details, 'all_lessons' => $all_lessons]);
     }
-    public function create()
+    //create lesson against subject
+    public function create($subject_id)
     {
-        $board_details = Board::where('is_activate', 1)->get();
-        $form_type = "Lesson";
-        return view('admin.course-management.lesson.create')->with(['boards' => $board_details, 'form_type' => $form_type]);
+        $assign_subject = AssignSubject::find(Crypt::decrypt($subject_id));
+
+        return view('admin.course-management.lesson.create')->with(['subject' => $assign_subject]);
     }
     public function store(Request $request)
     {
-     try {
-          
-            $slug=Str::slug($request->name);
-            if($request->has('parent_id')){
-                $lesson=Lesson::find($request->parent_id);
-                $board_id=$lesson->board_id;
-                $assign_class_id=$lesson->assign_class_id;
-                $assign_subject_id=$lesson->assign_subject_id;
-            }else{
-                $board_id=$request->board_id;
-                $assign_class_id=$request->assign_class_id;
-                $assign_subject_id=$request->assign_subject_id;
+        try {
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                ],
+                [
+                    'name.required' => 'Subject Name is required',
+                ]
+            );
+            if ($validate->fails()) {
+                Toastr::success($validate->errors(), '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+            $assign_subject = AssignSubject::find(Crypt::decrypt($request->subject_id));
+            if ($assign_subject == null) {
+                Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
             }
             $data = [
                 'name' => ucfirst($request->name),
-                'slug' => $slug,
-                'parent_id' => $request->parent_id,
-                'parent_lesson_id' => $request->parent_lesson_id,
-                'board_id' => $board_id,
-                'assign_class_id' => $assign_class_id,
-                'assign_subject_id' => $assign_subject_id,
-                'type' => $request->content_type,
+                'slug' => Str::slug($request->name),
+                'board_id' => $assign_subject->board_id,
+                'assign_class_id' => $assign_subject->assign_class_id,
+                'assign_subject_id' => $assign_subject->id,
             ];
-         
-            $lesson = Lesson::create($data);
-            if ($request->content_type == 1) {
-                $document = $request->file('image_url');
-                $image_path = LessonAttachmentTrait::uploadAttachment($document, "image");
-
-                $data_attachment = [
-                    'subject_lesson_id' =>  $lesson->id,
-                    'img_url' => url('') . $image_path,
-                    'type' => 2,
-                    'attachment_type' => $request->content_type,
-
-                ];
-                $lesson_attachment = LessonAttachment::create($data_attachment);
-                return response()->json(['message' => 'Lesson Created successfully.', 'status' => 1]);
-            }
-            if ($request->content_type == 2) {
-             
-                $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
-                $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl,"image");
-                // $origin_video = LessonAttachmentTrait::uploadAttachment($request->file('video_url'),"video");
-                $video_path=$request->video_url->store('public');
-               
-                $data_attachment = [
-                    'subject_lesson_id' => $lesson->id,
-                    'attachment_origin_url' => $video_path,
-                    'video_thumbnail_image' => url('') . $video_thumbnail_image_url_path,
-                    'video_origin_url'=>$video_path,
-                    'type' => 2,
-                    'progress_status'=>1,
-
-                ];
-                
-                $lesson_attachment=LessonAttachment::create($data_attachment);
-                $resizes = ["480", "720", "1080"];
-                foreach ($resizes as $key => $resize) {
-                    if ($resize == 480) {
-                        $x_dimension = 640;
-                        $y_dimension = 480;
-                    }
-                    if ($resize == 720) {
-                        $x_dimension = 1280;
-                        $y_dimension = 720;
-                    }
-                    // if($resize==1080){
-                    //     $x_dimension=1920;
-                    //     $y_dimension =1080;  
-                    // }
-                    $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension,$slug));
-                }
-               
-            }
-             if ($request->content_type == 3) {
-                $lesson->update(['content'=>$request->content]);
-                return response()->json(['message' => 'Lesson Created successfully.', 'status' => 1]);
-             }
-             if($request->content_type==4){
-                dd($request->all());
-             }
-
+            Lesson::create($data);
+            Toastr::success('Lesson added successfully.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
         } catch (\Throwable $th) {
-            dd($th);
-            // return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
+            Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
         }
     }
+    // public function store(Request $request)
+    // {
+    //  try {
+
+    //         $slug=Str::slug($request->name);
+    //         if($request->has('parent_id')){
+    //             $lesson=Lesson::find($request->parent_id);
+    //             $board_id=$lesson->board_id;
+    //             $assign_class_id=$lesson->assign_class_id;
+    //             $assign_subject_id=$lesson->assign_subject_id;
+    //         }else{
+    //             $board_id=$request->board_id;
+    //             $assign_class_id=$request->assign_class_id;
+    //             $assign_subject_id=$request->assign_subject_id;
+    //         }
+    //         $data = [
+    //             'name' => ucfirst($request->name),
+    //             'slug' => $slug,
+    //             'parent_id' => $request->parent_id,
+    //             'parent_lesson_id' => $request->parent_lesson_id,
+    //             'board_id' => $board_id,
+    //             'assign_class_id' => $assign_class_id,
+    //             'assign_subject_id' => $assign_subject_id,
+    //             'type' => $request->content_type,
+    //         ];
+
+    //         $lesson = Lesson::create($data);
+    //        
+    //         
+    //          if ($request->content_type == 3) {
+    //             $lesson->update(['content'=>$request->content]);
+    //             return response()->json(['message' => 'Lesson Created successfully.', 'status' => 1]);
+    //          }
+    //          if($request->content_type==4){
+    //             dd($request->all());
+    //          }
+
+    //     } catch (\Throwable $th) {
+    //         dd($th);
+    //         // return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
+    //     }
+    // }
     public function storeFile(Request $request)
     {
         return response()->json($request->all());
@@ -129,9 +124,12 @@ class LessonController extends Controller
         return $imgFile;
     }
     public function topicCreate($id)
-    {   $lesson_id=Crypt::decrypt($id);
-        $lesson = Lesson::where('id', $lesson_id)->first();
-        return view('admin.course-management.lesson.topic.create', compact('lesson'));
+    {
+        $lesson_id = Crypt::decrypt($id);
+        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
+        
+        $teachers=UserDetails::where('assign_class_id',$lesson->assign_class_id)->where('assign_subject_id',$lesson->assign_subject_id)->where('status',2)->get();
+        return view('admin.course-management.lesson.topic.create', compact('lesson','teachers'));
     }
     public function subTopicCreate($lesson_slug, $topic_slug)
     {
@@ -148,8 +146,8 @@ class LessonController extends Controller
     public function topicView($id)
     {
         try {
-            $lesson_id=Crypt::decrypt($id);
-            $lesson = Lesson::with('lessonAttachment')->where('id',$lesson_id)->first();
+            $lesson_id = Crypt::decrypt($id);
+            $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
             return view('admin.course-management.lesson.view', compact('lesson'));
         } catch (\Throwable $th) {
             //throw $th;
@@ -167,37 +165,9 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    public function lessonFunctionResponse($type)
-    {
-        if ($type == "lesson-create") {
-            return response()->json(['message' => 'Lesson Added Successfully', 'status' => 1]);
-        } elseif ($type == "create-topic") {
-            return response()->json(['message' => 'Topic Added Successfully', 'status' => 1]);
-        } elseif ($type == "create-sub-topic") {
-            return response()->json(['message' => 'Sub Topic Added Successfully', 'status' => 1]);
-        } elseif ($type == "update-lesson") {
-            return response()->json(['message' => 'Lesson Update Successfully', 'status' => 1]);
-        } else {
-            return response()->json(['message' => 'Whoops! Something went wrong. Failed to add Lesson.', 'status' => 2]);
-        }
-    }
+    
 
-    public function findFormType(Request $request)
-    {
-        if ($request->assign_class_id != null) {
-            return "create-lesson";
-        }
-
-        if ($request->parent_id != null &&  $request->parent_lesson_id == null) {
-            return "create-topic";
-        }
-        if ($request->parent_id != null &&  $request->parent_lesson_id != null) {
-            return "create-sub-topic";
-        }
-        if ($request->lesson_id != null && $request->parent_id == null &&  $request->parent_lesson_id == null) {
-            return "update-lesson";
-        }
-    }
+    
     public function displayAttachment($lesson_id, $url_type)
     {
         try {
@@ -221,12 +191,176 @@ class LessonController extends Controller
     }
     public function lessonDetails($lesson_id)
     {
-        $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'topics' => function ($query) {
+        $lesson = Lesson::with(['Sets','assignClass', 'board', 'assignSubject', 'topics' => function ($query) {
             $query->with('subTopics');
         }])->where('id', $lesson_id)->first();
         $data = [
             'filter_data' => $lesson,
         ];
         return response()->json($data);
+    }
+    public function topicStore(Request $request)
+    {
+        try {
+            // dd($request->all());
+          
+            $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
+            if ($isLessonNameAlreadyInUsed) {
+                Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+            if ($request->resource_type == 1) {
+                $validate = Validator::make(
+                    $request->all(),
+                    [
+                        'name' => 'required',
+                        'image_url' => 'required|mimes:pdf|max:10000',
+                    ],
+                    [
+                        'name.required' => 'Resource Name is required',
+                        'image_url.required' => 'Please upload your resource'
+                    ]
+                );
+                if ($validate->fails()) {
+                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
+                    return redirect()->back();
+                }
+                $lesson = Lesson::find($request->parent_id);
+                $name_slug = Str::slug($request->name);
+                $data = [
+                    'name' => ucfirst($request->name),
+                    'slug' => $name_slug,
+                    'parent_id' => $request->parent_id,
+                    'board_id' => $lesson->board_id,
+                    'assign_class_id' => $lesson->assign_class_id,
+                    'assign_subject_id' => $lesson->assign_subject_id,
+                    'type' => $request->resource_type,
+                    'teacher_id'=>$request->teacher_id,
+                ];
+                 
+                $resourceStore = Lesson::create($data);
+                $document = $request->file('image_url');
+                $image_path = LessonAttachmentTrait::uploadAttachment($document, "image", $name_slug);
+
+                $data_attachment = [
+                    'subject_lesson_id' =>  $resourceStore->id,
+                    'img_url' => $image_path,
+                    'type' => 2,
+                    'attachment_type' => $request->resource_type,
+
+                ];
+                LessonAttachment::create($data_attachment);
+                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+            if ($request->resource_type == 2) {
+                // dd($request->all());
+                $lesson = Lesson::find($request->parent_id);
+                $name_slug = Str::slug($request->name);
+                $data = [
+                    'name' => ucfirst($request->name),
+                    'slug' => $name_slug,
+                    'parent_id' => $request->parent_id,
+                    'board_id' => $lesson->board_id,
+                    'assign_class_id' => $lesson->assign_class_id,
+                    'assign_subject_id' => $lesson->assign_subject_id,
+                    'type' => $request->resource_type,
+                    'teacher_id'=>$request->teacher_id,
+                ];
+
+                $resourceStore = Lesson::create($data);
+                $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
+                $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image", $name_slug);
+                $origin_video = LessonAttachmentTrait::uploadAttachment($request->file('video_url'), "video", $name_slug);
+                // $video_path=$request->video_url->store('public');
+
+                $data_attachment = [
+                    'subject_lesson_id' => $resourceStore->id,
+                    'attachment_origin_url' => $origin_video,
+                    'video_thumbnail_image' =>  $video_thumbnail_image_url_path,
+                    'video_origin_url' => $origin_video,
+                    'video_resize_480' => $origin_video,
+                    'video_resize_720' => $origin_video,
+                    'type' => 2,
+                    'progress_status' => 1,
+                    'attachment_type' => $request->resource_type,
+                    'video_duration' => $request->duration,
+                ];
+
+                $lesson_attachment = LessonAttachment::create($data_attachment);
+                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+                // $resizes = ["480", "720", "1080"];
+                // foreach ($resizes as $key => $resize) {
+                //     if ($resize == 480) {
+                //         $x_dimension = 640;
+                //         $y_dimension = 480;
+                //     }
+                //     if ($resize == 720) {
+                //         $x_dimension = 1280;
+                //         $y_dimension = 720;
+                //     }
+                //     // if($resize==1080){
+                //     //     $x_dimension=1920;
+                //     //     $y_dimension =1080;  
+                //     // }
+                //     $this->dispatch(new ConvertVideoForResolution($lesson_attachment, $x_dimension, $y_dimension,$slug));
+                // }
+
+            }
+            if ($request->resource_type == 3) {
+                $lesson = Lesson::find($request->parent_id);
+                $name_slug = Str::slug($request->name);
+                $data = [
+                    'name' => ucfirst($request->name),
+                    'slug' => $name_slug,
+                    'parent_id' => $request->parent_id,
+                    'board_id' => $lesson->board_id,
+                    'assign_class_id' => $lesson->assign_class_id,
+                    'assign_subject_id' => $lesson->assign_subject_id,
+                    'type' => $request->resource_type,
+                    'content' => $request->content,
+                    'teacher_id'=>$request->teacher_id,
+                ];
+
+                $resourceStore = Lesson::create($data);
+                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+            if ($request->resource_type == 4) {
+                $lesson = Lesson::find($request->parent_id);
+                $setName = $request->name;
+                $board_id = $lesson->board_id;
+                $assign_class_id = $lesson->assign_class_id;
+                $assign_subject_id = $lesson->assign_subject_id;
+                $questionFile = $request->questionExcel;
+                if ($request->hasFile('questionExcel')) {
+
+                    $subject_id = $lesson->assign_subject_id;
+                    $board_id = $lesson->board_id;
+                    $assign_class_id = $lesson->assign_class_id;
+                    $new_excel_name = date('d-m-Y-H-i-s') . '_' . $questionFile->getClientOriginalName();
+                    $questionFileExtension = $questionFile->getClientOriginalExtension();
+
+                    if ($questionFileExtension != 'xlsx') {
+                        Toastr::error('Not a valid excel file.', '', ["positionClass" => "toast-top-right"]);
+                        return redirect()->back();
+                    } else {
+                        $questionFile = $request->file('questionExcel');
+
+                        $questionFile = $request->file('questionExcel')->store('imports');
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id);
+                        $import->import($questionFile);
+
+                        Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
+                        return redirect()->back();
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+           
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
     }
 }

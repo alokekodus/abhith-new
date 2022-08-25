@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\SubjectLessonVisitor;
 use App\Models\User;
 use App\Models\UserDetails;
+use App\Models\UserPracticeTest;
 
 function attachmenetPath($path)
 {
@@ -189,4 +190,40 @@ function timeDifference($from, $to)
     $from = new DateTime($from);
     $diff = $to->diff($from);
     return $diff->format('%H:%I:%S');
+}
+function isPracticeTestPlayed($set_id){
+    $user_practice_tests=UserPracticeTest::where('user_id',auth()->user()->id)->where('set_id',$set_id)->first();
+    if($user_practice_tests){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+function subjectTotalVideo($subject_id){
+    $total_video=Lesson::where('assign_subject_id',$subject_id)->where('type',2)->get()->count();
+    return $total_video;
+}
+function subjectTotalArticle($subject_id){
+    $total_article=Lesson::where('assign_subject_id',$subject_id)->where('type',3)->get()->count();
+    return $total_article;
+}
+function subjectTotalDocument($subject_id){
+    $total_document=Lesson::where('assign_subject_id',$subject_id)->where('type',1)->get()->count();
+    return $total_document;
+}
+function lessonTotalVideo($parent_id){
+    $total_video=Lesson::where('parent_id',$parent_id)->where('type',2)->get()->count();
+    return $total_video;
+}
+function lessonTotalArticle($parent_id){
+    $total_article=Lesson::where('parent_id',$parent_id)->where('type',3)->get()->count();
+    return $total_article;
+}
+function lessonTotalDocument($parent_id){
+    $total_document=Lesson::where('parent_id',$parent_id)->where('type',1)->get()->count();
+    return $total_document;
+}
+function lessonTopicFindById($parent_id){
+    $total_lesson=Lesson::where('parent_id',$parent_id)->get()->count();
+    return $total_lesson;
 }

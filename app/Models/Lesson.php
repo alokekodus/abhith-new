@@ -20,7 +20,8 @@ class Lesson extends Model
         'assign_class_id',
         'assign_subject_id',
         'content',
-        'type'
+        'type',
+        'teacher_id'
 
     ];
     public static function getRules($type)
@@ -153,5 +154,8 @@ class Lesson extends Model
     }
     public function activeSets(){
         return $this->hasMany(Set::class,'lesson_id','id')->where('is_activate',1);
+    }
+    public function parentLesson(){
+        return $this->belongsTo(Lesson::class,'parent_id','id');
     }
 }

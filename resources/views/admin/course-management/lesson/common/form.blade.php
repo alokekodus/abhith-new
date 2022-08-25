@@ -8,7 +8,7 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            <label for="">@yield('lesson-type') Name<span class="text-danger">*</span></label>
+            <label for="">@yield('lesson-type')Resource Name<span class="text-danger">*</span></label>
             <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="">
             <span class="text-danger">{{ $errors->first('board_id') }}</span>
         </div>
@@ -17,12 +17,12 @@
 <div class="row">
     <div class="col-6">
         <div class="form-group">
-            <label for="">@yield('lesson-type') Content Type(Image/pdf/video/article)<span
+            <label for="">@yield('lesson-type') Resource Type(Pdf/video/article)<span
                     class="text-danger">*</span></label>
 
-            <select name="content_type" id="content_type" class="form-control" onchange="showDiv()">
+            <select name="resource_type" id="content_type" class="form-control" onchange="showDiv()">
                 <option value="">-- Select -- </option>
-                <option value="1">File Attachement(Image/pdf)</option>
+                <option value="1">File Attachement(pdf)</option>
                 <option value="2">Video</option>
                 <option value="3">Article</option>
                 <option value="4">Practice Test</option>
@@ -30,12 +30,26 @@
 
         </div>
     </div>
+    <div class="col-6">
+        <div class="form-group">
+            <label for="">@yield('lesson-type') Assign Teacher<span class="text-danger">*</span></label>
+
+            <select  id="teacher_id" class="form-control" name="teacher_id">
+                <option value="">-- Select -- </option>
+                @foreach($teachers as $key=>$teacher)
+                <option value="{{$teacher->user_id}}">{{$teacher->name}}</option>
+                @endforeach
+            </select>
+
+        </div>
+    </div>
 </div>
+
 <div class="blockquote blockquote-primary fileattachment" id="fileattachment" style="display:none;">
     <div class="row">
         <div class="col-12">
             <div class="form-group">
-                <label for="">Upload File Attachement(Image/pdf)</label>
+                <label for="">Upload File Attachement(pdf)</label>
                 <div class="file-upload">
                     <div class="file-select">
                         <div class="file-select-button" id="fileName">Choose File</div>
@@ -74,6 +88,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div class="form-group">
@@ -124,7 +139,7 @@
 
         <div class="form-group">
             <label for="">Upload questions in excel format</label>
-            <input type="file" name="questionExcel" class="form-control" required>
+            <input type="file" name="questionExcel" class="form-control">
         </div>
     </div>
 </div>

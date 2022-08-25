@@ -79,16 +79,20 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::get('create', [AssignSubjectController::class, 'create'])->name('admin.course.management.subject.create');
             Route::get('edit/{subject_id}', [AssignSubjectController::class, 'edit'])->name('admin.course.management.subject.edit');
             Route::post('store', [AssignSubjectController::class, 'store'])->name('admin.course.management.subject.store');
+            Route::get('view/{subject_id}', [AssignSubjectController::class, 'view'])->name('admin.course.management.subject.view');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
+            Route::get('lesson/{lesson_id}', [AssignSubjectController::class, 'assignSubjectLesson'])->name('admin.course.management.lesson.topic.display');
             Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
+           
         });
         Route::prefix('lesson')->group(function(){
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');
-            Route::get('create', [LessonController::class,'create'])->name('admin.course.management.lesson.create');
+            Route::get('create/{subject_id}', [LessonController::class,'create'])->name('admin.course.management.lesson.create');
             Route::post('store', [LessonController::class,'store'])->name('admin.course.management.lesson.store');
             Route::get('edit/{lesson_slug}', [LessonController::class,'edit'])->name('admin.course.management.lesson.edit');
             // Route::post('store/file', [LessonController::class,'storeFile'])->name('admin.course.management.lesson.storefile');
             Route::get('{lesson_id}', [LessonController::class,'topicCreate'])->name('admin.course.management.lesson.topic.create');
+            Route::post('topic/store', [LessonController::class,'topicStore'])->name('admin.course.management.lesson.topic.store');
             Route::get('view/{lesson_id}', [LessonController::class,'topicView'])->name('admin.course.management.lesson.view');
             Route::get('subtopic/{lesson_slug}/{topic_slug}', [LessonController::class,'subTopicCreate'])->name('admin.course.management.lesson.subtopic.create');
             Route::get('attachment/{lesson_id}/{url_type}', [LessonController::class,'displayAttachment'])->name('admin.course.management.lesson.attachment');
@@ -194,7 +198,7 @@ Route::group(['middleware' => ['auth'] ],function(){
 
 
 });
-
+Route::get('course-management/subject/demovideo/{subject_id}',[SubjectController::class,'getDemoVideo'])->name('admin.subject.promovideo');
 
 /* ------------------------------- Enquiry Not Authenticated ------------------------------------ */
 Route::prefix('enquiry')->group(function(){
