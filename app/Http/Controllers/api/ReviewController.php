@@ -12,7 +12,7 @@ class ReviewController extends Controller
     public function store(Request $request){
         try {
             $validator = Validator::make($request->all(), [
-                'user_id' => 'required',
+                
                 'subject_id'=>'required',
             ]);
 

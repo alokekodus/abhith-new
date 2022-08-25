@@ -68,7 +68,11 @@ class SubjectController extends Controller
     }
     public function topicDetails($topic_id){
         try {
-            return view('website.my_account.lesson_details');
+            $lesson=Lesson::find(Crypt::decrypt($topic_id));
+            $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
+            $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
+            $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
+            return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles'));
         } catch (\Throwable $th) {
             //throw $th;
         }

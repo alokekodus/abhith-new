@@ -21,8 +21,9 @@
                          </div>
                          <div class="article-content">
                              <h5> {{$lesson->name}}</h5>
-                             <p>Document:|Video:{{lessonTotalVideo($lesson->id)}}|Article:{{lessonTotalArticle($lesson->id)}}|Practice Test| Teacher</p>
+                             <p>Document:{{lessonTotalDocument($lesson->id)}}|Video:{{lessonTotalVideo($lesson->id)}}|Article:{{lessonTotalArticle($lesson->id)}}|Practice Test| Teacher</p>
                          </div>
+                         <a href="{{route('subject.topic.details',Crypt::encrypt($lesson->id))}}"><i class="fa fa-play-circle" style="font-size:48px;color:#076fef"></i></a>
                      </div>
                      @endforeach
             </div>

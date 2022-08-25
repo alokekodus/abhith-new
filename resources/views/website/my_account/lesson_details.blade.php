@@ -23,7 +23,6 @@
         border-radius: 20px;
         border: 3px solid rgb(231, 231, 230);
     }
-  
 </style>
 @endsection
 
@@ -34,9 +33,12 @@
 <div class="lesson-details-main-div">
     <div class="lesson-details-sidebar">
         <div class="lesson-sidebar-btn">
-            <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen" >5 Videos</button>
-            <button class="lessonLinks" onclick="openFile(event, 'articles')" >12 Articles</button>
-            <button class="lessonLinks" onclick="openFile(event, 'documents')" >10 Documents</button>
+            <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen">{{$topicVideos->count()}}
+                Videos</button>
+            <button class="lessonLinks" onclick="openFile(event, 'articles')">{{$topicArticles->count()}}
+                Articles</button>
+            <button class="lessonLinks" onclick="openFile(event, 'documents')">{{$topicDocuments->count()}}
+                Documents</button>
         </div>
     </div>
     <div class="topic-content mb-5">
@@ -48,68 +50,70 @@
                 <div class="topic-content-sub-heading mt-4">
                     <h3>Videos</h3>
                 </div>
-                <div class="row">     
-                    @php
-                        $test = 5;    
-                    @endphp        
-                    @for ($i = 0; $i < $test; $i++)
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card video-lesson-pic">
-                                <img src="{{asset('asset_website/img/course/image1.png')}}" alt="">
-                                <div class="video-lesson-overlay">
-                                    <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
-                                </div>
-                            </div>
-                            <div class="video-lesson-text">
-                                <p>Lorem ipsum dolor sit amet.</p>
+                <div class="row">
+                    @if($topicVideos->count()>0)
+                    @foreach ($topicVideos as $key=>$video)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card video-lesson-pic">
+                            <img src="{{asset($video->lessonAttachment->video_thumbnail_image)}}" alt="">
+                            <div class="video-lesson-overlay">
+                                <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i
+                                        class="fa fa-play-circle-o" aria-hidden="true"></i></a>
                             </div>
                         </div>
-                    @endfor 
+                        <div class="video-lesson-text">
+                            <p>{{$video->name}}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endif
                 </div>
             </div>
-    
+
             <div class="container lessonContent" id="articles">
                 <div class="topic-content-sub-heading mt-4">
                     <h3>Articles</h3>
                 </div>
-                <div class="row"> 
-                    @php
-                        $test = 12;    
-                    @endphp
-                    @for ($i = 0; $i < $test; $i++)
-                        <div class="article-div d-flex">
-                            <div class="article-img">
-                                <img src="{{asset('asset_website/img/docs.png')}}" alt="">
-                            </div>
-                            <div class="article-content">
-                                <h5>Giving kids and teens a safer experience online</h5>
-                                <p>Monday, 30 May 2022, 10:21 AM</p>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-    
-            <div class="container lessonContent" id="documents">
-                <div class="topic-content-sub-heading mt-4">
-                    {{-- <h3>Documents</h3> --}}
-                </div>
                 <div class="row">
-                    {{-- @php
-                        $test = 8;    
+                    @php
+                    $test = 12;
                     @endphp
-                    @for ($i = 0; $i < $test; $i++)
-                        
-                    @endfor --}}
-                    <div class="document-content mx-4">
-                        <h2>Lesson Web Designing Start</h2>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit aut veniam eum neque, sed ullam magni cum recusandae dicta atque et nihil repellendus porro maxime quibusdam commodi quaerat? Doloribus, maxime.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione tempore impedit est neque officiis eius ipsum laudantium quaerat doloribus ad quam hic dolorum, voluptates architecto dolore vel voluptatibus quisquam, fuga fugit sint, magni veritatis tempora. Nihil voluptates aliquam, ea, maxime optio laudantium molestias commodi dolore necessitatibus quis sint dignissimos harum!</p>
-                    </div>
+                    @for ($i = 0; $i < $test; $i++) <div class="article-div d-flex">
+                        <div class="article-img">
+                            <img src="{{asset('asset_website/img/docs.png')}}" alt="">
+                        </div>
+                        <div class="article-content">
+                            <h5>Giving kids and teens a safer experience online</h5>
+                            <p>Monday, 30 May 2022, 10:21 AM</p>
+                        </div>
                 </div>
+                @endfor
+            </div>
+        </div>
+
+        <div class="container lessonContent" id="documents">
+            <div class="topic-content-sub-heading mt-4">
+                {{-- <h3>Documents</h3> --}}
+            </div>
+            <div class="row">
+                {{-- @php
+                $test = 8;
+                @endphp
+                @for ($i = 0; $i < $test; $i++) @endfor --}} <div class="document-content mx-4">
+                    <h2>Lesson Web Designing Start</h2>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit aut veniam eum neque, sed ullam
+                        magni cum recusandae dicta atque et nihil repellendus porro maxime quibusdam commodi quaerat?
+                        Doloribus, maxime.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione tempore impedit est neque
+                        officiis eius ipsum laudantium quaerat doloribus ad quam hic dolorum, voluptates architecto
+                        dolore vel voluptatibus quisquam, fuga fugit sint, magni veritatis tempora. Nihil voluptates
+                        aliquam, ea, maxime optio laudantium molestias commodi dolore necessitatibus quis sint
+                        dignissimos harum!</p>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <script>
@@ -133,5 +137,5 @@
         document.getElementById("defaultOpen").click();
 </script>
 
-  
+
 @endsection
