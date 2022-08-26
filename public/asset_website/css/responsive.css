@@ -279,6 +279,18 @@
     #detailsPage{
         margin-top: 30px;
     }
+    #articles .article-content h5{
+        font-size: 14px;
+    }
+    #articles .article-content p{
+        font-size: 10px;
+    }
+    #documents .doc-content h5 {
+        font-size: 14px;
+    }
+    #documents .doc-content p {
+        font-size: 10px;
+    }
 }
 @media (max-width: 767px) {
     a {
