@@ -20,7 +20,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    /* .login-details li:first-child {
+    /* .login-details li:first-child { 
         margin-right: 100px;
         position: relative;
     }
