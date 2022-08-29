@@ -173,7 +173,6 @@ class CourseController extends Controller
                         $rating_average="No reviews yet";
                     }
                     
-                   
                     $data = [
                         "id" => $course->id,
                         "subject_name" => $course->subject_name,
