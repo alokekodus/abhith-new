@@ -29,87 +29,108 @@ class CourseController extends Controller
         foreach ($courses as $key => $value) {
             # code...
             $price = [];
-            $publishDate = Carbon::parse($value->publish_date)->format('Y-m-d') ;
+            $publishDate = Carbon::parse($value->publish_date)->format('Y-m-d');
             $Today = Carbon::today()->format('Y-m-d');
             if ($publishDate < $Today) {
                 //  dd('less today', $value->publish_date);
-                $chapters = Chapter::where([['course_id', $value->id],['is_activate',Activation::Activate]])->get();
+                $chapters = Chapter::where([['course_id', $value->id], ['is_activate', Activation::Activate]])->get();
                 foreach ($chapters as $key => $value2) {
                     # code...
-                    $price [] = $value2->price;
+                    $price[] = $value2->price;
                 }
                 $final_price = array_sum($price);
-                $published['final_price']=$final_price;
-                $published['id']=$value->id;
-                $published['name']=$value->name;
-                $published['course_pic']=$value->course_pic;
-                $published['duration']=$value->durations;
-                $published['publish_date']=$value->publish_date;
+                $published['final_price'] = $final_price;
+                $published['id'] = $value->id;
+                $published['name'] = $value->name;
+                $published['course_pic'] = $value->course_pic;
+                $published['duration'] = $value->durations;
+                $published['publish_date'] = $value->publish_date;
                 $publishCourse[] = $published;
             } elseif ($publishDate == $Today) {
                 //    dd('Not Today', $value->publish_date);
                 $publishTime = Carbon::parse($value->publish_date)->format('H:i');
                 $presentTime = Carbon::now()->format('H:i');
                 if ($publishTime < $presentTime) {
-                $chapters = Chapter::where([['course_id', $value->id],['is_activate',Activation::Activate]])->get();
+                    $chapters = Chapter::where([['course_id', $value->id], ['is_activate', Activation::Activate]])->get();
                     foreach ($chapters as $key => $value3) {
                         # code...
-                        $price [] = $value3->price;
+                        $price[] = $value3->price;
                     }
                     $final_price = array_sum($price);
-                    $published['final_price']=$final_price;
-                    $published['id']=$value->id;
-                    $published['name']=$value->name;
-                    $published['course_pic']=$value->course_pic;
-                    $published['duration']=$value->durations;
-                    $published['publish_date']=$value->publish_date;
+                    $published['final_price'] = $final_price;
+                    $published['id'] = $value->id;
+                    $published['name'] = $value->name;
+                    $published['course_pic'] = $value->course_pic;
+                    $published['duration'] = $value->durations;
+                    $published['publish_date'] = $value->publish_date;
                     $publishCourse[] = $published;
                 } else {
-                    $upcoming['id']=$value->id;
-                    $upcoming['name']=$value->name;
-                    $upcoming['course_pic']=$value->course_pic;
-                $upcoming['duration']=$value->durations;
-                    $upcoming['publish_date']=$value->publish_date;
+                    $upcoming['id'] = $value->id;
+                    $upcoming['name'] = $value->name;
+                    $upcoming['course_pic'] = $value->course_pic;
+                    $upcoming['duration'] = $value->durations;
+                    $upcoming['publish_date'] = $value->publish_date;
                     $upComingCourse[] = $upcoming;
                 }
             } elseif ($publishDate > $Today) {
                 // dd('GRATER Today', $value->publish_date);
-                $upcoming['id']=$value->id;
-                $upcoming['name']=$value->name;
-                $upcoming['duration']=$value->durations;
-                $upcoming['course_pic']=$value->course_pic;
-                $upcoming['publish_date']=$value->publish_date;
+                $upcoming['id'] = $value->id;
+                $upcoming['name'] = $value->name;
+                $upcoming['duration'] = $value->durations;
+                $upcoming['course_pic'] = $value->course_pic;
+                $upcoming['publish_date'] = $value->publish_date;
                 $upComingCourse[] = $upcoming;
             }
         }
-        $subjects = Subject::where('is_activate',Activation::Activate)->get();
+        $subjects = Subject::where('is_activate', Activation::Activate)->get();
 
         $response = [
-            'subjects' => $subjects, 
+            'subjects' => $subjects,
             'publishCourse' => $publishCourse,
             'upcomingCourse' => $upComingCourse
         ];
         // dd($publishCourse);
         return response()->json(['response' => $response, 'message' => 'Data fetch successfully']);
     }
-    public function findClass(Request $request){
-       
-       $board=AssignClass::where(['board_id'=>$request->board_id])->get();
-       return response()->json($board);
+    public function findClass(Request $request)
+    {
+
+        $board = AssignClass::where(['board_id' => $request->board_id])->get();
+        return response()->json($board);
     }
-    public function findBoardClassSubject(Request $request){
-        $subject=AssignSubject::where(['board_id'=>$request->board_id,'assign_class_id'=>$request->class_id])->get();
-       return response()->json($subject);
+    public function findBoardClassSubject(Request $request)
+    {
+        $subject = AssignSubject::where(['board_id' => $request->board_id, 'assign_class_id' => $request->class_id])->get();
+        return response()->json($subject);
     }
-    public function allCourses(){
+    public function allCourses()
+    {
         try {
-            $courses=AssignSubject::select('id','subject_name','image','subject_amount','assign_class_id','board_id')->with('assignClass:id,class','boards:id,exam_board')->where('is_activate', 1)->limit(4)->get();
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->limit(4)->get();
+
             if (!$courses->isEmpty()) {
+                $all_courses = [];
+                foreach ($courses as $key => $course) {
+                    $total_rating = $course->review()->count() * 5;
+                    $rating_average = $course->review()->sum('rating') / $total_rating * 5;
+                    $data = [
+                        "id" => $course->id,
+                        "subject_name" => $course->subject_name,
+                        "image" => $course->image,
+                        "subject_amount" => $course->subject_amount,
+                        "assign_class_id" => $course->assign_class_id,
+                        "board_id" => $course->board_id,
+                        "assign_class" => $course->assignClass,
+                        "boards" => $course->boards,
+                        "rating" => $rating_average,
+                    ];
+                    $all_courses = $data;
+                }
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "all board",
-                    "result" => $courses,
+                    "result" => $all_courses,
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
@@ -131,17 +152,35 @@ class CourseController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
-       
     }
-    public function allUpcommingCourses(){
+    public function allUpcommingCourses()
+    {
         try {
-            $courses=AssignSubject::select('id','subject_name','image','subject_amount','assign_class_id','board_id')->with('assignClass:id,class','boards:id,exam_board')->where('is_activate',1)->limit(4)->get();
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->limit(4)->get();
+
             if (!$courses->isEmpty()) {
+                $all_courses = [];
+                foreach ($courses as $key => $course) {
+                    $total_rating = $course->review()->count() * 5;
+                    $rating_average = $course->review()->sum('rating') / $total_rating * 5;
+                    $data = [
+                        "id" => $course->id,
+                        "subject_name" => $course->subject_name,
+                        "image" => $course->image,
+                        "subject_amount" => $course->subject_amount,
+                        "assign_class_id" => $course->assign_class_id,
+                        "board_id" => $course->board_id,
+                        "assign_class" => $course->assignClass,
+                        "boards" => $course->boards,
+                        "rating" => $rating_average,
+                    ];
+                    $all_courses = $data;
+                }
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "all board",
-                    "result" => $courses,
+                    "result" => $all_courses,
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
@@ -162,21 +201,22 @@ class CourseController extends Controller
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
-        }  
+        }
     }
-    public function findAllClass(Request $request){
+    public function findAllClass(Request $request)
+    {
         try {
-            $board_name=$_GET['board_name'];
-            $board=Board::where('exam_board',$board_name)->where('is_activate',1)->first();
-           
-            if($board){
-                $assign_class=AssignClass::select('id','class','board_id')->where('board_id',$board->id)->get();
-                if($assign_class){
-                    $all_class=[];
-                    $all_class[0]="Select class";
-                    foreach($assign_class as $key=>$board){
-                        
-                         $all_class[$key+1]=$board->class;
+            $board_name = $_GET['board_name'];
+            $board = Board::where('exam_board', $board_name)->where('is_activate', 1)->first();
+
+            if ($board) {
+                $assign_class = AssignClass::select('id', 'class', 'board_id')->where('board_id', $board->id)->get();
+                if ($assign_class) {
+                    $all_class = [];
+                    $all_class[0] = "Select class";
+                    foreach ($assign_class as $key => $board) {
+
+                        $all_class[$key + 1] = $board->class;
                     }
                     $result = ["all_class" => $all_class];
                     $data = [
@@ -184,12 +224,10 @@ class CourseController extends Controller
                         "status" => 1,
                         "message" => "all Class",
                         "result" => $result,
-    
+
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                    
                 }
-                
             }
             $result = ["all_class" => []];
             $data = [
@@ -200,7 +238,6 @@ class CourseController extends Controller
 
             ];
             return response()->json(['status' => 1, 'result' => $data]);
-         
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,

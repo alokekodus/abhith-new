@@ -34,4 +34,7 @@ class AssignSubject extends Model
     public function assignOrder(){
         return $this->hasMany(CartOrOrderAssignSubject::class,'assign_subject_id','id');
     }
+    public function review(){
+        return $this->hasMany(Review::class,'subject_id','id');
+    }
 }

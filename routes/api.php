@@ -44,11 +44,6 @@ Route::post('verify-mobile-otp', [WebsiteAuthController::class, 'verifyMobileOtp
 Route::post('send-email-otp', [WebsiteAuthController::class, 'sendEmailOtp']);
 Route::post('verify-email-otp', [WebsiteAuthController::class, 'verifyEmailOtp']);
 
-
-Route::get('/video-url', function () {
-    $path = storage_path('app/public/1_480.mp4');
-    return response()->json($path); 
-});
 //get banner
 Route::get('/banner',[BannerController::class,'index']);
 Route::post('get-course-details', [CourseController::class, 'index']);

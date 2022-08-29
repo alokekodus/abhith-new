@@ -31,14 +31,31 @@ class SubjectController extends Controller
                 return response()->json(['status' => 0, 'result' => $data]);
             }
 
-            $subjects = AssignSubject::whereHas('boards', function ($query) use ($request) {
+            $subjects = AssignSubject::with('review')->whereHas('boards', function ($query) use ($request) {
                 $query->where('exam_board', $request->board);
             })->whereHas('assignClass', function ($query) use ($request) {
                 $query->where('class', $request->standard);
             })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->get();
             $total_amount = $subjects->sum('subject_amount');
+             $all_subject=[];
+            foreach($subjects as $key=>$subject){
+                $total_rating=$subject->review()->count()*5;
+                $rating_average=$subject->review()->sum('rating') / $total_rating * 5;
+                $data=[
+                    'id'=>$subject->id,
+                    'subject_name'=>$subject->subject_name,
+                    'image'=>$subject->image,
+                    'subject_amount'=>$subject->subject_amount,
+                    'rating'=>$rating_average,
+                ];
+                $all_subject[]=$data;
+            }
+            
+
+
+            
             $data = [
-                'subjects' => $subjects,
+                'subjects' => $all_subject,
                 'total_amount' => $total_amount,
             ];
             if (!$subjects->isEmpty()) {
@@ -66,7 +83,7 @@ class SubjectController extends Controller
                 "message" => "Something went wrong",
 
             ];
-            return response()->json(['status' => 0, 'result' => $data]);
+            return response()->json(['status' => 0, 'result' => $th]);
         }
     }
     public function subjectDetails(Request $request)
@@ -345,6 +362,7 @@ class SubjectController extends Controller
                             'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
                             'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
+                            'video_duration'=>$topic->video_duration??null
 
                         ];
 
@@ -362,7 +380,7 @@ class SubjectController extends Controller
                                     'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
                                     'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
-
+                                    'video_duration'=>$topic->video_duration??null,
                                 ];
                             $topic_video[] = $sub_topic_video;
                         }
