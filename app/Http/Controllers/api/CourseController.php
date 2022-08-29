@@ -111,7 +111,7 @@ class CourseController extends Controller
             if (!$courses->isEmpty()) {
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                    if($course->review->count>0){
+                    if($course->review->count()>0){
                         $total_rating = $course->review()->count() * 5;
                         $rating_average = $course->review()->sum('rating') / $total_rating * 5;
                     }else{
@@ -155,7 +155,7 @@ class CourseController extends Controller
                 "message" => "Something went wrong",
 
             ];
-            return response()->json(['status' => 0, 'result' => $th]);
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
     public function allUpcommingCourses()
