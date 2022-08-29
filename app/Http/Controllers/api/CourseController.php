@@ -134,7 +134,7 @@ class CourseController extends Controller
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "all board",
+                    "message" => "all courses",
                     "result" => $all_courses,
 
                 ];
@@ -189,7 +189,7 @@ class CourseController extends Controller
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "all board",
+                    "message" => "all courses",
                     "result" => $all_courses,
 
                 ];
