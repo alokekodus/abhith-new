@@ -129,7 +129,7 @@ class CourseController extends Controller
                         "boards" => $course->boards,
                         "rating" => $rating_average,
                     ];
-                    $all_courses = $data;
+                    $all_courses[] = $data;
                 }
                 $data = [
                     "code" => 200,
@@ -184,7 +184,7 @@ class CourseController extends Controller
                         "boards" => $course->boards,
                         "rating" => $rating_average,
                     ];
-                    $all_courses = $data;
+                    $all_courses[] = $data;
                 }
                 $data = [
                     "code" => 200,
