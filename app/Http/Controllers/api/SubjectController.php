@@ -345,7 +345,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
             $sub_topic_video = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('type', 2)->paginate();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('type', 2)->paginate();
 
             if ($lesson != null) {
 
@@ -362,7 +362,7 @@ class SubjectController extends Controller
                             'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
                             'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
-                            'video_duration'=>$topic->video_duration??null
+                            'video_duration'=>$topic->lessonAttachment->video_duration??null
 
                         ];
 
@@ -452,7 +452,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
             $sub_topic_pdf = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('parent_id', '!=', null)->where('type', 1)->paginate();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('parent_id', '!=', null)->where('type', 1)->paginate();
 
             if ($lesson != null) {
 
@@ -552,7 +552,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
 
-            $lesson = Lesson::with(['topics:parent_id,name', 'subTopics'])->where('id', $id)->first();
+            $lesson = Lesson::with(['topics:parent_id,name', 'subTopics'])->where('parent_id', $id)->first();
 
             if ($lesson->topics) {
                 $lesson_topic = $lesson->topics()->paginate(5);
