@@ -115,7 +115,7 @@ class CourseController extends Controller
                         $total_rating = $course->review()->count() * 5;
                         $rating_average = $course->review()->sum('rating') / $total_rating * 5;
                     }else{
-                        $rating_average=0;
+                        $rating_average="No reviews yet";
                     }
                     
                     $data = [
@@ -166,8 +166,14 @@ class CourseController extends Controller
             if (!$courses->isEmpty()) {
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                    $total_rating = $course->review()->count() * 5;
-                    $rating_average = $course->review()->sum('rating') / $total_rating * 5;
+                    if($course->review->count()>0){
+                        $total_rating = $course->review()->count() * 5;
+                        $rating_average = $course->review()->sum('rating') / $total_rating * 5;
+                    }else{
+                        $rating_average="No reviews yet";
+                    }
+                    
+                   
                     $data = [
                         "id" => $course->id,
                         "subject_name" => $course->subject_name,
