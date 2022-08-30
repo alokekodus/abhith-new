@@ -142,11 +142,11 @@ class CourseController extends Controller
             } else {
                 $data = [
                     "code" => 200,
-                    "status" => 0,
+                    "status" => 1,
                     "message" => "No record found",
 
                 ];
-                return response()->json(['status' => 0, 'result' => $data]);
+                return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
             $data = [
@@ -197,11 +197,11 @@ class CourseController extends Controller
             } else {
                 $data = [
                     "code" => 200,
-                    "status" => 0,
+                    "status" => 1,
                     "message" => "No record found",
 
                 ];
-                return response()->json(['status' => 0, 'result' => $data]);
+                return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
             $data = [

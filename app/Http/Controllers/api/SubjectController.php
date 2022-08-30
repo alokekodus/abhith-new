@@ -820,7 +820,7 @@ class SubjectController extends Controller
                 "message" => "Something went wrong",
                 "result" => [],
             ];
-            return response()->json(['status' => 1, 'result' => $th]);
+            return response()->json(['status' => 1, 'result' => $data]);
         }
     }
 }

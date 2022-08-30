@@ -211,7 +211,7 @@ class CartController extends Controller
                     "message" => "No data found",
 
                 ];
-                return response()->json(['status' => 0, 'result' => $data]);
+                return response()->json(['status' => 1, 'result' => $data]);
             }
         } catch (\Throwable $th) {
             $data = [
