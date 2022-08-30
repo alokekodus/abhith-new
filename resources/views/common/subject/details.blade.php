@@ -57,7 +57,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="mt-5">
-                                    <h4>Course Description</h4>
+                                    <h4>Subject Description</h4>
                                     {!!$subject->description!!}
                                 </div>
                             </div>
@@ -99,11 +99,9 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
-                                        <h4>Course Description</h4>
+                                        <h4>Subject Description</h4>
                                         <p>{{!!$subject->description!!}}</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
-                                            voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
-                                            velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -158,14 +156,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 order-2 order-lg-1 order-md-1 order-sm-1 mt-3">
-                                        <h4>Course Description</h4>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat architecto
-                                            expedita ratione itaque vero reiciendis odit perspiciatis possimus beatae?
-                                            Consectetur cupiditate nesciunt nulla quod vero dolorem explicabo, eos
-                                            sapiente quibusdam.</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sapiente
-                                            voluptas perferendis nemo repellat necessitatibus id, eum, in explicabo ipsa
-                                            velit. Ratione, quos! Veniam cumque perspiciatis harum placeat, nemo ab.</p>
+                                        <h4>Subject Description</h4>
+                                        <p>{{$subject->description}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -227,6 +219,17 @@
                     </h4>
                     {{-- <span>Created by : Demo Teacher</span><br> --}}
                     {{-- <span></i>Total Lesson: {{$subject->lesson->count()}}</span> --}}
+
+                    {{-- <a
+                        href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
+                        class="enroll">View Details</a> --}}
+
+
+                    @if(auth()->check() && isUserBuy($subject->id))
+                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+                        class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
+                        Course</a>
+                    @else
                     <div class="d-flex justify-content-between align-items-center mx-4"
                         style="margin-bottom: -15px; margin-top:15px">
                         <p>
@@ -239,18 +242,9 @@
                     </div>
                     <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2
                         days left at this price!</span>
-                    {{-- <a
-                        href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
-                        class="enroll">View Details</a> --}}
-
-
-                    @if(auth()->check() && isUserBuy($subject->id))
-                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
-                        class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
-                        Course</a>
-                    @else
                     <div class="d-flex card-button mb-2 mx-4">
-                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
+                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
+                            class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
                             <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
                         <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
@@ -355,8 +349,9 @@
                                         target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
 
-                                    @if($topic->type==2 && $topic->lessonAttachment->free_demo==1 ) <p data-toggle="modal" data-target="#exampleModalLong"
-                                        data-lesson="{{$topic->id}}" id="previewVideo">preview
+                                    @if($topic->type==2 && $topic->lessonAttachment->free_demo==1 ) <p
+                                        data-toggle="modal" data-target="#exampleModalLong" data-lesson="{{$topic->id}}"
+                                        id="previewVideo">preview
                                     </p>
                                     <p>{{round($topic->lessonAttachment->video_duration,2)}} mins
                                     </p> @endif
@@ -452,10 +447,10 @@
                 </button>
             </div>
             <div class="modal-body" style="box-shadow: 0px 6px 10px #d1d1d1;">
-                
+
                 <span class="demoVideoPlayer"></span>
-                
-                
+
+
                 <div class="course-desc1">
                     <h4 class="small-heading-black">
                         <span class="d-flex  course-header-and-back-to-pckg-btn">
