@@ -39,8 +39,13 @@ class SubjectController extends Controller
             $total_amount = $subjects->sum('subject_amount');
              $all_subject=[];
             foreach($subjects as $key=>$subject){
-                $total_rating=$subject->review()->count()*5;
-                $rating_average=$subject->review()->sum('rating') / $total_rating * 5;
+                if($subject->review->count()>0){
+                    $total_rating = $subject->review()->count() * 5;
+                    $rating_average = $subject->review()->sum('rating') / $total_rating * 5;
+                }else{
+                    $rating_average="No reviews yet";
+                }
+                
                 $data=[
                     'id'=>$subject->id,
                     'subject_name'=>$subject->subject_name,
