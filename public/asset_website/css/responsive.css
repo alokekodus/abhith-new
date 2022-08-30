@@ -1034,6 +1034,11 @@
     #articles .article-content h5 {
         font-size: 16px;
     }
+    .enroll {
+        right: 10px;
+        padding: 7px 10px;
+        bottom: 7px;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
