@@ -845,27 +845,29 @@ class SubjectController extends Controller
             }
 
             $lesson_id = $request->lesson_id;
-            $lesson=Lesson::with('lessonAttachment')->where('id',$lesson_id)->first();
+            $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
             $video_start_time = $request->video_start_time;
             $video_ending_time = $request->video_end_time;
-            $total_video_duration=$lesson->lessonAttachment->video_duration;
-            $total_watch_duration=$video_ending_time - $video_start_time;
-           
+            $total_video_duration = $lesson->lessonAttachment->video_duration;
+            $total_watch_duration = timeDifference($video_ending_time, $video_start_time);
+
+
             $data = [
+                'subject_id' => $lesson->parent_id,
                 'lesson_subject_id' => $lesson_id,
                 'teacher_id' => $lesson->teacher_id,
                 'visitor_id' => auth()->user()->id,
                 'type' => 2,
                 'video_watch_time' => $total_watch_duration,
                 'total_video_duration' => $total_video_duration,
-               
+
             ];
-            $subjectlessonvisitor=SubjectLessonVisitor::create($data);
+            $subjectlessonvisitor = SubjectLessonVisitor::create($data);
             $data = [
                 "code" => 200,
                 "status" => 1,
                 "message" => "Data stored successfully",
-               
+
             ];
             return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
@@ -873,7 +875,7 @@ class SubjectController extends Controller
                 "code" => 400,
                 "status" => 0,
                 "message" => "Something went wrong",
-                
+
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }

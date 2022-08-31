@@ -11,6 +11,7 @@ class SubjectLessonVisitor extends Model
     use SoftDeletes;
     protected $table = "subject_lesson_visitors";
     protected $fillable = [
+        'subject_id',
         'lesson_subject_id',
         'teacher_id',
         'visitor_id',

@@ -10,6 +10,7 @@ use App\Http\Controllers\api\CourseController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\Api\MobileEmailVerificationController;
 use App\Http\Controllers\api\PaymentController;
+use App\Http\Controllers\api\PerformanceController;
 use App\Http\Controllers\api\ReviewController;
 use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\api\UserController;
@@ -99,6 +100,7 @@ Route::group(['prefix' => 'user','middleware' => ['auth:sanctum']], function() {
     Route::get('/courses',[UserController::class,'allCourses']);
     Route::get('/courses/subject',[UserController::class,'allSubject']);
     Route::post('/password-reset',[UserController::class,'resetPassword']);
+    Route::get('/performance',[PerformanceController::class,'allPerformance']);
 });
 Route::group(['prefix' => 'review','middleware' => ['auth:sanctum']], function() {
     Route::get('/',[ReviewController::class,'index']);

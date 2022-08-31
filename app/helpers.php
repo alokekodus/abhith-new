@@ -227,3 +227,6 @@ function lessonTopicFindById($parent_id){
     $total_lesson=Lesson::where('parent_id',$parent_id)->get()->count();
     return $total_lesson;
 }
+function subjectTotalWatchVideo($subject_id){
+    $total_video=SubjectLessonVisitor::where('visitor_id',auth()->user()->id)->where('lesson_subject_id',$subject_id)->get()->count();
+}
