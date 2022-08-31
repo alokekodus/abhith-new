@@ -224,7 +224,6 @@
                         href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}"
                         class="enroll">View Details</a> --}}
 
-
                     @if(auth()->check() && isUserBuy($subject->id))
                     <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
                         class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
@@ -235,10 +234,11 @@
                         <p>
                             <span style="font-weight:700; font-size: 18px"><i
                                     class="fa fa-inr mr-1"></i>{{$subject->subject_amount}}</span> &nbsp;
+                            @php $original_amount=$subject->subject_amount+($subject->subject_amount*40/100) @endphp
                             <s style="color: grey"><i class="fa fa-inr mr-1"
-                                    aria-hidden="true"></i>{{$subject->subject_amount}}</s>
+                                    aria-hidden="true"></i>{{$original_amount}}</s>
                         </p>
-                        <p class="discount-percentage">87% Off</p>
+                        <p class="discount-percentage">40% Off</p>
                     </div>
                     <span style="font-size: 16px; color: red; padding-bottom:10px"><i class="fa fa-clock-o mr-1"></i> 2
                         days left at this price!</span>
@@ -264,7 +264,11 @@
                         <p class="details-bottom-text">
                             <i class="fa fa-user" aria-hidden="true"></i> &nbsp; Enrolled by
                         </p>
-                        <p>1982 students</p>
+                        <p>@if($subject->assignOrder->count()==0) Not Yet Enrolled
+                            @else
+                            {{$subject->assignOrder->count()}} students </a>
+                            @endif
+                        </p>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
@@ -353,7 +357,7 @@
                                         data-toggle="modal" data-target="#exampleModalLong" data-lesson="{{$topic->id}}"
                                         id="previewVideo">preview
                                     </p>
-                                    <p>{{round($topic->lessonAttachment->video_duration,2)}} mins
+                                    <p> {{gmdate("H:i:s", $topic->lessonAttachment->video_duration)}}
                                     </p> @endif
                                     @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i
                                         class="fa fa-play mt-2"></i>@endif @endif

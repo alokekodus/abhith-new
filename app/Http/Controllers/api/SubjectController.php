@@ -7,6 +7,7 @@ use App\Models\AssignSubject;
 use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Set;
+use App\Models\SubjectLessonVisitor;
 use App\Models\UserPracticeTest;
 use App\Models\UserPracticeTestAnswer;
 use Illuminate\Support\Facades\Validator;
@@ -37,28 +38,28 @@ class SubjectController extends Controller
                 $query->where('class', $request->standard);
             })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->get();
             $total_amount = $subjects->sum('subject_amount');
-             $all_subject=[];
-            foreach($subjects as $key=>$subject){
-                if($subject->review->count()>0){
+            $all_subject = [];
+            foreach ($subjects as $key => $subject) {
+                if ($subject->review->count() > 0) {
                     $total_rating = $subject->review()->count() * 5;
                     $rating_average = $subject->review()->sum('rating') / $total_rating * 5;
-                }else{
-                    $rating_average="No reviews yet";
+                } else {
+                    $rating_average = "No reviews yet";
                 }
-                
-                $data=[
-                    'id'=>$subject->id,
-                    'subject_name'=>$subject->subject_name,
-                    'image'=>$subject->image,
-                    'subject_amount'=>$subject->subject_amount,
-                    'rating'=>$rating_average,
+
+                $data = [
+                    'id' => $subject->id,
+                    'subject_name' => $subject->subject_name,
+                    'image' => $subject->image,
+                    'subject_amount' => $subject->subject_amount,
+                    'rating' => $rating_average,
                 ];
-                $all_subject[]=$data;
+                $all_subject[] = $data;
             }
-            
 
 
-            
+
+
             $data = [
                 'subjects' => $all_subject,
                 'total_amount' => $total_amount,
@@ -367,7 +368,7 @@ class SubjectController extends Controller
                             'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
                             'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
-                            'video_duration'=>$topic->lessonAttachment->video_duration??null
+                            'video_duration' => $topic->lessonAttachment->video_duration ?? null
 
                         ];
 
@@ -385,7 +386,7 @@ class SubjectController extends Controller
                                     'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
                                     'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
-                                    'video_duration'=>$topic->video_duration??null,
+                                    'video_duration' => $topic->video_duration ?? null,
                                 ];
                             $topic_video[] = $sub_topic_video;
                         }
@@ -615,7 +616,7 @@ class SubjectController extends Controller
                         'id' => $mcq_set->id,
                         'name' => $mcq_set->set_name,
                         'total_question' => $mcq_set->question->count(),
-                        'is_played'=>isPracticeTestPlayed($mcq_set->id),
+                        'is_played' => isPracticeTestPlayed($mcq_set->id),
                     ];
                     $all_mcq_set[] = $data;
                 }
@@ -733,8 +734,8 @@ class SubjectController extends Controller
             $findSet = Set::with('question')->where('id', $set_id)->first();
             $total_question = $findSet->question->count();
             $answers = $request->answers;
-            $user_practice_test=UserPracticeTest::where('set_id',$set_id)->where('user_id',auth()->user()->id)->first();
-            if($user_practice_test){
+            $user_practice_test = UserPracticeTest::where('set_id', $set_id)->where('user_id', auth()->user()->id)->first();
+            if ($user_practice_test) {
                 $user_practice_test->delete();
                 $user_practice_test->userPracticeTestAnswer()->delete();
             }
@@ -748,7 +749,7 @@ class SubjectController extends Controller
 
             $user_practice_test_store = UserPracticeTest::create($user_practice_test);
             foreach ($answers as $key => $answer) {
-                
+
                 $is_correct = 0;
                 $question = Question::find($answer['question_id']);
                 if ($question->correct_answer == $answer['user_answer']) {
@@ -799,17 +800,17 @@ class SubjectController extends Controller
                     'total_correct_count' => $user_practice_test->correctAnswer->count(),
                 ];
             $user_practice_test->update($update_user_practice_test_store);
-            $attempted_question=$user_practice_test->userPracticeTestAnswer->count();
-            $correct_attempted= $user_practice_test->correctAnswer->count();
-            $analysis_on_attempted_question=($correct_attempted/$attempted_question)*100;
+            $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
+            $correct_attempted = $user_practice_test->correctAnswer->count();
+            $analysis_on_attempted_question = ($correct_attempted / $attempted_question) * 100;
             $data = [
-                
+
                 'set_title' => $user_practice_test->set->set_name,
                 'total_question' => $user_practice_test->set->question->count(),
                 'attempted_question' => $attempted_question,
                 'correct_attempted' => $correct_attempted,
                 'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
-                'analysis_on_attempted_question'=>number_format((float)$analysis_on_attempted_question, 2, '.', ''),
+                'analysis_on_attempted_question' => number_format((float)$analysis_on_attempted_question, 2, '.', ''),
             ];
             $data = [
                 "code" => 200,
@@ -825,7 +826,56 @@ class SubjectController extends Controller
                 "message" => "Something went wrong",
                 "result" => [],
             ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function LessonVideoWatchTime(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+
+                'lesson_id' => 'required',
+                'video_start_time' => 'required',
+                'video_end_time' => 'required'
+            ]);
+
+            if ($validator->fails()) {
+
+                return response()->json(['status' => 0, 'result' => $validator->errors()]);
+            }
+
+            $lesson_id = $request->lesson_id;
+            $lesson=Lesson::with('lessonAttachment')->where('id',$lesson_id)->first();
+            $video_start_time = $request->video_start_time;
+            $video_ending_time = $request->video_end_time;
+            $total_video_duration=$lesson->lessonAttachment->video_duration;
+            $total_watch_duration=$video_ending_time - $video_start_time;
+           
+            $data = [
+                'lesson_subject_id' => $lesson_id,
+                'teacher_id' => $lesson->teacher_id,
+                'visitor_id' => auth()->user()->id,
+                'type' => 2,
+                'video_watch_time' => $total_watch_duration,
+                'total_video_duration' => $total_video_duration,
+               
+            ];
+            $subjectlessonvisitor=SubjectLessonVisitor::create($data);
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Data stored successfully",
+               
+            ];
             return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+                
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
 }

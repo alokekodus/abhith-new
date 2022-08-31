@@ -14,8 +14,9 @@ class SubjectLessonVisitor extends Model
         'lesson_subject_id',
         'teacher_id',
         'visitor_id',
-        'total_visit',
-        'type'
+        'type',
+        'video_watch_time',
+        'total_video_duration'
     ];
     public function visitor(){
         return $this->belongsTo(User::class, 'visitor_id', 'id');

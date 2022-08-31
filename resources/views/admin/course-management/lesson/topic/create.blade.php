@@ -181,7 +181,7 @@ function setFileInfo() {
     window.URL.revokeObjectURL(video.src);
     var duration = video.duration;
     myVideos[myVideos.length - 1].duration = duration;
-    document.getElementById("duration").value=duration/60;
+    document.getElementById("duration").value=duration;
     
   }
 

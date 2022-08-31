@@ -69,6 +69,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('subject/lessons',[SubjectController::class,'LessonDetails']);
     Route::get('subject/lesson/topic',[SubjectController::class,'LessonTopics']);
     Route::get('subject/lesson/video',[SubjectController::class,'LessonVideoDetails']);
+    Route::post('subject/lesson/video/watch-time',[SubjectController::class,'LessonVideoWatchTime']);
     Route::get('subject/lesson/pdf',[SubjectController::class,'LessonPdfDetails']);
     Route::get('subject/lesson/content',[SubjectController::class,'LessonContentDetails']);
     Route::get('subject/mcq',[SubjectController::class,'LessonMCQ']);

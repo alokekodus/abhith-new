@@ -178,10 +178,10 @@ function isUserBuy($subject_id)
     $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
         $q->where('assign_subject_id', $subject_id);
     })->where("user_id", auth()->user()->id)->get();
-    if ($isBuy) {
-        return true;
-    } else {
+    if ($isBuy->isEmpty()) {
         return false;
+    } else {
+        return true;
     }
 }
 function timeDifference($from, $to)
