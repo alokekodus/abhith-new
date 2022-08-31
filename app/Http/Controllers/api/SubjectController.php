@@ -853,7 +853,7 @@ class SubjectController extends Controller
 
 
             $data = [
-                'subject_id' => $lesson->parent_id,
+                'subject_id' => $lesson->assign_subject_id,
                 'lesson_subject_id' => $lesson_id,
                 'teacher_id' => $lesson->teacher_id,
                 'visitor_id' => auth()->user()->id,
