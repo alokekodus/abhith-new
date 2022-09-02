@@ -109,7 +109,7 @@ class SubjectController extends Controller
                 $subject_attachment = $subject->subjectAttachment->attachment_origin_url;
             } else {
                 $attachment_type = "image";
-                $subject_attachment = $subject->subjectAttachment->img_url;
+                $subject_attachment = $subject->subjectAttachment->image;
             }
             $subject_attachment = [
                 'attachment_type' => $attachment_type,
@@ -118,10 +118,10 @@ class SubjectController extends Controller
 
             ];
             $total_lesson = $subject->lesson->count();
-            $total_topic = Lesson::where('assign_subject_id', $id)->where('parent_id', '!=', null)->get()->count();
-            $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->get()->count();
-            $total_video = Lesson::where('assign_subject_id', $id)->where('type', 2)->get()->count();
-            $total_article = Lesson::where('assign_subject_id', $id)->where('type', 3)->get()->count();
+            $total_topic = Lesson::where('parent_id', $id)->count();
+            $total_image_pdf = Lesson::where('parent_id', $id)->where('type', 1)->get()->count();
+            $total_video = Lesson::where('parent_id', $id)->where('type', 2)->get()->count();
+            $total_article = Lesson::where('parent_id', $id)->where('type', 3)->get()->count();
             $subject_details = [
                 'id' => $subject->id,
                 'subject_name' => $subject->subject_name,
