@@ -138,7 +138,7 @@ class SubjectController extends Controller
                 'total_image_pdf' => $total_image_pdf,
                 'total_video' => $total_video,
                 'total_article' => $total_article,
-                'rating'=>$rating_average,
+                'rating'=>round($rating_average),
 
             ];
 
