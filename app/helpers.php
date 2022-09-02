@@ -228,5 +228,6 @@ function lessonTopicFindById($parent_id){
     return $total_lesson;
 }
 function subjectTotalWatchVideo($subject_id){
-    $total_video=SubjectLessonVisitor::where('visitor_id',auth()->user()->id)->where('lesson_subject_id',$subject_id)->get()->count();
+    $total_video=SubjectLessonVisitor::where('visitor_id',auth()->user()->id)->where('subject_id',$subject_id)->get()->count();
+    return $total_video;
 }

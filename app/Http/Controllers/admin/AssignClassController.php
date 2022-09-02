@@ -12,7 +12,7 @@ class AssignClassController extends Controller
 {
     public function allClasses(){
         $board_details = Board::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
-        $assigned_classes_details = AssignClass::with('boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $assigned_classes_details = AssignClass::with('boards')->orderBy('created_at', 'DESC')->get();
         return view('admin.course-management.classes.class')->with(['boards' => $board_details, 'assignedClass' => $assigned_classes_details]);
     }
 

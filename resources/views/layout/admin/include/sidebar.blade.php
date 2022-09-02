@@ -75,8 +75,8 @@
                             href="{{route('admin.course.management.class.all')}}">Classes</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.subject.all')}}">Subjects</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{route('admin.course.management.lesson.all')}}">Lesson</a></li>
+                    {{-- <li class="nav-item"> <a class="nav-link"
+                            href="{{route('admin.course.management.lesson.all')}}">Lesson</a></li> --}}
                 </ul>
             </div>
         </li>
