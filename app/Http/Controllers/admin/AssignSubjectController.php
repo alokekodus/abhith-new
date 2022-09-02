@@ -23,16 +23,16 @@ class AssignSubjectController extends Controller
     {
 
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
-        
-            $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
-        
+
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
+
 
 
         return view('admin.course-management.subjects.index')->with(['subjects' => $assign_subject, 'classes' => $class_details]);
     }
     public function store(Request $request)
     {
-
+          
         try {
 
             $validate = Validator::make(
@@ -43,9 +43,10 @@ class AssignSubjectController extends Controller
                     'subject_amount' => 'required',
                     'description' => 'required',
                     'why_learn' => 'required',
-                    'image_url' => 'mimes:jpg,png,jpeg',
-                    'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg',
-                    'video_url' => 'mimes:mp4,WEBM,MOV',
+                    'image_url' => 'mimes:jpg,png,jpeg|max:1024',
+                    'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
+                    'video_url' => 'mimes:mp4,WEBM,MOV|max:2097152',
+                    'requirements' => 'string|between:15,600'
 
                 ],
                 [
@@ -54,24 +55,32 @@ class AssignSubjectController extends Controller
                     'subject_amount.required' => 'Amount filed is required',
                     'description.required' => 'Subject descripttion filed is required',
                     'why_learn.required' => 'Why learn filed is required',
+                    'image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
+                    'video_thumbnail_image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
+                    'video_url.max' => "Maximum file size to upload is 2GB (2097152 KB).",
                 ]
             );
 
             if ($validate->fails()) {
-                Toastr::error('Something Want wrong', '', ["positionClass" => "toast-top-right"]);
+                Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
 
             $split_assignedClass = str_split($request->assignedClass);
-
+           
             $assignedClass = $split_assignedClass[0];
             $assignedBoard = $split_assignedClass[1];
+            $is_in_assignsubject=AssignSubject::where('name',ucfirst($request->subjectName))->where('assign_class_id',$assignedClass)->where('board_id',$assignedBoard)->where('is_activate',1)->first();
+            if($is_in_assignsubject){
+                Toastr::error("'ucfirst($request->subjectName)'.'already active'", '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
             $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
             $name_slug = Str::slug($request->subjectName);
             if (!empty($document)) {
-                $image_path = LessonAttachmentTrait::uploadAttachment($document, "image",$name_slug); //lesson image store
+                $image_path = LessonAttachmentTrait::uploadAttachment($document, "image", $name_slug); //lesson image store
                 $image_path = $image_path;
             } else {
                 if ($request->subject_id == null) {
@@ -84,10 +93,10 @@ class AssignSubjectController extends Controller
             }
 
             if (!empty($lessonVideo)) {
-                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video",$name_slug);
+                $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video", $name_slug);
                 $video_path = $video_path;
                 if (!empty($videoThumbnailImageUrl)) {
-                    $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image",$name_slug); //lesson image store
+                    $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image", $name_slug); //lesson image store
                     $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
                 } else {
                     if ($request->subject_id == null) {
@@ -104,7 +113,7 @@ class AssignSubjectController extends Controller
                     $video_thumbnail_image_url_path = null;
                 } else {
                     $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
-                    $video_path=$assign_subject->attachment_origin_url;
+                    $video_path = $assign_subject->attachment_origin_url;
                     $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
                 }
             }
@@ -153,7 +162,7 @@ class AssignSubjectController extends Controller
             dd($th);
         }
     }
-    
+
     public function create()
     {
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
@@ -184,19 +193,21 @@ class AssignSubjectController extends Controller
 
         return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard]);
     }
-    public function view($subject_id){
+    public function view($subject_id)
+    {
         try {
-            $subject=AssignSubject::where('id',Crypt::decrypt($subject_id))->first();
-            $lesson_groupby_teachers=Lesson::where('assign_subject_id',$subject->id)->where('teacher_id','!=',null)
-            ->get()->groupBy('teacher_id');
-           
-            return view('admin.course-management.subjects.view')->with(['subject' => $subject,'lesson_groupby_teachers'=>$lesson_groupby_teachers]);
+            $subject = AssignSubject::where('id', Crypt::decrypt($subject_id))->first();
+            $lesson_groupby_teachers = Lesson::where('assign_subject_id', $subject->id)->where('teacher_id', '!=', null)
+                ->get()->groupBy('teacher_id');
+
+            return view('admin.course-management.subjects.view')->with(['subject' => $subject, 'lesson_groupby_teachers' => $lesson_groupby_teachers]);
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-    public function assignSubjectLesson($lesson_id){
-        $lesson=Lesson::where('id',Crypt::decrypt($lesson_id))->first();
+    public function assignSubjectLesson($lesson_id)
+    {
+        $lesson = Lesson::where('id', Crypt::decrypt($lesson_id))->first();
         return view('admin.course-management.subjects.lesson')->with(['lesson' => $lesson]);
     }
 }

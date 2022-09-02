@@ -252,7 +252,7 @@ class UserController extends Controller
                     "message" => "Password does not match. ",
 
                 ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                return response()->json(['status' => 0, 'result' => $data]);
             }
         } catch (\Throwable $th) {
             $data = [

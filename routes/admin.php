@@ -82,7 +82,8 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::get('view/{subject_id}', [AssignSubjectController::class, 'view'])->name('admin.course.management.subject.view');
             Route::post('assign', [AssignSubjectController::class, 'assignSubject'])->name('admin.course.management.subject.assign');
             Route::get('lesson/{lesson_id}', [AssignSubjectController::class, 'assignSubjectLesson'])->name('admin.course.management.lesson.topic.display');
-            Route::post('active',[SubjectController::class,'active'])->name('admin.active.subject');
+            Route::post('published',[SubjectController::class,'published'])->name('admin.published.subject');
+            Route::get('active/{subject_id}',[SubjectController::class,'active'])->name('admin.active.subject');
            
         });
         Route::prefix('lesson')->group(function(){

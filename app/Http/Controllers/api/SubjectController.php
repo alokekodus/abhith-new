@@ -97,6 +97,12 @@ class SubjectController extends Controller
         try {
             $id = $_GET['subject_id'];
             $subject = AssignSubject::select('id', 'subject_name', 'subject_amount', 'assign_class_id', 'board_id', 'description', 'why_learn', 'created_at')->with(['assignClass:id,class', 'boards:id,exam_board', 'lesson', 'lesson.topics', 'subjectAttachment'])->where('id', $id)->first();
+            if($subject->review->count()>0){
+                $total_rating = $subject->review()->count() * 5;
+                $rating_average = $subject->review()->sum('rating') / $total_rating * 5;
+            }else{
+                $rating_average="No reviews yet";
+            }
             $subject_promo_video = $subject->subjectAttachment->attachment_origin_url;
             if ($subject_promo_video != null) {
                 $attachment_type = "video";
@@ -111,8 +117,6 @@ class SubjectController extends Controller
 
 
             ];
-
-
             $total_lesson = $subject->lesson->count();
             $total_topic = Lesson::where('assign_subject_id', $id)->where('parent_id', '!=', null)->get()->count();
             $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->get()->count();
@@ -134,6 +138,7 @@ class SubjectController extends Controller
                 'total_image_pdf' => $total_image_pdf,
                 'total_video' => $total_video,
                 'total_article' => $total_article,
+                'rating'=>$rating_average,
 
             ];
 

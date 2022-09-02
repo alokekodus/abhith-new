@@ -127,3 +127,14 @@
     </div>
 
 </div>
+<div class="row">
+    <div class="col-12">
+        <div class="form-group">
+            <label for="">Requirements</label>
+            <textarea class="form-control" name="requirements" id="requirements" rows="5">
+                @isset($subject) {{$subject->requirements??''}} @endisset
+           </textarea>
+        </div>
+    </div>
+
+</div>

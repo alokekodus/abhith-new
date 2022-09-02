@@ -6,7 +6,6 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        padding-left: 853px;
         list-style: none;
         border-radius: 0.25rem;
     }
@@ -73,7 +72,7 @@
                                     @else <a href="{{route('teacher.subject.student',Crypt::encrypt($subject->id))}}">
                                         {{$subject->assignOrder->count()}} student Enrolled </a>@endif</td>
                                 <td>
-                                    @if ($subject->is_activate == 1)
+                                    @if ($subject->published == 1)
                                     <label class="switch">
                                         <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}" checked>
                                         <span class="slider round"></span>
@@ -87,9 +86,9 @@
                                 </td>
                                 <td>
                                     @if ($subject->is_activate == 1)
-                                    <span class="label label-success">Active</span>
+                                    <a href="{{route('admin.active.subject',Crypt::encrypt($subject->id))}}" class="badge badge-success">Active</a>
                                     @else
-                                    <span class="label label-danger">In Active</span>
+                                    <a href="{{route('admin.active.subject',Crypt::encrypt($subject->id))}}" class="badge badge-danger">Inactive</a>
                                     @endif
                                 </td>
                                 <td>
@@ -196,13 +195,13 @@
         // console.log(status);
         var formDat = {
             subjectId: subject_id,
-            active: status
+            published: status
         }
         // console.log(formDat);
         $.ajax({
             type: "post",
 
-            url: "{{ route('admin.active.subject') }}",
+            url: "{{ route('admin.published.subject') }}",
             data: formDat,
 
             success: function(data) {

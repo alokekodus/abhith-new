@@ -7,6 +7,8 @@ use App\Models\AssignSubject;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Models\Subject;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class SubjectController extends Controller
@@ -41,16 +43,19 @@ class SubjectController extends Controller
         return \redirect()->back();
     }
 
-    protected function active(Request $request)
+    protected function published(Request $request)
     {
         $subject = AssignSubject::find($request->subjectId);
-        $subject->is_activate = $request->active;
+        $subject->published = $request->published;
         $subject->save();
 
-        if ($request->active == 0) {
-            return response()->json(['status' => 1, 'message' => 'Subject visibility changed from show to hide']);
+        if ($request->published == 0) {
+            return response()->json(['status' => 1, 'message' => 'Subject publicity changed from published to not published']);
         } else {
-            return response()->json(['status' => 1, 'message' => 'Subject visibility changed from hide to show']);
+            $subject = AssignSubject::find($request->subjectId);
+            $subject->is_activate = 1;
+            $subject->save();
+            return response()->json(['status' => 1, 'message' => 'Subject publicity changed from not published to published']);
         }
     }
 
@@ -78,18 +83,35 @@ class SubjectController extends Controller
     public function getDemoVideo($lesson_id)
     {
         try {
-            $lesson = Lesson::with('lessonAttachment')->where('id',$lesson_id)->first();
+            $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
             $all_lessons = Lesson::with('lessonAttachment')->whereHas('lessonAttachment', function ($query) {
                 $query->where('free_demo', 1);
             })->where('assign_subject_id', $lesson->assign_subject_id)->where('type', 2)->get();
-            $result=[
-                'lesson'=>$lesson,
-                'all_lessons'=>$all_lessons,
+            $result = [
+                'lesson' => $lesson,
+                'all_lessons' => $all_lessons,
             ];
 
             return response()->json(['status' => 1, 'result' => $result]);
         } catch (\Throwable $th) {
             return response()->json(['status' => 0, 'result' => []]);
+        }
+    }
+    public function active($subject_id)
+    {
+        try {
+            $assignSubject = AssignSubject::find(Crypt::decrypt($subject_id));
+            if ($assignSubject->is_activate == 0) {
+                $assignSubject->update(['is_activate' => 1]);
+                Toastr::success('Subject activate changed from inactivate to activate', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            } else {
+                $assignSubject->update(['is_activate' => 0]);
+                Toastr::success('Subject activate changed from activate to inactivate', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
     }
 }
