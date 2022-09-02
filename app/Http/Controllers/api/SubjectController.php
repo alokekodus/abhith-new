@@ -118,7 +118,7 @@ class SubjectController extends Controller
 
             ];
             $total_lesson = $subject->lesson->count();
-            $total_topic = Lesson::where('parent_id', $id)->count();
+            $total_topic = Lesson::where('id',$id)->where('parent_id',null)->count();
             $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->get()->count();
             $total_video = Lesson::where('assign_subject_id', $id)->where('type', 2)->get()->count();
             $total_article = Lesson::where('assign_subject_id', $id)->where('type', 3)->get()->count();
