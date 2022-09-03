@@ -42,13 +42,13 @@
                     <tr>
                         <td>Thumbnail Image: </td>
                         <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                    href="{{asset($subject->subjectAttachment)}}">{{$subject->subjectAttachment->video_thumbnail_image??'NA'}}</a>
+                                    href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->video_thumbnail_image)}}</a>
                                 @else NA @endif</b></td>
                     </tr>
                     <tr>
                         <td>Promo Video: </td>
                         <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                    href="{{asset($subject->subjectAttachment)}}">{{$subject->subjectAttachment->attachment_origin_url??'NA'}}</a>
+                                    href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->attachment_origin_url)}}</a>
                                 @else NA @endif</b></td>
 
                     </tr>

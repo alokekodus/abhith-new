@@ -59,10 +59,11 @@
                             <td>{{$item->user->name??"NA"}}</td>
                             <td>{{$item->user->email}}</td>
                             <td>{{$item->board->exam_board??"NA"}} -- Class {{$item->assignClass->class}}</td>
-                            <td>@foreach($item->assignSubject as $assignSubject)
+                            <td>
+                                @foreach($item->assignSubject as $assignSubject)
 
-                                {{$assignSubject->subject->subject_name??"NA"}} <span
-                                    class="badge badge-primary">Rs. {{$assignSubject->subject->subject_amount??"NA"}}</span>
+                                <a href="{{route('admin.course.management.subject.view',Crypt::encrypt($assignSubject->subject->id))}}">{{$assignSubject->subject->subject_name??"NA"}} <span
+                                    class="badge badge-primary">Rs. {{$assignSubject->subject->subject_amount??"NA"}}</a></span>
                                 @endforeach
                             </td>
                             <td>
