@@ -128,7 +128,7 @@ class CourseController extends Controller
                         "assign_class" => $course->assignClass,
                         "boards" => $course->boards,
                         "rating" => $rating_average,
-                        'already_purchase'=>subjectAlreadyPurchase($course->id),
+                        
                     ];
                     $all_courses[] = $data;
                 }
