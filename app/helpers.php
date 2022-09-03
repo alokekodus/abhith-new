@@ -233,9 +233,9 @@ function subjectAlreadyPurchase($subject_id){
         $q->where('assign_subject_id', $subject_id);
     })->where("user_id", auth()->user()->id)->get();
     if ($isBuy->isEmpty()) {
-        return false;
+        return 0;
     } else {
-        return true;
+        return 1;
     }
    
 }

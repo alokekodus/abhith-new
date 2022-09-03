@@ -21,6 +21,7 @@ use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\website\SubjectController;
 use App\Http\Controllers\website\UserCourseController;
+use App\Http\Middleware\WebSite;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,7 @@ Route::prefix('course')->group(function () {
     Route::get('', [CourseController::class, 'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class, 'details'])->name('website.course.details');
     Route::post('package', [CourseController::class, 'coursePackageFilter'])->name('website.course.package.filter');
-    Route::any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
+    Route::middleware([WebSite::class])->any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
     Route::get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
 });
 Route::prefix('subject')->group(function () {
@@ -82,7 +83,7 @@ Route::post('signin', [AuthController::class, 'customLogin'])->name('custom.sign
 /* ------------------------------- Website Login ---------------------------------- */
 Route::prefix('auth')->group(function () {
     Route::post('signup', [WebsiteAuthController::class, 'signup'])->name('website.auth.signup');
-    Route::post('login', [WebsiteAuthController::class, 'login'])->name('website.auth.login');
+    Route::any('login', [WebsiteAuthController::class, 'login'])->name('website.auth.login');
     Route::post('logout', [WebsiteAuthController::class, 'logout'])->name('website.auth.logout');
     Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp'])->name('website.auth.verify.otp');
     Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup'])->name('website.auth.complete.signup');

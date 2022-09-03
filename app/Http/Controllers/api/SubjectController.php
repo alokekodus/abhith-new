@@ -31,13 +31,22 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
             }
-
+            //get all subject
             $subjects = AssignSubject::with('review')->whereHas('boards', function ($query) use ($request) {
                 $query->where('exam_board', $request->board);
             })->whereHas('assignClass', function ($query) use ($request) {
                 $query->where('class', $request->standard);
-            })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->get();
-            $total_amount = $subjects->sum('subject_amount');
+            })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published',1)->get();
+            
+            // calculate total amount
+            $total_amount = 0;
+            foreach($subjects as $key=>$subject){
+                if(subjectAlreadyPurchase($subject->id)==1){
+                    $total_amount=$total_amount+0;
+                }else{
+                    $total_amount=$total_amount+$subject->subject_amount;
+                }
+            }
             $all_subject = [];
             foreach ($subjects as $key => $subject) {
                 if ($subject->review->count() > 0) {

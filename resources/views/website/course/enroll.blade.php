@@ -253,6 +253,7 @@
 @endsection
 
 @section('content')
+
 <section class="subheader">
     <div class="container-fluid">
         <div class="row">
@@ -307,7 +308,7 @@
                             <div class="mb-4">
                                 <label for="radio-card-1" class="radio-card">
                                     <input class="course_type" type="radio" name="course_type" id="radio-card-1" value="1"
-                                        onclick="changeCourse(this.value)" @if(!$custom_package_active) checked @endif />
+                                        onclick="changeCourse(this.value)"  />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content" style="width:100%; text-align:center">
@@ -321,7 +322,7 @@
                             <div>
                                 <label for="radio-card-2" class="radio-card">
                                     <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
-                                        onclick="changeCourse(this.value)" @if($custom_package_active) checked @endif />
+                                        onclick="changeCourse(this.value)" />
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content" style="width:100%; text-align:center">
@@ -337,7 +338,7 @@
 
                         <!-- <label for="radio-card-2" class="radio-card">
                             <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
-                                onclick="changeCourse(this.value)" @if($custom_package_active) checked @endif />
+                                onclick="changeCourse(this.value)" />
                             <div class="card-content-wrapper">
                                 <span class="check-icon"></span>
                                 <div class="card-content" style="width:100%; text-align:center">
@@ -351,19 +352,19 @@
                 </div>
                 <div class="rightBlock col-lg-6 col-md-12">
                     @csrf
-                    <input type="hidden" name="board_id" value="{{$board->id}}">
-                    <input type="hidden" name="class_id" value="{{$class->id}}">
-                    @foreach($subjects as $key=>$subject)
+                    <input type="hidden" name="board_id" value="{{$data['board']->id}}">
+                    <input type="hidden" name="class_id" value="{{$data['assignclass']->id}}">
+                    @foreach($data['subjects'] as $key=>$subject)
                     <div class="inputGroup">
-                        <input class="chapter_value" id="option{{$key}}" type="checkbox" value="{{$subject->id}}"
-                            name="subjects[]" data-price="{{number_format($subject->subject_amount,2,'.','')}}"
+                        <input class="chapter_value" id="option{{$key}}" type="checkbox" value="{{$data['subjects'][$key]['id']}}"
+                            name="subjects[]" data-price="{{number_format($data['subjects'][$key]['subject_amount'],2,'.','')}}"
                             onclick="checkedSubject()"  />
                         <label for="option{{$key}}">
-                            <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}">
+                            <a href="{{route('website.subject.detatils',Crypt::encrypt($data['subjects'][$key]['id']))}}">
                                 <i class="fa fa-external-link mr-2" aria-hidden="true"></i>    
-                                {{$subject->subject_name}}( 
+                                {{$data['subjects'][$key]['subject_name']}}( 
                                     <i class="fa fa-inr" aria-hidden="true"></i>
-                                    {{number_format($subject->subject_amount,2,'.','')
+                                    {{number_format($data['subjects'][$key]['subject_amount'],2,'.','')
                                     }}
                                 )
                             </a>
@@ -374,7 +375,7 @@
                     <div class="total">
                         <p class=""><b>Total</b></p>
                         <span class="course-price1 mr-2" id="total_price"><i class="fa fa-inr" aria-hidden="true"></i>
-                            {{number_format($total_amount, 2, '.', '
+                            {{number_format($data['total_amount'], 2, '.', '
                             ')}}</span>
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart">Add to cart</button>
