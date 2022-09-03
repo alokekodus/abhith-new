@@ -30,7 +30,7 @@
                     <span>Created by : Demo Teacher</span><br>
                     <span></i>Total Lesson:
                         {{$subject->lesson->count()}}</span>
-                    <a href="{{route('website.user.lesson',[Crypt::encrypt($order->id),Crypt::encrypt($subject->id)])}}" class="enroll">View Details</a>
+                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}" class="enroll">View Details</a>
                 </div>
             </div>
             @endforeach

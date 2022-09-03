@@ -246,7 +246,7 @@
                         <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
                             class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
                             <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
-                        <a class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
+                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
