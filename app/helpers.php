@@ -231,7 +231,7 @@ function subjectTotalWatchVideo($subject_id){
 function subjectAlreadyPurchase($subject_id){
     $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
         $q->where('assign_subject_id', $subject_id);
-    })->where("user_id", auth()->user()->id)->first();
+    })->where("user_id", auth()->user()->id)->get();
     if ($isBuy->isEmpty()) {
         return false;
     } else {
