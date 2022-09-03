@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\AssignSubject;
+use App\Models\Cart;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\Order;
@@ -86,11 +87,7 @@ function getAssignSubjects()
 {
     return AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->limit(9)->get();
 }
-function isSubjectAlreadyInCart($check_item_exists_inside_cart, $all_subjects)
-{
-    $subject_already_in_cart = $check_item_exists_inside_cart;
-    dd($subject_already_in_cart);
-}
+
 function isTeacherApply()
 {
     $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->count();
@@ -230,4 +227,17 @@ function lessonTopicFindById($parent_id){
 function subjectTotalWatchVideo($subject_id){
     $total_video=SubjectLessonVisitor::where('visitor_id',auth()->user()->id)->where('subject_id',$subject_id)->get()->count();
     return $total_video;
+}
+function subjectAlreadyPurchase($subject_id){
+    $cart=Cart::whereHas("assignSubject", function ($q) use ($subject_id) {
+        $q->where('assign_subject_id', $subject_id);
+    })->where('is_paid',1)->where('is_remove_from_cart',1)->first();
+
+
+    if ($cart->isEmpty()) {
+        return false;
+    } else {
+        return true;
+    }
+   
 }

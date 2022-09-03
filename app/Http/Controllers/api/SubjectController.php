@@ -53,6 +53,7 @@ class SubjectController extends Controller
                     'image' => $subject->image,
                     'subject_amount' => $subject->subject_amount,
                     'rating' => $rating_average,
+                    'already_purchase'=>subjectAlreadyPurchase($subject->id),
                 ];
                 $all_subject[] = $data;
             }
@@ -139,6 +140,7 @@ class SubjectController extends Controller
                 'total_video' => $total_video,
                 'total_article' => $total_article,
                 'rating'=>round($rating_average),
+                'already_purchase'=>subjectAlreadyPurchase($subject->id),
 
             ];
 
