@@ -32,12 +32,12 @@ class SubjectController extends Controller
                 return response()->json(['status' => 0, 'result' => $data]);
             }
             //get all subject
-            // $subjects = AssignSubject::with('review')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('board_id',$request->board)->where('assign_class_id', $request->standard)->where('is_activate', 1)->where('published', 1)->get();
-            $subjects = AssignSubject::with('review')->whereHas('boards', function ($query) use ($request) {
-                $query->where('exam_board', $request->board);
-            })->whereHas('assignClass', function ($query) use ($request) {
-                $query->where('class', $request->standard);
-            })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published',1)->get();
+            $subjects = AssignSubject::with('review')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('board_id',2)->where('assign_class_id', 3)->where('is_activate', 1)->where('published', 1)->get();
+            // $subjects = AssignSubject::with('review')->whereHas('boards', function ($query) use ($request) {
+            //     $query->where('exam_board', $request->board);
+            // })->whereHas('assignClass', function ($query) use ($request) {
+            //     $query->where('class', $request->standard);
+            // })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published',1)->get();
             
             // calculate total amount
             $total_amount = 0;
