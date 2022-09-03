@@ -229,12 +229,10 @@ function subjectTotalWatchVideo($subject_id){
     return $total_video;
 }
 function subjectAlreadyPurchase($subject_id){
-    $cart=Cart::whereHas("assignSubject", function ($q) use ($subject_id) {
+    $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
         $q->where('assign_subject_id', $subject_id);
-    })->where('is_paid',1)->where('is_remove_from_cart',1)->first();
-
-
-    if ($cart->isEmpty()) {
+    })->where("user_id", auth()->user()->id)->get();
+    if ($isBuy->isEmpty()) {
         return false;
     } else {
         return true;
