@@ -156,7 +156,7 @@ class CourseController extends Controller
                 "message" => "Something went wrong",
 
             ];
-            return response()->json(['status' => 0, 'result' => $th]);
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
     public function allUpcommingCourses()
