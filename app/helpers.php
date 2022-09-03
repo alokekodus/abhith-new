@@ -229,14 +229,17 @@ function subjectTotalWatchVideo($subject_id){
     return $total_video;
 }
 function subjectAlreadyPurchase($subject_id){
-    return $subject_id;
-    $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
-        $q->where('assign_subject_id', $subject_id);
-    })->where("user_id", auth()->user()->id)->get();
-    if ($isBuy->isEmpty()) {
-        return 0;
-    } else {
-        return 1;
-    }
-   
+        
+        $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
+            $q->where('assign_subject_id', $subject_id);
+        })->where("user_id", auth()->user()->id)->first();
+        
+        if ($isBuy==null) {
+            return 0;
+        } else {
+            return 1;
+        }
+       
+    
+    
 }

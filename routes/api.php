@@ -49,7 +49,7 @@ Route::post('verify-email-otp', [WebsiteAuthController::class, 'verifyEmailOtp']
 Route::get('/banner',[BannerController::class,'index']);
 Route::post('get-course-details', [CourseController::class, 'index']);
 //courses
-Route::prefix('homepage')->group(function(){
+Route::middleware('auth:sanctum')->prefix('homepage')->group(function(){
     //homepage courses
     Route::get('courses',[CourseController::class,'allCourses']);
     //homepage  upcomming courses
