@@ -52,7 +52,7 @@ class SubjectController extends Controller
             foreach ($subjects as $key => $subject) {
                 if ($subject->review->count() > 0) {
                     $total_rating = $subject->review()->count() * 5;
-                    $rating_average = $subject->review()->sum('rating') / $total_rating * 5;
+                    $rating_average =  round($subject->review()->sum('rating') / $total_rating * 5);
                 } else {
                     $rating_average = "No reviews yet";
                 }
@@ -62,7 +62,7 @@ class SubjectController extends Controller
                     'subject_name' => $subject->subject_name,
                     'image' => $subject->image,
                     'subject_amount' => $subject->subject_amount,
-                    'rating' => round($rating_average),
+                    'rating' => $rating_average,
                     'already_purchase'=>subjectAlreadyPurchase($subject->id),
                 ];
                 $all_subject[] = $data;
