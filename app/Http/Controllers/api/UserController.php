@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OtpVerfication;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -119,7 +121,7 @@ class UserController extends Controller
                 ->where('is_paid', 1)
                 ->where('is_remove_from_cart', 1)
                 ->get();
-           
+
             if (!$carts->isEmpty()) {
                 $all_courses = [];
                 $subject = [];
@@ -148,7 +150,7 @@ class UserController extends Controller
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
+            } else {
                 $data = [
                     "code" => 200,
                     "message" => "No data found",
@@ -168,7 +170,8 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function allSubject(Request $request){
+    public function allSubject(Request $request)
+    {
         try {
 
             $id = $_GET['cart_id'];
@@ -181,19 +184,18 @@ class UserController extends Controller
                 ->first();
             if (!$cart == null) {
                 $cart_total_amount = $cart->assignSubject->sum("amount");
-                $subject_details=[];
-                foreach($cart->assignSubject as $key=>$assignSubject){
-                    $subject=[
-                        'id'=>$assignSubject->subject->id,
-                        'name'=>$assignSubject->subject->subject_name,
-                        'total_lesson'=>$assignSubject->subject->lesson->count(),
-                        'image'=>$assignSubject->subject->image,
-                        'total_video'=>subjectTotalVideo($assignSubject->subject->id),
-                        'total_document'=>subjectTotalDocument($assignSubject->subject->id),
-                        'total_article'=>subjectTotalArticle($assignSubject->subject->id)
+                $subject_details = [];
+                foreach ($cart->assignSubject as $key => $assignSubject) {
+                    $subject = [
+                        'id' => $assignSubject->subject->id,
+                        'name' => $assignSubject->subject->subject_name,
+                        'total_lesson' => $assignSubject->subject->lesson->count(),
+                        'image' => $assignSubject->subject->image,
+                        'total_video' => subjectTotalVideo($assignSubject->subject->id),
+                        'total_document' => subjectTotalDocument($assignSubject->subject->id),
+                        'total_article' => subjectTotalArticle($assignSubject->subject->id)
                     ];
-                    $subject_details[]=$subject;
-
+                    $subject_details[] = $subject;
                 }
                 $cart_details = [
                     'id' => $cart->id,
@@ -263,11 +265,141 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function sendOtpForgotPassword(Request $request){
+    public function sendOtpForgotPassword(Request $request)
+    {
         try {
-            //code...
+            $type = $request->type;
+            if ($type = 1) {
+                $user = User::where('phone', $request->phone)->where('verify_otp', 1)->first();
+                if ($user) {
+                    $otp = rand(100000, 999999);
+                    $user->update(['otp' => $otp]);
+                    $send_otp = otpSendForgotPassword($user->phone, $otp);
+                    if ($send_otp) {
+                        $data = [
+                            "user_id" => $user->id,
+                            "otp"=>$otp,
+                            "code" => 200,
+                            "message" => "Verification code send to your registered mobile number.",
+
+                        ];
+                        return response()->json(['status' => 1, 'result' => $data]);
+                    }
+                    $data = [
+                        "code" => 400,
+                        "message" => "Something went wrong.",
+
+                    ];
+                    return response()->json(['status' => 0, 'result' => $data]);
+                }
+                $data = [
+                    "code" => 400,
+                    "message" => "Record not found.",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            } else {
+                $user = User::where('email', $request->email)->where('verify_otp', 1)->first();
+                if ($user) {
+                    $otp = rand(100000, 999999);
+                    $user->update(['otp' => $otp]);
+                    $details = [
+                        'otp' => $otp,
+
+                    ];
+                    $send_otp = Mail::to($request->email)->send(new OtpVerfication($details));
+                    if ($send_otp) {
+                        $data = [
+                            "user_id" => $user->id,
+                            "code" => 200,
+                            "message" => "Verification code send to your registered Email address.",
+
+                        ];
+                        return response()->json(['status' => 1, 'result' => $data]);
+                    }
+                    $data = [
+                        "code" => 400,
+                        "message" => "Something went wrong.",
+
+                    ];
+                    return response()->json(['status' => 0, 'result' => $data]);
+                }
+                $data = [
+                    "code" => 400,
+                    "message" => "Record not found.",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
         } catch (\Throwable $th) {
             //throw $th;
+        }
+    }
+    public function verifyOtpForgotPassword(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+
+                'user_id' => 'required',
+                'otp' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            }
+            $user=user::where('id',$request->user_id)->where('otp',$request->otp)->first();
+            if($user){
+                $data = [
+                    "user_id" => $user->id,
+                    "code" => 200,
+                    "message" => "Account verified successfully please enter your new password.",
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+            $data = [
+                "code" => 400,
+                "message" => "Record not found.",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "message" => "Something went wrong.",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function resetForgotPassword(Request $request){
+        try {
+            $user = User::find($request->user_id);
+            if($user){
+                $user->update(['password'=> Hash::make($request->password)]);
+            
+
+                $data = [
+                    "code" => 200,
+                    "message" => "Password changed Successfully ",
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+            $data = [
+                "code" => 200,
+                "message" => "Account not found. ",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
 }

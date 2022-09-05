@@ -57,16 +57,9 @@
         </div>
     </div>
 </div>
-@if($subject->lesson()->exists())
+
 @include('admin.course-management.lesson.all')
-@else
-<div class="col-lg-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-        </div>
-    </div>
-</div>
-@endif
+
 @if($lesson_groupby_teachers)
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">

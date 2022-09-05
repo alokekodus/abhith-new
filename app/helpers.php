@@ -169,6 +169,52 @@ function otpSend($phone, $otp)
         return true;
     }
 }
+
+function otpSendForgotPassword($phone, $otp){
+    $isError = 0;
+    $errorMessage = true;
+
+    //Your message to send, Adding URL encoding.
+    $message = urlencode("<#> Use $otp as your verification code.");
+
+
+    //Preparing post parameters
+    $postData = array(
+        'authkey' => '19403ARfxb6xCGLJ619221c6P15',
+        'mobiles' => $phone,
+        'message' => $message,
+        'sender' => 'ABHSKH',
+        'DLT_TE_ID' => 1207164006513329391,
+        'route' => 4,
+        'response' => 'json'
+    );
+
+    $url = "http://login.yourbulksms.com/api/sendhttp.php";
+
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $postData
+    ));
+    //Ignore SSL certificate verification
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    //get response
+    $output = curl_exec($ch);
+    //Print error if any
+    if (curl_errno($ch)) {
+        $isError = true;
+        $errorMessage = curl_error($ch);
+    }
+    curl_close($ch);
+    if ($isError) {
+        return false;
+    } else {
+        return true;
+    }
+}
 function isUserBuy($subject_id)
 {
 
