@@ -149,7 +149,7 @@ class SubjectController extends Controller
                 'total_image_pdf' => $total_image_pdf,
                 'total_video' => $total_video,
                 'total_article' => $total_article,
-                'rating'=>round($rating_average),
+                'rating'=>$rating_average,
                 'already_purchase'=>subjectAlreadyPurchase($subject->id),
 
             ];
@@ -176,7 +176,7 @@ class SubjectController extends Controller
             $data = [
                 "code" => 400,
                 "status" => 0,
-                "message" => $th,
+                "message" => "Something went wrong",
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
