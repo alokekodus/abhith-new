@@ -176,7 +176,7 @@ class SubjectController extends Controller
             $data = [
                 "code" => 400,
                 "status" => 0,
-                "message" => "Something went wrong",
+                "message" => $th,
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
