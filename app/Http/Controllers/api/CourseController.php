@@ -248,7 +248,7 @@ class CourseController extends Controller
             $board = Board::where('exam_board', $board_name)->where('is_activate', 1)->first();
 
             if ($board) {
-                $assign_class = AssignClass::select('id', 'class', 'board_id')->where('board_id', $board->id)->get();
+                $assign_class = AssignClass::select('id', 'class', 'board_id')->where('board_id', $board->id)->where('is_activate',1)->get();
                 if ($assign_class) {
                     $all_class = [];
                     $all_class[0] = "Select class";
