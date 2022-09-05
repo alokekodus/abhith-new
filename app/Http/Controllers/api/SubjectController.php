@@ -62,7 +62,7 @@ class SubjectController extends Controller
                     'subject_name' => $subject->subject_name,
                     'image' => $subject->image,
                     'subject_amount' => $subject->subject_amount,
-                    'rating' => $rating_average,
+                    'rating' => round($rating_average),
                     'already_purchase'=>subjectAlreadyPurchase($subject->id),
                 ];
                 $all_subject[] = $data;

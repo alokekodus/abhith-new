@@ -263,4 +263,11 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function sendOtpForgotPassword(Request $request){
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }
