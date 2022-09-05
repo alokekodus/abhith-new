@@ -110,7 +110,7 @@ class SubjectController extends Controller
             $subject = AssignSubject::select('id', 'subject_name', 'subject_amount', 'assign_class_id', 'board_id', 'description', 'why_learn', 'created_at')->with(['assignClass:id,class', 'boards:id,exam_board', 'lesson', 'lesson.topics', 'subjectAttachment'])->where('id', $id)->first();
             if($subject->review->count()>0){
                 $total_rating = $subject->review()->count() * 5;
-                $rating_average = $subject->review()->sum('rating') / $total_rating * 5;
+                $rating_average = round($subject->review()->sum('rating') / $total_rating * 5);
             }else{
                 $rating_average="No reviews yet";
             }
