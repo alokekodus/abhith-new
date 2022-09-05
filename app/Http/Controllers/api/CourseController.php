@@ -139,6 +139,7 @@ class CourseController extends Controller
                         "code" => 200,
                         "status" => 1,
                         "message" => "No record found",
+                        "result"=>[],
 
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
