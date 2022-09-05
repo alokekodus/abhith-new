@@ -4,6 +4,14 @@
 
 @section('head')
 <link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
+<style>
+    .img-top-left {
+        position: absolute;
+        top: 8px;
+        left: 26px;
+        color: aliceblue;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -121,8 +129,8 @@
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Address</label>
                                     <input type="text" class="form-control" name="address" placeholder="Enter Address"
-                                        id="address"
-                                        title="Please Enter valid address." value="{{$user_details->address}}" required>
+                                        id="address" title="Please Enter valid address."
+                                        value="{{$user_details->address}}" required>
                                 </div>
                                 @else
                                 <div class="form-group col-lg-6 pr10">
@@ -159,7 +167,7 @@
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Address</label>
                                     <input type="text" class="form-control" name="address" placeholder="Enter Address"
-                                        id="address"  value="{{$user_details->address}}" required>
+                                        id="address" value="{{$user_details->address}}" required>
                                 </div>
                                 @endif
                                 <div class="form-group col-lg-12">
@@ -221,7 +229,8 @@
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <div class="button-div1">
-                                        <button type="submit" class="btn btn-block knowledge-link change-password-btn">Change
+                                        <button type="submit"
+                                            class="btn btn-block knowledge-link change-password-btn">Change
                                             Password</button>
                                     </div>
                                 </div>
@@ -237,25 +246,25 @@
                                 <table id="purchase_history_table" class="table table-striped">
                                     <tbody>
                                         @forelse ($purchase_history as $key => $item)
-                                        <div class="col-lg-6">
 
-                                            <div class="course-pic"><img
-                                                    src="https://abhith.dev-ekodus.com/files/course/08-12-2021-17-51-12_p185554_b_v10_az.jpg"
-                                                    class="w100"></div>
-                                            <div class="course-desc">
-                                                <div class="block-ellipsis5">
-                                                    <h4 class="small-heading-black">{{$item->board->exam_board}}</h4>
-                                                </div>
-                                                <span>
-                                                    <h4 class="small-heading-black">Class -
-                                                        {{$item->assignClass->class??''}}</h4>
-                                                </span>
-                                                <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
-                                                    class="enroll">view
-                                                    Details</a>
-                                            </div>
 
+                                        <div class="course-pic"><img src="{{asset('files/course/courses.jpeg')}}"
+                                                class="w100">
+                                            <div class="img-top-left"><b>{{$item->board->exam_board}} ||
+                                                    Class-{{$item->assignClass->class??''}}</b></div>
                                         </div>
+                                        <div class="course-desc">
+
+                                            <h5><b>{{$item->board->exam_board}} ||
+                                                    Class-{{$item->assignClass->class??''}}</b></h5>
+
+
+                                            <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
+                                                class="enroll">view
+                                                Details</a>
+                                        </div>
+
+
                                         @empty
                                         <tr>
                                             <div class="text-center">

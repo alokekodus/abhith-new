@@ -106,40 +106,52 @@ class CourseController extends Controller
     public function allCourses()
     {
         try {
-            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->limit(4)->get();
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->limit(4)->get();
 
             if (!$courses->isEmpty()) {
+
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                    if($course->review->count()>0){
-                        $total_rating = $course->review()->count() * 5;
-                        $rating_average = $course->review()->sum('rating') / $total_rating * 5;
-                    }else{
-                        $rating_average="No reviews yet";
+                    if (subjectAlreadyPurchase($course->id) == 0) {
+                        if ($course->review->count() > 0) {
+                            $total_rating = $course->review()->count() * 5;
+                            $rating_average = $course->review()->sum('rating') / $total_rating * 5;
+                        } else {
+                            $rating_average = "No reviews yet";
+                        }
+                        $data = [
+                            "id" => $course->id,
+                            "subject_name" => $course->subject_name,
+                            "image" => $course->image,
+                            "subject_amount" => $course->subject_amount,
+                            "assign_class_id" => $course->assign_class_id,
+                            "board_id" => $course->board_id,
+                            "assign_class" => $course->assignClass,
+                            "boards" => $course->boards,
+                            "rating" => $rating_average,
+                           
+                        ];
+                        $all_courses[] = $data;
                     }
-                    
-                    $data = [
-                        "id" => $course->id,
-                        "subject_name" => $course->subject_name,
-                        "image" => $course->image,
-                        "subject_amount" => $course->subject_amount,
-                        "assign_class_id" => $course->assign_class_id,
-                        "board_id" => $course->board_id,
-                        "assign_class" => $course->assignClass,
-                        "boards" => $course->boards,
-                        "rating" => $rating_average,
-                        "already_purchase"=>subjectAlreadyPurchase($course->id),
-                    ];
-                    $all_courses[] = $data;
                 }
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "all courses",
-                    "result" => $all_courses,
+                if (count($all_courses) == 0) {
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "No record found",
 
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                } else {
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "all courses",
+                        "result" => $all_courses,
+
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }
             } else {
                 $data = [
                     "code" => 200,
@@ -162,40 +174,52 @@ class CourseController extends Controller
     public function allUpcommingCourses()
     {
         try {
-            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->limit(4)->get();
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 0)->limit(4)->get();
 
             if (!$courses->isEmpty()) {
+
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                    if($course->review->count()>0){
-                        $total_rating = $course->review()->count() * 5;
-                        $rating_average = $course->review()->sum('rating') / $total_rating * 5;
-                    }else{
-                        $rating_average="No reviews yet";
+                    if (subjectAlreadyPurchase($course->id) == 0) {
+                        if ($course->review->count() > 0) {
+                            $total_rating = $course->review()->count() * 5;
+                            $rating_average = $course->review()->sum('rating') / $total_rating * 5;
+                        } else {
+                            $rating_average = "No reviews yet";
+                        }
+                        $data = [
+                            "id" => $course->id,
+                            "subject_name" => $course->subject_name,
+                            "image" => $course->image,
+                            "subject_amount" => $course->subject_amount,
+                            "assign_class_id" => $course->assign_class_id,
+                            "board_id" => $course->board_id,
+                            "assign_class" => $course->assignClass,
+                            "boards" => $course->boards,
+                            "rating" => $rating_average,
+                            
+                        ];
+                        $all_courses[] = $data;
                     }
-                    
-                    $data = [
-                        "id" => $course->id,
-                        "subject_name" => $course->subject_name,
-                        "image" => $course->image,
-                        "subject_amount" => $course->subject_amount,
-                        "assign_class_id" => $course->assign_class_id,
-                        "board_id" => $course->board_id,
-                        "assign_class" => $course->assignClass,
-                        "boards" => $course->boards,
-                        "rating" => $rating_average,
-                        "already_purchase"=>subjectAlreadyPurchase($course->id),
-                    ];
-                    $all_courses[] = $data;
                 }
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "all courses",
-                    "result" => $all_courses,
+                if (count($all_courses) == 0) {
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "No record found",
 
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                } else {
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "all courses",
+                        "result" => $all_courses,
+
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }
             } else {
                 $data = [
                     "code" => 200,
