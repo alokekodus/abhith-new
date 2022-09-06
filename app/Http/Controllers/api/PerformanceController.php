@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\SubjectLessonVisitor;
+use App\Models\UserPracticeTest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -27,11 +28,18 @@ class PerformanceController extends Controller
             $subjects = [];
             $total_video_count = 0;
             $total_watch_video_count = 0;
+            $all_subjects=[];
             foreach ($carts as $key => $cart) {
 
                 foreach ($cart->assignSubject as $key => $assign_subject) {
-
+                    $all_subjects[]=[
+                        'id'=>$assign_subject->subject->id,
+                        'name'=>$assign_subject->subject->subject_name,
+                        'board'=>$assign_subject->subject->boards->exam_board,
+                        'class'=>$assign_subject->subject->assignClass->class,
+                    ];
                     $subjects[] = [
+                        
                         'total_video' => $total_video_count + subjectTotalVideo($assign_subject->subject->id),
                         'total_watch_video' => $total_watch_video_count + subjectTotalWatchVideo($assign_subject->subject->id),
                     ];
@@ -139,7 +147,27 @@ class PerformanceController extends Controller
                 'Sat' => $total_sat_day_watch_video,
                 'Sun' => $total_sun_day_watch_video,
             ];
+
+            //MCQ test performance
+
+            $user_practice_tests = UserPracticeTest::with('userPracticeTestAnswer')->where('user_id', auth()->user()->id)->get();
+            if($user_practice_tests->count()>0){
+                foreach( $user_practice_tests as $key=>$user_practice_tests){
+
+                }
+            }
+            // $update_user_practice_test_store =
+            //     [
+            //         'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
+            //         'total_correct_count' => $user_practice_test->correctAnswer->count(),
+            //     ];
+            // $user_practice_test->update($update_user_practice_test_store);
+            // $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
+            // $correct_attempted = $user_practice_test->correctAnswer->count();
+            // $analysis_on_attempted_question = ($correct_attempted / $attempted_question) * 100;
+
             $data = [
+                'all_subjects'=>$all_subjects,
                 'subject_progress' => $subject_progress,
                 'time_spent' => $time_spent,
             ];
