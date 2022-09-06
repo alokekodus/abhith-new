@@ -300,9 +300,9 @@ class UserController extends Controller
                 return response()->json(['status' => 0, 'result' => $data]);
             }
             if ($istype == 2) {
-                return response()->json($istype);
-                $user = User::where('email', $request->email)->where('verify_otp', 1)->first();
-
+                
+                $user = User::where('email',$request->email)->where('verify_otp', 1)->first();
+                return response()->json($user);
                 if ($user) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
