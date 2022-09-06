@@ -355,9 +355,10 @@ class UserController extends Controller
             if (!checkemail($request->user_id)) {
                 $user = user::where('email', $request->user_id)->where('otp', $request->otp)->first();
             } else {
+                return response()->json($request->user_id);
                 $user = user::where('phone', $request->user_id)->where('otp', $request->otp)->first();
             }
-            return response()->json($user);
+            
             if ($user) {
                 $data = [
                     "user_id" => $user->id,
