@@ -269,7 +269,7 @@ class UserController extends Controller
     {
         try {
             $istype = $request->type;
-            if ($istype = 1) {
+            if ($istype == 1) {
                 $user = User::where('phone', $request->phone)->where('verify_otp', 1)->first();
                 if ($user) {
                     $otp = rand(100000, 999999);
@@ -300,7 +300,7 @@ class UserController extends Controller
                 return response()->json(['status' => 0, 'result' => $data]);
             } else {
                 $user = User::where('email',$request->email)->where('verify_otp', 1)->first();
-                return response()->json($user);
+               
                 if ($user) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
