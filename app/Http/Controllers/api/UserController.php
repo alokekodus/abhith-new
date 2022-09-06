@@ -357,6 +357,7 @@ class UserController extends Controller
             } else {
                 $user = user::where('phone', $request->user_id)->where('otp', $request->otp)->first();
             }
+            return response()->json($user);
             if ($user) {
                 $data = [
                     "user_id" => $user->id,
