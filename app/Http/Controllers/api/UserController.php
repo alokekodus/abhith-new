@@ -278,7 +278,7 @@ class UserController extends Controller
                     if ($send_otp) {
                         $data = [
                             "user_id" => $user->id,
-                            "otp"=>$otp,
+                            "otp" => $otp,
                             "code" => 200,
                             "message" => "Verification code send to your registered mobile number.",
 
@@ -298,9 +298,10 @@ class UserController extends Controller
 
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
-            } else {
-                $user = User::where('email',$request->email)->where('verify_otp', 1)->first();
-               return response()->json($user);
+            }
+            if ($istype == 2) {
+                $user = User::where('email', $request->email)->where('verify_otp', 1)->first();
+
                 if ($user) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
@@ -318,7 +319,6 @@ class UserController extends Controller
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
                     }
-                    
                 }
                 $data = [
                     "code" => 400,
@@ -349,21 +349,20 @@ class UserController extends Controller
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
 
-          
-          if(!checkemail($request->user_id)){
-            $user=user::where('email',$request->user_id)->where('otp',$request->otp)->first();
-          }
-          else{
-            $user=user::where('phone',$request->user_id)->where('otp',$request->otp)->first();
-          }
+
+            if (!checkemail($request->user_id)) {
+                $user = user::where('email', $request->user_id)->where('otp', $request->otp)->first();
+            } else {
+                $user = user::where('phone', $request->user_id)->where('otp', $request->otp)->first();
+            }
 
 
 
 
 
 
-            $user=user::where('id',$request->user_id)->where('otp',$request->otp)->first();
-            if($user){
+            $user = user::where('id', $request->user_id)->where('otp', $request->otp)->first();
+            if ($user) {
                 $data = [
                     "user_id" => $user->id,
                     "code" => 200,
@@ -387,12 +386,13 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function resetForgotPassword(Request $request){
+    public function resetForgotPassword(Request $request)
+    {
         try {
             $user = User::find($request->user_id);
-            if($user){
-                $user->update(['password'=> Hash::make($request->password)]);
-            
+            if ($user) {
+                $user->update(['password' => Hash::make($request->password)]);
+
 
                 $data = [
                     "code" => 200,
@@ -407,7 +407,6 @@ class UserController extends Controller
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
-        
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
