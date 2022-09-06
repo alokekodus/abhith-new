@@ -318,12 +318,7 @@ class UserController extends Controller
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
                     }
-                    $data = [
-                        "code" => 400,
-                        "message" => "Something went wrong.",
-
-                    ];
-                    return response()->json(['status' => 0, 'result' => $data]);
+                    
                 }
                 $data = [
                     "code" => 400,
@@ -333,7 +328,12 @@ class UserController extends Controller
                 return response()->json(['status' => 0, 'result' => $data]);
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            $data = [
+                "code" => 400,
+                "message" => "Something went wrong.",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
     public function verifyOtpForgotPassword(Request $request)
