@@ -310,7 +310,8 @@ class UserController extends Controller
                         'otp' => $otp,
 
                     ];
-                    $send_otp = Mail::to($request->email)->send(new OtpVerfication($details));
+                    $send_otp = Mail::to($user->email)->send(new OtpVerfication($details));
+                    return response()->json($send_otp);
                     if ($send_otp) {
                         $data = [
                             "user_id" => $user->id,
