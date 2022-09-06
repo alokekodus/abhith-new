@@ -46,7 +46,7 @@ class UserController extends Controller
                 "message" => "Something went wrong",
 
             ];
-            return response()->json(['status' => 1, 'result' => $data]);
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
     public function updateDetails(Request $request)
@@ -413,4 +413,5 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    
 }

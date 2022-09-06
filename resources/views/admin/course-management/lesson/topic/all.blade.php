@@ -39,7 +39,7 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Recources Path </th>
-                                    <th>Free Demo</th>
+                                    <th>Pre View</th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -62,7 +62,7 @@
                                             target="_blank">
                                             {{ substr($topic->lessonAttachment->video_origin_url, 0,40)
                                             }}</a> @else NA @endif</td>
-                                    <td>@if($topic->lessonAttachment)No @else Yes @endif</td>
+                                    <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td>
                                     <td>@if($topic->status==1)Active @else InActive @endif</td>
                                     <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                         <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
