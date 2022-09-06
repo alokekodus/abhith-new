@@ -268,8 +268,8 @@ class UserController extends Controller
     public function sendOtpForgotPassword(Request $request)
     {
         try {
-            $type = $request->type;
-            if ($type = 1) {
+            $istype = $request->type;
+            if ($istype = 1) {
                 $user = User::where('phone', $request->phone)->where('verify_otp', 1)->first();
                 if ($user) {
                     $otp = rand(100000, 999999);
@@ -347,6 +347,20 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
+
+          
+          if(!checkemail($request->user_id)){
+            $user=user::where('email',$request->user_id)->where('otp',$request->otp)->first();
+          }
+          else{
+            $user=user::where('phone',$request->user_id)->where('otp',$request->otp)->first();
+          }
+
+
+
+
+
+
             $user=user::where('id',$request->user_id)->where('otp',$request->otp)->first();
             if($user){
                 $data = [
