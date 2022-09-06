@@ -351,11 +351,11 @@ class UserController extends Controller
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
 
-
+            return response()->json(checkemail($request->user_id));
             if (!checkemail($request->user_id)) {
                 $user = user::where('email', $request->user_id)->where('otp', $request->otp)->first();
             } else {
-                return response()->json($request->user_id);
+                
                 $user = user::where('phone', $request->user_id)->where('otp', $request->otp)->first();
             }
             
