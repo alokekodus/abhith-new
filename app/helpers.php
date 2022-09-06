@@ -170,7 +170,8 @@ function otpSend($phone, $otp)
     }
 }
 
-function otpSendForgotPassword($phone, $otp){
+function otpSendForgotPassword($phone, $otp)
+{
     $isError = 0;
     $errorMessage = true;
 
@@ -234,61 +235,83 @@ function timeDifference($from, $to)
     $diff = $to->diff($from);
     return $diff->format('%H:%I:%S');
 }
-function isPracticeTestPlayed($set_id){
-    $user_practice_tests=UserPracticeTest::where('user_id',auth()->user()->id)->where('set_id',$set_id)->first();
-    if($user_practice_tests){
+function isPracticeTestPlayed($set_id)
+{
+    $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->first();
+    if ($user_practice_tests) {
         return 1;
-    }else{
+    } else {
         return 0;
     }
 }
-function subjectTotalVideo($subject_id){
-    $total_video=Lesson::where('assign_subject_id',$subject_id)->where('type',2)->get()->count();
+function subjectTotalVideo($subject_id)
+{
+    $total_video = Lesson::where('assign_subject_id', $subject_id)->where('type', 2)->get()->count();
     return $total_video;
 }
-function subjectTotalArticle($subject_id){
-    $total_article=Lesson::where('assign_subject_id',$subject_id)->where('type',3)->get()->count();
+function subjectTotalArticle($subject_id)
+{
+    $total_article = Lesson::where('assign_subject_id', $subject_id)->where('type', 3)->get()->count();
     return $total_article;
 }
-function subjectTotalDocument($subject_id){
-    $total_document=Lesson::where('assign_subject_id',$subject_id)->where('type',1)->get()->count();
+function subjectTotalDocument($subject_id)
+{
+    $total_document = Lesson::where('assign_subject_id', $subject_id)->where('type', 1)->get()->count();
     return $total_document;
 }
-function lessonTotalVideo($parent_id){
-    $total_video=Lesson::where('parent_id',$parent_id)->where('type',2)->get()->count();
+function lessonTotalVideo($parent_id)
+{
+    $total_video = Lesson::where('parent_id', $parent_id)->where('type', 2)->get()->count();
     return $total_video;
 }
-function lessonTotalArticle($parent_id){
-    $total_article=Lesson::where('parent_id',$parent_id)->where('type',3)->get()->count();
+function lessonTotalArticle($parent_id)
+{
+    $total_article = Lesson::where('parent_id', $parent_id)->where('type', 3)->get()->count();
     return $total_article;
 }
-function lessonTotalDocument($parent_id){
-    $total_document=Lesson::where('parent_id',$parent_id)->where('type',1)->get()->count();
+function lessonTotalDocument($parent_id)
+{
+    $total_document = Lesson::where('parent_id', $parent_id)->where('type', 1)->get()->count();
     return $total_document;
 }
-function lessonTopicFindById($parent_id){
-    $total_lesson=Lesson::where('parent_id',$parent_id)->get()->count();
+function lessonTopicFindById($parent_id)
+{
+    $total_lesson = Lesson::where('parent_id', $parent_id)->get()->count();
     return $total_lesson;
 }
-function subjectTotalWatchVideo($subject_id){
-    $total_video=SubjectLessonVisitor::where('visitor_id',auth()->user()->id)->where('subject_id',$subject_id)->get()->count();
+function subjectTotalWatchVideo($subject_id)
+{
+    $total_video = SubjectLessonVisitor::where('visitor_id', auth()->user()->id)->where('subject_id', $subject_id)->distinct('lesson_subject_id')->count('lesson_subject_id');
     return $total_video;
 }
-function subjectAlreadyPurchase($subject_id){
-        
-        $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
-            $q->where('assign_subject_id', $subject_id);
-        })->where("user_id", auth()->user()->id)->first();
-        
-        if ($isBuy==null) {
-            return 0;
-        } else {
-            return 1;
-        }
-       
-    
-    
+function subjectAlreadyPurchase($subject_id)
+{
+
+    $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
+        $q->where('assign_subject_id', $subject_id);
+    })->where("user_id", auth()->user()->id)->first();
+
+    if ($isBuy == null) {
+        return 0;
+    } else {
+        return 1;
+    }
 }
-function checkemail($str) {
+function checkemail($str)
+{
     return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;
+}
+function totalTime($times) {
+    
+    $time_seconds=0;
+    foreach ($times as $key=>$time) {
+    $time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $time);
+
+    sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+    
+    $time_seconds = $time_seconds+$hours * 3600 + $minutes * 60 + $seconds;
+
+    }
+
+    return $time_seconds;
 }

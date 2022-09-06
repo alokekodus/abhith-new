@@ -16,12 +16,13 @@ class QuestionImport implements ToCollection, WithHeadingRow
 
     private $setId;
 
-    public function __construct($setName, $subject_id, $board_id, $assign_class_id)
+    public function __construct($setName, $subject_id, $board_id, $assign_class_id,$lesson_id)
     {
         $this->setName = $setName;
-        $this->subject_id = $subject_id;
+        $this->assign_subject_id = $subject_id;
         $this->board_id = $board_id;
         $this->assign_class_id = $assign_class_id;
+        $this->lesson_id=$lesson_id;
     }
 
     public function collection(Collection $rows)
@@ -39,9 +40,10 @@ class QuestionImport implements ToCollection, WithHeadingRow
 
         $set=Set::create([
             'set_name' =>  $this->setName,
-            'assign_subject_id' => $this->subject_id,
+            'assign_subject_id' => $this->assign_subject_id,
             'board_id' => $this->board_id,
             'assign_class_id' => $this->assign_class_id,
+            'lesson_id'=>$this->lesson_id,
         ]);
 
         foreach ($rows as $row) {

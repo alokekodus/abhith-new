@@ -333,6 +333,7 @@ class LessonController extends Controller
                 $board_id = $lesson->board_id;
                 $assign_class_id = $lesson->assign_class_id;
                 $assign_subject_id = $lesson->assign_subject_id;
+                $lesson_id=$lesson->id;
                 $questionFile = $request->questionExcel;
                 if ($request->hasFile('questionExcel')) {
 
@@ -349,7 +350,7 @@ class LessonController extends Controller
                         $questionFile = $request->file('questionExcel');
 
                         $questionFile = $request->file('questionExcel')->store('imports');
-                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id);
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id,$lesson_id);
                         $import->import($questionFile);
 
                         Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
