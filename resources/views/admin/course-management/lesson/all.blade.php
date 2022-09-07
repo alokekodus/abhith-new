@@ -1,10 +1,14 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">All Lesson</h4>
-            {{-- <a href="" style="float:right" class="btn btn-gradient-primary btn-fw">All
-                Subject</a> --}}
 
+        <div class="card-header">
+            All Lesson
+            <a href="{{route('admin.course.management.lesson.create',Crypt::encrypt($subject->id))}}" style="float:right" class="btn btn-gradient-primary btn-fw">Add
+                Lesson</a>
+        </div>
+        {{-- <a href="" style="float:right" class="btn btn-gradient-primary btn-fw">All
+            Subject</a> --}}
+        <div class="card-body">
             <div style="overflow-x:auto;">
                 <table class="table table-striped" id="lessonTable">
                     <thead>

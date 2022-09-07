@@ -120,7 +120,7 @@ class SubjectController extends Controller
                 $subject_attachment = $subject->subjectAttachment->attachment_origin_url;
             } else {
                 $attachment_type = "image";
-                $subject_attachment = $subject->subjectAttachment->image;
+                $subject_attachment = $subject->image;
             }
             $subject_attachment = [
                 'attachment_type' => $attachment_type,

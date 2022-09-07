@@ -94,10 +94,10 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item {{ (request()->routeIs('admin.insert.mcq.question')) ? 'active' : '' }}">
+        {{-- <li class="nav-item {{ (request()->routeIs('admin.insert.mcq.question')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.index.multiple.choice')}}"><span class="menu-title">MCQ's</span>
                 <i class="mdi  mdi-format-list-bulleted menu-icon"></i></a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link" href="{{route('website.get.report.knowledge.post')}}"><span class="menu-title">Reported
                     Posts</span>

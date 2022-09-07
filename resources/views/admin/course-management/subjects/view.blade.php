@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td>Image: </td>
-                            <td colspan="2"><b><a href="{{asset($subject->image)}}">{{$subject->image}}</a></b></td>
+                            <td colspan="2"><b><a href="{{asset($subject->image)}}">{{basename($subject->image)}}</a></b></td>
                         </tr>
                         <tr>
                             <td>Thumbnail Image: </td>
