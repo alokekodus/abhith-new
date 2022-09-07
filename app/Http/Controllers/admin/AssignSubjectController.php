@@ -32,7 +32,7 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-          
+
         try {
 
             $validate = Validator::make(
@@ -67,11 +67,11 @@ class AssignSubjectController extends Controller
             }
 
             $split_assignedClass = str_split($request->assignedClass);
-           
+
             $assignedClass = $split_assignedClass[0];
             $assignedBoard = $split_assignedClass[1];
-            $is_in_assignsubject=AssignSubject::where('subject_name',ucfirst($request->subjectName))->where('assign_class_id',$assignedClass)->where('board_id',$assignedBoard)->where('is_activate',1)->first();
-            if($is_in_assignsubject){
+            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
+            if ($is_in_assignsubject) {
                 Toastr::error("'ucfirst($request->subjectName)'.'already active'", '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
@@ -202,7 +202,8 @@ class AssignSubjectController extends Controller
 
             return view('admin.course-management.subjects.view')->with(['subject' => $subject, 'lesson_groupby_teachers' => $lesson_groupby_teachers]);
         } catch (\Throwable $th) {
-            //throw $th;
+            Toastr::error("Something went wrong", '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
         }
     }
     public function assignSubjectLesson($lesson_id)

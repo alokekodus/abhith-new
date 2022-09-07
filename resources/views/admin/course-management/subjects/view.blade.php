@@ -24,36 +24,60 @@
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Subject Table</h4>
-            <table class="table table-bordered">
+            <h4 class="card-title">Subject Details</h4>
+            <div style="overflow-x:auto;">
+                <table class="table table-bordered">
 
-                <tbody>
-                    <tr>
-                        <td> Subject Name: <b>{{$subject->subject_name}} </b> </td>
-                        <td>
-                            Board: <b>{{$subject->boards->exam_board}} </b>
-                        </td>
-                        <td> Class: <b>{{$subject->assignClass->class}} </b> </td>
-                    </tr>
-                    <tr>
-                        <td>Image: </td>
-                        <td colspan="2"><b><a href="{{asset($subject->image)}}">{{$subject->image}}</a></b></td>
-                    </tr>
-                    <tr>
-                        <td>Thumbnail Image: </td>
-                        <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                    href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->video_thumbnail_image)}}</a>
-                                @else NA @endif</b></td>
-                    </tr>
-                    <tr>
-                        <td>Promo Video: </td>
-                        <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                    href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->attachment_origin_url)}}</a>
-                                @else NA @endif</b></td>
+                    <tbody>
+                        <tr>
+                            <td> Subject Name: </td>
+                            <td><b>{{$subject->subject_name}} </b></td>
+                            
+                            
+                        </tr>
+                        <tr>
+                            <td>Board:</td>
+                            <td><b>{{$subject->boards->exam_board}} </b></td>
+                        </tr>
+                        <tr>
+                            <td>Class:</td>
+                            <td> <b>{{$subject->assignClass->class}} </b> </td>
+                        </tr>
+                        <tr>
+                            <td>Image: </td>
+                            <td colspan="2"><b><a href="{{asset($subject->image)}}">{{$subject->image}}</a></b></td>
+                        </tr>
+                        <tr>
+                            <td>Thumbnail Image: </td>
+                            <td colspan="2"><b>@if($subject->subjectAttachment)<a
+                                        href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->video_thumbnail_image)}}</a>
+                                    @else NA @endif</b></td>
+                        </tr>
+                        <tr>
+                            <td>Promo Video: </td>
+                            <td colspan="2"><b>@if($subject->subjectAttachment)<a
+                                        href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->attachment_origin_url)}}</a>
+                                    @else NA @endif</b></td>
 
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                        <tr>
+                            <td>Description: </td>
+                            <td colspan="2">{!!$subject->description!!}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Why Learn: </td>
+                            <td colspan="2">{!!$subject->why_learn!!}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Requirements: </td>
+                            <td colspan="2">{{$subject->requirements??'NA'}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -71,7 +95,7 @@
                         <th>#No</th>
                         <th> Name </th>
                         <th> Total Topic Assign </th>
-                       
+
                     </tr>
                 </thead>
                 <tbody>
@@ -79,9 +103,10 @@
                     @foreach($lesson_groupby_teachers as $key=>$teacher)
                     <tr>
                         <td>{{$no++}}</td>
-                        <td><a href="{{route('admin.teacher.details',Crypt::encrypt($teacher[0]->assignTeacher->id))}}"> {{$teacher[0]->assignTeacher->name}}</a>
+                        <td><a href="{{route('admin.teacher.details',Crypt::encrypt($teacher[0]->assignTeacher->id))}}">
+                                {{$teacher[0]->assignTeacher->name}}</a>
                         <td>{{totalTopicFindById($teacher[0]->assignTeacher->id)}} topics</td>
-                        
+
                     </tr>
                     @endforeach
                 </tbody>
@@ -104,6 +129,12 @@
             "searching": true,
             "ordering": false
         });
+        $('#teacherTable').DataTable({
+            "processing": true,
+            "searching": true,
+            "ordering": false
+        });
+        
     });
 </script>
 @endsection
