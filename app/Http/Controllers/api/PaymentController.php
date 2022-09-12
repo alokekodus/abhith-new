@@ -16,6 +16,7 @@ class PaymentController extends Controller
         try {
             $id = $_GET['cart_id'];
             $cart = Cart::where('id', $id)->where('is_remove_from_cart', 0)->where('is_paid', 0)->first();
+            return response()->json(['status' => 1, 'result' => $cart]);
             if ($cart) {
                 $total_amount = $total_amount = $cart->assignSubject->sum('amount');
                 $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
@@ -66,7 +67,7 @@ class PaymentController extends Controller
 
 
             ];
-            return response()->json(['status' => 0, 'result' => $th]);
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
     public function paymentVerification(Request $request)
