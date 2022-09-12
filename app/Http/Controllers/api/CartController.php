@@ -184,6 +184,7 @@ class CartController extends Controller
                 ->where('is_paid', 0)
                 ->where('is_remove_from_cart', 0)
                 ->first();
+                return response()->json(['status' => 0, 'result' => $cart]);
             if (!$cart == null) {
                 $cart_total_amount = $cart->assignSubject->sum("amount");
                  
