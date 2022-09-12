@@ -19,14 +19,14 @@ class PaymentController extends Controller
            
             if ($cart) {
                 $total_amount = $total_amount = $cart->assignSubject->sum('amount');
-                return response()->json(['status' => 1, 'result' => $total_amount]);
+              
                 $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
                 $orderData = [
                     'receipt'         => now()->timestamp,
                     'amount'          => $total_amount * 100, // 39900 rupees in paise
                     'currency'        => 'INR'
                 ];
-
+                return response()->json(['status' => 1, 'result' => $orderData]);
                 $razorpayOrder = $api->order->create($orderData);
                
                 $order = [
