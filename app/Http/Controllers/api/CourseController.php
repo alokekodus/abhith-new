@@ -139,7 +139,7 @@ class CourseController extends Controller
                         "code" => 200,
                         "status" => 1,
                         "message" => "No record found",
-                        "result"=>[],
+                        "result"=>$all_courses,
 
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
@@ -208,7 +208,7 @@ class CourseController extends Controller
                         "code" => 200,
                         "status" => 1,
                         "message" => "No record found",
-                        "result"=>[],
+                        "result"=>$all_courses,
 
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
