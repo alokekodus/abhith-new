@@ -248,8 +248,8 @@ class SubjectController extends Controller
                 $data = [
                     "code" => 200,
                     "message" => "No record found",
-                    "total_lesson" => [],
-                    "result" => [],
+                    "total_lesson" => $total_lesson,
+                    "result" => $lessons,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
