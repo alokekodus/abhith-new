@@ -66,7 +66,7 @@ class PaymentController extends Controller
 
 
             ];
-            return response()->json(['status' => 0, 'result' => $data]);
+            return response()->json(['status' => 0, 'result' => $th]);
         }
     }
     public function paymentVerification(Request $request)
