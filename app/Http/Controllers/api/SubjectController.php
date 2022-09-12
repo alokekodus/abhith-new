@@ -233,7 +233,7 @@ class SubjectController extends Controller
             // foreach ($lessons as $key => $lesson) {
 
             // }
-            if (!$lessons == null) {
+            if (!$lessons == null||!($lessons != [])) {
 
                 $data = [
                     "code" => 200,

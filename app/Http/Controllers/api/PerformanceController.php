@@ -52,14 +52,24 @@ class PerformanceController extends Controller
                 $total_video = $total_video + $subject['total_video'];
                 $total_watch_video = $total_watch_video + $subject['total_watch_video'];
             }
-            $watched_percentage = ($total_watch_video / $total_video) * 100;
-            $not_watched_percentage = ($total_video - $total_watch_video) / $total_video * 100;
 
-            $subject_progress = [
-                'watched_percentage' => round($watched_percentage),
-                'not_watched_percentage' => round($not_watched_percentage),
-                'subject_progress' => round($watched_percentage),
-            ];
+            if ($total_watch_video == 0) {
+                $subject_progress = [
+                    'watched_percentage' => 0,
+                    'not_watched_percentage' => 100,
+                    'subject_progress' => 0,
+                ];
+            } else {
+                $watched_percentage = ($total_watch_video / $total_video) * 100;
+                $not_watched_percentage = ($total_video - $total_watch_video) / $total_video * 100;
+
+                $subject_progress = [
+                    'watched_percentage' => round($watched_percentage),
+                    'not_watched_percentage' => round($not_watched_percentage),
+                    'subject_progress' => round($watched_percentage),
+                ];
+            }
+
 
             // // $all_watched_video=SubjectLessonVisitor::where('visitor_id',auth()->user()->id)->groupBy(date('D',strtotime('created_at')))->get();
             // $all_watched_video_day_wises = SubjectLessonVisitor::query()
