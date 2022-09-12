@@ -156,6 +156,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                 processData: false,
                 contentType: false,
                 statusCode: {
+                   
                     422: function(data) {
                         var errors = $.parseJSON(data.responseText);
                         $.each(errors.errors, function(key, val) {
