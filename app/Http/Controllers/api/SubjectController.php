@@ -233,8 +233,8 @@ class SubjectController extends Controller
             // foreach ($lessons as $key => $lesson) {
 
             // }
-            return response()->json(['status' => 1, 'result' => $lessons]);
-            if (!$lessons == null||!($lessons != [])) {
+           
+            if ($lessons->count()>0) {
 
                 $data = [
                     "code" => 200,
