@@ -19,6 +19,7 @@ class PaymentController extends Controller
            
             if ($cart) {
                 $total_amount = $total_amount = $cart->assignSubject->sum('amount');
+                return response()->json(['status' => 1, 'result' => $total_amount]);
                 $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
                 $orderData = [
                     'receipt'         => now()->timestamp,
@@ -27,7 +28,7 @@ class PaymentController extends Controller
                 ];
 
                 $razorpayOrder = $api->order->create($orderData);
-                return response()->json(['status' => 1, 'result' => $razorpayOrder]);
+               
                 $order = [
                     'user_id' => auth()->user()->id,
                     'board_id' => $cart->board_id,
