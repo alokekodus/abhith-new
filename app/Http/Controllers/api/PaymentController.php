@@ -26,9 +26,9 @@ class PaymentController extends Controller
                     'amount'          => $total_amount * 100, // 39900 rupees in paise
                     'currency'        => 'INR'
                 ];
-                return response()->json(['status' => 1, 'result' => $orderData]);
-                $razorpayOrder = $api->order->create($orderData);
                
+                $razorpayOrder = $api->order->create($orderData);
+                return response()->json(['status' => 1, 'result' => $api]);
                 $order = [
                     'user_id' => auth()->user()->id,
                     'board_id' => $cart->board_id,
