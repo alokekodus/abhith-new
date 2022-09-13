@@ -186,7 +186,7 @@ class PerformanceController extends Controller
                 $total_mon_day_test = totalTime($mon_day_practice_test);
             }
             if (!$tue_day_practice_test == []) {
-                $total_thu_day_test = totalTime($tue_day_practice_test);
+                $total_tue_day_test = totalTime($tue_day_practice_test);
             }
 
             if (!$wed_day_practice_test == []) {

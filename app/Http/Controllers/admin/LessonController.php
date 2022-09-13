@@ -253,7 +253,23 @@ class LessonController extends Controller
                 return redirect()->back();
             }
             if ($request->resource_type == 2) {
-                // dd($request->all());
+                
+                $validate = Validator::make(
+                    $request->all(),
+                    [
+                        'name' => 'required',
+                        'video_thumbnail_image_url' => 'mimes:pdf',
+                        'video_url'=>'required|'
+                    ],
+                    [
+                        'name.required' => 'Resource Name is required',
+                        'image_url.required' => 'Please upload your resource'
+                    ]
+                );
+                if ($validate->fails()) {
+                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
+                    return redirect()->back();
+                }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
                 $data = [
