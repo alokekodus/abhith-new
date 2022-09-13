@@ -10,85 +10,83 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 @section('title','Banner')
 
 @section('head')
-<script src="{{ asset('asset_admin/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('asset_admin/ckeditor/ckeditor.js') }}"></script>
 
-<link rel="stylesheet"
-    href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
-<link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
+    <link rel="stylesheet"
+        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
 @endsection
 
 @section('content')
-<div class="col-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Create Banner</h4>
-            <form class="forms-sample" id="bannerForm" action="{{ route('admin.creating.subject') }}" method="POST"
-                enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="exampleInputName1">Name</label>
-                    <input type="text" class="form-control" id="banner_name" name="name" maxlength="20"
-                        placeholder="Enter Banner Name" required>
-                    <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
-                    <span class="text-danger" id="name_error"></span>
-                </div>
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Create Banner</h4>
+                <form class="forms-sample" id="bannerForm" action="{{ route('admin.creating.subject') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text" class="form-control" id="banner_name" name="name" maxlength="20" placeholder="Enter Banner Name" required>
+                        <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
+                        <span class="text-danger" id="name_error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label>File upload</label>
-                    <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
-                        data-max-files="1" required />
-                    <span class="text-danger" id="pic_error"></span>
-                </div>
+                    <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
+                            data-max-files="1"  required/>
+                        <span class="text-danger" id="pic_error"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="exampleTextarea1">Description</label>
-                    <textarea class="form-control" id="" name="description" maxlength="80" rows="4"
-                        placeholder="Describe banner here."></textarea>
-                    <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
-                    <span class="text-danger" id="description_error"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="exampleTextarea1">Description</label>
+                        <textarea class="form-control" id="" name="description" maxlength="80" rows="4" placeholder="Describe banner here."></textarea>
+                        <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
+                        <span class="text-danger" id="description_error"></span>
+                    </div>
 
-                {{-- <div class="form-group">
-                    <label for="exampleSelectGender">Related to Course</label>
-                    <select class="form-control" id="related_course" required>
-                        <option value="" disabled selected>-- Select --</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
+                    {{-- <div class="form-group">
+                        <label for="exampleSelectGender">Related to Course</label>
+                        <select class="form-control" id="related_course" required>
+                            <option value="" disabled selected>-- Select --</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
 
-                <div class="form-group" id="course_id">
-                    <label for="exampleSelectGender">Course</label>
-                    <select class="form-control" id="course_list" name="course_list">
-                        <option value="" disabled selected> -- Select Course --</option>
-                        @foreach ($course as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                        @endforeach
-                    </select>
-                </div> --}}
+                    <div class="form-group" id="course_id">
+                        <label for="exampleSelectGender">Course</label>
+                        <select class="form-control" id="course_list" name="course_list">
+                            <option value="" disabled selected> -- Select Course --</option>
+                            @foreach ($course as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </div> --}}
 
-                <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
-            </form>
+                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
 
-<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
-</script>
-<script
-    src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
-</script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
+    </script>
+    <script
+        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 
 
-<script>
-    //  window.onload = function() {
+    <script>
+        //  window.onload = function() {
         //     CKEDITOR.replace('editor', {
         //         height: 200,
         //         filebrowserUploadMethod: 'form',
@@ -157,9 +155,6 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                 data: formdata,
                 processData: false,
                 contentType: false,
-                success: function( data ) {
-                alert( data );
-               }
                 statusCode: {
                    
                     422: function(data) {
@@ -177,8 +172,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                         toastr.success(data.message);
                         location.reload();
                     },
-                    500: function(data) {
-                        console.log(data.message);
+                    500: function() {
                         alert('500 someting went wrong');
                     }
                 }
@@ -200,6 +194,6 @@ $course = Course::where('is_activate', Activation::Activate)->get();
             }
             // var firstDropVal = $('#pick').val();
         });
-</script>
+    </script>
 
 @endsection
