@@ -158,7 +158,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                 processData: false,
                 contentType: false,
                 success: function( data ) {
-                alert( data );
+                console.log( data );
                }
                 // statusCode: {
                    
