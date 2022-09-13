@@ -17,7 +17,7 @@ class BannerController extends Controller
 
     protected function create(Request $request)
     {
-       
+
         $this->validate($request,[
             'name' => 'required',
             'description' => 'string',
@@ -36,14 +36,14 @@ class BannerController extends Controller
             $file = 'files/banner/' . $new_name;
         }
 
-       $banner= Banner::create([
+        Banner::create([
             'name' => $request->name,
             'description' => $request->description,
             'course_id' => $request->course_list,
             'banner_image' => $file
         ]);
 
-        return response()->json(['status' => 1,'message' => $banner]);
+        return response()->json(['status' => 1,'message' => 'Banner created successfully']);
     }
 
     protected function active(Request $request) {
