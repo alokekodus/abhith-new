@@ -172,7 +172,8 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                         toastr.success(data.message);
                         location.reload();
                     },
-                    500: function() {
+                    500: function(data) {
+                        console.log(data.message);
                         alert('500 someting went wrong');
                     }
                 }

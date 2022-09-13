@@ -17,7 +17,7 @@ class BannerController extends Controller
 
     protected function create(Request $request)
     {
-
+        return response()->json(['status' => 1,'message' => $request->all()]);
         $this->validate($request,[
             'name' => 'required',
             'description' => 'string',
