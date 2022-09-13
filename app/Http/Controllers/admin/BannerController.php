@@ -36,14 +36,14 @@ class BannerController extends Controller
             $file = 'files/banner/' . $new_name;
         }
 
-        Banner::create([
+       $banner= Banner::create([
             'name' => $request->name,
             'description' => $request->description,
             'course_id' => $request->course_list,
             'banner_image' => $file
         ]);
 
-        return response()->json(['status' => 1,'message' => 'Banner created successfully']);
+        return response()->json(['status' => 1,'message' => $banner]);
     }
 
     protected function active(Request $request) {
