@@ -56,7 +56,7 @@ class UserController extends Controller
             $data = [
                 'education' => $request->education ?? $user_details->education,
                 'name' => $request->name ?? $user_details->name,
-                'address' => $request->address ?? $user_details->email,
+                'address' => $request->address ?? $user_details->address,
             ];
             $user_details->update($data);
 
