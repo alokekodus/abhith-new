@@ -202,7 +202,7 @@ class LessonController extends Controller
     public function topicStore(Request $request)
     {
         try { 
-            dd($request->all());
+            
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
                 Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
@@ -213,7 +213,7 @@ class LessonController extends Controller
                     $request->all(),
                     [
                         'name' => 'required',
-                        'image_url' => 'required|mimes:pdf|max:10000',
+                        'image_url' => 'required|mimes:pdf',
                     ],
                     [
                         'name.required' => 'Resource Name is required',
