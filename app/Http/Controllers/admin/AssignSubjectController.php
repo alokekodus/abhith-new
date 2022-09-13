@@ -40,7 +40,7 @@ class AssignSubjectController extends Controller
                 [
                     'subjectName' => 'required',
                     'assignedClass' => 'required',
-                    'subject_amount' => 'required|numeric|min:100|max:100000',
+                    'subject_amount' => 'required',
                     'description' => 'required',
                     'why_learn' => 'required',
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
