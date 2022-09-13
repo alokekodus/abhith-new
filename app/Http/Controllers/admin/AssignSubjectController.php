@@ -34,7 +34,7 @@ class AssignSubjectController extends Controller
     {
 
         try {
-            dd($request->all());
+            
           
             $validate = Validator::make(
                 $request->all(),
