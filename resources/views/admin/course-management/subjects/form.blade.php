@@ -33,7 +33,7 @@
                 <div class="file-select">
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noCoverImage">No file chosen...</div>
-                    <input type="file" id='imageUpload' name="image_url" accept=".jpg, .jpeg, .png"
+                    <input type="file" id='imageUpload' name="image_url" accept=".jpg, .jpeg, .png,.tif, .tiff"
                         value="@if(isset($subject)){{asset($subject->subjectAttachment->img_url)}} @else {{asset('files/subject/placeholder.jpg')}} @endif">
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="file-select">
                     <div class="file-select-button" id="fileName">Choose File</div>
                     <div class="file-select-name" id="noImageFilePromoVideo">No file chosen...</div>
-                    <input type="file" id='videoThumbnailImageUpload' onchange="changeVideoImage(this);"
+                    <input type="file" id='videoThumbnailImageUpload' accept=".jpg, .jpeg, .png,.tif, .tiff" onchange="changeVideoImage(this);"
                         name="video_thumbnail_image_url"
                         value="@if(isset($subject)){{asset($subject->subjectAttachment->video_thumbnail_image)}} @else {{asset('files/subject/placeholder.jpg')}} @endif">
                 </div>
@@ -101,7 +101,7 @@
         <div class="form-group">
             <label for="">Subject Amount<span class="text-danger">*</span></label>
             <input type="text" name="subject_amount" class="form-control" id="subject_amount" placeholder="7000"
-                value="@isset($subject) {{$subject->subject_amount}} @endisset">
+                value="@isset($subject) {{$subject->subject_amount}} @endisset" minlength="3" maxlength="7">
         </div>
     </div>
 </div>

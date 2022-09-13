@@ -22,9 +22,10 @@
 
 <div class="card">
     <div class="card-body">
-        <form enctype="multipart/form-data" id="addSubject" action="{{route('admin.course.management.subject.store')}}" method="POST">
+        <form enctype="multipart/form-data" id="addSubject" action="{{route('admin.course.management.subject.store')}}"
+            method="POST">
             @csrf
-             @include('admin.course-management.subjects.form')
+            @include('admin.course-management.subjects.form')
             <div style="float: right;">
                 <button type="button" class="btn btn-md btn-default" id="assignSubjectCancelBtn">Cancel</button>
                 <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">Submit</button>
@@ -38,7 +39,6 @@
 @section('scripts')
 
 <script>
-
     CKEDITOR.replace( 'description', {
 	toolbar: [
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
@@ -49,6 +49,14 @@
 </script>
 <script>
     CKEDITOR.replace( 'why_learn', {
+	toolbar: [
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+	]
+    });
+</script>
+<script>
+    CKEDITOR.replace( 'requirements', {
 	toolbar: [
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
 	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },

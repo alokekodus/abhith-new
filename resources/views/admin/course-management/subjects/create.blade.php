@@ -56,6 +56,15 @@
     });
 </script>
 <script>
+    CKEDITOR.replace( 'requirements', {
+	toolbar: [
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+	]
+    });
+</script>
+
+<script>
     $(document).ready(function () {
 
     $('#addSubject').validate({

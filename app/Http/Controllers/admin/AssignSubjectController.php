@@ -40,7 +40,7 @@ class AssignSubjectController extends Controller
                 [
                     'subjectName' => 'required',
                     'assignedClass' => 'required',
-                    'subject_amount' => 'required',
+                    'subject_amount' => 'required|numeric|min:100|max:100000',
                     'description' => 'required',
                     'why_learn' => 'required',
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
@@ -63,7 +63,8 @@ class AssignSubjectController extends Controller
 
             if ($validate->fails()) {
                 Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+               
+                return back()->withInput();
             }
 
             $split_assignedClass = str_split($request->assignedClass);
@@ -72,7 +73,7 @@ class AssignSubjectController extends Controller
             $assignedBoard = $split_assignedClass[1];
             $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
             if ($is_in_assignsubject) {
-                Toastr::error("'ucfirst($request->subjectName)'.'already active'", '', ["positionClass" => "toast-top-right"]);
+                Toastr::error("'$request->subjectName'.'already active'", '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
             $document = $request->file('image_url');
@@ -128,7 +129,9 @@ class AssignSubjectController extends Controller
                 'is_activate' => 0, //initially subject not active
                 'description' => $request->description,
                 'why_learn' => $request->why_learn,
+                'requirements'=>$request->requirements,
             ];
+            
             if ($request->subject_id == null) {
                 $assign_subject = AssignSubject::create($data);
             } else {
@@ -159,7 +162,8 @@ class AssignSubjectController extends Controller
             }
             return redirect()->route('admin.course.management.subject.all');
         } catch (\Throwable $th) {
-            dd($th);
+            Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
+            return back()->withInput();
         }
     }
 
