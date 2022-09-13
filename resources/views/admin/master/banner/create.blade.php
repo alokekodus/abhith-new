@@ -158,30 +158,30 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                 processData: false,
                 contentType: false,
                 success: function( data ) {
-                console.log( data.message );
+                alert( data );
                }
-                // statusCode: {
+                statusCode: {
                    
-                //     422: function(data) {
-                //         var errors = $.parseJSON(data.responseText);
-                //         $.each(errors.errors, function(key, val) {
-                //             $("#" + key + "_error").empty();
-                //         });
-                //         $.each(errors.errors, function(key, val) {
-                //             $("#" + key + "_error").text(val[0]);
-                //         });
+                    422: function(data) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors.errors, function(key, val) {
+                            $("#" + key + "_error").empty();
+                        });
+                        $.each(errors.errors, function(key, val) {
+                            $("#" + key + "_error").text(val[0]);
+                        });
 
-                //     },
-                //     200: function(data) {
-                //         // console.log(data);
-                //         toastr.success(data.message);
-                //         location.reload();
-                //     },
-                //     500: function(data) {
-                //         console.log(data.message);
-                //         alert('500 someting went wrong');
-                //     }
-                // }
+                    },
+                    200: function(data) {
+                        // console.log(data);
+                        toastr.success(data.message);
+                        location.reload();
+                    },
+                    500: function(data) {
+                        console.log(data.message);
+                        alert('500 someting went wrong');
+                    }
+                }
             });
 
 
