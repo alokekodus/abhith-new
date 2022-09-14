@@ -395,6 +395,50 @@ class UserController extends Controller
     }
     public function resetForgotPassword(Request $request)
     {
+       
+       
+        try {
+            if (checkemail($request->user_id)) {
+                $user = user::where('email', $request->user_id)->first();
+            } else {
+                
+                $user = user::where('phone', $request->user_id)->first();
+            }
+            if (Hash::check($request->old_password, $user->password)) {
+                $user->fill([
+                    'password' => Hash::make($request->new_password)
+                ])->save();
+
+                $data = [
+                    "code" => 200,
+                    "message" => "Password changed Successfully ",
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "message" => "Old Password does not match. ",
+
+                ];
+                return response()->json(['status' => 0, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }  
+       
+       
+       
+       
+       
+       
+       
+       
         try {
             $user = User::find($request->user_id);
             if ($user) {
