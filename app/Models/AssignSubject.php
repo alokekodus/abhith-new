@@ -32,7 +32,7 @@ class AssignSubject extends Model
         return $this->hasOne(LessonAttachment::class,'subject_lesson_id','id')->where('type',1);
     }
     public function assignOrder(){
-        return $this->hasMany(CartOrOrderAssignSubject::class,'assign_subject_id','id');
+        return $this->hasMany(CartOrOrderAssignSubject::class,'assign_subject_id','id')->where('order_id','!=',null);
     }
     public function review(){
         return $this->hasMany(Review::class,'subject_id','id');

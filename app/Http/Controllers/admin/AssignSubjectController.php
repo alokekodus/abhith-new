@@ -41,7 +41,7 @@ class AssignSubjectController extends Controller
                 [
                     'subjectName' => 'required',
                     'assignedClass' => 'required',
-                    'subject_amount' => 'required',
+                    'subject_amount' => 'required|integer|digits_between:3,6',
                     'description' => 'required',
                     'why_learn' => 'required',
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
@@ -54,6 +54,7 @@ class AssignSubjectController extends Controller
                     'subjectName.required' => 'Subject name is required',
                     'assignedClass.required' => 'Subject class is required',
                     'subject_amount.required' => 'Amount filed is required',
+                    'subject_amount.digits_between'=>'Please insert a valid amount',
                     'description.required' => 'Subject descripttion filed is required',
                     'why_learn.required' => 'Why learn filed is required',
                     'image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
