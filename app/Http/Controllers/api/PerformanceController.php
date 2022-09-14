@@ -52,7 +52,7 @@ class PerformanceController extends Controller
                 $total_video = $total_video + $subject['total_video'];
                 $total_watch_video = $total_watch_video + $subject['total_watch_video'];
             }
-
+            return response()->json(['status' => 1, 'result' => $total_watch_video]);
             if ($total_watch_video == 0) {
                 $subject_progress = [
                     'watched_percentage' => 0,
