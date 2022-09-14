@@ -62,10 +62,11 @@
                             <a class="nav-link" data-toggle="tab" href="#mycourses" role="tab"
                                 aria-controls="mycourses">My Courses</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#payment" role="tab"
-                                aria-controls="payment">Payment</a>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#myperformance" role="tab"
+                                aria-controls="myperformance">My Performance</a>
                         </li>
+                        {{-- 
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#notification" role="tab"
                                 aria-controls="notification">Notification <span class="notification-badge">4</span></a>
@@ -281,7 +282,12 @@
                         </div>
 
                     </div>
+                    <div class="tab-pane" id="myperformance" role="tabpanel">
+                        <div class="row">
+                          
+                        </div>
 
+                    </div>
                     <div class="tab-pane" id="purchase" role="tabpanel">
                         <div class="row">
                             <div class="col-lg-12 col-6">
