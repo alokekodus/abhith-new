@@ -274,7 +274,7 @@ class UserController extends Controller
                 if ($user) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
-                    $send_otp = otpSendForgotPassword($user->phone, $otp);
+                    $send_otp = otpSendForgotPassword($request->phone, $otp);
                     if ($send_otp) {
                         $data = [
                             "user_id" => $user->id,
