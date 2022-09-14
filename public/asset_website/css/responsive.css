@@ -20,7 +20,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    /* .login-details li:first-child {
+    /* .login-details li:first-child { 
         margin-right: 100px;
         position: relative;
     }
@@ -1033,6 +1033,11 @@
     }
     #articles .article-content h5 {
         font-size: 16px;
+    }
+    .enroll {
+        right: 10px;
+        padding: 7px 10px;
+        bottom: 7px;
     }
 }
 

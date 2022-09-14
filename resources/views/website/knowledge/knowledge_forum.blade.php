@@ -116,6 +116,10 @@
                     </div>
                 </div>
             </div>
+            {{-- <div class="caughtUP d-lg-none"> 
+                <i class="fa fa-check-circle-o" aria-hidden="true" style="color:green;font-size:22px;"></i>
+                &nbsp; You are all caught up. 
+            </div> --}}
 
             <div class="ajax-loading" style="display:none;">
                 <p>
@@ -124,6 +128,7 @@
                 </p>
             </div>
         </div>
+        
     </section>
 
 
@@ -136,7 +141,7 @@
     @include('layout.website.include.modal_scripts')
     <script>
         function loadMorePost(page) {
-            let html = '<div style="position: absolute;left: 34%; bottom: 16%"> <i class="fa fa-check-circle-o" aria-hidden="true" style="color:green;font-size:22px;"></i>&nbsp; You are all caught up. </div>';
+            let html = '<div style="position: absolute;left: 27%; bottom: 20%"> <i class="fa fa-check-circle-o" aria-hidden="true" style="color:green;font-size:22px;"></i>&nbsp; You are all caught up. </div>';
             $.ajax({
                     url: '?page=' + page,
                     type: 'get',
