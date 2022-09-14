@@ -387,7 +387,7 @@ class SubjectController extends Controller
                             'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
                             'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
-                            'video_duration' => $topic->lessonAttachment->video_duration ?? null
+                            'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00"
 
                         ];
 
@@ -405,7 +405,7 @@ class SubjectController extends Controller
                                     'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
                                     'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
-                                    'video_duration' => $topic->video_duration ?? null,
+                                    'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
                                 ];
                             $topic_video[] = $sub_topic_video;
                         }
