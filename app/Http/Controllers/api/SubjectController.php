@@ -269,7 +269,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
             $sub_topic_content = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('id', $id)->where('type', 3)->paginate();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('type', 3)->paginate();
 
             if ($lesson != null) {
 
@@ -342,8 +342,8 @@ class SubjectController extends Controller
                 }
             } else {
                 $content_details = [
-                    'videos' => [],
-                    'total_videos' => 0,
+                    'contents' => [],
+                    'total_contents' => 0,
 
                 ];
                 $data = [
