@@ -37,15 +37,15 @@ class SubjectController extends Controller
                 $query->where('exam_board', $request->board);
             })->whereHas('assignClass', function ($query) use ($request) {
                 $query->where('class', $request->standard);
-            })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published',1)->get();
-            
+            })->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published', 1)->get();
+
             // calculate total amount
             $total_amount = 0;
-            foreach($subjects as $key=>$subject){
-                if(subjectAlreadyPurchase($subject->id)==1){
-                    $total_amount=$total_amount+0;
-                }else{
-                    $total_amount=$total_amount+$subject->subject_amount;
+            foreach ($subjects as $key => $subject) {
+                if (subjectAlreadyPurchase($subject->id) == 1) {
+                    $total_amount = $total_amount + 0;
+                } else {
+                    $total_amount = $total_amount + $subject->subject_amount;
                 }
             }
             $all_subject = [];
@@ -63,7 +63,7 @@ class SubjectController extends Controller
                     'image' => $subject->image,
                     'subject_amount' => $subject->subject_amount,
                     'rating' => $rating_average,
-                    'already_purchase'=>subjectAlreadyPurchase($subject->id),
+                    'already_purchase' => subjectAlreadyPurchase($subject->id),
                 ];
                 $all_subject[] = $data;
             }
@@ -108,11 +108,11 @@ class SubjectController extends Controller
         try {
             $id = $_GET['subject_id'];
             $subject = AssignSubject::select('id', 'subject_name', 'subject_amount', 'assign_class_id', 'board_id', 'description', 'why_learn', 'created_at')->with(['assignClass:id,class', 'boards:id,exam_board', 'lesson', 'lesson.topics', 'subjectAttachment'])->where('id', $id)->first();
-            if($subject->review->count()>0){
+            if ($subject->review->count() > 0) {
                 $total_rating = $subject->review()->count() * 5;
                 $rating_average = round($subject->review()->sum('rating') / $total_rating * 5);
-            }else{
-                $rating_average="No reviews yet";
+            } else {
+                $rating_average = "No reviews yet";
             }
             $subject_promo_video = $subject->subjectAttachment->attachment_origin_url;
             if ($subject_promo_video != null) {
@@ -129,10 +129,10 @@ class SubjectController extends Controller
 
             ];
             $total_lesson = $subject->lesson->count();
-            $total_topic = Lesson::where('id',$id)->where('parent_id',null)->count();
-            $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->get()->count();
-            $total_video = Lesson::where('assign_subject_id', $id)->where('type', 2)->get()->count();
-            $total_article = Lesson::where('assign_subject_id', $id)->where('type', 3)->get()->count();
+            $total_topic = Lesson::where('id', $id)->where('parent_id', null)->count();
+            $total_image_pdf = Lesson::where('assign_subject_id', $id)->where('type', 1)->where('status', 1)->get()->count();
+            $total_video = Lesson::where('assign_subject_id', $id)->where('type', 2)->where('status', 1)->get()->count();
+            $total_article = Lesson::where('assign_subject_id', $id)->where('type', 3)->where('status', 1)->get()->count();
             $subject_details = [
                 'id' => $subject->id,
                 'subject_name' => $subject->subject_name,
@@ -149,8 +149,8 @@ class SubjectController extends Controller
                 'total_image_pdf' => $total_image_pdf,
                 'total_video' => $total_video,
                 'total_article' => $total_article,
-                'rating'=>$rating_average,
-                'already_purchase'=>subjectAlreadyPurchase($subject->id),
+                'rating' => $rating_average,
+                'already_purchase' => subjectAlreadyPurchase($subject->id),
 
             ];
 
@@ -195,7 +195,7 @@ class SubjectController extends Controller
                 $img = 0;
 
                 $topic = $lesson->topics->count();
-                $total_image_pdfs = Lesson::with(['lessonAttachment'])->where('type', 1)->where('parent_id', $lesson->id)->get();
+                $total_image_pdfs = Lesson::with(['lessonAttachment'])->where('type', 1)->where('status', 1)->where('parent_id', $lesson->id)->get();
                 if ($total_image_pdfs != null) {
                     foreach ($total_image_pdfs as $key => $data) {
                         $ext = pathinfo($data->lessonAttachment->img_url, PATHINFO_EXTENSION);
@@ -206,8 +206,8 @@ class SubjectController extends Controller
                         }
                     }
                 }
-                $total_video = Lesson::with(['lessonAttachment'])->where('type', 2)->where('parent_id', $lesson->id)->get()->count();
-                $total_article = Lesson::with(['lessonAttachment'])->where('type', 3)->where('parent_id', $lesson->id)->get()->count();
+                $total_video = Lesson::with(['lessonAttachment'])->where('type', 2)->where('status', 1)->where('parent_id', $lesson->id)->get()->count();
+                $total_article = Lesson::with(['lessonAttachment'])->where('type', 3)->where('status', 1)->where('parent_id', $lesson->id)->get()->count();
                 $subject_content =
                     [
                         'total_pdf' => $pdf,
@@ -233,8 +233,8 @@ class SubjectController extends Controller
             // foreach ($lessons as $key => $lesson) {
 
             // }
-           
-            if ($lessons->count()>0) {
+
+            if ($lessons->count() > 0) {
 
                 $data = [
                     "code" => 200,
@@ -269,7 +269,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
             $sub_topic_content = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('type', 3)->paginate();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('type', 3)->where('status', 1)->paginate();
 
             if ($lesson != null) {
 
@@ -283,7 +283,7 @@ class SubjectController extends Controller
                             'id' => $topic->id,
                             'title' => $topic->name,
                             'content' => $topic->content ?? null,
-
+                            'preview'=>$topic->preview
                         ];
 
 
@@ -297,6 +297,7 @@ class SubjectController extends Controller
                                     'id' => $sub_topic->id,
                                     'title' => $sub_topic->name,
                                     'content' => $topic->content ?? null,
+                                    'preview'=>$topic->preview,
 
                                 ];
                             $topic_content[] = $sub_topic_content;
@@ -370,7 +371,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
             $sub_topic_video = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('type', 2)->paginate();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('type', 2)->where('status', 1)->paginate();
 
             if ($lesson != null) {
 
@@ -387,8 +388,8 @@ class SubjectController extends Controller
                             'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
                             'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
-                            'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00"
-
+                            'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
+                            'preview' => $topic->preview,
                         ];
 
 
@@ -406,6 +407,7 @@ class SubjectController extends Controller
                                     'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
                                     'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
+                                    'preview' => $sub_topic->preview,
                                 ];
                             $topic_video[] = $sub_topic_video;
                         }
@@ -477,7 +479,7 @@ class SubjectController extends Controller
             $id = $_GET['lesson_id'];
             $page = $_GET['page'];
             $sub_topic_pdf = [];
-            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('parent_id', '!=', null)->where('type', 1)->paginate();
+            $lesson = Lesson::with(["lessonAttachment", "subTopics"])->where('parent_id', $id)->where('parent_id', '!=', null)->where('type', 1)->where('status', 1)->paginate();
 
             if ($lesson != null) {
 
@@ -492,6 +494,7 @@ class SubjectController extends Controller
                             'title' => $topic->name,
                             'pdf_url' => $topic->lessonAttachment->img_url ?? null,
                             'pdf_name' => $path,
+                            'preview'=>$topic->preview,
                         ];
 
 
@@ -503,7 +506,8 @@ class SubjectController extends Controller
                                 [
                                     'id' => $sub_topic->id,
                                     'title' => $sub_topic->name,
-                                    'pdf_url' => $topic->lessonAttachment->img_url ?? null,
+                                    'pdf_url' => $sub_topic->lessonAttachment->img_url ?? null,
+                                    'preview'=>$sub_topic->preview,
 
                                 ];
                             $topic_pdf[] = $sub_topic_pdf;

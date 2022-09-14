@@ -127,9 +127,9 @@ class LessonController extends Controller
     {
         $lesson_id = Crypt::decrypt($id);
         $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
-        
-        $teachers=UserDetails::where('assign_class_id',$lesson->assign_class_id)->where('assign_subject_id',$lesson->assign_subject_id)->where('status',2)->get();
-        return view('admin.course-management.lesson.topic.create', compact('lesson','teachers'));
+
+        $teachers = UserDetails::where('assign_class_id', $lesson->assign_class_id)->where('assign_subject_id', $lesson->assign_subject_id)->where('status', 2)->get();
+        return view('admin.course-management.lesson.topic.create', compact('lesson', 'teachers'));
     }
     public function subTopicCreate($lesson_slug, $topic_slug)
     {
@@ -165,9 +165,9 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    
 
-    
+
+
     public function displayAttachment($lesson_id, $url_type)
     {
         try {
@@ -191,7 +191,7 @@ class LessonController extends Controller
     }
     public function lessonDetails($lesson_id)
     {
-        $lesson = Lesson::with(['Sets','assignClass', 'board', 'assignSubject', 'topics' => function ($query) {
+        $lesson = Lesson::with(['Sets', 'assignClass', 'board', 'assignSubject', 'topics' => function ($query) {
             $query->with('subTopics');
         }])->where('id', $lesson_id)->first();
         $data = [
@@ -201,23 +201,23 @@ class LessonController extends Controller
     }
     public function topicStore(Request $request)
     {
-        try { 
+        try {
             $validate = Validator::make(
                 $request->all(),
                 [
                     'resource_type' => 'required',
-                    
+
                 ],
                 [
                     'resource_type.required' => 'Resource type is required',
-                    
+
                 ]
             );
             if ($validate->fails()) {
                 Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
-           
+
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
                 Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
@@ -249,9 +249,9 @@ class LessonController extends Controller
                     'assign_class_id' => $lesson->assign_class_id,
                     'assign_subject_id' => $lesson->assign_subject_id,
                     'type' => $request->resource_type,
-                    'teacher_id'=>$request->teacher_id,
+                    'teacher_id' => $request->teacher_id,
                 ];
-                 
+
                 $resourceStore = Lesson::create($data);
                 $document = $request->file('image_url');
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image", $name_slug);
@@ -265,21 +265,21 @@ class LessonController extends Controller
                 ];
                 LessonAttachment::create($data_attachment);
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return back()->withInput(['tab'=>'nav-pdf']);
+                return back()->withInput(['tab' => 'nav-pdf']);
             }
             if ($request->resource_type == 2) {
-                
+
                 $validate = Validator::make(
                     $request->all(),
                     [
                         'name' => 'required',
                         'video_thumbnail_image_url' => 'mimes:jpeg,png,jpg,gif,svg',
-                        'video_url'=>'required|mimes:mp4,webm,mov'
+                        'video_url' => 'required|mimes:mp4,webm,mov'
                     ],
                     [
                         'name.required' => 'Resource Name is required',
                         'video_thumbnail_image_url.mimes' => 'Video Thumbnail image should be in jpeg|png|jpg|gif|svg formate',
-                        'video_url.required'=>'Video should be on mp4|webm|mov formate'
+                        'video_url.required' => 'Video should be on mp4|webm|mov formate'
                     ]
                 );
                 if ($validate->fails()) {
@@ -296,7 +296,7 @@ class LessonController extends Controller
                     'assign_class_id' => $lesson->assign_class_id,
                     'assign_subject_id' => $lesson->assign_subject_id,
                     'type' => $request->resource_type,
-                    'teacher_id'=>$request->teacher_id,
+                    'teacher_id' => $request->teacher_id,
                 ];
 
                 $resourceStore = Lesson::create($data);
@@ -320,7 +320,7 @@ class LessonController extends Controller
 
                 $lesson_attachment = LessonAttachment::create($data_attachment);
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return back()->withInput(['tab'=>'nav-video']);
+                return back()->withInput(['tab' => 'nav-video']);
                 // $resizes = ["480", "720", "1080"];
                 // foreach ($resizes as $key => $resize) {
                 //     if ($resize == 480) {
@@ -345,12 +345,12 @@ class LessonController extends Controller
                     [
                         'name' => 'required',
                         'content' => 'required',
-                        
+
                     ],
                     [
                         'name.required' => 'Resource Name is required',
                         'content.required' => 'Write Article is required',
-                        
+
                     ]
                 );
                 if ($validate->fails()) {
@@ -368,12 +368,12 @@ class LessonController extends Controller
                     'assign_subject_id' => $lesson->assign_subject_id,
                     'type' => $request->resource_type,
                     'content' => $request->content,
-                    'teacher_id'=>$request->teacher_id,
+                    'teacher_id' => $request->teacher_id,
                 ];
 
                 $resourceStore = Lesson::create($data);
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return back()->withInput(['tab'=>'nav-contact']);
+                return back()->withInput(['tab' => 'nav-contact']);
             }
             if ($request->resource_type == 4) {
                 $lesson = Lesson::find($request->parent_id);
@@ -381,7 +381,7 @@ class LessonController extends Controller
                 $board_id = $lesson->board_id;
                 $assign_class_id = $lesson->assign_class_id;
                 $assign_subject_id = $lesson->assign_subject_id;
-                $lesson_id=$lesson->id;
+                $lesson_id = $lesson->id;
                 $questionFile = $request->questionExcel;
                 if ($request->hasFile('questionExcel')) {
 
@@ -398,16 +398,52 @@ class LessonController extends Controller
                         $questionFile = $request->file('questionExcel');
 
                         $questionFile = $request->file('questionExcel')->store('imports');
-                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id,$lesson_id);
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id);
                         $import->import($questionFile);
 
                         Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                        return back()->withInput(['tab'=>'nav-practice-test']);
+                        return back()->withInput(['tab' => 'nav-practice-test']);
                     }
                 }
             }
         } catch (\Throwable $th) {
-           
+
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
+    }
+    public function previewStatusChange($lesson_id)
+    {
+        try {
+            $lesson = Lesson::find(Crypt::decrypt($lesson_id));
+            if ($lesson->preview == 0) {
+                $lesson->update(['preview' => 1]);
+                Toastr::success('Resource preview status update from No to Yes successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            } else {
+                $lesson->update(['preview' => 0]);
+                Toastr::success('Resource preview status update from Yes to No successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+        } catch (\Throwable $th) {
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
+    }
+    public function lessonStatusChange($lesson_id)
+    {
+        try {
+            $lesson = Lesson::find(Crypt::decrypt($lesson_id));
+            if ($lesson->status == 0) {
+                $lesson->update(['status' => 1]);
+                Toastr::success('Resource status update from Active to InActive successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            } else {
+                $lesson->update(['status' => 0]);
+                Toastr::success('Resource status update from InActive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+        } catch (\Throwable $th) {
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }

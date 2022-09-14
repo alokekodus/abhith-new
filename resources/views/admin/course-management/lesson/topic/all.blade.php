@@ -8,19 +8,23 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-item nav-link active" id="tabMenu" data-toggle="tab" href="#nav-pdf" role="tab"
-                        aria-controls="nav-home" aria-selected="true">Document <span class="badge rounded-pill bg-danger" style="color: aliceblue">
+                        aria-controls="nav-home" aria-selected="true">Document <span
+                            class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->topics->where('type',1)->count()}}
                         </span></a>
                     <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-video" role="tab"
-                        aria-controls="nav-profile" aria-selected="false">Video <span class="badge rounded-pill bg-danger" style="color: aliceblue">
+                        aria-controls="nav-profile" aria-selected="false">Video <span
+                            class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->topics->where('type',2)->count()}}
                         </span></a>
                     <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-contact" role="tab"
-                        aria-controls="nav-contact" aria-selected="false">Article <span class="badge rounded-pill bg-danger" style="color: aliceblue">
+                        aria-controls="nav-contact" aria-selected="false">Article <span
+                            class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->topics->where('type',3)->count()}}
                         </span></a>
-                    <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-practice-test"
-                        role="tab" aria-controls="nav-contact" aria-selected="false">MCQ Practice Test <span class="badge rounded-pill bg-danger" style="color: aliceblue" >
+                    <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-practice-test" role="tab"
+                        aria-controls="nav-contact" aria-selected="false">MCQ Practice Test <span
+                            class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->Sets->count()}}
                         </span></a>
                 </div>
@@ -39,7 +43,7 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Recources Path </th>
-                                    <th>Pre View</th>
+                                    <th> Preview</th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -62,8 +66,23 @@
                                             target="_blank">
                                             {{ substr($topic->lessonAttachment->video_origin_url, 0,40)
                                             }}</a> @else NA @endif</td>
-                                    <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td>
-                                    <td>@if($topic->status==1)Active @else InActive @endif</td>
+                                    <td>
+                                        @if ($topic->preview==0)
+                                        <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-danger">No</a>
+                                        @else
+                                        <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-success">Yes</a>
+                                        @endif
+                                    </td>
+                                    <td>@if($topic->status==1)
+                                        <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-success">Active</a>
+                                        @else
+                                        <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-danger">InActive</a>
+                                        @endif
+                                    </td>
                                     <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                         <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
                                     </td>
@@ -88,7 +107,7 @@
                                     <th> Recources Path </th>
                                     <th> Thumbnail image </th>
                                     <th>Video Duration</th>
-                                    <th>Free Demo</th>
+                                    <th>Preview</th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -118,9 +137,23 @@
                                         @else NA @endif
                                     </td>
                                     <td>{{round($topic->lessonAttachment->video_duration, 2)}} minutes</td>
-                                    <td></td>
-                                    {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
-                                    <td>@if($topic->status==1)Active @else InActive @endif</td>
+
+                                    <td>
+                                        @if ($topic->preview==0)
+                                        <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-danger">No</a>
+                                        @else
+                                        <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-success">Yes</a>
+                                        @endif
+                                    </td>
+                                    <td>@if($topic->status==1)
+                                        <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-success">Active</a>
+                                        @else
+                                        <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-danger">InActive</a> @endif
+                                    </td>
                                     <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                         <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
                                     </td>
@@ -140,7 +173,7 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Article </th>
-                                    <th>Free Demo</th>
+                                    <th>Preview</th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -159,7 +192,22 @@
                                                 class="mdi mdi-eye"></i></a></td>
                                     <td></td>
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
-                                    <td>@if($topic->status==1)Active @else InActive @endif</td>
+                                    <td>
+                                        @if ($topic->preview==0)
+                                        <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-danger">No</a>
+                                        @else
+                                        <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-success">Yes</a>
+                                        @endif
+                                    </td>
+                                    <td>@if($topic->status==1)
+                                        <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-success">Active</a>
+                                        @else
+                                        <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
+                                            class="badge badge-danger">InActive</a> @endif
+                                    </td>
                                     <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                         <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
                                     </td>

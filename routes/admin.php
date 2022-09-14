@@ -97,6 +97,9 @@ Route::group(['middleware' => ['auth'] ],function(){
             Route::get('view/{lesson_id}', [LessonController::class,'topicView'])->name('admin.course.management.lesson.view');
             Route::get('subtopic/{lesson_slug}/{topic_slug}', [LessonController::class,'subTopicCreate'])->name('admin.course.management.lesson.subtopic.create');
             Route::get('attachment/{lesson_id}/{url_type}', [LessonController::class,'displayAttachment'])->name('admin.course.management.lesson.attachment');
+            Route::get('preview/{attachement_id}', [LessonController::class,'previewStatusChange'])->name('admin.preview.lesson');
+            Route::get('status/{lesson_id}', [LessonController::class,'lessonStatusChange'])->name('admin.lesson.status');
+           
         });
     });
 

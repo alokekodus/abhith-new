@@ -21,7 +21,9 @@ class Lesson extends Model
         'assign_subject_id',
         'content',
         'type',
-        'teacher_id'
+        'teacher_id',
+        'preview',
+        'status'
 
     ];
     public static function getRules($type)
