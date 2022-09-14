@@ -2,14 +2,14 @@
     <div class="col-6">
         <div class="form-group">
             <label for="">Lesson Name<span class="text-danger">*</span></label>
-            <input type="text" name="lesson_name" class="form-control" value="{{$lesson->name??''}}" disabled>
+            <input type="text" name="lesson_name" id="lesson_name" class="form-control" value="{{$lesson->name??''}}" disabled>
             <span class="text-danger"></span>
         </div>
     </div>
     <div class="col-6">
         <div class="form-group">
             <label for="">@yield('lesson-type')Resource Name<span class="text-danger">*</span></label>
-            <input type="text" name="name" class="form-control" placeholder="e.g Perimeter and Area" value="">
+            <input type="text" name="name" id="name" class="form-control" placeholder="e.g Perimeter and Area" value="">
             <span class="text-danger">{{ $errors->first('board_id') }}</span>
         </div>
     </div>
@@ -20,7 +20,7 @@
             <label for="">@yield('lesson-type') Resource Type(Pdf/video/article)<span
                     class="text-danger">*</span></label>
 
-            <select name="resource_type" id="content_type" class="form-control" onchange="showDiv()">
+            <select name="resource_type" id="resource_type" class="form-control" onchange="showDiv()">
                 <option value="">-- Select -- </option>
                 <option value="1">File Attachement(pdf)</option>
                 <option value="2">Video</option>
@@ -32,7 +32,7 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            <label for="">@yield('lesson-type') Assign Teacher<span class="text-danger">*</span></label>
+            <label for="">@yield('lesson-type') Assign Teacher</label>
 
             <select  id="teacher_id" class="form-control" name="teacher_id">
                 <option value="">-- Select -- </option>

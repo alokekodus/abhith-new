@@ -202,7 +202,22 @@ class LessonController extends Controller
     public function topicStore(Request $request)
     {
         try { 
-            
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'resource_type' => 'required',
+                    
+                ],
+                [
+                    'resource_type.required' => 'Resource type is required',
+                    
+                ]
+            );
+            if ($validate->fails()) {
+                Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+           
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
                 Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
@@ -250,7 +265,7 @@ class LessonController extends Controller
                 ];
                 LessonAttachment::create($data_attachment);
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return back()->withInput(['tab'=>'nav-pdf']);
             }
             if ($request->resource_type == 2) {
                 
@@ -305,7 +320,7 @@ class LessonController extends Controller
 
                 $lesson_attachment = LessonAttachment::create($data_attachment);
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return back()->withInput(['tab'=>'nav-video']);
                 // $resizes = ["480", "720", "1080"];
                 // foreach ($resizes as $key => $resize) {
                 //     if ($resize == 480) {
@@ -358,7 +373,7 @@ class LessonController extends Controller
 
                 $resourceStore = Lesson::create($data);
                 Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return back()->withInput(['tab'=>'nav-contact']);
             }
             if ($request->resource_type == 4) {
                 $lesson = Lesson::find($request->parent_id);
@@ -387,7 +402,7 @@ class LessonController extends Controller
                         $import->import($questionFile);
 
                         Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                        return redirect()->back();
+                        return back()->withInput(['tab'=>'nav-practice-test']);
                     }
                 }
             }

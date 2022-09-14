@@ -123,7 +123,7 @@
     // }
     
     function showDiv(){
-   var showDivId= document.getElementById("content_type").value;
+   var showDivId= document.getElementById("resource_type").value;
   
    if(showDivId==1){
           $('#fileattachment').show();
@@ -191,5 +191,35 @@ function setFileInfo() {
 
 
 
+</script>
+<script>
+    $(document).ready(function () {
+
+    $('#assignTopicForm').validate({
+        rules: {
+            name: {
+                required: true
+            },
+            resource_type:{
+                required:true
+            }
+          
+        },
+        messages: {
+            name: {
+                required: "Resource name may not be empty ."
+            },    
+            resource_type:{
+                required:"Please Select Resource Type."
+            },
+           
+        },
+      });
+});
+</script>
+<script>
+    $(document).ready(function () {
+    $('#tabMenu a[href="#{{ old('tab') }}"]').tab('show')
+    });
 </script>
 @endsection

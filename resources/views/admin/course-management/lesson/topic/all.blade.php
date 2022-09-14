@@ -7,19 +7,19 @@
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-pdf" role="tab"
+                    <a class="nav-item nav-link active" id="tabMenu" data-toggle="tab" href="#nav-pdf" role="tab"
                         aria-controls="nav-home" aria-selected="true">Document <span class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->topics->where('type',1)->count()}}
                         </span></a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-video" role="tab"
+                    <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-video" role="tab"
                         aria-controls="nav-profile" aria-selected="false">Video <span class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->topics->where('type',2)->count()}}
                         </span></a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                    <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-contact" role="tab"
                         aria-controls="nav-contact" aria-selected="false">Article <span class="badge rounded-pill bg-danger" style="color: aliceblue">
                             {{$lesson->topics->where('type',3)->count()}}
                         </span></a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-practice-test"
+                    <a class="nav-item nav-link" id="tabMenu" data-toggle="tab" href="#nav-practice-test"
                         role="tab" aria-controls="nav-contact" aria-selected="false">MCQ Practice Test <span class="badge rounded-pill bg-danger" style="color: aliceblue" >
                             {{$lesson->Sets->count()}}
                         </span></a>
