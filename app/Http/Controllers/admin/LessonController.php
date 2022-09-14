@@ -258,12 +258,13 @@ class LessonController extends Controller
                     $request->all(),
                     [
                         'name' => 'required',
-                        'video_thumbnail_image_url' => 'mimes:pdf',
-                        'video_url'=>'required|'
+                        'video_thumbnail_image_url' => 'mimes:jpeg,png,jpg,gif,svg',
+                        'video_url'=>'required|mimes:mp4,webm,mov'
                     ],
                     [
                         'name.required' => 'Resource Name is required',
-                        'image_url.required' => 'Please upload your resource'
+                        'video_thumbnail_image_url.mimes' => 'Video Thumbnail image should be in jpeg|png|jpg|gif|svg formate',
+                        'video_url.required'=>'Video should be on mp4|webm|mov formate'
                     ]
                 );
                 if ($validate->fails()) {
@@ -324,6 +325,23 @@ class LessonController extends Controller
 
             }
             if ($request->resource_type == 3) {
+                $validate = Validator::make(
+                    $request->all(),
+                    [
+                        'name' => 'required',
+                        'content' => 'required',
+                        
+                    ],
+                    [
+                        'name.required' => 'Resource Name is required',
+                        'content.required' => 'Write Article is required',
+                        
+                    ]
+                );
+                if ($validate->fails()) {
+                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
+                    return redirect()->back();
+                }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
                 $data = [
