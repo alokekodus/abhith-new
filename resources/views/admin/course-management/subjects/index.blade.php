@@ -2,13 +2,13 @@
 @section('title', 'Course Management - Subjects')
 @section('head')
 <style>
-    .pagination {
+    /* .pagination {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
         list-style: none;
         border-radius: 0.25rem;
-    }
+    } */
 </style>
 @endsection
 @section('content')
