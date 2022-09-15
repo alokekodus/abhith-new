@@ -101,7 +101,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$subjects->links() }}
+                    {{-- {{$subjects->links() }} --}}
                 </div>
             </div>
         </div>
@@ -205,6 +205,7 @@
             data: formDat,
 
             success: function(data) {
+                location.reload();
                 toastr.success(data.message);
             }
         });

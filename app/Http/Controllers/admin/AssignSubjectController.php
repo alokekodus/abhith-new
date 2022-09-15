@@ -24,7 +24,7 @@ class AssignSubjectController extends Controller
 
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
 
-        $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->get();
 
 
 
