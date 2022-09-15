@@ -45,7 +45,11 @@ class StudentController extends Controller
   }
   public function getAssignOrder($subject_id)
   {
-    $assign_subjects = AssignSubject::with(['assignOrder'])->where('id', Crypt::decrypt($subject_id))->first();
+    $assign_subjects = AssignSubject::with(['assignOrder' => function ($query) {
+      $query->with(['order' => function ($q) {
+        $q->with('user');
+      }]);
+    }])->where('id', Crypt::decrypt($subject_id))->first();
     return $assign_subjects->assignOrder;
   }
 }
