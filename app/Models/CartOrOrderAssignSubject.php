@@ -21,6 +21,6 @@ class CartOrOrderAssignSubject extends Model
         return $this->belongsTo(AssignSubject::class,'assign_subject_id','id');
     }
     public function order(){
-        return $this->hasOne(order::class,'id','order_id');
+        return $this->belongsTo(order::class);
     }
 }
