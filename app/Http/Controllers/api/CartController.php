@@ -67,6 +67,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         try {
+            
             $all_subjects = $request->subjects;
             if ($all_subjects == null) {
                 $data = [
@@ -94,9 +95,22 @@ class CartController extends Controller
 
             $cart_check = Cart::whereHas('assignSubject', function ($q) use ($all_subjects) {
                 $q->whereIn('assign_subject_id', $all_subjects);
-            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->first();
+            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
+            
+            
             
             if ($cart_check) {
+                if($cart_check->is_full_course_selected==$request->course_type && $cart_check->assignSubject()->count()==count($all_subjects)){
+                    $data = [
+                        "code" => 400,
+                        "status" => 0,
+                        "message" => "Same Subjects already on your cart.",
+        
+        
+                    ];
+                    return response()->json(['status' => 0, 'result' => $data]);
+
+                }
                 $cart_check->assignSubject()->delete();
                 $cart_check->update(['is_remove_from_cart'=>1]);
              
