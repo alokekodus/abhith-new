@@ -190,7 +190,7 @@
                                     </td>
                                     <td> {{ substr($topic->content, 0,40)}} <a href="" title="View Details"><i
                                                 class="mdi mdi-eye"></i></a></td>
-                                    <td></td>
+                                    
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
                                     <td>
                                         @if ($topic->preview==0)
