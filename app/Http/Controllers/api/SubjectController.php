@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
+use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Set;
@@ -903,6 +904,40 @@ class SubjectController extends Controller
                 "code" => 400,
                 "status" => 0,
                 "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function getBoard(){
+        try {
+            $board_details = Board::where('is_activate',1)->orderBy('created_at', 'DESC')->get();
+            if ($board_details) {
+                
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All boards",
+                    "board" => $board_details,
+    
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No record found",
+                    "board"=>null
+    
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+                "board"=>null
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);

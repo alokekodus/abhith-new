@@ -28,7 +28,7 @@ class PaymentController extends Controller
                 ];
                
                 $razorpayOrder = $api->order->create($orderData);
-                return response()->json($razorpayOrder);
+                
                 $order = [
                     'user_id' => auth()->user()->id,
                     'board_id' => $cart->board_id,
