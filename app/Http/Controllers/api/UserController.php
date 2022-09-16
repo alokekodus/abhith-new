@@ -139,7 +139,7 @@ class UserController extends Controller
                         'class_name' => $cart->assignClass->class,
                         'total_subject' => $cart->assignSubject->count(),
                         'total_amount' => $cart->assignSubject->sum("amount"),
-                        'cart_subject_details' => $subject,
+                        'cart_subject_details' => $$cart->assignSubject->subject->subject_name,
                     ];
                     $all_courses[] = $course_details;
                 }
