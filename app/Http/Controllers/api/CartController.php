@@ -100,7 +100,7 @@ class CartController extends Controller
             
             
             if ($cart_check) {
-                if($cart_check->is_full_course_selected==$request->course_type && $cart_check->assignSubject()->count()==count($all_subjects)){
+                if($cart_check->is_full_course_selected==$request->course_type && $cart_check->assignSubject()->count()==count($all_subjects) && $request->is_buy==0){
                     $data = [
                         "code" => 400,
                         "status" => 0,
