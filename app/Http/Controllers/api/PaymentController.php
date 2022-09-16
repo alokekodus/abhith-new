@@ -37,6 +37,7 @@ class PaymentController extends Controller
                     'rzp_order_id' => $razorpayOrder['id'],
                     'payment_status' => "unpaid",
                 ];
+                return response()->json($order);
                  Order::create($order);
                 $data = [
                     'razorpayOrderId' => $razorpayOrder['id'],
