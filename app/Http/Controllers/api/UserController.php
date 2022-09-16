@@ -124,8 +124,9 @@ class UserController extends Controller
 
             if (!$carts->isEmpty()) {
                 $all_courses = [];
-                $subject = [];
+               
                 foreach ($carts as $key => $cart) {
+                    $subject = [];
                     foreach ($cart->assignSubject as $key => $assign_subject) {
                         $subject[] = $assign_subject->subject->subject_name;
                     }
@@ -139,7 +140,7 @@ class UserController extends Controller
                         'class_name' => $cart->assignClass->class,
                         'total_subject' => $cart->assignSubject->count(),
                         'total_amount' => $cart->assignSubject->sum("amount"),
-                        'cart_subject_details' => $$cart->assignSubject->subject->subject_name,
+                        'cart_subject_details' => $subject,
                     ];
                     $all_courses[] = $course_details;
                 }
