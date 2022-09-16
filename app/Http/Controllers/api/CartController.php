@@ -36,7 +36,7 @@ class CartController extends Controller
                 $subject_tmp = trim($subject_tmp, ',');
                 $cart = [
                     'id' => $cart->id,
-                    'course_type' => $cart->is_full_course_selected,
+                    'course_type' => $cart->is_full_course_selected??"1",
                     'assign_class' => $cart->assignClass->class,
                     'board' => $cart->board->exam_board,
                     'cart_total_amount' => $cart->assignSubject->sum("amount"),
