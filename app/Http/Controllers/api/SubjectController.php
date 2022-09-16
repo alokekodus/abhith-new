@@ -911,7 +911,7 @@ class SubjectController extends Controller
     }
     public function getBoard(){
         try {
-            $board_details = Board::where('is_activate',1)->orderBy('created_at', 'DESC')->get();
+            $board_details = Board::where('is_activate',1)->orderBy('created_at', 'DESC')->select('id','exam_board')->get();
             if ($board_details) {
                 
                 $data = [
