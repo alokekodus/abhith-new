@@ -41,6 +41,7 @@ class CartController extends Controller
                     'board' => $cart->board->exam_board,
                     'cart_total_amount' => $cart->assignSubject->sum("amount"),
                     'assign_subject' => $subject_tmp,
+                    'total_subject'=>$cart->assignSubject->count(),
 
                 ];
                 $cart_items[] = $cart;
