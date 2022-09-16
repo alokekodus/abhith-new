@@ -95,7 +95,7 @@ class CartController extends Controller
 
             $cart_check = Cart::whereHas('assignSubject', function ($q) use ($all_subjects) {
                 $q->whereIn('assign_subject_id', $all_subjects);
-            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
+            })->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->where('is_buy',$request->is_buy)->first();
             
             
             
