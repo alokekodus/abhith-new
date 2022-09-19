@@ -1050,14 +1050,8 @@
         margin-left: 10.75rem;
     }
     .monthly-progress-bar {
-        width: 330px;
-    }
-    .monthly-progress-bar {
         position: unset;
-        width: 550px;
-        height: 325px;
-        border-bottom: 1px solid rgb(223, 223, 223);
-        display: flex;
+        padding: 0;
     }
 }
 
