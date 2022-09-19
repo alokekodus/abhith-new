@@ -284,9 +284,84 @@
                     </div>
                     <div class="tab-pane" id="myperformance" role="tabpanel">
                         <div class="row">
-                          
+                            <div class="col-lg-6">
+                                <h2 class="font-weight-bold">My Performance</h2>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Select Subject
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mt-5 mb-5">
+                                <h3 class="text-center font-weight-bold">All Subject</h3>
+                            </div>
+                            <div class="col-lg-6 circular-left">
+                                <div class="d-flex progress-main">
+                                    <div class="circleOne">
+                                        <div class="circular-progress-one">
+                                            <span class="progress-value-one">50/100</span>
+                                        </div>
+                                    </div>
+                                    <div class="circularText">
+                                        <p>Watched Videos</p>
+                                        <p>Not Watched Videos</p>
+                                    </div>
+                                </div>                                
+                            </div>
+                            
+                            <div class="col-lg-6 circular-right">
+                                <div class="d-flex progress-main">
+                                    <div class="circleTwo">
+                                        <div class="circular-progress-two">
+                                            <span class="progress-value-two">0%</span>
+                                        </div>
+                                    </div>
+                                    <div class="circular-text">
+                                        <h5>Subject Progress</h5>
+                                        <h6>Based on your video</h6>
+                                    </div>
+                                </div>                                
+                            </div>
                         </div>
-
+                        {{-- <span class="text">Based on video Watched</span> --}}
+                                {{-- <input type="text" data-plugin="knob" class="dial" data-width="150" data-height="250" data-fgColor="blue" value="50" data-max="100" data-skin="tron" data-readOnly=true data-thickness=".2" data-displayInput=false/> --}}
+                                {{-- <div class="col-lg-6">
+                                <input type="text" class="dial" value="93" data-width="125" data-height="125" data-thickness="0.25" data-fgcolor="#9C27B0" style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 10px; background: none; font: bold 25px Arial; text-align: center; color: rgb(156, 39, 176); padding: 0px; appearance: none;" data-angleOffset="180">
+                                </div> --}}
+                                {{-- <input data-plugin="knob" class="dial" data-width="120" data-height="120" data-linecap=round data-fgColor="#2abfcc" value="20" data-max="100" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" /> --}}
+                        {{-- <div class="skill">
+                            <div class="skill-outer">
+                                <div class="skill-inner">
+                                    <div id="skillNumber"></div>
+                                </div>
+                            </div>
+                           
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                                <defs>
+                                   <linearGradient id="GradientColor">
+                                      <stop offset="0%" stop-color="#e91e63" />
+                                      <stop offset="100%" stop-color="#673ab7" />
+                                   </linearGradient>
+                                </defs>
+                                <circle cx="80" cy="80" r="70"/>
+                            </svg>
+                        </div> --}}
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
+                            <defs>
+                               <linearGradient id="GradientColor">
+                                  <stop offset="0%" stop-color="#e91e63" />
+                                  <stop offset="100%" stop-color="#673ab7" />
+                               </linearGradient>
+                            </defs>
+                            <circle cx="80" cy="80" r="70" stroke-linecap="round" />
+                        </svg> --}}
                     </div>
                     <div class="tab-pane" id="purchase" role="tabpanel">
                         <div class="row">
@@ -547,5 +622,38 @@
                 ]
             });
         });
+    // $(function() {
+    //     $(".dial").knob();
+    // });
+
+    let number = document.getElementById("skillNumber");
+    let counter = 0;
+    setInterval(() => {
+        if(counter == 60){
+            clearInterval();
+        }else{
+            counter += 1;
+            number.innerHTML = counter + "%";
+        }
+    }, 43);
+    
+
+    let circularProgress = document.querySelector(".circular-progress-two"),
+        progressValue  = document.querySelector(".progress-value-two");
+
+    let progressStartValue = 0,
+        progressEndValue = 60,
+        speed = 100;
+    
+    let progess = setInterval(() =>{
+        progressStartValue++;
+
+        progressValue.textContent = `${progressStartValue}%`
+        circularProgress.style.background = `conic-gradient(#36b872 ${progressStartValue * 3.6}deg, #ededed 0deg)`
+
+        if(progressStartValue == progressEndValue){
+            clearInterval(progess);
+        }
+    })
 </script>
 @endsection

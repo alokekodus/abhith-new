@@ -3870,3 +3870,141 @@ input {
 
 /* Css for custom scrollbar */
 
+/* My purchase CSS */
+
+#myperformance .dropdown .btn{
+    width: 450px;
+    padding: 10px 0px;
+    border-radius: 5px;
+    border: 2px solid rgba(201, 201, 201, 0.438);
+}
+#myperformance .dropdown-toggle::after {
+    margin-left: 16.75rem;
+    font-size: 24px;
+    vertical-align: 0;
+    color: rgba(151, 151, 151, 0.788);
+}
+#myperformance .btn:focus{
+    border-color: #F5F5F5;
+    outline: none;
+}
+
+.skill{
+    height: 160px;
+    width: 160px;
+    position: relative;
+}
+.skill-outer{
+    height: 160px;
+    width: 160px;
+    border-radius: 50%;
+    /* border: 1px solid red; */
+    padding: 20px;
+    box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, .15),
+                -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+}
+.skill-inner{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, .2),
+                inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
+                -0.5px -0.5px 0px rgba(255, 255, 255, 1),
+                0.5px 0.5px 0px rgba(0, 0, 0, .15),
+                0px 12px 10px -10px rgba(0, 0, 0, .05);
+}
+#skillNumber{
+    font-weight: 600;
+    color: #555;
+}
+circle{
+    fill: none;
+    stroke: url(#GradientColor);
+    stroke-width: 20px;
+    stroke-dasharray: 472;
+    stroke-dashoffset: 472;
+    animation: anim 2s linear forwards;
+}
+svg{
+    position: relative;
+    top: -158px;
+    left: 0;
+}
+@keyframes anim{
+    100%{
+        stroke-dashoffset: 150;
+    }
+}
+.circular-progress-one{
+    position: relative;
+    height: 170px;
+    width: 170px;
+    border-radius: 50%;
+    background: conic-gradient(#076fef 3.6deg, #ededed 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.circular-progress-one::before{
+    content: '';
+    position: absolute;
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    background-color: white ;
+}
+.progress-value-one{
+    position: relative;
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+}
+.circularText {
+    margin-top: 50px;
+    margin-left: 40px;
+}
+.circularText p{
+    font-size: 14px;
+    font-weight: 600;
+}
+.circular-progress-two{
+    position: relative;
+    height: 170px;
+    width: 170px;
+    border-radius: 50%;
+    background: conic-gradient(#36b872 3.6deg, #ededed 0deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.circular-progress-two::before{
+    content: '';
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background-color: white ;
+}
+.progress-value-two{
+    position: relative;
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+}
+.circular-text{
+    margin-left: 30px;
+}
+.circular-text h5{
+    /* font-size: 12px; */
+    margin-top: 50px;
+    font-weight: 700;
+}
+.circular-left{
+    border-right: 1px solid rgba(182, 181, 181, 0.486);
+}
+.progress-main{
+    padding-left: 40px;
+}
