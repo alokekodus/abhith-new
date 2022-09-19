@@ -3888,7 +3888,6 @@ input {
     border-color: #F5F5F5;
     outline: none;
 }
-
 .skill{
     height: 160px;
     width: 160px;
@@ -4007,4 +4006,84 @@ svg{
 }
 .progress-main{
     padding-left: 40px;
+}
+.icon-box{
+    margin-left: 15px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.icon-box img{
+    width: 100%;
+    height: 35px;
+}
+.mcq-box{
+    border: 1px solid #e9e8e8;
+    border-radius: 10px;
+    padding: 10px;
+}
+.mcq-text{
+    font-size: 24px;
+    font-weight: 700;
+}
+.mcq-text p{
+    margin-bottom: 0;
+}
+.progress-bar-left p{
+    font-size: 14px;
+    font-weight: 600;
+}
+.monthly-progress-bar{
+    position: absolute;
+    width: 550px;
+    height: 325px;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    display: flex;
+}
+.monthly-progress-bar .weekly-bar{
+    position: relative;
+    flex: 1;
+    text-align: center;
+}
+.monthly-progress-bar .weekly-bar .week-percent{
+    position: absolute;
+    width: 40px;
+    /* background: rgb(0,0,0,1); */
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+.monthly-progress-bar .weekly-bar .week-percent::before{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 0;
+    background: linear-gradient(0deg, #076fef, #05559b);
+}
+.monthly-progress-bar .weekly-bar .week-percent::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+}
+.monthly-progress-bar .weekly-bar .week-percent .percent{
+    position: absolute;  
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: black;
+    font-weight: 600;
+}
+.monthly-progress-bar .weekly-bar .weekday-name{
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 2px 6px;
 }

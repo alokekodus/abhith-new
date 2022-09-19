@@ -330,6 +330,98 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-8 col-md-8 mt-5">
+                                <div class="progress-bar-text d-flex justify-content-between">
+                                    <div class="progress-bar-left">
+                                        <h5 class="font-weight-bold">Time Spent</h5>
+                                        <p>Based on your activities in app ( Mins)</p>
+                                    </div>
+                                    <div class="progress-bar-right"></div>
+                                </div>
+                                <div class="monthly-progress-bar">
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 25%">
+                                            <div class="percent">15</div>
+                                        </div>
+                                        <div class="weekday-name">Sun</div>
+                                    </div>
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 65%">
+                                            <div class="percent">45</div>
+                                        </div>
+                                        <div class="weekday-name">Mon</div>
+                                    </div>
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 30%">
+                                            <div class="percent">20</div>
+                                        </div>
+                                        <div class="weekday-name">Tue</div>
+                                    </div>
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 67%">
+                                            <div class="percent">47</div>
+                                        </div>
+                                        <div class="weekday-name">Wed</div>
+                                    </div>
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 60%">
+                                            <div class="percent">40</div>
+                                        </div>
+                                        <div class="weekday-name">Thu</div>
+                                    </div>
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 23%">
+                                            <div class="percent">13</div>
+                                        </div>
+                                        <div class="weekday-name">Fri</div>
+                                    </div>
+                                    <div class="weekly-bar">
+                                        <div class="week-percent" style="height: 60%">
+                                            <div class="percent">40</div>
+                                        </div>
+                                        <div class="weekday-name">Sat</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 mt-5">
+                                <h5 class="font-weight-bold">MCQ Test Performance</h5>
+                                <div class="mcq-box mt-4 d-flex">
+                                    <div class="icon-box">
+                                        <img src="{{asset('asset_website/img/icon.png')}}" alt="">
+                                    </div>
+                                    <div class="mcq-text">
+                                        <h6>Test Attempt</h6>
+                                        <p>1</p>
+                                    </div>
+                                </div>
+                                <div class="mcq-box mt-3 d-flex">
+                                    <div class="icon-box">
+                                        <img src="{{asset('asset_website/img/icon.png')}}" alt="">
+                                    </div>
+                                    <div class="mcq-text">
+                                        <h6>Correct Answer</h6>
+                                        <p>10</p>
+                                    </div>
+                                </div>
+                                <div class="mcq-box mt-3 d-flex">
+                                    <div class="icon-box">
+                                        <img src="{{asset('asset_website/img/icon.png')}}" alt="">
+                                    </div>
+                                    <div class="mcq-text">
+                                        <h6>Accuracy</h6>
+                                        <p>30</p>
+                                    </div>
+                                </div>
+                                <div class="mcq-box mt-3 d-flex">
+                                    <div class="icon-box">
+                                        <img src="{{asset('asset_website/img/icon.png')}}" alt="">
+                                    </div>
+                                    <div class="mcq-text">
+                                        <h6>Total Time</h6>
+                                        <p>00:25:40</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {{-- <span class="text">Based on video Watched</span> --}}
                         {{-- <input type="text" data-plugin="knob" class="dial" data-width="150" data-height="250"
@@ -675,7 +767,7 @@
 
     let progressStartValue = 0,
         progressEndValue = result.subject_progress.watched_percentage,
-        speed = 100;
+        speed = 200;
     
     let progess = setInterval(() =>{
         progressStartValue++;
