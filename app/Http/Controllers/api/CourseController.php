@@ -134,16 +134,7 @@ class CourseController extends Controller
                         $all_courses[] = $data;
                     }
                 }
-                if (count($all_courses) == 0) {
-                    $data = [
-                        "code" => 200,
-                        "status" => 1,
-                        "message" => "No record found",
-                        "result"=>$all_courses,
-
-                    ];
-                    return response()->json(['status' => 1, 'result' => $data]);
-                } else {
+                
                     $data = [
                         "code" => 200,
                         "status" => 1,
@@ -152,7 +143,7 @@ class CourseController extends Controller
 
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                }
+                
             } else {
                 $data = [
                     "code" => 200,
