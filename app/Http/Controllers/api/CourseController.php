@@ -112,7 +112,7 @@ class CourseController extends Controller
 
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                    if (subjectAlreadyPurchase($course->id) == 0) {
+                  
                         if ($course->review->count() > 0) {
                             $total_rating = $course->review()->count() * 5;
                             $rating_average = round($course->review()->sum('rating') / $total_rating * 5);
@@ -132,7 +132,7 @@ class CourseController extends Controller
                            
                         ];
                         $all_courses[] = $data;
-                    }
+                    
                 }
                 
                     $data = [
