@@ -172,15 +172,15 @@ class AssignSubjectController extends Controller
     public function create()
     {
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
-        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+       
         $teachers = $students = User::whereHas(
             'roles',
             function ($q) {
                 $q->where('name', 'Teacher');
             }
         )->get();
-
-        return view('admin.course-management.subjects.create')->with(['subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers]);
+              
+        return view('admin.course-management.subjects.create')->with(['subject' => null, 'classes' => $class_details, 'teachers' => $teachers]);
     }
     public function edit($id)
     {
