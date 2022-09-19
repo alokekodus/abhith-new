@@ -634,16 +634,7 @@
     //     $(".dial").knob();
     // });
 
-    let number = document.getElementById("skillNumber");
-    let counter = 0;
-    setInterval(() => {
-        if(counter == 60){
-            clearInterval();
-        }else{
-            counter += 1;
-            number.innerHTML = counter + "%";
-        }
-    }, 43);
+   
     
     $(document).ready(function(){
         $.ajax({
@@ -657,25 +648,27 @@
     })
 })
  function progreceGraph(result){
-        
+    let not_watched_percentage= result.subject_progress.not_watched_percentage;
+    let watched_percentage= result.subject_progress.watched_percentage;
+    let total_video=not_watched_percentage+watched_percentage;
+    var total=result.subject_progress.total;
     let circularProgressOne = document.querySelector(".circular-progress-one"),
         progressValueOne  = document.querySelector(".progress-value-one");
 
     let progressStartValueOne = 0,
-        progressEndValueOne = 0,
+        progressEndValueOne = total,
         speedOne = 100;
     
     let progessOne = setInterval(() =>{
         progressStartValueOne++;
 
-        progressValueOne.textContent = `${progressStartValueOne}%`
+        progressValueOne.textContent = `${result.subject_progress.not_watched_percentage}/${total_video}`
         circularProgressOne.style.background = `conic-gradient(#36b872 ${progressStartValueOne * 3.6}deg, #ededed 0deg)`
 
         if(progressStartValueOne == progressEndValueOne){
-            clearInterval(progess);
+            clearInterval(progessOne);
         }
     })
-
     
     let circularProgress = document.querySelector(".circular-progress-two"),
         progressValue  = document.querySelector(".progress-value-two");

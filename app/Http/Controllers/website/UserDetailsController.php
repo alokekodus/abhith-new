@@ -189,11 +189,12 @@ class UserDetailsController extends Controller
                 $watched_percentage = $total_watch_video ;
                 $not_watched_percentage = ($total_video - $total_watch_video);
                 $subject_progress=($total_video - $total_watch_video) / $total_video * 100;
-
+                $total_watched=($watched_percentage/($watched_percentage+$not_watched_percentage))*100;
                 $subject_progress = [
                     'watched_percentage' => round($watched_percentage),
                     'not_watched_percentage' => round($not_watched_percentage),
                     'subject_progress' => round($watched_percentage),
+                    'total'=>round($total_watched),
                 ];
             }
 
