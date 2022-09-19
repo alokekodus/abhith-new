@@ -46,8 +46,8 @@ Route::post('send-email-otp', [WebsiteAuthController::class, 'sendEmailOtp']);
 Route::post('verify-email-otp', [WebsiteAuthController::class, 'verifyEmailOtp']);
 
 //get banner
-Route::get('/banner', [BannerController::class, 'index']);
-Route::post('get-course-details', [CourseController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/banner', [BannerController::class, 'index']);
+Route::middleware('auth:sanctum')->post('get-course-details', [CourseController::class, 'index']);
 //courses
 Route::middleware('auth:sanctum')->prefix('homepage')->group(function () {
     //homepage courses

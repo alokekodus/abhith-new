@@ -27,10 +27,10 @@ class UserDetails extends Model
     }
     public function assignClass()
     {
-        return $this->belongsTo(assignClass::class,'assign_class_id','id');
+        return $this->belongsTo(AssignClass::class,'assign_class_id','id');
     }
     public function assignSubject()
     {
-        return $this->belongsTo(assignSubject::class,'assign_subject_id','id');
+        return $this->belongsTo(AssignSubject::class,'assign_subject_id','id');
     }
 }
