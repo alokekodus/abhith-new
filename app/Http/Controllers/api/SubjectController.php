@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
+use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\Question;
 use App\Models\Set;
@@ -283,7 +284,8 @@ class SubjectController extends Controller
                             'id' => $topic->id,
                             'title' => $topic->name,
                             'content' => $topic->content ?? null,
-                            'preview'=>$topic->preview
+                            'preview'=>$topic->preview,
+                            'purchase'=>subjectAlreadyPurchase($topic->assign_subject_id),
                         ];
 
 
@@ -296,8 +298,9 @@ class SubjectController extends Controller
                                 [
                                     'id' => $sub_topic->id,
                                     'title' => $sub_topic->name,
-                                    'content' => $topic->content ?? null,
-                                    'preview'=>$topic->preview,
+                                    'content' => $sub_topic->content ?? null,
+                                    'preview'=>$sub_topic->preview,
+                                    'purchase'=>subjectAlreadyPurchase($sub_topic->assign_subject_id),
 
                                 ];
                             $topic_content[] = $sub_topic_content;
@@ -390,6 +393,7 @@ class SubjectController extends Controller
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
                             'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
                             'preview' => $topic->preview,
+                            'purchase'=>subjectAlreadyPurchase($topic->assign_subject_id),
                         ];
 
 
@@ -408,6 +412,7 @@ class SubjectController extends Controller
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
                                     'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
                                     'preview' => $sub_topic->preview,
+                                    'purchase'=>subjectAlreadyPurchase($sub_topic->assign_subject_id),
                                 ];
                             $topic_video[] = $sub_topic_video;
                         }
@@ -495,6 +500,7 @@ class SubjectController extends Controller
                             'pdf_url' => $topic->lessonAttachment->img_url ?? null,
                             'pdf_name' => $path,
                             'preview'=>$topic->preview,
+                            'purchase'=>subjectAlreadyPurchase($topic->assign_subject_id),
                         ];
 
 
@@ -508,7 +514,7 @@ class SubjectController extends Controller
                                     'title' => $sub_topic->name,
                                     'pdf_url' => $sub_topic->lessonAttachment->img_url ?? null,
                                     'preview'=>$sub_topic->preview,
-
+                                    'purchase'=>subjectAlreadyPurchase($sub_topic->assign_subject_id),
                                 ];
                             $topic_pdf[] = $sub_topic_pdf;
                         }
@@ -898,6 +904,40 @@ class SubjectController extends Controller
                 "code" => 400,
                 "status" => 0,
                 "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function getBoard(){
+        try {
+            $board_details = Board::where('is_activate',1)->orderBy('created_at', 'DESC')->select('id','exam_board')->get();
+            if ($board_details) {
+                
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All boards",
+                    "board" => $board_details,
+    
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No record found",
+                    "board"=>null
+    
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+                "board"=>null
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);

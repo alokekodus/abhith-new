@@ -62,18 +62,18 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management"  @if(Route::currentRouteName()=="admin.course.management.lesson.create")  aria-expanded="true" @else aria-expanded="false" @endif>
+            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management"  @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create")  aria-expanded="true" @else aria-expanded="false" @endif>
                 <span class="menu-title">Course Management</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-            <div class="collapse" id="course-management">
+            <div @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create")class="collapse show" @else class="collapse" @endif id="course-management">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.class.all')}}">Classes</a></li>
-                    <li class="nav-item"> <a @if(Route::currentRouteName()=="admin.course.management.lesson.create") class="nav-link active" @else class="nav-link" @endif
+                    <li class="nav-item"> <a @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create") class="nav-link active" @else class="nav-link" @endif
                             href="{{route('admin.course.management.subject.all')}}">Subjects</a></li>
                     {{-- <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.lesson.all')}}">Lesson</a></li> --}}

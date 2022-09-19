@@ -90,7 +90,7 @@ Route::prefix('auth')->group(function () {
 });
 
 /* ------------------------------- Account ------------------------------------ */
-Route::prefix('account')->group(function () {
+Route::prefix('account')->middleware([WebSite::class])->group(function () {
     Route::get('my-account', [UserDetailsController::class, 'myAccount'])->name('website.user.account');
     Route::post('user-details', [UserDetailsController::class, 'userDetails'])->name('website.user.details');
     Route::post('user-photo', [UserDetailsController::class, 'uploadPhoto'])->name('website.user.upload.photo');
@@ -101,6 +101,7 @@ Route::prefix('account')->group(function () {
     Route::post('attachment', [UserDetailsController::class, 'displayAttachment'])->name('website.user.lesson.attachment');
     Route::get('lesson/{id}', [LessonController::class, 'LessonDetails'])->name('website.user.lessonbyid');
     Route::get('mcq/{set_id}', [SubjectController::class, 'subjectMCQ'])->name('website.subject.mcq');
+    Route::get('performance',[UserDetailsController::class,'myPerformance'])->name('web.user.performance');
 });
 
 

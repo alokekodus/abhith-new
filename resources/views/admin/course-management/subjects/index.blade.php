@@ -2,13 +2,13 @@
 @section('title', 'Course Management - Subjects')
 @section('head')
 <style>
-    .pagination {
+    /* .pagination {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
         list-style: none;
         border-radius: 0.25rem;
-    }
+    } */
 </style>
 @endsection
 @section('content')
@@ -101,7 +101,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$subjects->links() }}
+                    {{-- {{$subjects->links() }} --}}
                 </div>
             </div>
         </div>
@@ -205,6 +205,7 @@
             data: formDat,
 
             success: function(data) {
+                location.reload();
                 toastr.success(data.message);
             }
         });

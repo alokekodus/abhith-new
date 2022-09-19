@@ -124,8 +124,9 @@ class UserController extends Controller
 
             if (!$carts->isEmpty()) {
                 $all_courses = [];
-                $subject = [];
+               
                 foreach ($carts as $key => $cart) {
+                    $subject = [];
                     foreach ($cart->assignSubject as $key => $assign_subject) {
                         $subject[] = $assign_subject->subject->subject_name;
                     }

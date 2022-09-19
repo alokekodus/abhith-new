@@ -24,7 +24,7 @@ class AssignSubjectController extends Controller
 
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
 
-        $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->paginate(4);
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->orderBy('created_at', 'DESC')->get();
 
 
 
@@ -47,7 +47,7 @@ class AssignSubjectController extends Controller
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_url' => 'mimes:mp4,WEBM,MOV|max:2097152',
-                    'requirements' => 'string|between:15,600'
+                    'requirements' => 'string'
 
                 ],
                 [
@@ -172,15 +172,15 @@ class AssignSubjectController extends Controller
     public function create()
     {
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
-        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+       
         $teachers = $students = User::whereHas(
             'roles',
             function ($q) {
                 $q->where('name', 'Teacher');
             }
         )->get();
-
-        return view('admin.course-management.subjects.create')->with(['subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers]);
+              
+        return view('admin.course-management.subjects.create')->with(['subject' => null, 'classes' => $class_details, 'teachers' => $teachers]);
     }
     public function edit($id)
     {

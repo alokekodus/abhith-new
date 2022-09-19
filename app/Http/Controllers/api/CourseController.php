@@ -106,13 +106,13 @@ class CourseController extends Controller
     public function allCourses()
     {
         try {
-            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->limit(4)->get();
-
-            if (!$courses->isEmpty()) {
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id','is_activate','published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate',1)->where('published',1)->limit(4)->get();
+           
+            if ($courses) {
 
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                    if (subjectAlreadyPurchase($course->id) == 0) {
+                  
                         if ($course->review->count() > 0) {
                             $total_rating = $course->review()->count() * 5;
                             $rating_average = round($course->review()->sum('rating') / $total_rating * 5);
@@ -132,18 +132,9 @@ class CourseController extends Controller
                            
                         ];
                         $all_courses[] = $data;
-                    }
+                    
                 }
-                if (count($all_courses) == 0) {
-                    $data = [
-                        "code" => 200,
-                        "status" => 1,
-                        "message" => "No record found",
-                        "result"=>$all_courses,
-
-                    ];
-                    return response()->json(['status' => 1, 'result' => $data]);
-                } else {
+                
                     $data = [
                         "code" => 200,
                         "status" => 1,
@@ -152,7 +143,7 @@ class CourseController extends Controller
 
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                }
+                
             } else {
                 $data = [
                     "code" => 200,
@@ -178,7 +169,7 @@ class CourseController extends Controller
         try {
             $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 0)->limit(4)->get();
 
-            if (!$courses->isEmpty()) {
+            if ($courses) {
 
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
