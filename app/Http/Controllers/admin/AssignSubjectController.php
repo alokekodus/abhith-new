@@ -47,7 +47,7 @@ class AssignSubjectController extends Controller
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_url' => 'mimes:mp4,WEBM,MOV|max:2097152',
-                    'requirements' => 'string|between:15,600'
+                    'requirements' => 'string'
 
                 ],
                 [

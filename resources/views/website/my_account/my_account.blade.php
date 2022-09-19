@@ -66,7 +66,7 @@
                             <a class="nav-link" data-toggle="tab" href="#myperformance" role="tab"
                                 aria-controls="myperformance">My Performance</a>
                         </li>
-                        {{-- 
+                        {{--
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#notification" role="tab"
                                 aria-controls="notification">Notification <span class="notification-badge">4</span></a>
@@ -289,7 +289,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Select Subject
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -313,9 +314,9 @@
                                         <p>Watched Videos</p>
                                         <p>Not Watched Videos</p>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
-                            
+
                             <div class="col-lg-6 circular-right">
                                 <div class="d-flex progress-main">
                                     <div class="circleTwo">
@@ -327,38 +328,45 @@
                                         <h5>Subject Progress</h5>
                                         <h6>Based on your video</h6>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                         {{-- <span class="text">Based on video Watched</span> --}}
-                                {{-- <input type="text" data-plugin="knob" class="dial" data-width="150" data-height="250" data-fgColor="blue" value="50" data-max="100" data-skin="tron" data-readOnly=true data-thickness=".2" data-displayInput=false/> --}}
-                                {{-- <div class="col-lg-6">
-                                <input type="text" class="dial" value="93" data-width="125" data-height="125" data-thickness="0.25" data-fgcolor="#9C27B0" style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 10px; background: none; font: bold 25px Arial; text-align: center; color: rgb(156, 39, 176); padding: 0px; appearance: none;" data-angleOffset="180">
-                                </div> --}}
-                                {{-- <input data-plugin="knob" class="dial" data-width="120" data-height="120" data-linecap=round data-fgColor="#2abfcc" value="20" data-max="100" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" /> --}}
+                        {{-- <input type="text" data-plugin="knob" class="dial" data-width="150" data-height="250"
+                            data-fgColor="blue" value="50" data-max="100" data-skin="tron" data-readOnly=true
+                            data-thickness=".2" data-displayInput=false /> --}}
+                        {{-- <div class="col-lg-6">
+                            <input type="text" class="dial" value="93" data-width="125" data-height="125"
+                                data-thickness="0.25" data-fgcolor="#9C27B0"
+                                style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 10px; background: none; font: bold 25px Arial; text-align: center; color: rgb(156, 39, 176); padding: 0px; appearance: none;"
+                                data-angleOffset="180">
+                        </div> --}}
+                        {{-- <input data-plugin="knob" class="dial" data-width="120" data-height="120"
+                            data-linecap=round data-fgColor="#2abfcc" value="20" data-max="100" data-skin="tron"
+                            data-angleOffset="180" data-readOnly=true data-thickness=".1" /> --}}
                         {{-- <div class="skill">
                             <div class="skill-outer">
                                 <div class="skill-inner">
                                     <div id="skillNumber"></div>
                                 </div>
                             </div>
-                           
+
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
                                 <defs>
-                                   <linearGradient id="GradientColor">
-                                      <stop offset="0%" stop-color="#e91e63" />
-                                      <stop offset="100%" stop-color="#673ab7" />
-                                   </linearGradient>
+                                    <linearGradient id="GradientColor">
+                                        <stop offset="0%" stop-color="#e91e63" />
+                                        <stop offset="100%" stop-color="#673ab7" />
+                                    </linearGradient>
                                 </defs>
-                                <circle cx="80" cy="80" r="70"/>
+                                <circle cx="80" cy="80" r="70" />
                             </svg>
                         </div> --}}
                         {{-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
                             <defs>
-                               <linearGradient id="GradientColor">
-                                  <stop offset="0%" stop-color="#e91e63" />
-                                  <stop offset="100%" stop-color="#673ab7" />
-                               </linearGradient>
+                                <linearGradient id="GradientColor">
+                                    <stop offset="0%" stop-color="#e91e63" />
+                                    <stop offset="100%" stop-color="#673ab7" />
+                                </linearGradient>
                             </defs>
                             <circle cx="80" cy="80" r="70" stroke-linecap="round" />
                         </svg> --}}
@@ -637,12 +645,43 @@
         }
     }, 43);
     
+    $(document).ready(function(){
+        $.ajax({
+					url: "{{route('web.user.performance')}}",
+					method: 'get',
+                   
+					success: function(result) {
+                      
+                       progreceGraph(result.result);
+                    }
+    })
+})
+ function progreceGraph(result){
 
+    let circularProgressOne = document.querySelector(".circular-progress-one"),
+        progressValueOne  = document.querySelector(".progress-value-one");
+
+    let progressStartValueOne = 0,
+        progressEndValueOne = 0,
+        speedOne = 100;
+    
+    let progessOne = setInterval(() =>{
+        progressStartValueOne++;
+
+        progressValueOne.textContent = `${progressStartValueOne}%`
+        circularProgressOne.style.background = `conic-gradient(#36b872 ${progressStartValueOne * 3.6}deg, #ededed 0deg)`
+
+        if(progressStartValueOne == progressEndValueOne){
+            clearInterval(progess);
+        }
+    })
+
+    
     let circularProgress = document.querySelector(".circular-progress-two"),
         progressValue  = document.querySelector(".progress-value-two");
 
     let progressStartValue = 0,
-        progressEndValue = 60,
+        progressEndValue = result.subject_progress.watched_percentage,
         speed = 100;
     
     let progess = setInterval(() =>{
@@ -655,5 +694,7 @@
             clearInterval(progess);
         }
     })
+ }
+    
 </script>
 @endsection
