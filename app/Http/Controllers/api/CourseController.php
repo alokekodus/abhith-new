@@ -106,7 +106,7 @@ class CourseController extends Controller
     public function allCourses()
     {
         try {
-            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->limit(4)->get();
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id','is_activate','published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate',1)->where('published',1)->limit(4)->get();
 
             if (!$courses->isEmpty()) {
 

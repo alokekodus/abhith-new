@@ -307,7 +307,7 @@
                                 <div class="d-flex progress-main">
                                     <div class="circleOne">
                                         <div class="circular-progress-one">
-                                            <span class="progress-value-one">50/100</span>
+                                            <span class="progress-value-one"></span>
                                         </div>
                                     </div>
                                     <div class="circularText">
@@ -657,7 +657,7 @@
     })
 })
  function progreceGraph(result){
-
+        
     let circularProgressOne = document.querySelector(".circular-progress-one"),
         progressValueOne  = document.querySelector(".progress-value-one");
 
