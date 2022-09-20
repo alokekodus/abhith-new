@@ -2294,7 +2294,7 @@ input[type=number] {
 }
 
 .cart-checkout {
-    background: #f0f0f0;
+    background: #f0f0f062;
     padding: 30px 30px;
 }
 
@@ -4108,4 +4108,50 @@ svg{
 }
 .progress-bar-right .nav-tabs {
     border-bottom: none;
+}
+.total-price{
+    font-size: 22px;
+    font-weight: 700;
+}
+.checkout-details-text{
+    font-weight: 600;
+}
+.cart-coupon {
+    background: #f0f0f062;
+    padding: 0px 30px;
+    margin-top: 15px;
+}
+.coupon-text, .coupon-arrow{
+    padding-top: 15px;
+}
+.cart-course{
+    background: #f0f0f062;
+}
+.cart-course p{
+    margin-bottom: 0;
+    padding: 10px 15px;
+    font-size: 22px;
+    font-weight: 700;
+}
+.subjectName h4{
+    font-size: 22px;
+    font-weight: 600;
+}
+.subjectName p{
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.subjectName a{
+    color: #68b0f0;
+    text-decoration: underline;
+}
+.cart-course-description{
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.price-div p{
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 15px;
 }

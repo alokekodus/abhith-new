@@ -36,7 +36,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-8">
-                <ul class="list-inline cart-course-list1">
+                {{-- <ul class="list-inline cart-course-list1">
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success alert-block">
                             <button type="button" class="close" data-dismiss="alert">×</button>    
@@ -55,21 +55,97 @@
                         <h4 class="text-center pb-3">Cart empty !</h4>
                     @endforelse
                 </ul>
-                <div class="shipping-div text-center"><a href="{{route('website.course')}}" class="shipping-btn">Continue Enrolling</a></div>
+                <div class="shipping-div text-center"><a href="{{route('website.course')}}" class="shipping-btn">Continue Enrolling</a></div> --}}
+                <div class="cart-course d-flex justify-content-between">
+                    <p class="courseName">SEBA - Class 9</p>
+                    <p>Full Course</p>
+                </div>
+                <div class="cart-course-description d-flex justify-content-between">
+                    <div class="subject-div d-flex">
+                        <div class="subject-img mr-3">
+                            <img src="{{asset('asset_website/img/image.jpg')}}" alt="">
+                        </div>
+                        <div class="subjectName">
+                            <h4>Maths</h4>
+                            <p>34 Lessons</p>
+                            <a href="#">View</a>
+                        </div>
+                    </div>
+                    <div class="price-div">
+                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>3499</p>
+                    </div>
+                </div>
+                <div class="cart-course-description d-flex justify-content-between">
+                    <div class="subject-div d-flex">
+                        <div class="subject-img mr-3">
+                            <img src="{{asset('asset_website/img/image.jpg')}}" alt="">
+                        </div>
+                        <div class="subjectName">
+                            <h4>Maths</h4>
+                            <p>34 Lessons</p>
+                            <a href="#">View</a>
+                        </div>
+                    </div>
+                    <div class="price-div">
+                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>3499</p>
+                    </div>
+                </div>
+                <div class="cart-course-description d-flex justify-content-between">
+                    <div class="subject-div d-flex">
+                        <div class="subject-img mr-3">
+                            <img src="{{asset('asset_website/img/image.jpg')}}" alt="">
+                        </div>
+                        <div class="subjectName">
+                            <h4>Maths</h4>
+                            <p>34 Lessons</p>
+                            <a href="#">View</a>
+                        </div>
+                    </div>
+                    <div class="price-div">
+                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>3499</p>
+                    </div>
+                </div>
                 
             </div>
             <div class="col-lg-4">
                 @auth   
                     <div class="cart-checkout">
-                        <label class="bold-600">Total:</label>
+                        {{-- <label class="bold-600">Total:</label>
                         <h2 class="heading-black mb20"><i class="fa fa-inr" aria-hidden="true"></i> {{number_format($countPrice,2,'.','')}}</h2>
-                        {{-- <label class="bold-600">Apply Promo Code If Any Available:</label> --}}
+                        <label class="bold-600">Apply Promo Code If Any Available:</label> --}}
+                        <div class="checkout-details d-flex justify-content-between">
+                            <p class="checkout-details-text">Course Price</p>
+                            <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>3499</p>
+                        </div>
+                        <div class="checkout-details d-flex justify-content-between">
+                            <p class="checkout-details-text">Discount</p>
+                            <p>
+                                <span class="mr-1 font-weight-bold">-</span>
+                                <i class="fa fa-inr mr-2" aria-hidden="true"></i>200</p>
+                        </div>
+                        <div class="checkout-details d-flex justify-content-between">
+                            <p class="checkout-details-text">Tax</p>
+                            <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>50</p>
+                        </div>
+                        <div class="total-price d-flex justify-content-between">
+                            <p class="checkout-details-text">Total</p>
+                            <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>3349</p>
+                        </div>
                         @if ($countPrice == 0)
                             <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a>
                         @else
                             <button class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn" data-checkout="{{number_format($countPrice,2,'.','')}}">Checkout</button>
                         @endif
                     </div>
+                @endauth
+                @auth
+                    <a href="#" class="cart-coupon d-flex justify-content-between">
+                        <p class="coupon-text">
+                            <img src="{{asset('asset_website/img/coupun.png')}}" class="mr-2" alt="">Apply Coupon
+                        </p>
+                        <p class="coupon-arrow">
+                            <img src="{{asset('asset_website/img/arrow.png')}}" alt=""></p>
+                    </a>
                 @endauth
             </div>
         </div>
