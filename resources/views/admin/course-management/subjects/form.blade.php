@@ -14,7 +14,7 @@
                 <option value="">-- Select -- </option>
                 @forelse ($classes as $key => $item)
 
-                <option value="{{$item->id}}{{$item->boards->id}}" @isset($subject){{$classBoard==$item->id.$item->boards->id ? 'selected':''}} @endisset> Class - {{$item->class}} --
+                <option value="{{$item->id}}{{$item->boards->id}}" @if($subject){{$classBoard==$item->id.$item->boards->id ? 'selected':''}}@else {{old('assignedClass')}} @endif> Class - {{$item->class}} --
                     {{$item->boards->exam_board}} Board -- </option>
                 @empty
                 <option disabled>No Class to show</option>
