@@ -4136,10 +4136,11 @@ svg{
 .subjectName h4{
     font-size: 22px;
     font-weight: 600;
+    margin-bottom: 5px;
 }
 .subjectName p{
     font-size: 14px;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 .subjectName a{
     color: #68b0f0;
