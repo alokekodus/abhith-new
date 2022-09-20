@@ -343,43 +343,43 @@
                                         <div class="week-percent" style="height: 25%">
                                             <div class="percent">15</div>
                                         </div>
-                                        <div class="weekday-name">Sun</div>
+                                        <div class="weekday-name">Mon</div>
                                     </div>
                                     <div class="weekly-bar">
                                         <div class="week-percent" style="height: 65%">
                                             <div class="percent">45</div>
                                         </div>
-                                        <div class="weekday-name">Mon</div>
+                                        <div class="weekday-name">Tue</div>
                                     </div>
                                     <div class="weekly-bar">
                                         <div class="week-percent" style="height: 30%">
                                             <div class="percent">20</div>
                                         </div>
-                                        <div class="weekday-name">Tue</div>
+                                        <div class="weekday-name">Wed</div>
                                     </div>
                                     <div class="weekly-bar">
                                         <div class="week-percent" style="height: 67%">
                                             <div class="percent">47</div>
                                         </div>
-                                        <div class="weekday-name">Wed</div>
+                                        <div class="weekday-name">Thu</div>
                                     </div>
                                     <div class="weekly-bar">
                                         <div class="week-percent" style="height: 60%">
                                             <div class="percent">40</div>
                                         </div>
-                                        <div class="weekday-name">Thu</div>
+                                        <div class="weekday-name">Fri</div>
                                     </div>
                                     <div class="weekly-bar">
                                         <div class="week-percent" style="height: 23%">
                                             <div class="percent">13</div>
                                         </div>
-                                        <div class="weekday-name">Fri</div>
+                                        <div class="weekday-name">Sat</div>
                                     </div>
                                     <div class="weekly-bar">
                                         <div class="week-percent" style="height: 60%">
                                             <div class="percent">40</div>
                                         </div>
-                                        <div class="weekday-name">Sat</div>
+                                        <div class="weekday-name">Sun</div>
                                     </div>
                                 </div>
                             </div>
