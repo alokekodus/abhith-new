@@ -4090,3 +4090,22 @@ svg{
     padding: 2px 6px;
     font-size: 14px;
 }
+.progress-bar-right .nav-tabs .nav-link.active {
+    color: white;
+    background-color: black;
+    border-color: rgba(211, 210, 210, 0.267);
+    box-shadow: none;
+    font-size: 14px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+.progress-bar-right .nav-tabs .nav-link {
+    border: 1px solid rgba(199, 199, 199, 0.521);
+    margin-right: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.progress-bar-right .nav-tabs {
+    border-bottom: none;
+}
