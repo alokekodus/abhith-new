@@ -330,7 +330,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-8 col-md-8 mt-5">
+                            <div class="col-md-8 mt-5">
                                 <div class="progress-bar-text d-flex justify-content-between">
                                     <div class="progress-bar-left">
                                         <h5 class="font-weight-bold">Time Spent</h5>
@@ -383,7 +383,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 mt-5">
+                            <div class="col-md-4 mt-5">
                                 <h5 class="font-weight-bold">MCQ Test Performance</h5>
                                 <div class="mcq-box mt-4 d-flex">
                                     <div class="icon-box">
