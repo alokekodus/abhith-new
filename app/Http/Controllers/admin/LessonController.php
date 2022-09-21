@@ -39,7 +39,7 @@ class LessonController extends Controller
     }
     public function store(Request $request)
     {
-       
+
         try {
             $validate = Validator::make(
                 $request->all(),
@@ -56,10 +56,10 @@ class LessonController extends Controller
             }
             if ($request->has('lesson_id')) {
                 $assign_subject = AssignSubject::find($request->subject_id);
-            }else{
+            } else {
                 $assign_subject = AssignSubject::find(Crypt::decrypt($request->subject_id));
             }
-        
+
             if ($assign_subject == null) {
                 Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
@@ -71,7 +71,7 @@ class LessonController extends Controller
                 'assign_class_id' => $assign_subject->assign_class_id,
                 'assign_subject_id' => $assign_subject->id,
             ];
-            
+
             if ($request->has('lesson_id')) {
                 $lesson = Lesson::find($request->lesson_id);
                 $lesson->update($data);
@@ -139,7 +139,7 @@ class LessonController extends Controller
     }
     public function topicCreate($id)
     {
-      
+
         $lesson_id = Crypt::decrypt($id);
         $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
 
@@ -168,17 +168,19 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    public function resourceEdit($id){
+    public function resourceEdit($id)
+    {
         try {
             $lesson_id = Crypt::decrypt($id);
             $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
             $teachers = UserDetails::where('assign_class_id', $lesson->assign_class_id)->where('assign_subject_id', $lesson->assign_subject_id)->where('status', 2)->get();
-            return view('admin.course-management.lesson.resources.edit', compact('lesson','teachers'));
+            return view('admin.course-management.lesson.resources.edit', compact('lesson', 'teachers'));
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-    public function resourceupdate(Request $request){
+    public function resourceupdate(Request $request)
+    {
         try {
             $validate = Validator::make(
                 $request->all(),
@@ -192,11 +194,11 @@ class LessonController extends Controller
                 ]
             );
             if ($validate->fails()) {
-                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
             }
-            $lesson=Lesson::find($request->lesson_id);
-            $lesson->update(['content'=>$request->content]);
-            return response()->json(['status'=>1,'message' => "Resource Updated successfully."]);
+            $lesson = Lesson::find($request->lesson_id);
+            $lesson->update(['content' => $request->content]);
+            return response()->json(['status' => 1, 'message' => "Resource Updated successfully."]);
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -206,13 +208,13 @@ class LessonController extends Controller
         try {
             $lesson = Lesson::find(Crypt::decrypt($lesson_id));
             $assign_subject = AssignSubject::find($lesson->assign_subject_id);
-            
+
             return view('admin.course-management.lesson.edit')->with(['lesson' => $lesson, 'subject' => $assign_subject]);
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-   
+
 
 
 
@@ -249,7 +251,8 @@ class LessonController extends Controller
     }
     public function topicStore(Request $request)
     {
-      
+
+
         try {
             $validate = Validator::make(
                 $request->all(),
@@ -263,13 +266,13 @@ class LessonController extends Controller
                 ]
             );
             if ($validate->fails()) {
-                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
             }
-            
+
 
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
-                return response()->json(['status'=>0,'message' => "This Resource name already in used."]);
+                return response()->json(['status' => 0, 'message' => "This Resource name already in used."]);
             }
             if ($request->resource_type == 1) {
                 $validate = Validator::make(
@@ -284,7 +287,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                    return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
                 }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
@@ -311,7 +314,7 @@ class LessonController extends Controller
 
                 ];
                 LessonAttachment::create($data_attachment);
-                return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
+                return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
             }
             if ($request->resource_type == 2) {
 
@@ -329,7 +332,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                    return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
                 }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
@@ -364,7 +367,7 @@ class LessonController extends Controller
                 ];
 
                 $lesson_attachment = LessonAttachment::create($data_attachment);
-                return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
+                return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
                 // $resizes = ["480", "720", "1080"];
                 // foreach ($resizes as $key => $resize) {
                 //     if ($resize == 480) {
@@ -398,7 +401,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                    return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
                 }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
@@ -415,7 +418,7 @@ class LessonController extends Controller
                 ];
 
                 $resourceStore = Lesson::create($data);
-                return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
+                return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
             }
             if ($request->resource_type == 4) {
                 $lesson = Lesson::find($request->parent_id);
@@ -434,22 +437,23 @@ class LessonController extends Controller
                     $questionFileExtension = $questionFile->getClientOriginalExtension();
 
                     if ($questionFileExtension != 'xlsx') {
-                        Toastr::error('Not a valid excel file.', '', ["positionClass" => "toast-top-right"]);
-                        return redirect()->back();
+                        return response()->json(['status' => 0, 'message' => "Not a valid excel file."]);
                     } else {
                         $questionFile = $request->file('questionExcel');
 
                         $questionFile = $request->file('questionExcel')->store('imports');
                         $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id);
+                      
                         $import->import($questionFile);
 
-                        return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
+
+                        return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
                     }
                 }
             }
         } catch (\Throwable $th) {
 
-            return response()->json(['status'=>0,'message' => "something went wrong"]);
+            return response()->json(['status' => 0, 'message' => "something went wrong"]);
         }
     }
     public function previewStatusChange($lesson_id)
@@ -488,5 +492,4 @@ class LessonController extends Controller
             return redirect()->back();
         }
     }
-  
 }

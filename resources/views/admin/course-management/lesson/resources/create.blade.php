@@ -19,7 +19,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.course.management.subject.all')}}">Subject</a></li>
-            <li class="breadcrumb-item" aria-current="page">{{$lesson->assignSubject->subject_name}}</li>
+            <li class="breadcrumb-item" aria-current="page"><a href="{{route('admin.course.management.lesson.create',Crypt::encrypt($lesson->assignSubject->id))}}">{{$lesson->assignSubject->subject_name}}</a></li>
             <li class="breadcrumb-item" aria-current="page">{{$lesson->name}}</li>
         </ol>
     </nav>
