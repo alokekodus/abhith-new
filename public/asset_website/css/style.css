@@ -4159,3 +4159,58 @@ svg{
 #leftBlock{
     padding-right: 110px;
 }
+
+.selected-course{
+    margin: 0px 80px;
+    padding: 0px 0px 40px 0px;
+}
+.coursePrice h3{
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 15px;
+    /* color: #000; */
+}
+.board, .class{
+    margin-right: 70px;
+}
+.board p , .class p , .course-type p{
+    margin-bottom: 0;
+    font-size: 16px;
+}
+.board h3, .class h3, .course-type h3{
+    font-size: 26px;
+    font-weight: 700;
+}
+.subjectDetails p{
+    margin-bottom: 0;
+    text-decoration: underline;
+}
+.subjectDetails h5{
+    font-size: 22px;
+    font-weight: 600;
+}
+.way-to-cart{
+    justify-content: end;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.way-to-cart a{
+    text-decoration: underline;
+    color: white;
+}
+#cart-container{
+    border: 1px solid;
+    border-radius: 10px;
+    background: #a102e0a8;
+    /* background-image: linear-gradient(to left, #003475, #88e2fd); */
+    color: white;
+}
+.course-subject{
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.subjectDetails, .way-to-cart{
+    margin-left: 10px;
+    margin-right: 10px;
+}

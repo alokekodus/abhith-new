@@ -1053,6 +1053,32 @@
         position: unset;
         padding: 0;
     }
+    .selected-course {
+        margin: 0px 15px;
+    }
+    .board, .class {
+        margin-right: 16px;
+    }
+    .board p, .class p, .course-type p {
+        margin-bottom: 0;
+        font-size: 10px;
+    }
+    .board h3, .class h3, .course-type h3 {
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .coursePrice h3 {
+        font-size: 14px;
+        margin-top: 8px;
+    }
+    .subjectDetails p{
+        font-size: 12px;
+        text-decoration: underline;
+    }
+    .subjectDetails h5{
+        font-size: 14px;
+        font-weight: 600;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
