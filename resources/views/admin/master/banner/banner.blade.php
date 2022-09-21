@@ -24,7 +24,7 @@
             <i class="mdi mdi-book"></i>
         </span> Banner
     </h3>
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb p-2">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
                 <a href="{{ route('admin.create.banner') }}" class="btn btn-gradient-primary btn-fw">Add Banner</a>
@@ -41,7 +41,7 @@
             <h4 class="card-title">Banner List</h4>
             </p>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="banner_table">
                     <thead>
                         <tr>
                             <th> # </th>
@@ -56,8 +56,8 @@
                         @foreach ($banners as $key => $item)
                         <tr>
                             <td> {{ $key + 1 }} </td>
-                            <td> {!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 50, $end = '...')
-                                !!} </td>
+                            <td> @if($item->name){!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 50, $end = '...')
+                                !!}@else NA @endif </td>
                             <td>
                                 <img src="{{ asset($item->banner_image) }}" alt="" srcset="">
                             </td>
@@ -77,8 +77,8 @@
                             <td>
                                 {{-- {!! $item->description !!} --}}
                                 {{-- {!! Illuminate\Support\Str::limit($item->description, 100, ' ...')!!} --}}
-                                {!! Illuminate\Support\Str::limit(strip_tags($item->description), $limit = 50, $end =
-                                '...') !!}
+                               @if($item->description) {!! Illuminate\Support\Str::limit(strip_tags($item->description), $limit = 50, $end =
+                                '...') !!}@else NA @endif
                             </td>
                             <td>
                                 <a href="{{ route('admin.edit.banner', ['id' => \Crypt::encrypt($item->id)]) }}"
@@ -93,9 +93,7 @@
                     </tbody>
                 </table>
             </div>
-            <div style="float:right;margin-top:10px;">
-                {{$banners->links()}}
-            </div>
+            
         </div>
     </div>
 </div>
@@ -103,6 +101,13 @@
 
 @section('scripts')
 <script>
+    $(document).ready( function () {
+            $('#banner_table').DataTable({
+                "processing": true,
+                "searching" : false,
+                "ordering" : false
+            });
+        });
     $(document.body).on('change', '#testingUpdate', function() {
             var status = $(this).prop('checked') == true ? 1 : 0;
             var cart_id = $(this).data('id');

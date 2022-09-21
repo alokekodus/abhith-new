@@ -27,13 +27,13 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="banner_name" name="name" maxlength="20" placeholder="Enter Banner Name" required>
+                        <input type="text" class="form-control" id="banner_name" name="name" maxlength="20" placeholder="Enter Banner Name">
                         <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
                         <span class="text-danger" id="name_error"></span>
                     </div>
 
                     <div class="form-group">
-                        <label>File upload</label>
+                        <label>File upload<span class="text-danger">*</span></label>
                         <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
                             data-max-files="1"  required/>
                         <span class="text-danger" id="pic_error"></span>
