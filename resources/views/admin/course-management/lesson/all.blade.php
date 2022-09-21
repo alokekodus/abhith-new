@@ -3,8 +3,7 @@
 
         <div class="card-header">
             All Lesson
-            <a href="{{route('admin.course.management.lesson.create',Crypt::encrypt($subject->id))}}" style="float:right" class="btn btn-gradient-primary btn-fw">Add
-                Lesson</a>
+            
         </div>
         {{-- <a href="" style="float:right" class="btn btn-gradient-primary btn-fw">All
             Subject</a> --}}
@@ -37,7 +36,7 @@
                             <td style="text-align: center"> {{$lesson->topics->where('type',2)->count()}} </td>
                             <td style="text-align: center">{{$lesson->topics->where('type',1)->count()}} </td>
                             <td style="text-align: center">{{$lesson->topics->where('type',3)->count()}}</td>
-                            <td style="text-align: center"><a href="" title="Edit Lesson"><i
+                            <td style="text-align: center"><a  href="{{route('admin.course.management.lesson.edit',Crypt::encrypt($lesson->id))}}" title="Edit Lesson"><i
                                         class="mdi mdi-grease-pencil"></i></a>
                                 <a href="{{route('admin.course.management.lesson.topic.display',Crypt::encrypt($lesson->id))}}"
                                     title="View Details"><i class="mdi mdi-eye"></i></a>

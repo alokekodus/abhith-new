@@ -4,7 +4,7 @@
         <div class="form-group">
             <label for="">Subject Name<span class="text-danger">*</span></label>
             <input type="text" name="subjectName" class="form-control" id="subjectName"
-                value="@if($subject) {{$subject->subject_name}} @else {{old('subjectName')}} @endif" placeholder="e.g Science, Math etc.">
+                value="@if($subject) {{$subject->subject_name}} @endif" placeholder="e.g Science, Math etc.">
         </div>
     </div>
     <div class="col-6">
@@ -14,7 +14,7 @@
                 <option value="">-- Select -- </option>
                 @forelse ($classes as $key => $item)
 
-                <option value="{{$item->id}}{{$item->boards->id}}" @if($subject){{$classBoard==$item->id.$item->boards->id ? 'selected':''}}@else {{old('assignedClass')}} @endif> Class - {{$item->class}} --
+                <option value="{{$item->id}}{{$item->boards->id}}" @isset($subject){{$classBoard==$item->id.$item->boards->id ? 'selected':''}} @endisset> Class - {{$item->class}} --
                     {{$item->boards->exam_board}} Board -- </option>
                 @empty
                 <option disabled>No Class to show</option>

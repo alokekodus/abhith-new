@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="" class="btn btn-gradient-primary btn-fw" data-backdrop="static" data-keyboard="false">Add
+                <a href="{{route('admin.course.management.subject.all')}}" class="btn btn-gradient-primary btn-fw" data-backdrop="static" data-keyboard="false">All
                     Subject</a>
             </li>
         </ul>
@@ -22,12 +22,12 @@
 
 <div class="card">
     <div class="card-body">
-        <form enctype="multipart/form-data" id="addSubject" action="{{route('admin.course.management.subject.store')}}" method="POST">
+        <form enctype="multipart/form-data" id="addSubject" method="POST" action="javascript:void(0)">
             @csrf
-             @include('admin.course-management.subjects.form')
+            @include('admin.course-management.subjects.form')
             <div style="float: right;">
-                <button type="button" class="btn btn-md btn-default" id="assignSubjectCancelBtn">Cancel</button>
-                <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">Submit</button>
+                <button type="button" class="btn btn-gradient-light btn-fw" id="assignSubjectCancelBtn">Cancel</button>
+                <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">@if($subject)Update @else Submit @endif</button>
             </div>
         </form>
     </div>
@@ -38,7 +38,6 @@
 @section('scripts')
 
 <script>
-
     CKEDITOR.replace( 'description', {
 	toolbar: [
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
@@ -75,12 +74,6 @@
             assignedClass:{
                 required:true
             },
-            description:{
-                required:true
-            },
-            why_learn:{
-                required:true
-            },
             subject_amount:{
                 required:true
             }
@@ -92,19 +85,56 @@
             assignedClass:{
                 required:"Please Select Class."
             },
-            description:{
-                required:"Subject Description Filed is required.",
-            },
-            why_learn:{
-                required:"This Filed is required.",
-            },
             subject_amount:{
-                required:"Subject Amount is required.",
+                required:"Subject Amount is required."
             }
         },
-        
+        submitHandler: function() {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#assignSubjectSubmitBtn').html('Sending..');
+            for ( instance in CKEDITOR.instances ){
+                     CKEDITOR.instances[instance].updateElement();
+                }
+                var data = new FormData(document.getElementById("addSubject"));
+                
+            $.ajax({
+                url: "{{route('admin.course.management.subject.store')}}" ,
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function( response ) {
+                    console.log(response);
+                    toastr.options.timeOut = 3000;
+                    if(response.status==1){
+                        
+                        toastr.success(response.message);
+                        $('#assignSubjectSubmitBtn').html('Submit');
+                        
+                        location.reload();
+                    }
+                    if(response.status==0){
+                        $.each(response.message,function(prefix,val){
+                            toastr.error(val[0]);
+                        })
+                       
+                        $('#assignSubjectSubmitBtn').html('Submit');
+                    }
+                           
+                }
+            });
+        }
       });
-});
+    });
+    $('#assignSubjectCancelBtn').on('click', function(){
+            
+            $('#addSubject')[0].reset();
+        });
 
     imageUpload.onchange = evt => {
         const [file] = imageUpload.files
@@ -132,7 +162,7 @@
         var input=evt.srcElement;
             $("#noFileVideo").html(input.files[0].name);
    }
-    
+   
        
 </script>
 @endsection

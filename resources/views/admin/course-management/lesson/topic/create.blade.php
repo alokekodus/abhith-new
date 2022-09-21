@@ -16,6 +16,13 @@
             <i class="mdi mdi-bulletin-board"></i>
         </span> Add Resources
     </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{route('admin.course.management.subject.all')}}">Subject</a></li>
+            <li class="breadcrumb-item" aria-current="page">{{$lesson->assignSubject->subject_name}}</li>
+            <li class="breadcrumb-item" aria-current="page">{{$lesson->name}}</li>
+        </ol>
+    </nav>
 </div>
 
 <div class="col-lg-12 grid-margin stretch-card">
@@ -25,14 +32,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form id="assignTopicForm" enctype="multipart/form-data" method="post"
-                            action="{{route('admin.course.management.lesson.topic.store')}}">
+                        <form id="assignTopicForm" enctype="multipart/form-data" method="post">
                             @csrf
                             <input type="hidden" name="parent_id" value="{{$lesson->id}}">
                             <input type="hidden" name="type" value="create-topic">
                             @include('admin.course-management.lesson.common.form')
                             <div style="float: right;">
-                                <button type="button" class="btn btn-md btn-default"
+                                <button type="button" class="btn btn-gradient-light btn-fw"
                                     id="assignTopicCancelBtn">Cancel</button>
                                 <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn"
                                     name="type" value="create-topic">Submit</button>
@@ -214,6 +220,46 @@ function setFileInfo() {
             },
            
         },
+        submitHandler: function() {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#assignTopicSubmitBtn').html('Sending..');
+            for ( instance in CKEDITOR.instances ){
+                     CKEDITOR.instances[instance].updateElement();
+                }
+                var data = new FormData(document.getElementById("assignTopicForm"));
+                
+            $.ajax({
+                url: "{{route('admin.course.management.lesson.topic.store')}}" ,
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function( response ) {
+                    console.log(response);
+                    toastr.options.timeOut = 3000;
+                    if(response.status==1){
+                        
+                        toastr.success(response.message);
+                        $('#assignTopicSubmitBtn').html('Submit');
+                        
+                        location.reload();
+                    }
+                    if(response.status==0){
+                        $.each(response.message,function(prefix,val){
+                            toastr.error(val[0]);
+                        })
+                       
+                        $('#assignTopicSubmitBtn').html('Submit');
+                    }
+                           
+                }
+            });
+        }
       });
 });
 </script>

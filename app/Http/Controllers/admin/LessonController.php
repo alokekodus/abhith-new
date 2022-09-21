@@ -39,6 +39,7 @@ class LessonController extends Controller
     }
     public function store(Request $request)
     {
+       
         try {
             $validate = Validator::make(
                 $request->all(),
@@ -53,7 +54,12 @@ class LessonController extends Controller
                 Toastr::success($validate->errors(), '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
-            $assign_subject = AssignSubject::find(Crypt::decrypt($request->subject_id));
+            if ($request->has('lesson_id')) {
+                $assign_subject = AssignSubject::find($request->subject_id);
+            }else{
+                $assign_subject = AssignSubject::find(Crypt::decrypt($request->subject_id));
+            }
+        
             if ($assign_subject == null) {
                 Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
@@ -65,9 +71,17 @@ class LessonController extends Controller
                 'assign_class_id' => $assign_subject->assign_class_id,
                 'assign_subject_id' => $assign_subject->id,
             ];
-            Lesson::create($data);
-            Toastr::success('Lesson added successfully.', '', ["positionClass" => "toast-top-right"]);
-            return redirect()->back();
+            
+            if ($request->has('lesson_id')) {
+                $lesson = Lesson::find($request->lesson_id);
+                $lesson->update($data);
+                Toastr::success('Lesson updated successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            } else {
+                Lesson::create($data);
+                Toastr::success('Lesson added successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
         } catch (\Throwable $th) {
             Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
@@ -153,14 +167,12 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    public function edit($lesson_slug)
+    public function edit($lesson_id)
     {
         try {
-
-            $lesson_edit_status = true;
-            $board_details = Board::where('is_activate', 1)->get();
-            $lesson = Lesson::with('boards', 'topics', 'subTopics')->where('slug', $lesson_slug)->first();
-            return view('admin.course-management.lesson.edit')->with(['boards' => $board_details, 'lesson' => $lesson, 'lesson_edit_status' => $lesson_edit_status]);
+            $lesson = Lesson::find(Crypt::decrypt($lesson_id));
+            $assign_subject = AssignSubject::find($lesson->assign_subject_id);
+            return view('admin.course-management.lesson.edit')->with(['lesson' => $lesson, 'subject' => $assign_subject]);
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -201,6 +213,7 @@ class LessonController extends Controller
     }
     public function topicStore(Request $request)
     {
+      
         try {
             $validate = Validator::make(
                 $request->all(),
@@ -214,14 +227,13 @@ class LessonController extends Controller
                 ]
             );
             if ($validate->fails()) {
-                Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
             }
+            
 
             $isLessonNameAlreadyInUsed = Lesson::where('name', $request->name)->first();
             if ($isLessonNameAlreadyInUsed) {
-                Toastr::error('This Resource name already in used.', '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return response()->json(['status'=>0,'message' => "This Resource name already in used."]);
             }
             if ($request->resource_type == 1) {
                 $validate = Validator::make(
@@ -236,8 +248,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-                    return redirect()->back();
+                    return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
                 }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
@@ -264,8 +275,7 @@ class LessonController extends Controller
 
                 ];
                 LessonAttachment::create($data_attachment);
-                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return back()->withInput(['tab' => 'nav-pdf']);
+                return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
             }
             if ($request->resource_type == 2) {
 
@@ -283,8 +293,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-                    return redirect()->back();
+                    return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
                 }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
@@ -319,8 +328,7 @@ class LessonController extends Controller
                 ];
 
                 $lesson_attachment = LessonAttachment::create($data_attachment);
-                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return back()->withInput(['tab' => 'nav-video']);
+                return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
                 // $resizes = ["480", "720", "1080"];
                 // foreach ($resizes as $key => $resize) {
                 //     if ($resize == 480) {
@@ -354,8 +362,7 @@ class LessonController extends Controller
                     ]
                 );
                 if ($validate->fails()) {
-                    Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-                    return redirect()->back();
+                    return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
                 }
                 $lesson = Lesson::find($request->parent_id);
                 $name_slug = Str::slug($request->name);
@@ -372,8 +379,7 @@ class LessonController extends Controller
                 ];
 
                 $resourceStore = Lesson::create($data);
-                Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                return back()->withInput(['tab' => 'nav-contact']);
+                return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
             }
             if ($request->resource_type == 4) {
                 $lesson = Lesson::find($request->parent_id);
@@ -401,15 +407,13 @@ class LessonController extends Controller
                         $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id);
                         $import->import($questionFile);
 
-                        Toastr::success('Resource stored successfully.', '', ["positionClass" => "toast-top-right"]);
-                        return back()->withInput(['tab' => 'nav-practice-test']);
+                        return response()->json(['status'=>1,'message' => "Resource stored successfully."]);
                     }
                 }
             }
         } catch (\Throwable $th) {
 
-            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
-            return redirect()->back();
+            return response()->json(['status'=>0,'message' => "something went wrong"]);
         }
     }
     public function previewStatusChange($lesson_id)

@@ -170,6 +170,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                     200: function(data) {
                         // console.log(data);
                         toastr.success(data.message);
+                        toastr.options.timeOut = 3000;
                         location.reload();
                     },
                     500: function() {

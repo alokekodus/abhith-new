@@ -188,9 +188,7 @@
                                     <td> @if($topic->type==1)pdf @elseif($topic->type==2) video @else
                                         article @endif </article>
                                     </td>
-                                    <td> {{ substr($topic->content, 0,40)}} <a href="" title="View Details"><i
-                                                class="mdi mdi-eye"></i></a></td>
-                                    
+                                    <td>{{substr($topic->content, 0, 20)}}</td>
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
                                     <td>
                                         @if ($topic->preview==0)

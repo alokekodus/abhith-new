@@ -32,10 +32,9 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-
+        
         try {
             
-          return response()->json($request->all());
             $validate = Validator::make(
                 $request->all(),
                 [
@@ -47,7 +46,7 @@ class AssignSubjectController extends Controller
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_url' => 'mimes:mp4,WEBM,MOV|max:2097152',
-                    'requirements' => 'string'
+                    
 
                 ],
                 [
@@ -64,9 +63,7 @@ class AssignSubjectController extends Controller
             );
 
             if ($validate->fails()) {
-                Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-               
-                return back()->withInput();
+                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
             }
 
             $split_assignedClass = str_split($request->assignedClass);
@@ -75,8 +72,8 @@ class AssignSubjectController extends Controller
             $assignedBoard = $split_assignedClass[1];
             $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
             if ($is_in_assignsubject) {
-                Toastr::error("'$request->subjectName'.'already active'", '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
+              
             }
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
@@ -120,9 +117,9 @@ class AssignSubjectController extends Controller
                     $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
                 }
             }
-
+            $subject_name=strtolower($request->subjectName);
             $data = [
-                'subject_name' => ucfirst($request->subjectName),
+                'subject_name' => ucfirst($subject_name),
                 'image' =>  $image_path,
                 'teacher_id' => $request->teacher_id,
                 'subject_amount' => $request->subject_amount,
@@ -158,14 +155,14 @@ class AssignSubjectController extends Controller
                 $assign_subject->subjectAttachment->update($data_attachment);
             }
             if ($request->subject_id == null) {
-                Toastr::success('Subject created successfully', '', ["positionClass" => "toast-top-right"]);
+                return response()->json(['status'=>1,'message' => 'Subject added successfully.']);
             } else {
-                Toastr::success('Subject updated successfully', '', ["positionClass" => "toast-top-right"]);
+                return response()->json(['status'=>1,'message' => 'Subject updated successfully.']);
+              
             }
             return redirect()->route('admin.course.management.subject.all');
         } catch (\Throwable $th) {
-            Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
-            return back()->withInput();
+            return response()->json(['status'=>0,'message' => 'Something went wrong.']);
         }
     }
 
