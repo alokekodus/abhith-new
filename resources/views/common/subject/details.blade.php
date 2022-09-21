@@ -400,12 +400,13 @@
 </div> --}}
 
 <!-- Student Feedback -->
-
+@if($reviews)
 <div class="container-fluid mt-5" id="student-feedback">
     <div class="row">
         <div class="col-lg-8 col-md-12">
 
             <h4>Students Reviews</h4>
+           
             @foreach($reviews as $key=>$review)
             <div class="d-md-flex mt-4">
                 <div class="studentImageBox mr-4">
@@ -430,10 +431,11 @@
                 </div>
             </div>
             @endforeach
+            
         </div>
     </div>
 </div>
-
+@endif
 <!-- End Student Feedback -->
 {{-- demo vidio display subject --}}
 <!-- Button trigger modal -->
