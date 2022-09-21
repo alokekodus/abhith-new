@@ -139,11 +139,12 @@ class LessonController extends Controller
     }
     public function topicCreate($id)
     {
+      
         $lesson_id = Crypt::decrypt($id);
         $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
 
         $teachers = UserDetails::where('assign_class_id', $lesson->assign_class_id)->where('assign_subject_id', $lesson->assign_subject_id)->where('status', 2)->get();
-        return view('admin.course-management.lesson.topic.create', compact('lesson', 'teachers'));
+        return view('admin.course-management.lesson.resources.create', compact('lesson', 'teachers'));
     }
     public function subTopicCreate($lesson_slug, $topic_slug)
     {
@@ -157,12 +158,45 @@ class LessonController extends Controller
             //throw $th;
         }
     }
-    public function topicView($id)
+    public function resourceView($id)
     {
         try {
             $lesson_id = Crypt::decrypt($id);
             $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
-            return view('admin.course-management.lesson.view', compact('lesson'));
+            return view('admin.course-management.lesson.resources.view', compact('lesson'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function resourceEdit($id){
+        try {
+            $lesson_id = Crypt::decrypt($id);
+            $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
+            $teachers = UserDetails::where('assign_class_id', $lesson->assign_class_id)->where('assign_subject_id', $lesson->assign_subject_id)->where('status', 2)->get();
+            return view('admin.course-management.lesson.resources.edit', compact('lesson','teachers'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function resourceupdate(Request $request){
+        try {
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'content' => 'required',
+
+                ],
+                [
+                    'content.required' => 'Write Article is required',
+
+                ]
+            );
+            if ($validate->fails()) {
+                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+            }
+            $lesson=Lesson::find($request->lesson_id);
+            $lesson->update(['content'=>$request->content]);
+            return response()->json(['status'=>1,'message' => "Resource Updated successfully."]);
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -172,11 +206,13 @@ class LessonController extends Controller
         try {
             $lesson = Lesson::find(Crypt::decrypt($lesson_id));
             $assign_subject = AssignSubject::find($lesson->assign_subject_id);
+            
             return view('admin.course-management.lesson.edit')->with(['lesson' => $lesson, 'subject' => $assign_subject]);
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
+   
 
 
 
@@ -440,11 +476,11 @@ class LessonController extends Controller
             $lesson = Lesson::find(Crypt::decrypt($lesson_id));
             if ($lesson->status == 0) {
                 $lesson->update(['status' => 1]);
-                Toastr::success('Resource status update from Active to InActive successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Resource status update from InActive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             } else {
                 $lesson->update(['status' => 0]);
-                Toastr::success('Resource status update from InActive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Resource status update from Active to InActive successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
         } catch (\Throwable $th) {
@@ -452,4 +488,5 @@ class LessonController extends Controller
             return redirect()->back();
         }
     }
+  
 }

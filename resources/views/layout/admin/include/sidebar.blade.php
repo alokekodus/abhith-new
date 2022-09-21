@@ -67,7 +67,7 @@
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-            <div @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create")class="collapse show" @else class="collapse" @endif id="course-management">
+            <div @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create") class="collapse show" @else class="collapse" @endif id="course-management">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
