@@ -24,7 +24,7 @@
             <div class="card-body">
                 <h4 class="card-title">Gallery List</h4>
                 </p>
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="gallery-table">
                     <thead>
                         <tr>
                             <th> # </th>
@@ -68,9 +68,7 @@
 
                     </tbody>
                 </table>
-                <div style="float:right;margin-top:10px;">
-                    {{$gallerries->links()}}
-                </div>
+                
             </div>
         </div>
     </div>
@@ -78,6 +76,13 @@
 
 @section('scripts')
 <script>
+     $(document).ready( function () {
+            $('#gallery-table').DataTable({
+                "processing": true,
+                "searching" : false,
+                "ordering" : false
+            });
+        });
     $(document.body).on('change', '#testingUpdate', function() {
         var status = $(this).prop('checked') == true ? 1 : 0;
         var user_id = $(this).data('id');

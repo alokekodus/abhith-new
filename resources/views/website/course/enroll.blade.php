@@ -301,6 +301,7 @@
 
 <section class="home-courses">
     <form action="{{route('website.add-to-cart')}}" method="post">
+        <input type="hidden" name="is_buy" value="0">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-sm-12">
@@ -322,7 +323,7 @@
                             <div>
                                 <label for="radio-card-2" class="radio-card">
                                     <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
-                                        onclick="changeCourse(this.value)" />
+                                        onclick="changeCourse(this.value)" checked/>
                                     <div class="card-content-wrapper">
                                         <span class="check-icon"></span>
                                         <div class="card-content" style="width:100%; text-align:center">
@@ -375,8 +376,7 @@
                     <div class="total">
                         <p class=""><b>Total</b></p>
                         <span class="course-price1 mr-2" id="total_price"><i class="fa fa-inr" aria-hidden="true"></i>
-                            {{number_format($data['total_amount'], 2, '.', '
-                            ')}}</span>
+                            {{number_format($data['subjectamount'], 2, '.', '')}}</span>
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart">Add to cart</button>
 

@@ -29,7 +29,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
                     <input type="hidden" name="id" id="id" value="{{\Crypt::encrypt($banner->id)}}">
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="banner_name" value="{{ $banner->name }}" name="name" maxlength="20" placeholder="Enter Banner Name" required>
+                        <input type="text" class="form-control" id="banner_name" value="{{ $banner->name }}" name="name" maxlength="20" placeholder="Enter Banner Name">
                         <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
                     </div>
 
@@ -41,7 +41,7 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 
                     <div class="form-group">
                         <label for="exampleTextarea1">Description</label>
-                        <textarea class="form-control"  name="description" maxlength="80" placeholder="Describe banner here" rows="4" required>{{ $banner->description }}</textarea>
+                        <textarea class="form-control"  name="description" maxlength="80" placeholder="Describe banner here" rows="4">{{ $banner->description }}</textarea>
                         <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
                     </div>
 

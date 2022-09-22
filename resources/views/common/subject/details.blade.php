@@ -184,12 +184,10 @@
             <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
                 <div class="mt-3">
-                    <ul class="">
-                        <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias inventore adipisci id,
-                            iure excepturi nostrum ex voluptatum totam omnis vitae amet neque at reiciendis dolore minus
-                            ab reprehenderit tempora quae tempore harum saepe distinctio. Sapiente.
-                        </li>
-                    </ul>
+                    
+                        {!!$subject->requirements!!}
+                        
+                    
                 </div>
             </div>
             <!-- End Requirements -->
@@ -353,13 +351,13 @@
                                         target="_blank"> {{$topic->name}}</a></p>
                                 <div class="d-flex course-duration-div">
 
-                                    @if($topic->type==2 && $topic->lessonAttachment->free_demo==1 ) <p
+                                    @if($topic->type==2 && $topic->preview==1 ) <p
                                         data-toggle="modal" data-target="#exampleModalLong" data-lesson="{{$topic->id}}"
                                         id="previewVideo">preview
                                     </p>
                                     <p> {{gmdate("H:i:s", $topic->lessonAttachment->video_duration)}}
                                     </p> @endif
-                                    @if($topic->type==2) @if($topic->lessonAttachment->free_demo==1)<i
+                                    @if($topic->type==2) @if($topic->preview==1)<i
                                         class="fa fa-play mt-2"></i>@endif @endif
                                 </div>
                             </div>

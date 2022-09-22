@@ -27,7 +27,8 @@
                             <td>{{++$key}}</td>
                             <td style="text-align: center">{{$lesson->name}} </td>
                             <td><span class="badge rounded-pill bg-danger">
-                                    {{$lesson->topics->count()}}
+                                @php $total_topic= $lesson->topics->count()+$lesson->Sets->count()@endphp
+                                    {{$total_topic}}
                                 </span><a
                                     href="{{route('admin.course.management.lesson.topic.create',Crypt::encrypt($lesson->id))}}">
                                     Add Recources

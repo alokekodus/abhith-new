@@ -145,7 +145,8 @@ class CourseController extends Controller
                 'subjects' => $all_subject,
                 'total_amount' => $total_amount,
                 'board' => $board,
-                'assignclass' => $Assignclass
+                'assignclass' => $Assignclass,
+                'subjectamount'=>$subject->subject_amount,
             ];
 
             return view('website.course.enroll', compact('data','subject_id','total_subject'));

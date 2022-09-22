@@ -85,7 +85,7 @@ class SubjectController extends Controller
         try {
             $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
             $all_lessons = Lesson::with('lessonAttachment')->whereHas('lessonAttachment', function ($query) {
-                $query->where('free_demo', 1);
+                $query->where('preview', 1);
             })->where('assign_subject_id', $lesson->assign_subject_id)->where('type', 2)->get();
             $result = [
                 'lesson' => $lesson,

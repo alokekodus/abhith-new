@@ -17,7 +17,7 @@
                 <h3 class="mb-4 text-center">{{$blog->name}}</h3>
                 {{-- Blog image --}}
                 <div class="text-center">
-                    <img class="rounded" src="{{ asset($blog->blog_image) }}" height="500" alt="">
+                    <img class="rounded w-100" src="{{ asset($blog->blog_image) }}" height="500" alt="">
                 </div>
 
                 <p class="mt-4">

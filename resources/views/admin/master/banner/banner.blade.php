@@ -3,21 +3,6 @@
 @section('title', 'Banner')
 
 @section('content')
-
-<style>
-    table {
-        width: 100%;
-    }
-
-    .ten {
-        width: 10%
-    }
-
-    .twenty {
-        width: 20%;
-    }
-</style>
-
 <div class="page-header">
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -41,7 +26,7 @@
             <h4 class="card-title">Banner List</h4>
             </p>
             <div class="table-responsive">
-                <table class="table table-bordered" id="banner_table">
+                <table class="table table-bordered" id="banner-table">
                     <thead>
                         <tr>
                             <th> # </th>
@@ -81,11 +66,10 @@
                                 '...') !!}@else NA @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.edit.banner', ['id' => \Crypt::encrypt($item->id)]) }}"
-                                    class="btn btn-gradient-primary btn-rounded btn-icon anchor_rounded"
-                                    data-toggle="tooltip" data-placement="top" title="Edit">
-                                    <i class="mdi mdi-pencil-outline"></i>
-                                </a>
+                                <a href="{{route('admin.edit.banner',Crypt::encrypt($item->id))}}"
+                                    title="View Details"><i class="mdi mdi-grease-pencil"></i></a>
+                               
+                                
                             </td>
                         </tr>
                         @endforeach
@@ -102,7 +86,7 @@
 @section('scripts')
 <script>
     $(document).ready( function () {
-            $('#banner_table').DataTable({
+            $('#banner-table').DataTable({
                 "processing": true,
                 "searching" : false,
                 "ordering" : false
