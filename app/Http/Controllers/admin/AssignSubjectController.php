@@ -32,7 +32,7 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-        
+        return response($request->all());
         try {
             
             $validate = Validator::make(

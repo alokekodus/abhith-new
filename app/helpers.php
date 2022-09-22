@@ -341,7 +341,14 @@ function ifBlogActive($current_route){
     }
 }
 function ifGalleryActive($current_route){
-    if($current_route=="admin.get.blog.by.id"||$current_route=="admin.create.blog"||$current_route=="admin.creating.blog"||$current_route=="upload"||$current_route=="admin.active.blog"||$current_route=="admin.edit.blog"||$current_route=="admin.editing.blog"||$current_route=="admin.read.blog"){
+    if($current_route=="admin.get.gallery"||$current_route=="admin.create.gallery"||$current_route=="admin.creating.gallery"||$current_route=="admin.edit.gallery"||$current_route=="admin.editing.gallery"){
+        return true;
+    }else{
+        return false;
+    }
+}
+function ifSubjectActive($current_route){
+    if($current_route=="admin.course.management.subject.all"||$current_route=="admin.course.management.subject.create"||$current_route=="admin.course.management.subject.edit"||$current_route=="admin.course.management.subject.store"||$current_route=="admin.course.management.subject.view"||$current_route=="admin.course.management.subject.assign"||$current_route=="admin.course.management.lesson.topic.display"||$current_route=="admin.published.subject"||$current_route=="admin.active.subject"){
         return true;
     }else{
         return false;

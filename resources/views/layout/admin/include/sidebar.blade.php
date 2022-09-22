@@ -51,12 +51,12 @@
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
             </a>
-            <div @if(ifBannerActive(Route::currentRouteName())==true||ifBlogActive(Route::currentRouteName())==true) class="collapse show" @else  class="collapse" @endif id="ui-basic">
+            <div @if(ifBannerActive(Route::currentRouteName())==true||ifBlogActive(Route::currentRouteName())==true||ifGalleryActive(Route::currentRouteName())==true) class="collapse show" @else  class="collapse" @endif id="ui-basic">
                 <ul class="nav flex-column sub-menu">
 
                     <li @if(ifBannerActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a  @if(ifBannerActive(Route::currentRouteName())==true) class="nav-link active"  @else class="nav-link" @endif href="{{route('admin.get.banner')}}">Banner</a></li>
                     <li @if(ifBlogActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifBlogActive(Route::currentRouteName())==true) class="nav-link active" @else class="nav-link" @endif href="{{route('admin.get.blog.by.id')}}">Blog</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.gallery')}}">Gallery</a></li>
+                    <li @if(ifGalleryActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifGalleryActive(Route::currentRouteName())==true)  class="nav-link active" @else class="nav-link" @endif href="{{route('admin.get.gallery')}}">Gallery</a></li>
 
                 </ul>
             </div>
