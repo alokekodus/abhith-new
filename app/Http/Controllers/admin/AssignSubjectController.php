@@ -162,9 +162,9 @@ class AssignSubjectController extends Controller
                 return response()->json(['status'=>1,'message' => 'Subject updated successfully.']);
               
             }
-            return redirect()->route('admin.course.management.subject.all');
+           
         } catch (\Throwable $th) {
-            return response()->json(['status'=>0,'message' => 'Something went wrong.']);
+            return response()->json(['status'=>0,'message' => $th]);
         }
     }
 

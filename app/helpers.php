@@ -340,10 +340,10 @@ function ifBlogActive($current_route){
         return false;
     }
 }
-// function ifGalleryActive($current_route){
-//     if($current_route=="admin.get.blog.by.id"||$current_route=="admin.create.blog"||$current_route=="admin.creating.blog"||$current_route=="upload"||$current_route=="admin.active.blog"||$current_route=="admin.edit.blog"||$current_route=="admin.editing.blog"||$current_route=="admin.read.blog"){
-//         return true;
-//     }else{
-//         return false;
-//     }
-// }
+function ifGalleryActive($current_route){
+    if($current_route=="admin.get.blog.by.id"||$current_route=="admin.create.blog"||$current_route=="admin.creating.blog"||$current_route=="upload"||$current_route=="admin.active.blog"||$current_route=="admin.edit.blog"||$current_route=="admin.editing.blog"||$current_route=="admin.read.blog"){
+        return true;
+    }else{
+        return false;
+    }
+}
