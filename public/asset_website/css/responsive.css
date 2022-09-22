@@ -1044,7 +1044,7 @@
     }
     #myperformance .dropdown .btn {
         width: 100%;
-        padding: 0px;
+        padding: 10px;
     }
     #myperformance .dropdown-toggle::after {
         margin-left: 10.75rem;
@@ -1078,6 +1078,30 @@
     .subjectDetails h5{
         font-size: 14px;
         font-weight: 600;
+    }
+    .circleOne{
+        margin-bottom: 40px;
+    }
+    .progress-main {
+        padding-left: 15px;
+        /* padding-bottom: 20px; */
+    }
+    .circular-progress-one {
+        height: 165px;
+        width: 165px;
+    }
+    .circularText p {
+        font-size: 12px;
+    }
+    .circular-text h5 {
+        font-size: 14px;
+        margin-top: 65px;
+    }
+    .circular-text h6{
+        font-size: 12px;
+    }
+    .progress-bar-right{
+        padding-left: 50px;
     }
 }
 
