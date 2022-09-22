@@ -311,8 +311,14 @@
                                         </div>
                                     </div>
                                     <div class="circularText">
-                                        <p>Watched Videos</p>
-                                        <p>Not Watched Videos</p>
+                                        <div class="watched d-flex">
+                                            <span class="dot mr-2"></span>
+                                            <p> Watched Videos</p>
+                                        </div>
+                                        <div class="not-watched d-flex">
+                                            <span class="dot mr-2"></span>
+                                            <p>Not Watched Videos</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

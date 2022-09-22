@@ -4001,6 +4001,22 @@ svg{
     margin-top: 50px;
     font-weight: 700;
 }
+.circularText .watched .dot {
+    border-radius: 50%;
+    background: #04AA6D;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-top: 3px;
+}
+.circularText .not-watched .dot{
+    border-radius: 50%;
+    background: #b6cfeee5;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-top: 3px;
+}
 .circular-left{
     border-right: 1px solid rgba(182, 181, 181, 0.486);
 }

@@ -1103,6 +1103,14 @@
     .progress-bar-right{
         padding-left: 50px;
     }
+    .circularText .watched .dot {
+        height: 12px;
+        width: 12px;
+    }
+    .circularText .not-watched .dot {
+        height: 12px;
+        width: 12px;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
