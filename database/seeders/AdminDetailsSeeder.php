@@ -14,11 +14,12 @@ class AdminDetailsSeeder extends Seeder
      */
     public function run()
     {
-        UserDetails::create([
-            'firstname' => 'Admin',
-            'lastname' => 'Admin',
+        $user=UserDetails::create([
+            'name' => 'Admin',
             'email' => 'abhit@admin.com',
-            'user_id' => 1,
+            'type_id' => 1,
         ]);
+        $roles = 1;
+        $user->assignRole($roles);
     }
 }
