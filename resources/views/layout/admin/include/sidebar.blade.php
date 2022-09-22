@@ -51,7 +51,7 @@
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div @if(Route::currentRouteName()=="admin.get.banner") class="collapse show" @else  class="collapse" @endif id="ui-basic">
                 <ul class="nav flex-column sub-menu">
 
                     <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.banner')}}">Banner</a></li>
