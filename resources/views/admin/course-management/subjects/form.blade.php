@@ -129,7 +129,7 @@
 <div class="row">
     <div class="col-12">
         <div class="form-group">
-            <label for="">Requirements</label>
+            <label for="">Requirements<span class="text-danger">*</span></label>
             <textarea class="form-control" name="requirements" id="requirements" rows="5">
                 @isset($subject) {{$subject->requirements??''}} @endisset
            </textarea>
