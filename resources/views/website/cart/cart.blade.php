@@ -50,7 +50,7 @@
                 <a href="">Remove</a>
             </div>
             <div class="go-to-cart">
-                <a href="{{route('website.cart.details')}}">Go to Cart</a>
+                <a href="{{route('website.cart.details')}}">Purchase</a>
             </div>
         </div>
     </div>

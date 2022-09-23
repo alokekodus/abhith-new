@@ -39,6 +39,8 @@
                 Articles</button>
             <button class="lessonLinks" onclick="openFile(event, 'documents')">{{$topicDocuments->count()}}
                 Documents</button>
+            <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{$topicDocuments->count()}}
+                MCQ Test</button>
         </div>
     </div>
     <div class="topic-content mb-5">
@@ -109,6 +111,30 @@
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             </div>
                             <div class="doc-content">
+                                <h5>{{$document->name}}</h5>
+                                <p>{{dateFormat($document->created_at,"D ,F j, Y")}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    @else
+                    @endif
+                </div>
+            </div>
+
+            <div class="container lessonContent" id="mcq_test">
+                <div class="topic-content-sub-heading mt-4">
+                    <h3>MCQ Test</h3>
+                </div>
+                <div class="row">
+                    @if($topicDocuments->count()>0)
+                    @foreach ($topicDocuments as $key=>$document)
+                    <div class="col-lg-6 col-md-6">
+                        <div class="mcq-div">
+                            <div class="mcq-icon">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                            </div>
+                            <div class="mcq-content">
                                 <h5>{{$document->name}}</h5>
                                 <p>{{dateFormat($document->created_at,"D ,F j, Y")}}</p>
                             </div>
