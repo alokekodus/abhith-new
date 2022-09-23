@@ -828,7 +828,7 @@ class SubjectController extends Controller
                     'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
                     'total_correct_count' => $user_practice_test->correctAnswer->count(),
                 ];
-            $user_practice_test->update($update_user_practice_test_store);
+            
             $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
             $correct_attempted = $user_practice_test->correctAnswer->count();
             $analysis_on_attempted_question = ($correct_attempted / $attempted_question) * 100;

@@ -186,6 +186,7 @@ class AssignSubjectController extends Controller
     public function edit($id)
     {
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $boards =  Board::where('is_activate', 1)->get();
         $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         $teachers = $students = User::whereHas(
             'roles',
@@ -198,7 +199,7 @@ class AssignSubjectController extends Controller
         $subject = AssignSubject::with('subjectAttachment')->where('id', $subject_id)->first();
         $classBoard = $subject->assign_class_id . $subject->board_id;
 
-        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard]);
+        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard,'boards'=>$boards]);
     }
     public function view($subject_id)
     {

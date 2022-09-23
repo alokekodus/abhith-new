@@ -162,6 +162,35 @@
             $("#noFileVideo").html(input.files[0].name);
    }
     
-       
+   function changeBoard()
+{
+    let board_id=$("#assignedBoard").val();
+    $("#assignedClass").html('');
+    $.ajax({
+                url:"{{route('webboard.class')}}",
+                type:"post",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'board_id' : board_id
+                },
+                success:function(data){
+                   
+                    $("#assignedBoard").prop("disabled",false);
+                    $('#assignedClass').html('<option value="">Select State</option>');
+                    data.forEach((boardClass) => {
+                            $("#assignedClass").append('<option value="' + boardClass
+                                .id + '">'+'Class-' + boardClass.class + '</option>');
+      
+                    });
+                   
+                      
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+}  
 </script>
 @endsection
