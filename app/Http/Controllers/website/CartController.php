@@ -34,10 +34,11 @@ class CartController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back();
         }
-      
+
         return view('website.cart.cart')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $totalPrice]);
     }
-    public function cartDetails(){
+    public function cartDetails()
+    {
         $cart = [];
         $countCartItem = 0;
         $price = [];
@@ -53,9 +54,9 @@ class CartController extends Controller
     }
     public function addToCart(Request $request)
     {
-        
+
         try {
-              
+
             if (!Auth::check()) {
 
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
@@ -68,12 +69,58 @@ class CartController extends Controller
             if ($course_type == 1) {
                 $all_subjects = AssignSubject::where(['board_id' => $board_id, 'assign_class_id' => $class_id, 'is_activate' => 1])->get();
             } else {
-                $all_subjects = AssignSubject::whereIn('id',$request->subjects)->get();
+                $all_subjects = AssignSubject::whereIn('id', $request->subjects)->get();
             }
-            dd($all_subjects);
-            
+            $cart = Cart::with('assignSubject')->where([['user_id', '=', Auth::user()->id], ['assign_class_id', '=', $class_id], ['board_id', '=', $board_id], ['is_paid', '=', 0], ['is_remove_from_cart', '=', 0], ['is_full_course_selected', '=', $course_type]])->first();
+            if ($cart) {
+                $assignSubjectAlreadyInCart = CartOrOrderAssignSubject::whereNotIn('assign_subject_id', $request->subjects)->get();
+                if ($assignSubjectAlreadyInCart->count() == 0) {
+                    Toastr::error('Package already in Cart!', '', ["positionClass" => "toast-top-right"]);
+                    return redirect()->back();
+                } else {
+                  
+                    foreach ($all_subjects as $key => $subject) {
+                      $subject_already_store=CartOrOrderAssignSubject::where('cart_id',$cart['id'])->where('assign_subject_id', $all_subjects[$key]['id'])->first();
+                      if($subject_already_store){
+                           $subject_already_store->update(['amount','=',$all_subjects[$key]['subject_amount']]);
+                      }else{
+                        $data = [
+                            'cart_id' => $cart['id'],
+                            'assign_subject_id' => $all_subjects[$key]['id'],
+                            'amount' => $all_subjects[$key]['subject_amount'],
+                            'type' => 1,
+                        ];
+                        $assign_subject = CartOrOrderAssignSubject::create($data);
+                      }
+                        
+                    }
+                    Toastr::success('Subjects was successfully added to your cart.', '', ["positionClass" => "toast-top-right"]);
+                    return redirect()->back();
+                }
+            } else {
+                $cartstore = Cart::create([
+                    'user_id' => auth()->user()->id,
+                    'board_id' => $board_id, //board_id
+                    'assign_class_id' => $class_id, //class_id
+                    'is_full_course_selected' => $course_type,
+                    'is_buy' => $request->is_buy
+                ]);
+
+                foreach ($all_subjects as $key => $subject) {
+                    $data = [
+                        'cart_id' => $cartstore['id'],
+                        'assign_subject_id' => $all_subjects[$key]['id'],
+                        'amount' => $all_subjects[$key]['subject_amount'],
+                        'type' => 1,
+                    ];
+
+                    $assign_subject = CartOrOrderAssignSubject::create($data);
+                }
+                Toastr::success('Subjects was successfully added to your cart.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
         } catch (\Throwable $th) {
-            
+            dd($th);
             Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
@@ -84,16 +131,15 @@ class CartController extends Controller
     {
         try {
             if (Auth::check()) {
-                $cart=Cart::find($request->cart_id);
-                $cart->update([ 'is_remove_from_cart' => 1]);
+                $cart = Cart::find($request->cart_id);
+                $cart->update(['is_remove_from_cart' => 1]);
                 $cart->assignSubject()->delete();
                 return response()->json(['message' => 'Item removed successfully']);
-            }else{
+            } else {
                 return response()->json(['message' => ' Something want wrong']);
             }
         } catch (\Throwable $th) {
             return response()->json(['message' => ' Something want wrong']);
         }
-
     }
 }

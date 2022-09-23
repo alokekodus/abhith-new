@@ -322,7 +322,7 @@ class LessonController extends Controller
                     $request->all(),
                     [
                         'name' => 'required',
-                        'video_thumbnail_image_url' => 'mimes:jpeg,png,jpg,gif,svg',
+                        'video_thumbnail_image_url' => 'nullable|mimes:jpeg,png,jpg,gif,svg',
                         'video_url' => 'required|mimes:mp4,webm,mov'
                     ],
                     [
@@ -349,10 +349,14 @@ class LessonController extends Controller
 
                 $resourceStore = Lesson::create($data);
                 $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
+                if (!empty($videoThumbnailImageUrl)) {
                 $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image", $name_slug);
+               
+                }else{
+                    $image_path = '/files/subject/placeholder.jpg';
+                    $video_thumbnail_image_url_path = $image_path;
+                }// $video_path=$request->video_url->store('public');
                 $origin_video = LessonAttachmentTrait::uploadAttachment($request->file('video_url'), "video", $name_slug);
-                // $video_path=$request->video_url->store('public');
-
                 $data_attachment = [
                     'subject_lesson_id' => $resourceStore->id,
                     'attachment_origin_url' => $origin_video,
@@ -453,7 +457,7 @@ class LessonController extends Controller
             }
         } catch (\Throwable $th) {
 
-            return response()->json(['status' => 0, 'message' => "something went wrong"]);
+            return response()->json(['status' => 0, 'message' => $th]);
         }
     }
     public function previewStatusChange($lesson_id)
