@@ -45,13 +45,7 @@ class BoardController extends Controller
             'is_activate' => $request->active
         ]);
 
-        AssignClass::where('board_id', $request->board_id)->update([
-            'is_activate' => $request->active
-        ]);
-
-        AssignSubject::where('board_id', $request->board_id)->update([
-            'is_activate' => $request->active
-        ]);
+       
 
         if($update){
             if($request->active == 0){

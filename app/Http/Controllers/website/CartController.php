@@ -68,7 +68,7 @@ class CartController extends Controller
             if ($course_type == 1) {
                 $all_subjects = AssignSubject::where(['board_id' => $board_id, 'assign_class_id' => $class_id, 'is_activate' => 1])->get();
             } else {
-                $all_subjects = $request->subjects;
+                $all_subjects = AssignSubject::whereIn('id',$request->subjects)->get();
             }
             dd($all_subjects);
             
