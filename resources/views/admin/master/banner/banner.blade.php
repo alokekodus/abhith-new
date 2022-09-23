@@ -3,28 +3,13 @@
 @section('title', 'Banner')
 
 @section('content')
-
-<style>
-    table {
-        width: 100%;
-    }
-
-    .ten {
-        width: 10%
-    }
-
-    .twenty {
-        width: 20%;
-    }
-</style>
-
 <div class="page-header">
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-book"></i>
         </span> Banner
     </h3>
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb p-2">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
                 <a href="{{ route('admin.create.banner') }}" class="btn btn-gradient-primary btn-fw">Add Banner</a>
@@ -41,7 +26,7 @@
             <h4 class="card-title">Banner List</h4>
             </p>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="banner-table">
                     <thead>
                         <tr>
                             <th> # </th>
@@ -56,8 +41,8 @@
                         @foreach ($banners as $key => $item)
                         <tr>
                             <td> {{ $key + 1 }} </td>
-                            <td> {!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 50, $end = '...')
-                                !!} </td>
+                            <td> @if($item->name){!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 50, $end = '...')
+                                !!}@else NA @endif </td>
                             <td>
                                 <img src="{{ asset($item->banner_image) }}" alt="" srcset="">
                             </td>
@@ -77,15 +62,14 @@
                             <td>
                                 {{-- {!! $item->description !!} --}}
                                 {{-- {!! Illuminate\Support\Str::limit($item->description, 100, ' ...')!!} --}}
-                                {!! Illuminate\Support\Str::limit(strip_tags($item->description), $limit = 50, $end =
-                                '...') !!}
+                               @if($item->description) {!! Illuminate\Support\Str::limit(strip_tags($item->description), $limit = 50, $end =
+                                '...') !!}@else NA @endif
                             </td>
                             <td>
-                                <a href="{{ route('admin.edit.banner', ['id' => \Crypt::encrypt($item->id)]) }}"
-                                    class="btn btn-gradient-primary btn-rounded btn-icon anchor_rounded"
-                                    data-toggle="tooltip" data-placement="top" title="Edit">
-                                    <i class="mdi mdi-pencil-outline"></i>
-                                </a>
+                                <a href="{{route('admin.edit.banner',Crypt::encrypt($item->id))}}"
+                                    title="View Details"><i class="mdi mdi-grease-pencil"></i></a>
+                               
+                                
                             </td>
                         </tr>
                         @endforeach
@@ -93,9 +77,7 @@
                     </tbody>
                 </table>
             </div>
-            <div style="float:right;margin-top:10px;">
-                {{$banners->links()}}
-            </div>
+            
         </div>
     </div>
 </div>
@@ -103,6 +85,13 @@
 
 @section('scripts')
 <script>
+    $(document).ready( function () {
+            $('#banner-table').DataTable({
+                "processing": true,
+                "searching" : false,
+                "ordering" : false
+            });
+        });
     $(document.body).on('change', '#testingUpdate', function() {
             var status = $(this).prop('checked') == true ? 1 : 0;
             var cart_id = $(this).data('id');

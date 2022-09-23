@@ -10,14 +10,14 @@
                 <form class="forms-sample" id="blogForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="exampleInputName1">Name</label>
+                        <label for="exampleInputName1">Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" maxlength="100" placeholder="Enter Blog Name" required>
                         <span class="text-muted" style="font-size:12px;margin-top:5px;">Allowed characters 100.</span>
                         <span class="text-danger" id="name_error"></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="">Select Category</label>
+                        <label for="">Select Category <span class="text-danger">*</span></label>
                         <select name="blog_category" id="blog_category" class="form-control" required>
                             <option value="" selected disabled> -- Select -- </option>
                             <option value="Fashion">Fashion</option>
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>File upload</label>
+                        <label>File upload <span class="text-danger">*</span></label>
                         <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
                             data-max-files="1" required>
                             <span class="text-danger" id="pic_error"></span>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleTextarea1">Description</label>
+                        <label for="exampleTextarea1">Description<span class="text-danger">*</span></label>
                         <textarea class="form-control" id="editor" name="description"></textarea>
                         <span class="text-danger" id="data_error"></span>
                     </div>

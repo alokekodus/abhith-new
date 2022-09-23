@@ -832,7 +832,7 @@
 
     let progressStartValue = 0,
         progressEndValue = result.subject_progress.watched_percentage,
-        speed = 200;
+        speed = 100;
     
     let progess = setInterval(() =>{
         progressStartValue++;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
+use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\User;
@@ -32,10 +33,9 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-
+        
         try {
             
-          
             $validate = Validator::make(
                 $request->all(),
                 [
@@ -44,10 +44,11 @@ class AssignSubjectController extends Controller
                     'subject_amount' => 'required|integer|digits_between:3,6',
                     'description' => 'required',
                     'why_learn' => 'required',
+                    'requirements'=> 'required',
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_url' => 'mimes:mp4,WEBM,MOV|max:2097152',
-                    'requirements' => 'string'
+                    
 
                 ],
                 [
@@ -57,6 +58,7 @@ class AssignSubjectController extends Controller
                     'subject_amount.digits_between'=>'Please insert a valid amount',
                     'description.required' => 'Subject descripttion filed is required',
                     'why_learn.required' => 'Why learn filed is required',
+                    'requirements.required' => 'Requirements filed is required',
                     'image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
                     'video_thumbnail_image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
                     'video_url.max' => "Maximum file size to upload is 2GB (2097152 KB).",
@@ -64,19 +66,17 @@ class AssignSubjectController extends Controller
             );
 
             if ($validate->fails()) {
-                Toastr::error($validate->errors(), '', ["positionClass" => "toast-top-right"]);
-               
-                return back()->withInput();
+                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
             }
 
             $split_assignedClass = str_split($request->assignedClass);
 
-            $assignedClass = $split_assignedClass[0];
-            $assignedBoard = $split_assignedClass[1];
+            $assignedClass = $request->assignedClass;
+            $assignedBoard = $request->assignedBoard;
             $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
             if ($is_in_assignsubject) {
-                Toastr::error("'$request->subjectName'.'already active'", '', ["positionClass" => "toast-top-right"]);
-                return redirect()->back();
+                return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
+              
             }
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
@@ -120,9 +120,9 @@ class AssignSubjectController extends Controller
                     $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
                 }
             }
-
+            $subject_name=strtolower($request->subjectName);
             $data = [
-                'subject_name' => ucfirst($request->subjectName),
+                'subject_name' => ucfirst($subject_name),
                 'image' =>  $image_path,
                 'teacher_id' => $request->teacher_id,
                 'subject_amount' => $request->subject_amount,
@@ -158,20 +158,20 @@ class AssignSubjectController extends Controller
                 $assign_subject->subjectAttachment->update($data_attachment);
             }
             if ($request->subject_id == null) {
-                Toastr::success('Subject created successfully', '', ["positionClass" => "toast-top-right"]);
+                return response()->json(['status'=>1,'message' => 'Subject added successfully.']);
             } else {
-                Toastr::success('Subject updated successfully', '', ["positionClass" => "toast-top-right"]);
+                return response()->json(['status'=>1,'message' => 'Subject updated successfully.']);
+              
             }
-            return redirect()->route('admin.course.management.subject.all');
+           
         } catch (\Throwable $th) {
-            Toastr::error('Something went wrong', '', ["positionClass" => "toast-top-right"]);
-            return back()->withInput();
+            return response()->json(['status'=>0,'message' => $th]);
         }
     }
 
     public function create()
     {
-        $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $boards =  Board::where('is_activate', 1)->get();
        
         $teachers = $students = User::whereHas(
             'roles',
@@ -179,12 +179,14 @@ class AssignSubjectController extends Controller
                 $q->where('name', 'Teacher');
             }
         )->get();
+        
               
-        return view('admin.course-management.subjects.create')->with(['subject' => null, 'classes' => $class_details, 'teachers' => $teachers]);
+        return view('admin.course-management.subjects.create')->with(['subject' => null, 'boards' => $boards, 'teachers' => $teachers]);
     }
     public function edit($id)
     {
         $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $boards =  Board::where('is_activate', 1)->get();
         $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         $teachers = $students = User::whereHas(
             'roles',
@@ -197,7 +199,7 @@ class AssignSubjectController extends Controller
         $subject = AssignSubject::with('subjectAttachment')->where('id', $subject_id)->first();
         $classBoard = $subject->assign_class_id . $subject->board_id;
 
-        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard]);
+        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard,'boards'=>$boards]);
     }
     public function view($subject_id)
     {

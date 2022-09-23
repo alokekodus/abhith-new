@@ -19,8 +19,14 @@ class UserController extends Controller
     {
         try {
             $user_details = UserDetails::select('name', 'email', 'phone', 'education', 'gender', 'image', 'address')->where('email', auth()->user()->email)->first();
-
-            $result = ["user_details" => $user_details];
+            $cart= Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
+            ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
+            ->where('user_id', auth()->user()->id)
+            ->where('is_paid',0)
+            ->where('is_remove_from_cart',0)
+            ->where('is_buy',0)
+            ->get()->count();
+            $result = ["user_details" => $user_details,"cart_total_count"=>$cart];
             if (!$user_details = null) {
                 $data = [
                     "code" => 200,

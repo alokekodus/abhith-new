@@ -36,14 +36,15 @@
     .course-wrapper {
         position: relative;
     }
+
     .course-desc {
-         padding: 15px 20px 30px;
+        padding: 15px 20px 30px;
     }
 
-    .course-wrapper .enroll{
+    .course-wrapper .enroll {
         position: absolute;
-        bottom : 15px;
-        right : 15px;
+        bottom: 15px;
+        right: 15px;
     }
 </style>
 @endsection
@@ -54,6 +55,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 p0">
+
                 <div class="owl-slider">
                     <div id="carousel-banner" class="owl-carousel" style="border-radius: 20px">
                         @foreach ($banner as $item)
@@ -86,6 +88,7 @@
                         </div> --}}
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -193,7 +196,8 @@
                 <div class="course-pic">
                     <img src="{{asset($subject->image)}}" class="w100">
                     <div class="course-image-overlay">
-                        <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}" class="btn btn-default course-image-overlay-eye-icon text-white">View</a>
+                        <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}"
+                            class="btn btn-default course-image-overlay-eye-icon text-white">View</a>
                         <!-- <i class="fa fa-eye course-image-overlay-eye-icon text-white"  aria-hidden="true"></i> -->
                     </div>
                 </div>

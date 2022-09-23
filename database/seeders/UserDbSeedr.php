@@ -17,8 +17,7 @@ class UserDbSeedr extends Seeder
     {
         //
         User::create([
-            'firstname' => 'Admin',
-            'lastname' => 'Admin',
+            'name' => 'Admin',
             'email' => 'admin@abhit.com',
             'phone' => '7896541230',
             'otp' => '123456',

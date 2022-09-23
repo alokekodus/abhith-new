@@ -109,7 +109,6 @@
                                     <th>Video Duration</th>
                                     <th>Preview</th>
                                     <th> Status </th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -154,9 +153,7 @@
                                         <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
                                             class="badge badge-danger">InActive</a> @endif
                                     </td>
-                                    <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
-                                        <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
-                                    </td>
+                                    
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -188,9 +185,7 @@
                                     <td> @if($topic->type==1)pdf @elseif($topic->type==2) video @else
                                         article @endif </article>
                                     </td>
-                                    <td> {{ substr($topic->content, 0,40)}} <a href="" title="View Details"><i
-                                                class="mdi mdi-eye"></i></a></td>
-                                    
+                                    <td>{{substr($topic->content, 0, 20)}}</td>
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
                                     <td>
                                         @if ($topic->preview==0)
@@ -208,8 +203,8 @@
                                         <a href="{{route('admin.lesson.status',Crypt::encrypt($topic->id))}}"
                                             class="badge badge-danger">InActive</a> @endif
                                     </td>
-                                    <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
-                                        <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
+                                    <td><a href="{{route('admin.course.management.lesson.edit',Crypt::encrypt($topic->id))}}" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                        <a href="{{route('admin.course.management.lesson.view',Crypt::encrypt($topic->id))}}" title="View Details"><i class="mdi mdi-eye"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -235,9 +230,11 @@
                                     <td>{{++$key}}</td>
                                     <td> {{$set->set_name}}</td>
                                     <td> {{$set->question->count()}}</td>
-                                    <td> @if($set->is_activate==1)Active @else InActive @endif</td>
+                                    <td> @if($set->is_activate==1)<a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
+                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
+                                            class="badge badge-danger">InActive</a> @endif</td>
                                     {{-- <td>@if($topic->status==1)Active @else InActive @endif</td> --}}
-                                    <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                    <td>
                                         <a href="{{route('admin.view.mcq.question',Crypt::encrypt($set->id))}}"
                                             title="View Details"><i class="mdi mdi-eye"></i></a>
                                     </td>

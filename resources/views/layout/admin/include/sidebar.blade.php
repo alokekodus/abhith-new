@@ -51,29 +51,29 @@
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-crosshairs-gps menu-icon"></i>
             </a>
-            <div class="collapse" id="ui-basic">
+            <div @if(ifBannerActive(Route::currentRouteName())==true||ifBlogActive(Route::currentRouteName())==true||ifGalleryActive(Route::currentRouteName())==true) class="collapse show" @else  class="collapse" @endif id="ui-basic">
                 <ul class="nav flex-column sub-menu">
 
-                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.banner')}}">Banner</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.blog.by.id')}}">Blog</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.gallery')}}">Gallery</a></li>
+                    <li @if(ifBannerActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a  @if(ifBannerActive(Route::currentRouteName())==true) class="nav-link active"  @else class="nav-link" @endif href="{{route('admin.get.banner')}}">Banner</a></li>
+                    <li @if(ifBlogActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifBlogActive(Route::currentRouteName())==true) class="nav-link active" @else class="nav-link" @endif href="{{route('admin.get.blog.by.id')}}">Blog</a></li>
+                    <li @if(ifGalleryActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifGalleryActive(Route::currentRouteName())==true)  class="nav-link active" @else class="nav-link" @endif href="{{route('admin.get.gallery')}}">Gallery</a></li>
 
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management"  @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create")  aria-expanded="true" @else aria-expanded="false" @endif>
+            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
                 <span class="menu-title">Course Management</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-            <div @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create")class="collapse show" @else class="collapse" @endif id="course-management">
+            <div class="collapse" id="course-management">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.class.all')}}">Classes</a></li>
-                    <li class="nav-item"> <a @if(Route::currentRouteName()=="admin.course.management.lesson.create"||"admin.course.management.subject.create") class="nav-link active" @else class="nav-link" @endif
+                    <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.subject.all')}}">Subjects</a></li>
                     {{-- <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.course.management.lesson.all')}}">Lesson</a></li> --}}

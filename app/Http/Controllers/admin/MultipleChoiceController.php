@@ -11,6 +11,8 @@ use App\Models\Subject;
 use App\Imports\QuestionImport;
 use App\Models\AssignSubject;
 use App\Models\Board;
+use App\Models\Lesson;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 
@@ -84,8 +86,9 @@ class MultipleChoiceController extends Controller
         $mcq_set_id = Crypt::decrypt($id);
 
         $details = Question::with('set')->where('set_id', $mcq_set_id)->get();
-
-        return view('admin.multiple-choice.edit-multiple-choice')->with('details', $details);
+        $set=Set::find($mcq_set_id);
+        $lesson=Lesson::find($set->lesson_id);
+        return view('admin.multiple-choice.edit-multiple-choice')->with(['lesson' => $lesson, 'details' => $details]);
     }
 
 
@@ -196,5 +199,22 @@ class MultipleChoiceController extends Controller
         // $output = array_intersect( $selectedAnswer,$correctAnswerArray);
 
         return response()->json(['selectedAnswer' =>  $selectedAnswer, 'checkMcq' => $checkMcq, 'setId' => $setId]);
+    }
+    public function statusChange($question_id){
+        try {
+            $question = Question::find(Crypt::decrypt($question_id));
+            if ($question->is_activate == 0) {
+                $question->update(['is_activate' => 1]);
+                Toastr::success('Question status update from InActive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            } else {
+                $question->update(['is_activate' => 0]);
+                Toastr::success('Question status update from Active to InActive successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+        } catch (\Throwable $th) {
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
     }
 }
