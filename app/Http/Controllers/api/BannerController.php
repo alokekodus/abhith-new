@@ -11,7 +11,7 @@ class BannerController extends Controller
     public function index()
     {
         try {
-            $banner = Banner::select('id','name', 'banner_image', 'description','is_activate')->where('is_activate', 1)->get();
+            $banner = Banner::select('id','name', 'banner_image', 'description','is_activate','created_at')->where('is_activate', 1)->orderBy('id', 'DESC')->limit(5)->get();
             $result = ["banner" => $banner];
             if (!$banner->isEmpty()) {
                 $data = [
