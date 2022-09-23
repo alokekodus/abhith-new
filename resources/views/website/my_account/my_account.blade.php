@@ -338,7 +338,7 @@
                                     </div>
                                     <div class="progress-bar-right">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item" role="presentation">
+                                            <li class="nav-item mb-2" role="presentation">
                                               <button class="nav-link active" id="daily-tab" data-toggle="tab" data-target="#daily" type="button" role="tab" aria-controls="daily" aria-selected="true">Daily</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
