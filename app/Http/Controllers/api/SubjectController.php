@@ -823,11 +823,7 @@ class SubjectController extends Controller
         try {
             $id = $_GET['id'];
             $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
-            $update_user_practice_test_store =
-                [
-                    'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
-                    'total_correct_count' => $user_practice_test->correctAnswer->count(),
-                ];
+          
             
             $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
             $correct_attempted = $user_practice_test->correctAnswer->count();
