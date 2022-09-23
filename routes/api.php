@@ -38,7 +38,7 @@ Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp']);
 Route::post('signup', [WebsiteAuthController::class, 'mobileSignUp']);
 Route::post('login', [WebsiteAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->get('logout', [WebsiteAuthController::class, 'userLogout']);
-
+Route::post('get-class', [CourseController::class, 'findClass'])->name('webboard.class');
 //singup verify otp
 Route::post('send-mobile-otp', [WebsiteAuthController::class, 'sendMobileOtp']);
 Route::post('verify-mobile-otp', [WebsiteAuthController::class, 'verifyMobileOtp']);

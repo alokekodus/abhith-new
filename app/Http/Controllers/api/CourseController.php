@@ -95,7 +95,7 @@ class CourseController extends Controller
     public function findClass(Request $request)
     {
 
-        $board = AssignClass::where(['board_id' => $request->board_id])->get();
+        $board = AssignClass::where(['board_id' => $request->board_id,'is_activate'=>1])->get();
         return response()->json($board);
     }
     public function findBoardClassSubject(Request $request)

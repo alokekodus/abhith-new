@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
+use App\Models\Board;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\User;
@@ -32,7 +33,7 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-        return response($request->all());
+        
         try {
             
             $validate = Validator::make(
@@ -70,8 +71,8 @@ class AssignSubjectController extends Controller
 
             $split_assignedClass = str_split($request->assignedClass);
 
-            $assignedClass = $split_assignedClass[0];
-            $assignedBoard = $split_assignedClass[1];
+            $assignedClass = $request->assignedClass;
+            $assignedBoard = $request->assignedBoard;
             $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
             if ($is_in_assignsubject) {
                 return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
@@ -170,7 +171,7 @@ class AssignSubjectController extends Controller
 
     public function create()
     {
-        $class_details =  AssignClass::with('boards')->where('is_activate', 1)->get();
+        $boards =  Board::where('is_activate', 1)->get();
        
         $teachers = $students = User::whereHas(
             'roles',
@@ -178,8 +179,9 @@ class AssignSubjectController extends Controller
                 $q->where('name', 'Teacher');
             }
         )->get();
+        
               
-        return view('admin.course-management.subjects.create')->with(['subject' => null, 'classes' => $class_details, 'teachers' => $teachers]);
+        return view('admin.course-management.subjects.create')->with(['subject' => null, 'boards' => $boards, 'teachers' => $teachers]);
     }
     public function edit($id)
     {

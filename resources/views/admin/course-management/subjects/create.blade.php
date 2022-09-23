@@ -13,7 +13,8 @@
     <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{route('admin.course.management.subject.all')}}" class="btn btn-gradient-primary btn-fw" data-backdrop="static" data-keyboard="false">All
+                <a href="{{route('admin.course.management.subject.all')}}" class="btn btn-gradient-primary btn-fw"
+                    data-backdrop="static" data-keyboard="false">All
                     Subject</a>
             </li>
         </ul>
@@ -27,7 +28,8 @@
             @include('admin.course-management.subjects.form')
             <div style="float: right;">
                 <button type="button" class="btn btn-gradient-light btn-fw" id="assignSubjectCancelBtn">Cancel</button>
-                <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">@if($subject)Update @else Submit @endif</button>
+                <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">@if($subject)Update
+                    @else Submit @endif</button>
             </div>
         </form>
     </div>
@@ -71,6 +73,9 @@
             subjectName: {
                 required: true
             },
+            assignedBoard:{
+                required:true
+            },
             assignedClass:{
                 required:true
             },
@@ -81,7 +86,10 @@
         messages: {
             subjectName: {
                 required: "Please Enter Subjet Name ."
-            },    
+            },  
+            assignedBoard:{
+                required:"Please Select Board."
+            }, 
             assignedClass:{
                 required:"Please Select Class."
             },
@@ -162,7 +170,36 @@
         var input=evt.srcElement;
             $("#noFileVideo").html(input.files[0].name);
    }
-   
+   function changeBoard()
+{
+    let board_id=$("#assignedBoard").val();
+    $("#assignedClass").html('');
+    $.ajax({
+                url:"{{route('webboard.class')}}",
+                type:"post",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'board_id' : board_id
+                },
+                success:function(data){
+                   
+                    $("#assignedBoard").prop("disabled",false);
+                    $('#assignedClass').html('<option value="">Select State</option>');
+                    data.forEach((boardClass) => {
+                            $("#assignedClass").append('<option value="' + boardClass
+                                .id + '">'+'Class-' + boardClass.class + '</option>');
+      
+                    });
+                   
+                      
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+}
        
 </script>
 @endsection
