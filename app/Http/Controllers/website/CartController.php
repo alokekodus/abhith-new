@@ -37,7 +37,20 @@ class CartController extends Controller
       
         return view('website.cart.cart')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $totalPrice]);
     }
-
+    public function cartDetails(){
+        $cart = [];
+        $countCartItem = 0;
+        $price = [];
+        if (Auth::check()) {
+            $cart = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
+            $countCartItem = Cart::where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->count();
+            $totalPrice = 0;
+            foreach ($cart as $item) {
+                $totalPrice = $totalPrice + $item->assignSubject->sum('amount');
+            }
+        }
+        return view('website.cart.cart-details')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $totalPrice]);
+    }
     public function addToCart(Request $request)
     {
         try {
