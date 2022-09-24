@@ -11,13 +11,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="heading-black mb0">Cart({{$countCartItem}})</h2>
+                <h2 class="heading-black mb0">{{$carts->count()}}</h2>
             </div>
         </div>
     </div>
 </section>
 
 <section class="selected-course">
+    @foreach($carts as $key=>$cart)
     <div class="container-fluid" id="cart-container">
         <div class="course-subject">
             <div class="course-subject-header d-flex justify-content-between">
@@ -54,6 +55,7 @@
             </div>
         </div>
     </div>
+    @endforeach
 </section>
 @endsection
 
