@@ -25,41 +25,11 @@
         <div class="form-group">
             <label for="">Belongs to Class<span class="text-danger">*</span></label>
             <select name="assignedClass" id="assignedClass" class="form-control">
-                
+                @isset($subject) <option value="{{$subject->assign_class_id}}">Class-{{$subject->assignClass->class}}</option> @endisset
             </select>
         </div>
     </div>
 
-
-
-    <div class="col-3">
-        <div class="form-group">
-            <label for="">Belongs to Board<span class="text-danger">*</span></label>
-            <select name="assignedBoard" id="assignedBoard" class="form-control">
-                <option value="">-- Select -- </option>
-                @forelse ($boards as $key => $item)
-                 <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                {{-- <option value="{{$item->id}}" @isset($subject){{$classBoard==$item->id ? 'selected':''}} @endisset> Class - {{$item->class}} --
-                    {{$item->boards->exam_board}} Board -- </option> --}}
-                @empty
-                <option disabled>No Class to show</option>
-                @endforelse
-            </select>
-        </div>
-    </div>
-    <div class="col-3">
-        <div class="form-group">
-            <label for="">Belongs to Class<span class="text-danger">*</span></label>
-            <select name="assignedBoard" id="assignedBoard" class="form-control">
-                <option value="">-- Select -- </option>
-                @forelse ($boards as $key => $item)
-                 <option value="{{$item->id}}">{{$item->exam_board}}</option>
-                @empty
-                <option disabled>No Class to show</option>
-                @endforelse
-            </select>
-        </div>
-    </div>
 </div>
 
 <div class="row">
