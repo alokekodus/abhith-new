@@ -113,7 +113,7 @@ class PaymentController extends Controller
                         }
                     }
 
-                    Toastr::error('Payment Done Successfully.', '', ["positionClass" => "toast-top-right"]);
+                    Toastr::success('Payment Done Successfully.', '', ["positionClass" => "toast-top-right"]);
                     return redirect()->route('website.cart')->with('success', 'Payment Successfull!');
                 }
 

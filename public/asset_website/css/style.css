@@ -3888,7 +3888,7 @@ input {
     border-color: #F5F5F5;
     outline: none;
 }
-.skill{
+/* .skill{
     height: 160px;
     width: 160px;
     position: relative;
@@ -3897,7 +3897,7 @@ input {
     height: 160px;
     width: 160px;
     border-radius: 50%;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     padding: 20px;
     box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, .15),
                 -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
@@ -3936,7 +3936,7 @@ svg{
     100%{
         stroke-dashoffset: 150;
     }
-}
+} */
 .circular-progress-one{
     position: relative;
     height: 170px;
@@ -4000,6 +4000,22 @@ svg{
     /* font-size: 12px; */
     margin-top: 50px;
     font-weight: 700;
+}
+.circularText .watched .dot {
+    border-radius: 50%;
+    background: #04AA6D;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-top: 3px;
+}
+.circularText .not-watched .dot{
+    border-radius: 50%;
+    background: #b6cfeee5;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin-top: 3px;
 }
 .circular-left{
     border-right: 1px solid rgba(182, 181, 181, 0.486);

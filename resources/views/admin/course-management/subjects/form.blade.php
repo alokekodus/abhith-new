@@ -25,7 +25,7 @@
         <div class="form-group">
             <label for="">Belongs to Class<span class="text-danger">*</span></label>
             <select name="assignedClass" id="assignedClass" class="form-control">
-                
+                @isset($subject) <option value="{{$subject->assign_class_id}}">Class-{{$subject->assignClass->class}}</option> @endisset
             </select>
         </div>
     </div>

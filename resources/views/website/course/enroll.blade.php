@@ -407,7 +407,7 @@
             $("#full_course").prop("checked", true);
             $(".chapter_value").each(function(index) {
                 $(this).prop("checked", true);
-                $(this).prop("disabled", true);
+                $(this).prop("readonly", true);
          
            });
            checkedSubject();

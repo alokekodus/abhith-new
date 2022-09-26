@@ -184,7 +184,7 @@
                 success:function(data){
                    
                     $("#assignedBoard").prop("disabled",false);
-                    $('#assignedClass').html('<option value="">Select State</option>');
+                    $('#assignedClass').html('<option value="">Select Class</option>');
                     data.forEach((boardClass) => {
                             $("#assignedClass").append('<option value="' + boardClass
                                 .id + '">'+'Class-' + boardClass.class + '</option>');
