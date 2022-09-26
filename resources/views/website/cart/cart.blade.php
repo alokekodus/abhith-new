@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="heading-black mb0">{{$carts->count()}}</h2>
+                <h2 class="heading-black mb0">Cart({{$carts->count()}})</h2>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 <a href="">Remove</a>
             </div>
             <div class="go-to-cart">
-                <a href="{{route('website.cart.details')}}">Go to Cart</a>
+                <a href="{{route('website.cart.details',Crypt::encrypt($cart->id))}}">Go to Cart</a>
             </div>
         </div>
     </div>

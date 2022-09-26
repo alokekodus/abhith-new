@@ -29,7 +29,7 @@
                     <div class="total1">
                         <p class=""><b>Total</b></p>
                         <span class=" course-price1">
-                            <i class="fa fa-inr" aria-hidden="true"></i>{{number_format($countPrice,2,'.','')}}</span>
+                            <i class="fa fa-inr" aria-hidden="true"></i> {{number_format($countPrice,2,'.','')}}</span>
                     </div>
                 </div>
                 <div class="col-md-5" style="border-left:2px solid #ddd;">
@@ -45,7 +45,6 @@
                 {{-- <div class="col-lg-12 p0">
                     <ul class="list-inline cart-desc-list1">
                         <li class="">
-
                             <div class="course-desc-list-left">
                                 <h4 data-brackets-id="12020" class="small-heading-black mb20">Order Summary</h4>
                                 <ul class="list-inline cart-course-list">
@@ -102,7 +101,6 @@
                                                 aria-hidden="true"></i>5000</span>
                                     </li>
                                 </ul>
-
                                 <div class="total1">
                                     <p class=""><b>Total</b></p>
                                     <span class=" course-price1">
@@ -113,7 +111,6 @@
                         <li>
                             <div class="cart-box course-desc-list-right">
                                 <h4 data-brackets-id="12020" class="small-heading-black mb20">Checkout</h4>
-
                                 <form action="#" class="payment">
                                     <p>
                                         <input type="radio" id="test1" name="radio-group" checked>
@@ -136,7 +133,6 @@
                                         <label for="test2">Net Banking</label>
                                     </p>
                                     <!-- if a card is already save then the below code will be shown otherwise it is hidden-->
-
                                     <div class="saved-card">
                                         <label class="box3 "><span class="f14">ICICI CREDIT
                                                 CARD5267-</span> <br />
@@ -146,7 +142,6 @@
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
-
                                     <!-- if you select vredit/debit card below form-div2 will be shown-->
                                     <div class="row form-div2" action="">
                                         <div class="col-lg-6">
@@ -174,14 +169,12 @@
                                                     id="cvv">
                                             </div>
                                         </div>
-
                                         <div class="col-lg-12">
                                             <label class="box2 ">Save this card
                                                 <input type="checkbox" id="">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
-
                                         <!-- if you select net-banking-->
                                         <div class="col-lg-12">
                                             <p>Select your bank from the drop-down list and click proceed to continue
@@ -201,14 +194,10 @@
                                             <button type="submit" class="btn btn-block knowledge-link-old">Pay
                                                 ₹15000</button>
                                         </div>
-
                                         <!-- After filling up the form and after save this card button class will me change knowledge-link-old to  knowledge-link-new. knowledge-link-new is already added in the css.-->
                                     </div>
-
-
                                 </form> 
                             </div>
-
                         </li>
                         
                     </ul>
@@ -226,7 +215,6 @@
         // const select = document.querySelectorAll('.selectBtn');
         // const option = document.querySelectorAll('.option');
         // let index = 1;
-
         // select.forEach(a => {
         //     a.addEventListener('click', b => {
         //         const next = b.target.nextElementSibling;
@@ -237,18 +225,13 @@
         // option.forEach(a => {
         //     a.addEventListener('click', b => {
         //         b.target.parentElement.classList.remove('toggle');
-
         //         const parent = b.target.closest('.select').children[0];
         //         parent.setAttribute('data-type', b.target.getAttribute('data-type'));
         //         parent.innerText = b.target.innerText;
         //     })
         // })
-
-
-
         // Checkout details as a json
         var options = @json($checkoutParam);
-
         /**
         * The entire list of checkout fields is available at
         * https://docs.razorpay.com/docs/checkout-form#checkout-fields
@@ -258,23 +241,18 @@
             document.getElementById('razorpay_signature').value = response.razorpay_signature;
             document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
             document.razorpayform.submit();
-
            if(response.flag == 201){
                 toastr.success(response.message);
            }else if(response.flag == 400){
                 toastr.error(response.message);
            }
         };
-
         // Boolean whether to show image inside a white frame. (default: true)
         options.theme.image_padding = false;
-
         var rzp = new Razorpay(options);
-
         document.getElementById('rzp-button1').onclick = function(e){
             rzp.open();
             e.preventDefault();
         }
-
     </script>
 @endsection

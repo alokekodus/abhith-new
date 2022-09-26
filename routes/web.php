@@ -128,7 +128,7 @@ Route::view('mcq-result', 'website.multiple-choice.review-mcq')->name('website.m
 
 Route::prefix('cart')->group(function () {
     Route::get('', [CartController::class, 'index'])->name('website.cart');
-    Route::get('cart-details', [CartController::class, 'cartDetails'])->name('website.cart.details');
+    Route::get('cart-details/{cart_id}', [CartController::class, 'cartDetails'])->name('website.cart.details');
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('website.add-to-cart');
     Route::post('remove-from-cart', [CartController::class, 'removeFromCart'])->name('website.remove-from-cart');
 });
