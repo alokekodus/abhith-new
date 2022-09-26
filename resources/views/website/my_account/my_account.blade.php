@@ -131,7 +131,7 @@
                                     <label>Address</label>
                                     <input type="text" class="form-control" name="address" placeholder="Enter Address"
                                         id="address" title="Please Enter valid address."
-                                        value="{{$user_details->address}}" required>
+                                        value="{{$user_details->address??''}}" required>
                                 </div>
                                 @else
                                 <div class="form-group col-lg-6 pr10">
@@ -168,7 +168,7 @@
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Address</label>
                                     <input type="text" class="form-control" name="address" placeholder="Enter Address"
-                                        id="address" value="{{$user_details->address}}" required>
+                                        id="address" value="{{$user_details->address??'NA'}}" required>
                                 </div>
                                 @endif
                                 <div class="form-group col-lg-12">
