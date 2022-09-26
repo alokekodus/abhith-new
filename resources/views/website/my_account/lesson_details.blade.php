@@ -132,10 +132,11 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="mcq-div">
                             <div class="mcq-icon">
-                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                               <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
                             </div>
                             <div class="mcq-content">
                                 <h5>{{$document->name}}</h5>
+                                <h6>10 Questions</h6>
                                 <p>{{dateFormat($document->created_at,"D ,F j, Y")}}</p>
                             </div>
                         </div>
