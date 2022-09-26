@@ -100,7 +100,7 @@ class WebsiteAuthController extends Controller
         }
     }
 
-   
+
 
     public function otpSend($phone, $otp)
     {
@@ -287,10 +287,9 @@ class WebsiteAuthController extends Controller
                             return redirect()->route('admin.dashboard');
                         }
                         if (auth()->user()->hasRole('Student')) {
-                            
+
                             Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right"]);
                             return redirect()->route('website.dashboard');
-                          
                         }
                     } else {
                         return redirect($request->current_route);
@@ -310,7 +309,7 @@ class WebsiteAuthController extends Controller
             if (getPrefix($request) == "api") {
 
                 auth()->user()->tokens()->delete();
-    
+
                 return [
                     'message' => 'Tokens Revoked'
                 ];
@@ -323,7 +322,6 @@ class WebsiteAuthController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Something went wrong.', 'status' => 0]);
         }
-        
     }
     public function viewLogin(Request $request)
     {
@@ -349,34 +347,33 @@ class WebsiteAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
-            $is_mobile_verified=MobileAndEmailVerification::where('mobile',$request->phone)->where('mobile_email_verification',1)->first();
-            $is_email_verified=MobileAndEmailVerification::where('email',$request->email)->where('mobile_email_verification',1)->first();
-            $user_mobile_in_use=User::where('phone',$request->phone)->where('is_activate',1)->first();
-            $user_email_in_use=User::where('email',$request->phone)->where('is_activate',1)->first();
-            if($is_mobile_verified==null){
+            $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
+            $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
+            $user_mobile_in_use = User::where('phone', $request->phone)->where('is_activate', 1)->first();
+            $user_email_in_use = User::where('email', $request->phone)->where('is_activate', 1)->first();
+            if ($is_mobile_verified == null) {
                 return response()->json([
                     'status' => 0,
                     'message' => "Please verify your mobile number",
                 ]);
-               
             }
-            if($is_email_verified==null){
+            if ($is_email_verified == null) {
                 return response()->json([
                     'status' => 0,
                     'message' => "Please verify your email address",
-                ]); 
+                ]);
             }
-            if($user_mobile_in_use){
+            if ($user_mobile_in_use) {
                 return response()->json([
                     'status' => 0,
                     'message' => "This mobile number already exists",
-                ]); 
+                ]);
             }
-            if($user_email_in_use){
+            if ($user_email_in_use) {
                 return response()->json([
                     'status' => 0,
                     'message' => "This email address already exists",
-                ]); 
+                ]);
             }
             $data = [
                 'name' => $request->name,
@@ -409,21 +406,19 @@ class WebsiteAuthController extends Controller
             return response()->json(['message' => 'Whoops! Something Went Wrong', 'status' => 0]);
         }
     }
-    public function sendMobileOtp(Request $request){
+    public function sendMobileOtp(Request $request)
+    {
         try {
-            if($request->has('phone')){
-               
-                
-
+            if ($request->has('phone')) {
                 $validator = Validator::make($request->all(), [
                     'phone' => 'required|numeric',
                 ]);
                 if ($validator->fails()) {
                     return response()->json(['status' => 0, 'message' => $validator->errors()]);
                 }
-                $user=User::where('phone',$request->phone)->where('is_activate',1)->first();
-              
-                if($user!=null){
+                $user = User::where('phone', $request->phone)->where('is_activate', 1)->first();
+
+                if ($user != null) {
                     $data = [
                         "code" => 400,
                         "status" => 0,
@@ -431,52 +426,48 @@ class WebsiteAuthController extends Controller
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
                 }
-               
+
                 $phone = $request->phone;
                 $otp = rand(100000, 999999);
-                
-                $mobile_email_verification_data=MobileAndEmailVerification::where('mobile',$phone)->first();
-               
-                $mobileEmailVerificationData=[
-                    'mobile'=>$phone,
-                    'mobile_email_otp'=>$otp
+
+                $mobile_email_verification_data = MobileAndEmailVerification::where('mobile', $phone)->first();
+
+                $mobileEmailVerificationData = [
+                    'mobile' => $phone,
+                    'mobile_email_otp' => $otp
 
                 ];
-                if($mobile_email_verification_data!=null){
+                if ($mobile_email_verification_data != null) {
                     $mobile_email_verification_data->update($mobileEmailVerificationData);
-                    
-                }else{
+                } else {
                     MobileAndEmailVerification::create($mobileEmailVerificationData);
                 }
-               
-                $otpsend=otpSend($phone, $otp);
-                $data=[
-                    'otp'=>$otp,
-                    'phone'=>$phone,
+
+                $otpsend = otpSend($phone, $otp);
+                $data = [
+                    'otp' => $otp,
+                    'phone' => $phone,
                 ];
-                if($otpsend){
+                if ($otpsend) {
                     $data = [
                         "code" => 200,
                         "status" => 1,
                         "message" => "Otp sent successfully",
-                        'data'=>$data
-                        
-    
+                        'data' => $data
+
+
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                }else{
+                } else {
                     $data = [
                         "code" => 400,
                         "status" => 0,
                         "message" => "Something went wrong",
-        
+
                     ];
                     return response()->json(['status' => 0, 'result' => $data]);
                 }
             }
-           
-
-            
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
@@ -487,9 +478,10 @@ class WebsiteAuthController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function verifyMobileOtp(Request $request){
+    public function verifyMobileOtp(Request $request)
+    {
         try {
-          
+
             $validator = Validator::make($request->all(), [
                 'phone' => 'required|numeric',
                 'otp' => 'required|numeric',
@@ -499,28 +491,27 @@ class WebsiteAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => false, 'message' => $validator->errors()]);
             }
-            
-            $mobile_email_verification_data=MobileAndEmailVerification::where('mobile',$request->phone)->where('mobile_email_otp',$request->otp)->first();
-            
-            if($mobile_email_verification_data){
-                $mobile_email_verification_data->update(['mobile_email_verification'=>1]);
+
+            $mobile_email_verification_data = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_otp', $request->otp)->first();
+
+            if ($mobile_email_verification_data) {
+                $mobile_email_verification_data->update(['mobile_email_verification' => 1]);
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "Your Mobile Number Verified successfully",    
+                    "message" => "Your Mobile Number Verified successfully",
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
+            } else {
                 $data = [
                     "code" => 400,
                     "status" => 0,
-                    "message" => "OTP verification Mismatch",    
+                    "message" => "OTP verification Mismatch",
 
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
             }
-
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
@@ -531,12 +522,13 @@ class WebsiteAuthController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function sendEmailOtp(Request $request){
+    public function sendEmailOtp(Request $request)
+    {
         try {
-            
-            $user=User::where('email',$request->email)->where('is_activate',1)->first();
-              
-            if($user!=null){
+
+            $user = User::where('email', $request->email)->where('is_activate', 1)->first();
+
+            if ($user != null) {
                 $data = [
                     "code" => 400,
                     "status" => 0,
@@ -547,37 +539,35 @@ class WebsiteAuthController extends Controller
             $email = $request->email;
             $otp = rand(100000, 999999);
 
-            $mobile_email_verification_data=MobileAndEmailVerification::where('email',$email)->first();
-           
-            $data=[
-                'mobile_email_otp'=>$otp,
-                'email'=>$email,
-                'mobile_email_verification'=>0,
+            $mobile_email_verification_data = MobileAndEmailVerification::where('email', $email)->first();
+
+            $data = [
+                'mobile_email_otp' => $otp,
+                'email' => $email,
+                'mobile_email_verification' => 0,
             ];
             $details = [
                 'otp' => $otp,
-               
+
             ];
-            if($mobile_email_verification_data!=null){
+            if ($mobile_email_verification_data != null) {
                 $mobile_email_verification_data->update($data);
-                
-            }else{
+            } else {
                 MobileAndEmailVerification::create($data);
             }
-           
-             Mail::to($request->email)->send(new OtpVerfication($details));
-            
-           
-                $data = [
-                    "code" => 200,
-                    "status" => 1,
-                    "message" => "Otp sent successfully",
-                    'data'=>$data
-                    
 
-                ];
-                return response()->json(['status' => 1, 'result' => $data]);     
-           
+            Mail::to($request->email)->send(new OtpVerfication($details));
+
+
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Otp sent successfully",
+                'data' => $data
+
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
             // dd($th);
             $data = [
@@ -589,9 +579,10 @@ class WebsiteAuthController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function verifyEmailOtp(Request $request){
+    public function verifyEmailOtp(Request $request)
+    {
         try {
-        
+
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'otp' => 'required|numeric',
@@ -601,28 +592,27 @@ class WebsiteAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => false, 'message' => $validator->errors()]);
             }
-            
-            $mobile_email_verification_data=MobileAndEmailVerification::where('email',$request->email)->where('mobile_email_otp',$request->otp)->first();
-            
-            if($mobile_email_verification_data){
-                $mobile_email_verification_data->update(['mobile_email_verification'=>1]);
+
+            $mobile_email_verification_data = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_otp', $request->otp)->first();
+
+            if ($mobile_email_verification_data) {
+                $mobile_email_verification_data->update(['mobile_email_verification' => 1]);
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "Your Email address Verified successfully",    
+                    "message" => "Your Email address Verified successfully",
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
+            } else {
                 $data = [
                     "code" => 400,
                     "status" => 0,
-                    "message" => "OTP verification Mismatch",    
+                    "message" => "OTP verification Mismatch",
 
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
             }
-
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
@@ -633,15 +623,14 @@ class WebsiteAuthController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function userLogout(){
+    public function userLogout()
+    {
         try {
             auth()->user()->tokens()->delete();
-    
-                return response()->json(['message' => 'Logged out successfully.', 'status' => 1]);
-            
+
+            return response()->json(['message' => 'Logged out successfully.', 'status' => 1]);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Something went wrong.', 'status' => 0]);
         }
     }
-   
 }
