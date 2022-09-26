@@ -29,7 +29,7 @@
                     <div class="total1">
                         <p class=""><b>Total</b></p>
                         <span class=" course-price1">
-                            <i class="fa fa-inr" aria-hidden="true"></i>{{number_format($countPrice,2,'.','')}}</span>
+                            <i class="fa fa-inr" aria-hidden="true"></i> {{number_format($countPrice,2,'.','')}}</span>
                     </div>
                 </div>
                 <div class="col-md-5" style="border-left:2px solid #ddd;">

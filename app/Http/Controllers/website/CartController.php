@@ -12,6 +12,7 @@ use App\Models\CartOrOrderAssignSubject;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Auth;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Crypt;
 
 class CartController extends Controller
 {
@@ -35,18 +36,14 @@ class CartController extends Controller
     public function cartDetails($cart_id)
     {
         try {
-            $cart = [];
-            $countCartItem = 0;
-            $price = [];
+           
             if (Auth::check()) {
-                $cart = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
-                $countCartItem = Cart::where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->count();
-                $totalPrice = 0;
-                foreach ($cart as $item) {
-                    $totalPrice = $totalPrice + $item->assignSubject->sum('amount');
-                }
+                $cart = Cart::with('board', 'assignClass','assignSubject')->where('id', Crypt::decrypt($cart_id))->first();
+                $all_subjects=$cart->assignSubject;
+                $totalPrice=$cart->assignSubject->sum('amount');
+                
             }
-            return view('website.cart.cart-details')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $totalPrice]);
+            return view('website.cart.cart-details')->with(['cart' => $cart, 'all_subjects' => $all_subjects, 'countPrice' => $totalPrice]);
         } catch (\Throwable $th) {
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();

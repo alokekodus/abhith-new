@@ -106,7 +106,11 @@ class SubjectController extends Controller
                 Toastr::success('Subject activate changed from inactivate to activate', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             } else {
+               
                 $assignSubject->update(['is_activate' => 0]);
+                if($assignSubject->published==1){
+                    $assignSubject->update(['published' => 0]);
+                }
                 Toastr::success('Subject activate changed from activate to inactivate', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
