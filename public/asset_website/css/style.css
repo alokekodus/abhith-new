@@ -3858,6 +3858,35 @@ input {
     font-size: 14px;
     color: rgb(143, 143, 143);
 }
+
+#mcq_test .mcq-div{
+    display: flex;
+    align-items: center;
+    border: 1px solid #bfbaba;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0px;
+}
+
+#mcq_test .mcq-icon img{
+    width: 100%;
+}
+#mcq_test .mcq-content{
+    margin-left: 15px;
+    padding-top: 20px;
+}
+#mcq_test .mcq-content h5{
+    font-size: 18px;
+    font-weight: 600;
+}
+#mcq_test .mcq-content h6{
+    font-size: 16px;
+    color: rgb(102, 102, 102);
+}
+#mcq_test .mcq-content p{
+    font-size: 14px;
+    color: rgb(143, 143, 143);
+}
 /* End of lesson details */
 
 /* knwldge forum */
