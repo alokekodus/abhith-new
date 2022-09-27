@@ -8,11 +8,12 @@
 <body>
 
     <!-- ======= Header ======= -->
+    @if(Route::currentRouteName()!="website.subject.mcqstart")
     @include('layout.website.include.header')
     
    
     @include('layout.website.include.navbar')
-    
+    @endif
     <!-- End Header -->
 
 
@@ -21,8 +22,9 @@
         @yield('content')
         
     </main>
+    @if(Route::currentRouteName()!="website.subject.mcqstart")
     @include('layout.website.include.footer')
-
+     @endif
 
     {{-- script --}}
     @include('layout.website.include.script')
