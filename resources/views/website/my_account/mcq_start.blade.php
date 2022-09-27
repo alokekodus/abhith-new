@@ -4,65 +4,110 @@
 
 @section('head')
 <link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
-
+<style>
+    main{
+        margin: 0;
+    }
+    .topic-content-heading{
+        background-image: linear-gradient(to left, #0457bd, #01b9f1);
+    }
+</style>
 @endsection
 
 @section('content')
 
-
-<div class="container-fluid mt-2">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h5>Multiple Choice Questions For Class {{$set->assignClass->class}} {{$set->subject_name}}
-                    {{$set->board->exam_board}} Board
-                </h5>
-            </div>
+<div class="mcq-head topic-content-heading d-flex">
+    <div class="mcq-head-text d-flex">
+        <div class="mcq-head-icon mr-3">
+            <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
         </div>
-        <div class="row">
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5>All Questions</h5><br>
-                        @foreach ($set->question as $key=>$question)
-                        <button type="button" class="btn btn-primary btn-circle">{{$key+1}}
-                        </button>
-                        @endforeach
+        <div class="mcq-header-text">
+            <h3>Multiple Choice Questions For Class {{$set->assignClass->class}} {{$set->subject_name}}
+                <span>{{$set->board->exam_board}} Board</span>
+            </h3>
+        </div>
+    </div>
+    <div class="mcq-cross-icon">
+        <button type="button" class="close btn" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5>All Questions</h5><br>
+                    @foreach ($set->question as $key=>$question)
+                    <button type="button" class="btn btn-primary btn-circle">{{$key+1}}
+                    </button>
+                    @endforeach
 
-                    </div>
                 </div>
             </div>
-            <div class="col-9">
-                <div class="card">
-                    <div class="card-body">
-                        <h5>1. {{$set->question[0]->question}}</h5>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio">Option 2
-                            </label>
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <div class="card-body">
+                    {{-- <h5>1. {{$set->question[0]->question}}</h5> --}}
+                    {{-- <div class="form-check">
+                        <input type="radio" class="form-check-input" name="optradio">
+                        <label>Option 2</label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradio">Option 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradio">Option 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradio">Option 2
+                        </label>
+                    </div> --}}
+                    <h4>Question 1: What is your favourite language?</h4>
+                    <form action="" class="mcq-options d-flex">
+                        <div class="mcq-option-text">
+                            <h5>Option:</h5>
                         </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio">Option 2
-                            </label>
+                        <div class="mcq-option-div">
+                            <div class="options">
+                                <input type="radio" id="html" name="fav_language" value="HTML">
+                            <label for="html">HTML</label>
+                            </div>
+                            <div class="options">
+                                <input type="radio" id="css" name="fav_language" value="CSS">
+                                <label for="css">CSS</label>
+                            </div>
+                            <div class="options">
+                                <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+                                <label for="javascript">JavaScript</label>
+                            </div>
+                            <div class="options">
+                                <input type="radio" id="jQuery" name="fav_language" value="jQuery">
+                                <label for="jQuery">jQuery</label>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio">Option 2
-                            </label>
+                    </form>
+                    <div class="mcq-submit-btn d-flex">
+                        <div class="mcq-submit">
+                            <button type="button" class="btn btn-success mr-3">Submit</button>
                         </div>
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio">Option 2
-                            </label>
+                        <div class="mcq-next">
+                            <button type="button" class="btn btn-primary">Next & Continue</button>
                         </div>
-                        <button type="button" class="btn btn-success">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
