@@ -61,7 +61,9 @@ class SubjectController extends Controller
     }
     public function mcqStart($set_id){
         try {
-            $set=Set::with('board','assignClass','assignSubject','question')->where('id',decrypt($set_id))->first();
+            $set_id=Crypt::decrypt($set_id);
+            $set=Set::with('question')->where('id',$set_id)->first();
+            
             return view('website.my_account.mcq_start',compact('set'));
         } catch (\Throwable $th) {
             //throw $th;
@@ -73,8 +75,9 @@ class SubjectController extends Controller
             $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
             $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
             $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
-            $mcq_question=Lesson::with('Sets')->where('parent_id',$lesson->id)->first();
-            return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles'));
+            $mcq_questions=Lesson::with('Sets')->where('id',$lesson->id)->first();
+            
+            return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions'));
         } catch (\Throwable $th) {
             //throw $th;
         }

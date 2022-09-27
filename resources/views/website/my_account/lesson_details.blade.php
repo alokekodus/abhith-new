@@ -39,7 +39,7 @@
                 Articles</button>
             <button class="lessonLinks" onclick="openFile(event, 'documents')">{{$topicDocuments->count()}}
                 Documents</button>
-            <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{$topicDocuments->count()}}
+            <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{$mcq_questions->Sets()->count()}}
                 MCQ Test</button>
         </div>
     </div>
@@ -127,17 +127,17 @@
                     <h3>MCQ Test</h3>
                 </div>
                 <div class="row">
-                    @if($topicDocuments->count()>0)
-                    @foreach ($topicDocuments as $key=>$document)
+                    @if($mcq_questions->Sets()->count()>0)
+                    @foreach ($mcq_questions->Sets as $key=>$set)
                     <div class="col-lg-6 col-md-6">
                         <div class="mcq-div">
                             <div class="mcq-icon">
                                <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
                             </div>
                             <div class="mcq-content">
-                                <h5>{{$document->name}}</h5>
-                                <h6>10 Questions</h6>
-                                <p>{{dateFormat($document->created_at,"D ,F j, Y")}}</p>
+                                <h5><a href="{{route('website.subject.mcqstart',Crypt::encrypt($set->id))}}">{{$set->set_name}}</a></h5>
+                                <h6>{{$set->question->count()}} Questions</h6>
+                                <p>{{dateFormat($set->created_at,"D ,F j, Y")}}</p>
                             </div>
                         </div>
                     </div>

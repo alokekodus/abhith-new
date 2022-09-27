@@ -100,7 +100,6 @@ Route::prefix('account')->middleware([WebSite::class])->group(function () {
     Route::get('my-lesson/{topic_id}', [UserDetailsController::class, 'myLessonDetails'])->name('website.user.lesson.details');
     Route::post('attachment', [UserDetailsController::class, 'displayAttachment'])->name('website.user.lesson.attachment');
     Route::get('lesson/{id}', [LessonController::class, 'LessonDetails'])->name('website.user.lessonbyid');
-    Route::get('mcq/{set_id}', [SubjectController::class, 'subjectMCQ'])->name('website.subject.mcq');
     Route::get('performance',[UserDetailsController::class,'myPerformance'])->name('web.user.performance');
 });
 
