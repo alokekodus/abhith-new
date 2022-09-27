@@ -1147,6 +1147,20 @@
     .cart-coupon {
         padding: 0px 20px;
     }
+    .mcq-head {
+        justify-content: space-between;
+        padding: 20px 30px;
+        background-color: #0770EF;
+        flex-direction: column;
+    }
+    .mcq-head-text h3 {
+        font-size: 24px;
+    }
+    .mcq-cross-icon .btn {
+        margin-top: 0;
+        font-size: 14px;
+        float: right;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {

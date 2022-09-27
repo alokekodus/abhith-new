@@ -4261,20 +4261,23 @@ svg{
 .mcq-head{
     justify-content: space-between;
     padding: 20px 30px;
+    background-color: #0770EF;
 }
 .mcq-head-text h3{
-    margin-bottom: 0;
-    padding-top: 12px;
     color: white;
     font-weight: 700;
-    font-size: 32px;
+}
+.mcq-head-text p{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 0;
 }
 .mcq-cross-icon .btn{
     color: white;
-    padding-top: 18px;
-    padding-right: 25px;
-    font-size: 36px;
-    opacity: 1;
+    margin-top: 12px;
+    background-color: red;
+    font-weight: 700;
 }
 .options{
     font-weight: 700;
@@ -4288,4 +4291,10 @@ svg{
 }
 .mcq-option-text h5{
     font-weight: 600;
+}
+.mcq-submit-btn{
+    float: right;
+}
+#mcq-question{
+    margin-top: 50px;
 }
