@@ -8,15 +8,12 @@
     main{
         margin: 0;
     }
-    .topic-content-heading{
-        background-image: linear-gradient(to left, #0457bd, #01b9f1);
-    }
 </style>
 @endsection
 
 @section('content')
 
-<div class="mcq-head topic-content-heading d-flex">
+<div class="mcq-head  d-flex">
     <div class="mcq-head-text d-flex">
         <div class="mcq-head-icon mr-3">
             <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
@@ -25,17 +22,16 @@
             <h3>Multiple Choice Questions For Class {{$set->assignClass->class}} {{$set->subject_name}}
                 <span>{{$set->board->exam_board}} Board</span>
             </h3>
+            <p>1/10 Questions</p>
         </div>
     </div>
     <div class="mcq-cross-icon">
-        <button type="button" class="close btn" aria-label="Close">
-            <i class="fa fa-times" aria-hidden="true"></i>
-        </button>
+        <button type="button" class="btn btn-danger">End Test</button>
     </div>
 </div>
-<div class="container-fluid mt-4">
+<div class="container-fluid" id="mcq-question">
     <div class="row">
-        <div class="col-3">
+        {{-- <div class="col-3">
             <div class="card">
                 <div class="card-body">
                     <h5>All Questions</h5><br>
@@ -46,8 +42,8 @@
 
                 </div>
             </div>
-        </div>
-        <div class="col-9">
+        </div> --}}
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     {{-- <h5>1. {{$set->question[0]->question}}</h5> --}}
@@ -96,10 +92,10 @@
                     </form>
                     <div class="mcq-submit-btn d-flex">
                         <div class="mcq-submit">
-                            <button type="button" class="btn btn-success mr-3">Submit</button>
+                            <button type="button" class="btn btn-success mr-3">Previous</button>
                         </div>
                         <div class="mcq-next">
-                            <button type="button" class="btn btn-primary">Next & Continue</button>
+                            <button type="button" class="btn btn-primary">Next</button>
                         </div>
                     </div>
                 </div>
