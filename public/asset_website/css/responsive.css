@@ -1173,6 +1173,76 @@
     .mcq-head-icon img{
         height: 50px;
     }
+    .total-div {
+        border: 1px solid rgba(182, 181, 181, 0.486);
+        border-radius: 10px;
+        height: auto;
+        width: auto;
+        text-align: center;
+    }
+    .total-div h3{
+        font-size: 18px;
+    }
+    #mcq_result {
+        margin-top: 25px;
+    }
+    #mcq_result h4 {
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    .progress-main-div {
+        padding-left: 0px;
+        margin-top: 25px;
+    }
+    .circular-progress {
+        position: relative;
+        height: 200px;
+        width: 200px;
+        border-radius: 50%;
+        background: conic-gradient(#076fef 3.6deg, #ededed 0deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .circular-progress::before{
+        content: '';
+        position: absolute;
+        height: 160px;
+        width: 160px;
+        border-radius: 50%;
+        background-color: white ;
+    }
+    .circular_text {
+        margin-top: 50px;
+        margin-left: 25px;
+    }
+    .circular_text p {
+        font-size: 12px;
+    }
+    .circular_text .watched .dot {
+        border-radius: 50%;
+        background: #04AA6D;
+        height: 12px;
+        width: 12px;
+        display: inline-block;
+        margin-top: 3px;
+    }
+    .circular_text .not-watched .dot{
+        border-radius: 50%;
+        background: rgb(255, 145, 0);
+        height: 12px;
+        width: 12px;
+        display: inline-block;
+        margin-top: 3px;
+    }
+    .circular_text .unattempt .dot{
+        border-radius: 50%;
+        background: rgb(209, 31, 0);
+        height: 12px;
+        width: 12px;
+        display: inline-block;
+        margin-top: 3px;
+    }
 }
 
 @media only screen and (min-width: 350px) and (max-width: 375px) {
