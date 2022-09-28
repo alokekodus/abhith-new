@@ -3730,6 +3730,7 @@ input {
 }
 .topic-content-heading{
     background-image: linear-gradient(to left, #076fef, #01b9f1);
+    justify-content: space-between;
 }
 .topic-content-sub-heading h3{
     font-size: 18px;
@@ -3740,6 +3741,11 @@ input {
     padding: 20px;
     margin-left: 12px;
     font-size: 18px;
+    margin-bottom: 0;
+}
+.topic-next-btn{
+    margin-top: 15px;
+    margin-right: 25px;
 }
 .topic-content-details{
     padding: 20px;
@@ -4275,9 +4281,11 @@ svg{
 }
 .mcq-cross-icon .btn{
     color: white;
-    margin-top: 12px;
-    background-color: red;
+    margin-top: 8px;
+    background-color: black;
     font-weight: 700;
+    border: none;
+    padding: 15px;
 }
 .options{
     font-weight: 700;
@@ -4293,8 +4301,15 @@ svg{
     font-weight: 600;
 }
 .mcq-submit-btn{
-    float: right;
+    /* float: right; */
+    padding-left: 120px;
+}
+.mcq-btn-width{
+    width: 100px;
 }
 #mcq-question{
     margin-top: 50px;
+}
+#mcq-question .card{
+    border: none;
 }

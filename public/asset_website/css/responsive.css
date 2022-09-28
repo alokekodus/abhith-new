@@ -1153,13 +1153,25 @@
         background-color: #0770EF;
         flex-direction: column;
     }
+    #mcq-question {
+        margin-top: 20px;
+    }
+    .mcq-submit-btn {
+        padding-left: 0px;
+        float: right;
+    }
     .mcq-head-text h3 {
-        font-size: 24px;
+        font-size: 16px;
+    }
+    .mcq-cross-icon{
+        margin-top: 10px;
     }
     .mcq-cross-icon .btn {
         margin-top: 0;
         font-size: 14px;
-        float: right;
+    }
+    .mcq-head-icon img{
+        height: 50px;
     }
 }
 

@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="mcq-cross-icon">
-        <button type="button" class="btn btn-danger">End Test</button>
+        <button type="button" class="btn">Submit Test</button>
     </div>
 </div>
 <div class="container-fluid" id="mcq-question">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div> --}}
-        <div class="col-md-12">
+        <div class="col-md-10 mx-auto">
             <div class="card">
                 <div class="card-body">
                     {{-- <h5>1. {{$set->question[0]->question}}</h5> --}}
@@ -92,10 +92,10 @@
                     </form>
                     <div class="mcq-submit-btn d-flex">
                         <div class="mcq-submit">
-                            <button type="button" class="btn btn-success mr-3">Previous</button>
+                            <button type="button" class="btn btn-outline-success mcq-btn-width mr-2">Skip</button>
                         </div>
                         <div class="mcq-next">
-                            <button type="button" class="btn btn-primary">Next</button>
+                            <button type="button" class="btn btn-primary mcq-btn-width">Next</button>
                         </div>
                     </div>
                 </div>
