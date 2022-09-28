@@ -72,7 +72,7 @@
                         </tr>
                         <tr>
                             <td>Requirements: </td>
-                            <td colspan="2">{{$subject->requirements??'NA'}}</td>
+                            <td colspan="2">{!!$subject->requirements??'NA'!!}</td>
 
                         </tr>
                     </tbody>
