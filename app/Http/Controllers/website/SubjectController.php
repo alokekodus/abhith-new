@@ -69,6 +69,11 @@ class SubjectController extends Controller
             //throw $th;
         }
     }
+    public function mcqResult(){
+        
+        return view('website.my_account.mcq_result');
+    }
+
     public function topicDetails($topic_id){
         try {
             $lesson=Lesson::find(Crypt::decrypt($topic_id));

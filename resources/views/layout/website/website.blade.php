@@ -8,7 +8,8 @@
 <body>
 
     <!-- ======= Header ======= -->
-    @if(Route::currentRouteName()!="website.subject.mcqstart")
+    
+    @if((Route::currentRouteName()!="website.subject.mcqstart") && (Route::currentRouteName()!="website.subject.mcqresult"))
     @include('layout.website.include.header')
     
    
@@ -22,7 +23,7 @@
         @yield('content')
         
     </main>
-    @if(Route::currentRouteName()!="website.subject.mcqstart")
+    @if((Route::currentRouteName()!="website.subject.mcqstart") && (Route::currentRouteName()!="website.subject.mcqresult"))
     @include('layout.website.include.footer')
      @endif
 

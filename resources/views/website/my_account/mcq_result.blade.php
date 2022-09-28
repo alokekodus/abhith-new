@@ -19,15 +19,13 @@
             <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
         </div>
         <div class="mcq-header-text">
-            <h3>Multiple Choice Questions For Class {{$set->assignClass->class}} {{$set->subject_name}}
-                <span>{{$set->board->exam_board}} Board</span>
+            <h3>Multiple Choice Questions For Class 
+                <span>Board</span>
             </h3>
             <p>1/10 Questions</p>
         </div>
     </div>
-    <div class="mcq-cross-icon">
-        <a href="{{route('website.subject.mcqresult')}}" type="button" class="btn">Submit Test</a>
-    </div>
+    
 </div>
 <div class="container-fluid" id="mcq-question">
     <div class="row">
