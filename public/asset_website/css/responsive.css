@@ -1180,8 +1180,11 @@
         width: auto;
         text-align: center;
     }
+    .totalQuestion {
+        padding: 20px 0;
+    }
     .total-div h3{
-        font-size: 18px;
+        font-size: 16px;
     }
     #mcq_result {
         margin-top: 25px;
