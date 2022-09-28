@@ -44,8 +44,18 @@
         </div>
     </div>
     <div class="topic-content mb-5">
-        <div class="topic-content-heading">
-            <h2>Topic: {{$lesson->name}}</h2>
+        <div class="topic-content-heading d-flex">
+            <div class="topic-name">
+                <h2>Topic: {{$lesson->name}}</h2>
+            </div>
+            <div class="topic-next-btn d-flex">
+                <div class="topic-previous">
+                    <button type="button" class="btn btn-outline-success text-white mr-2">Previous Lesson</button>
+                </div>
+                <div class="topic-next">
+                    <button type="button" class="btn btn-outline-danger text-white">Next Lesson</button>
+                </div>
+            </div>
         </div>
         <div class="topic-content-body">
             <div class="container lessonContent" id="videos">
