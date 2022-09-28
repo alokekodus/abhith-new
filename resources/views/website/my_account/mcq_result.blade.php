@@ -95,7 +95,7 @@
                 </div>
                 <div class="attempted-div d-flex">
                     <div class="col-md-6 attempted">
-                        <h3>Attempt: <span>9</span></h3>
+                        <h3>Attempted: <span>9</span></h3>
                     </div>
                     <div class="col-md-6 unattempted">
                         <h3>Unattempted: <span>1</span></h3>
