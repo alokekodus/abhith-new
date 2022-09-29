@@ -7,6 +7,7 @@ use App\Models\AssignSubject;
 use App\Models\Lesson;
 use App\Models\Review;
 use App\Models\Set;
+use App\Models\UserPracticeTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -91,9 +92,13 @@ class SubjectController extends Controller
     }
     public function mcqGetQuestion(Request $request){
         try {
-           
             $set_id = $request->set_id;
             $page = $request->page;
+            $type=$request->type;
+            $last=$request->last;
+            $user_practice_test_store_id=$request->user_practice_test_store_id;
+            // return response()->json($request->all());
+
             $set_question = Set::with('question')->where('id', $set_id)->first();
             if (!$set_question) {
                 $result = [
@@ -110,6 +115,34 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
             if (!$set_question->question->isEmpty()) {
+                if($type=="start"){
+                    $user_practice_test = [
+                        'user_id' => auth()->user()->id,
+                        'set_id' => $set_question->id,
+                        'start_time' => date('Y-m-d H:i:s'),
+                        
+                    ];
+        
+                    $user_practice_test_store = UserPracticeTest::create($user_practice_test);
+                }if($type=="next"){
+
+                   
+                }
+                if($type=="skip" && $page==$last){
+                    $user_practice_tests = UserPracticeTest::where('set_id', $set_id)->where('user_id', auth()->user()->id)->where('id', '!=' , $user_practice_test_store_id)->get();
+                    if ($user_practice_test) {
+                        foreach($user_practice_tests as $key=>$user_practice_test){
+                            $user_practice_test->delete();
+                            $user_practice_test->userPracticeTestAnswer()->delete();
+                        }
+                       
+                    }
+                    $user_practice_test=UserPracticeTest::find($user_practice_test_store_id);
+                    $end_time = date('Y-m-d H:i:s');
+                    $start_time=$user_practice_test->start_time;
+                    $total_duration = timeDifference($start_time, $end_time);
+                    return response()->json($request->all());
+                }
                 $all_questions = $set_question->question()->paginate(1);
                 $options = [];
                 foreach ($all_questions as $key => $question) {
@@ -132,6 +165,7 @@ class SubjectController extends Controller
                     'total_question' => $set_question->question->count(),
                     'mcq_question' => $data,
                     'page'=>$page,
+                    'user_practice_test_store'=>$user_practice_test_store->id,
                 ];
                 $data = [
                     "code" => 200,

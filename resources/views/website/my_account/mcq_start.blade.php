@@ -50,23 +50,43 @@
 @endsection
 @section('scripts')
 <script>
- $(document).ready(function() {
+    $(document).ready(function() {
         var page=1;
         var set_id=@json($set['id']);
         var last=@json($total_question);
-        getQuestion(page,set_id,last)
+        var type="start";
+        var question_answer=null;
+        var user_practice_test_store_id=null;
+        getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id);
 });
 
 function nextQuestion(current_page) {
     var current_page=current_page;
-    var ele = document.getElementsByName('question_option');
+    var question_answer = document.getElementsByName('question_option');
+    var user_practice_test_store_id=$("#user_practice_test_store_id").val();
     var page=current_page+1;
     var set_id=@json($set['id']);  
     var last=@json($total_question);
-    getQuestion(page,set_id,last);
+    var type="next";
+   console.log(question_answer);
+    getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id);
+}
+function skipQuestion(current_page){
+    var current_page=current_page;
+    var page=current_page+1;
+    var set_id=@json($set['id']);  
+    var last=@json($total_question);
+    var type="skip";
+    var user_practice_test_store_id=$("#user_practice_test_store_id").val();
+    if(current_page==last){
+        var question_answer = document.getElementsByName('question_option');
+    }else{
+        var question_answer=null;
+    }
+    getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id);
 }
 
-function getQuestion(page,set_id,last){
+function getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id){
     
     $.ajaxSetup({
             headers: {
@@ -81,9 +101,14 @@ function getQuestion(page,set_id,last){
                 data: {
                     "page": page,
                     "set_id":set_id,
+                    "last":last,
+                    "type":type,
+                    "question_answer":question_answer,
+                    "user_practice_test_store_id":user_practice_test_store_id,
                     
                     },
                  success: function( response ) {
+                    console.log(response);
                         var code=response.result.code;
                         var result=response.result.result;
                                       
@@ -99,21 +124,22 @@ function getQuestion(page,set_id,last){
                                 </div>
                                 <div class="mcq-option-div">
                                     <div class="options">
-                                        <input type="radio" id="html" name="question_option" value="${question_option[0]}" required>
+                                        <input type="radio" id="html" name="question_option" value="${question_option[0]}" required="required">
                                     <label for="html">${question_option[0]}</label>
                                     </div>
                                     <div class="options">
-                                        <input type="radio" id="css" name="question_option" value="${question_option[1]}" required>
+                                        <input type="radio" id="css" name="question_option" value="${question_option[1]}" required="required">
                                         <label for="css">${question_option[1]}</label>
                                     </div>
                                     <div class="options">
-                                        <input type="radio" id="javascript" name="question_option" value="${question_option[2]}" required>
+                                        <input type="radio" id="javascript" name="question_option" value="${question_option[2]}" required="required">
                                         <label for="javascript">${question_option[2]}</label>
                                     </div>
                                     <div class="options">
-                                        <input type="radio" id="jQuery" name="question_option" value="${question_option[3]}" required>
+                                        <input type="radio" id="jQuery" name="question_option" value="${question_option[3]}" required="required">
                                         <label for="jQuery">${question_option[3]}</label>
                                     </div>
+                                    <input type="hidden" name="user_practice_test_store_id" id="user_practice_test_store_id" value="${response.result.result.user_practice_test_store}"
                                 </div>
                             </form>
                             <div class="mcq-button"></div>
@@ -131,26 +157,19 @@ function getQuestion(page,set_id,last){
             }else{
                 mcq_button=` <div class="mcq-submit-btn d-flex">
                                 <div class="mcq-submit">
-                                    <button type="button" class="btn btn-outline-success mcq-btn-width mr-2">Skip</button>
+                                    <button type="button" class="btn btn-outline-success mcq-btn-width mr-2" onclick="skipQuestion(${result.page})">Skip</button>
                                 </div>
                                 <div class="mcq-next">
                                     <button type="button" class="btn btn-primary mcq-btn-width" onclick="nextQuestion(${result.page})">Next</button>
                                 </div>
                             </div>`;
                             $('.mcq-button').html(mcq_button);
-                
-
-
-
-
-
-            }
+                }
             
-
-                            }
+            }
                                        
-                         }
-            });  
+            }
+        });  
           
 }
 </script>

@@ -590,10 +590,10 @@ class SubjectController extends Controller
             $lesson = Lesson::with(['topics:parent_id,name', 'subTopics'])->where('parent_id', $id)->first();
 
             if ($lesson->topics) {
-                $lesson_topic = $lesson->topics()->paginate(5);
+                $lesson_topic = $lesson->topics()->where('status',1)->paginate(5);
                 $topics = [];
                 foreach ($lesson_topic as $key => $topic) {
-                    $sub_topic_count = $topic->subTopics->count();
+                    $sub_topic_count = $topic->subTopics()->where('status',1)->count();
                     $topic = [
                         'id' => $topic->id,
                         'name' => $topic->name,
@@ -757,9 +757,9 @@ class SubjectController extends Controller
         try {
 
             $set_id = $request->set_id;
-            $strat_time = $request->start_time;
+            $start_time = $request->start_time;
             $end_time = $request->endtime;
-            $total_duration = timeDifference($strat_time, $end_time);
+            $total_duration = timeDifference($start_time, $end_time);
             $findSet = Set::with('question')->where('id', $set_id)->first();
             $total_question = $findSet->question->count();
             $answers = $request->answers;
@@ -800,7 +800,7 @@ class SubjectController extends Controller
                     'total_correct_count' => $user_practice_test->correctAnswer->count(),
                 ];
             $user_practice_test->update($update_user_practice_test_store);
-            $data = ['user_practice_test_id' => $user_practice_test->id,];
+            $data = ['user_practice_test_id' => $user_practice_test->id];
             $data = [
                 "code" => 200,
                 "status" => 1,
