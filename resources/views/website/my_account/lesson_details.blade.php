@@ -46,7 +46,7 @@
     <div class="topic-content mb-5">
         <div class="topic-content-heading d-flex">
             <div class="topic-name">
-                <h2>Topic: {{$lesson->name}}</h2>
+                <h2>Lesson: {{$lesson->name}}</h2>
             </div>
             <div class="topic-next-btn d-flex">
                 <div class="topic-previous">
@@ -145,7 +145,7 @@
                                <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
                             </div>
                             <div class="mcq-content">
-                                <h5><a href="{{route('website.subject.mcqstart',Crypt::encrypt($set->id))}}">{{$set->set_name}}</a></h5>
+                                <h5><a href="{{route('website.subject.mcqstart',Crypt::encrypt($set->id))}}" target="_blank">{{$set->set_name}} </a></h5>
                                 <h6>{{$set->question->count()}} Questions</h6>
                                 <p>{{dateFormat($set->created_at,"D ,F j, Y")}}</p>
                             </div>
@@ -159,7 +159,7 @@
         </div>
     </div>
 </div>
-
+@section('scripts')
 <script>
     function openFile(evt, fileName) {
         let i, lessonContent, lessonLinks;
@@ -178,6 +178,6 @@
     // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
 </script>
-
+@endsection
 
 @endsection

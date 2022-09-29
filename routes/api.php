@@ -14,6 +14,7 @@ use App\Http\Controllers\api\PerformanceController;
 use App\Http\Controllers\api\ReviewController;
 use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\website\SubjectController as WebsiteSubjectController;
 use App\Http\Controllers\website\WebsiteAuthController;
 use App\Models\MobileAndEmailVerification;
 

@@ -63,8 +63,10 @@ class SubjectController extends Controller
         try {
             $set_id=Crypt::decrypt($set_id);
             $set=Set::with('question')->where('id',$set_id)->first();
+            $total_question=$set->question->count();
+            $start=true;
             
-            return view('website.my_account.mcq_start',compact('set'));
+            return view('website.my_account.mcq_start',compact('set','start','total_question'));
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -85,6 +87,81 @@ class SubjectController extends Controller
             return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions'));
         } catch (\Throwable $th) {
             //throw $th;
+        }
+    }
+    public function mcqGetQuestion(Request $request){
+        try {
+           
+            $set_id = $request->set_id;
+            $page = $request->page;
+            $set_question = Set::with('question')->where('id', $set_id)->first();
+            if (!$set_question) {
+                $result = [
+                    'set_name' => null,
+                    'total_question' => 0,
+                    'mcq_question' => [],
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Record Found",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+            if (!$set_question->question->isEmpty()) {
+                $all_questions = $set_question->question()->paginate(1);
+                $options = [];
+                foreach ($all_questions as $key => $question) {
+
+                    $options[] = $question->option_1;
+                    $options[] = $question->option_2;
+                    $options[] = $question->option_3;
+                    $options[] = $question->option_4;
+                    $data = [
+                        'id' => $question->id,
+                        'question' => $question->question,
+                        'options' => $options,
+                        'correct_answer' => $question->correct_answer,
+
+                    ];
+                }
+
+                $result = [
+                    'set_name' => $set_question->set_name,
+                    'total_question' => $set_question->question->count(),
+                    'mcq_question' => $data,
+                    'page'=>$page,
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All MCQ Questions",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $result = [
+                    'set_name' => null,
+                    'total_question' => 0,
+                    'mcq_question' => [],
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Record Found",
+                    "result" => $result,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
         }
     }
 }
