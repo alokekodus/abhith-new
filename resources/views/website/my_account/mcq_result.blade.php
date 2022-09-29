@@ -27,43 +27,11 @@
     </div>
     
 </div>
-<div class="container-fluid" id="mcq-question">
+{{-- <div class="container-fluid" id="mcq-question">
     <div class="row">
-        {{-- <div class="col-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5>All Questions</h5><br>
-                    @foreach ($set->question as $key=>$question)
-                    <button type="button" class="btn btn-primary btn-circle">{{$key+1}}
-                    </button>
-                    @endforeach
-
-                </div>
-            </div>
-        </div> --}}
         <div class="col-md-10 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    {{-- <h5>1. {{$set->question[0]->question}}</h5> --}}
-                    {{-- <div class="form-check">
-                        <input type="radio" class="form-check-input" name="optradio">
-                        <label>Option 2</label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Option 2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Option 2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optradio">Option 2
-                        </label>
-                    </div> --}}
                     <h4>Question 1: What is your favourite language?</h4>
                     <form action="" class="mcq-options d-flex">
                         <div class="mcq-option-text">
@@ -88,17 +56,91 @@
                             </div>
                         </div>
                     </form>
-                    <div class="mcq-submit-btn d-flex">
-                        <div class="mcq-submit">
-                            <button type="button" class="btn btn-outline-success mcq-btn-width mr-2">Skip</button>
-                        </div>
-                        <div class="mcq-next">
-                            <button type="button" class="btn btn-primary mcq-btn-width">Next</button>
-                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --}}
+<div class="container-fluid" id="mcq_result">
+    <h4>MCQ Test</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="d-flex progress-main-div">
+                <div class="circleOne">
+                    <div class="circular-progress">
+                        <span class="progress-value"></span>
+                    </div>
+                </div>
+                <div class="circular_text">
+                    <div class="watched d-flex">
+                        <span class="dot mr-2"></span>
+                        <p>Correct</p>
+                    </div>
+                    <div class="not-watched d-flex">
+                        <span class="dot mr-2"></span>
+                        <p>Incorrect</p>
+                    </div>
+                    <div class="unattempt d-flex">
+                        <span class="dot mr-2"></span>
+                        <p>Unattempted</p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="total-div">
+                <div class="totalQuestion">
+                    <h3>Total Question: <span>10</span></h3>
+                </div>
+                <div class="attempted-div d-flex">
+                    <div class="col-md-6 attempted">
+                        <h3>Attempted: <span>9</span></h3>
+                    </div>
+                    <div class="col-md-6 unattempted">
+                        <h3>Unattempted: <span>1</span></h3>
+                    </div>
+                </div>
+                <div class="answered d-flex">
+                    <div class="col-md-6 correct">
+                        <h3>Correct: <span>7</span></h3>
+                    </div>
+                    <div class="col-md-6 incorrect">
+                        <h3>Incorrect: <span>2</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="col-md-6" id="mcq-result">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="totalQuestion">
+                        <h3>Total Question: <span>9</span></h3>
+                    </div>
+                </div>
+                <div class="col-md-6 random"> 
+                    <div class="attempted">
+                        <h3>Attempt: <span>9</span></h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="unattempted">
+                        <h3>Unattempted: <span>9</span></h3>
+                    </div>
+                </div>
+                <div class="col-md-6 random"> 
+                    <div class="correct">
+                        <h3>Correct: <span>9</span></h3>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="incorrect">
+                        <h3>Incorrect: <span>9</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
     </div>
 </div>
 
