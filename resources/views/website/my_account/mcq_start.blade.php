@@ -57,21 +57,27 @@
         var type="start";
         var question_answer=null;
         var user_practice_test_store_id=null;
-        getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id);
+        var question_id=null;
+        getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id,question_id);
 });
 
 function nextQuestion(current_page) {
     var current_page=current_page;
-    var question_answer = document.getElementsByName('question_option');
+   
+      var question_answer = $("input[name='question_option']:checked").val();
+     
+
+    var question_id=document.getElementById('question_id').value;
     var user_practice_test_store_id=$("#user_practice_test_store_id").val();
     var page=current_page+1;
     var set_id=@json($set['id']);  
     var last=@json($total_question);
     var type="next";
-   console.log(question_answer);
-    getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id);
+  
+    getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id,question_id);
 }
 function skipQuestion(current_page){
+    console.log(current_page);
     var current_page=current_page;
     var page=current_page+1;
     var set_id=@json($set['id']);  
@@ -79,14 +85,15 @@ function skipQuestion(current_page){
     var type="skip";
     var user_practice_test_store_id=$("#user_practice_test_store_id").val();
     if(current_page==last){
-        var question_answer = document.getElementsByName('question_option');
+        var question_answer = $("input[name='question_option']:checked").val();
     }else{
         var question_answer=null;
     }
-    getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id);
+    var question_id=document.getElementById('question_id').value;
+    getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id,question_id);
 }
 
-function getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id){
+function getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id,question_id){
     
     $.ajaxSetup({
             headers: {
@@ -105,6 +112,7 @@ function getQuestion(page,set_id,last,type,question_answer,user_practice_test_st
                     "type":type,
                     "question_answer":question_answer,
                     "user_practice_test_store_id":user_practice_test_store_id,
+                    "question_id":question_id
                     
                     },
                  success: function( response ) {
@@ -124,22 +132,23 @@ function getQuestion(page,set_id,last,type,question_answer,user_practice_test_st
                                 </div>
                                 <div class="mcq-option-div">
                                     <div class="options">
-                                        <input type="radio" id="html" name="question_option" value="${question_option[0]}" required="required">
-                                    <label for="html">${question_option[0]}</label>
+                                        <input type="radio" id="question_option1" name="question_option" value="${question_option[0]}" required="required">
+                                    <label for="question_option1">${question_option[0]}</label>
                                     </div>
                                     <div class="options">
-                                        <input type="radio" id="css" name="question_option" value="${question_option[1]}" required="required">
-                                        <label for="css">${question_option[1]}</label>
+                                        <input type="radio" id="question_option2" name="question_option" value="${question_option[1]}" required="required">
+                                        <label for="question_option2">${question_option[1]}</label>
                                     </div>
                                     <div class="options">
-                                        <input type="radio" id="javascript" name="question_option" value="${question_option[2]}" required="required">
-                                        <label for="javascript">${question_option[2]}</label>
+                                        <input type="radio" id="question_option3" name="question_option" value="${question_option[2]}" required="required">
+                                        <label for="question_option3">${question_option[2]}</label>
                                     </div>
                                     <div class="options">
-                                        <input type="radio" id="jQuery" name="question_option" value="${question_option[3]}" required="required">
-                                        <label for="jQuery">${question_option[3]}</label>
+                                        <input type="radio" id="question_option4" name="question_option" value="${question_option[3]}" required="required">
+                                        <label for="question_option4">${question_option[3]}</label>
                                     </div>
-                                    <input type="hidden" name="user_practice_test_store_id" id="user_practice_test_store_id" value="${response.result.result.user_practice_test_store}"
+                                    <input type="hidden" name="user_practice_test_store_id" id="user_practice_test_store_id" value="${response.result.result.user_practice_test_store}">
+                                    <input type="hidden" name="question_id" id="question_id" value="${result.mcq_question.id}">
                                 </div>
                             </form>
                             <div class="mcq-button"></div>
@@ -150,7 +159,7 @@ function getQuestion(page,set_id,last,type,question_answer,user_practice_test_st
             if(page==last){
                 mcq_button=` <div class="mcq-submit-btn d-flex">
                                 <div class="mcq-submit">
-                                    <button type="button" class="btn btn-outline-success mcq-btn-width mr-2">Skip</button>
+                                    <button type="button" class="btn btn-outline-success mcq-btn-width mr-2" onclick="skipQuestion(${result.page})">Skip</button>
                                 </div>
                             </div>`;
                             $('.mcq-button').html(mcq_button);

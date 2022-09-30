@@ -5,9 +5,11 @@ namespace App\Http\Controllers\website;
 use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
 use App\Models\Lesson;
+use App\Models\Question;
 use App\Models\Review;
 use App\Models\Set;
 use App\Models\UserPracticeTest;
+use App\Models\UserPracticeTestAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -97,8 +99,9 @@ class SubjectController extends Controller
             $type=$request->type;
             $last=$request->last;
             $user_practice_test_store_id=$request->user_practice_test_store_id;
-            // return response()->json($request->all());
-
+            $question_id=$request->question_id;
+             
+            
             $set_question = Set::with('question')->where('id', $set_id)->first();
             if (!$set_question) {
                 $result = [
@@ -125,25 +128,80 @@ class SubjectController extends Controller
         
                     $user_practice_test_store = UserPracticeTest::create($user_practice_test);
                 }if($type=="next"){
-
+                  
+                    $question=Question::find($request->question_id);
+                    
+                    if ($question->correct_answer == $request->question_answer) {
+                        $is_correct = 1;
+                    }else{
+                        $is_correct = 0;
+                    }
+                    $data = [
+                        'user_practice_test_id' => $request->user_practice_test_store_id,
+                        'question_id' => $question_id,
+                        'answer' => $question->correct_answer,
+                        'user_answer' => $request->question_answer,
+                        'is_correct' => $is_correct
+                    ];
+                    
+                    $user_pract_test_answer = UserPracticeTestAnswer::create($data);
                    
                 }
-                if($type=="skip" && $page==$last){
-                    $user_practice_tests = UserPracticeTest::where('set_id', $set_id)->where('user_id', auth()->user()->id)->where('id', '!=' , $user_practice_test_store_id)->get();
-                    if ($user_practice_test) {
+              
+                if($type=="skip" && $page==($last+1)){
+                      
+                    $user_practice_tests = UserPracticeTest::with('userPracticeTestAnswer')->where('set_id', $set_id)->where('user_id', auth()->user()->id)->where('id', '!=' , $user_practice_test_store_id)->get();
+                   
+                    if ($user_practice_tests) {
+                        
                         foreach($user_practice_tests as $key=>$user_practice_test){
+                            
                             $user_practice_test->delete();
-                            $user_practice_test->userPracticeTestAnswer()->delete();
+                            if( $user_practice_test->userPracticeTestAnswer!=null){
+                                $user_practice_test->userPracticeTestAnswer()->delete();
+                            }
+                           
                         }
                        
                     }
-                    $user_practice_test=UserPracticeTest::find($user_practice_test_store_id);
+                   
+                    $user_practice_test=UserPracticeTest::find($request->user_practice_test_store_id);
+                   
                     $end_time = date('Y-m-d H:i:s');
                     $start_time=$user_practice_test->start_time;
                     $total_duration = timeDifference($start_time, $end_time);
-                    return response()->json($request->all());
+                    $update_data=[
+                        'end_time'=>$end_time,
+                        'total_duration'=>$total_duration,
+                    ];
+                    $user_practice_test->update($update_data);
+                    $question=Question::find($request->question_id);
+                    if ($question->correct_answer == $request->question_answer) {
+                        $is_correct = 1;
+                    }else{
+                        $is_correct = 0;
+                    }
+                    
+                    $data = [
+                        'user_practice_test_id' => $request->user_practice_test_store_id,
+                        'question_id' => $question->id,
+                        'answer' => $question->correct_answer,
+                        'user_answer' => $request->question_answer,
+                        'is_correct' => $is_correct
+                    ];
+                   
+                    $user_pract_test_answer = UserPracticeTestAnswer::create($data);
+                    $update_user_practice_test_store =
+                    [
+                        'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
+                        'total_correct_count' => $user_practice_test->correctAnswer->count(),
+                    ];
+                    $user_practice_test->update($update_user_practice_test_store);
+               
                 }
+               
                 $all_questions = $set_question->question()->paginate(1);
+                  
                 $options = [];
                 foreach ($all_questions as $key => $question) {
 
@@ -159,14 +217,19 @@ class SubjectController extends Controller
 
                     ];
                 }
-
+                if($type=="start"){
+                   $user_practice_test_store_id= $user_practice_test_store->id;
+                }else{
+                    $user_practice_test_store_id=$request->user_practice_test_store_id;
+                }
                 $result = [
                     'set_name' => $set_question->set_name,
                     'total_question' => $set_question->question->count(),
                     'mcq_question' => $data,
                     'page'=>$page,
-                    'user_practice_test_store'=>$user_practice_test_store->id,
+                    'user_practice_test_store'=>$user_practice_test_store_id,
                 ];
+               
                 $data = [
                     "code" => 200,
                     "status" => 1,
@@ -195,7 +258,7 @@ class SubjectController extends Controller
                 "message" => "Something went wrong",
 
             ];
-            return response()->json(['status' => 0, 'result' => $data]);
+            return response()->json(['status' => 0, 'result' => $th]);
         }
     }
 }
