@@ -44,6 +44,7 @@ Route::prefix('course')->group(function () {
     Route::get('', [CourseController::class, 'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class, 'details'])->name('website.course.details');
     Route::post('package', [CourseController::class, 'coursePackageFilter'])->name('website.course.package.filter');
+    Route::get('lesson/{lesson_id}/{type}',[CourseController::class, 'getLessonDetails'])->name('getLessonDetails');
     Route::middleware([WebSite::class])->any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
     Route::get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
 });
@@ -161,6 +162,7 @@ Route::view('website/faq', 'website.docs.faq')->name('website.faq');
 Route::view('website/privacy-policy', 'website.docs.privacy')->name('website.privacy');
 Route::view('website/terms-and-conditions', 'website.docs.terms')->name('website.terms');
 Route::view('website/refund-and-cancellation-policy', 'website.docs.refund')->name('website.refund');
+
 
 
 /* --------------------------------------- View -> Become A Teacher ------------------------------------------------------------ */

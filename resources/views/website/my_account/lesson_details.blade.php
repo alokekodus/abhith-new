@@ -48,13 +48,18 @@
             <div class="topic-name">
                 <h2>Lesson: {{$lesson->name}}</h2>
             </div>
+           
             <div class="topic-next-btn d-flex">
+                @if($previous_lesson_id)
                 <div class="topic-previous">
-                    <button type="button" class="btn btn-outline-success text-white mr-2">Previous Lesson</button>
+                    <a href="{{route('getLessonDetails',[Crypt::encrypt($lesson->id),1])}}" class="btn btn-outline-success text-white mr-2">Previous Lesson</a>
                 </div>
+                @endif
+                @if($next_lesson_id)
                 <div class="topic-next">
-                    <button type="button" class="btn btn-outline-danger text-white">Next Lesson</button>
+                    <a href="{{route('getLessonDetails',[Crypt::encrypt($lesson->id),2])}}"  class="btn btn-outline-danger text-white">Next Lesson</a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="topic-content-body">

@@ -17,7 +17,7 @@ class SubjectController extends Controller
 {
     public function subjectDetails($subject_id)
     {
-       
+      
         $subject_id = Crypt::decrypt($subject_id);
         $subject = AssignSubject::with('lesson', 'subjectAttachment')->where('id', $subject_id)->first();
         $lessons = $subject->lesson;
