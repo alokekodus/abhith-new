@@ -25,7 +25,7 @@
                         @foreach($subject->lesson as $key=>$lesson)
                         <tr>
                             <td>{{++$key}}</td>
-                            <td style="text-align: center">{{$lesson->name}} </td>
+                            <td>{{$lesson->name}} </td>
                             <td><span class="badge rounded-pill bg-danger">
                                 @php $total_topic= $lesson->topics->count()+$lesson->Sets->count()@endphp
                                     {{$total_topic}}
@@ -37,7 +37,7 @@
                             <td style="text-align: center"> {{$lesson->topics->where('type',2)->count()}} </td>
                             <td style="text-align: center">{{$lesson->topics->where('type',1)->count()}} </td>
                             <td style="text-align: center">{{$lesson->topics->where('type',3)->count()}}</td>
-                            <td style="text-align: center"><a  href="{{route('admin.course.management.lesson.edit',Crypt::encrypt($lesson->id))}}" title="Edit Lesson"><i
+                            <td><a  href="{{route('admin.course.management.lesson.edit',Crypt::encrypt($lesson->id))}}" title="Edit Lesson"><i
                                         class="mdi mdi-grease-pencil"></i></a>
                                 <a href="{{route('admin.course.management.lesson.topic.display',Crypt::encrypt($lesson->id))}}"
                                     title="View Details"><i class="mdi mdi-eye"></i></a>

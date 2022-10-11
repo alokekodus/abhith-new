@@ -53,7 +53,7 @@
                                     <img src="{{asset($subject->image)}}" alt="image" />
                                 </td>
                                 <td> {{$subject->subject_name}} </td>
-                                <td>Class -{{$subject->assignClass->class}} -- {{$subject->boards->exam_board}} Board
+                                <td> Board -- {{$subject->boards->exam_board}} / Class -{{$subject->assignClass->class}}
                                 </td>
                                 <td><i class="mdi mdi-currency-inr"></i>
                                     {{number_format((float)$subject->subject_amount, 2,

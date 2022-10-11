@@ -6,24 +6,27 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Gallery;
 use App\Common\Activation;
+use Illuminate\Support\Facades\Crypt;
+use Brian2694\Toastr\Facades\Toastr;
 
 class GalleryController extends Controller
 {
     //
     protected function index()
     {
-        $gallerries = Gallery::orderBy('created_at','DESC')->paginate(10);
+        $gallerries = Gallery::orderBy('created_at', 'DESC')->paginate(10);
         return view('admin.master.gallery.gallery', \compact('gallerries'));
     }
 
-    protected function create(Request $request) {
+    protected function create(Request $request)
+    {
 
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => 'required',
             'pic' => 'required',
 
 
-        ],[
+        ], [
             'name.required' => 'Gallery name is required',
             'pic.required' => 'Picture required',
 
@@ -42,16 +45,16 @@ class GalleryController extends Controller
             'gallery' => $file
         ]);
 
-        return response()->json(['status'=>1, 'message' => 'Gallery created successfully']);
+        return response()->json(['status' => 1, 'message' => 'Gallery created successfully']);
     }
 
-    protected function active(Request $request) {
+    protected function active(Request $request)
+    {
         $banner = Gallery::find($request->catId);
         $banner->is_activate = $request->active;
         $banner->save();
 
-        return response()->json(['status'=>1]);
-
+        return response()->json(['status' => 1]);
     }
 
     protected function editGallery(Request $request)
@@ -84,8 +87,19 @@ class GalleryController extends Controller
             $gallery->save();
         }
 
-        return response()->json(['status'=>1, 'message' => 'Gallery details updated successfully']);
+        return response()->json(['status' => 1, 'message' => 'Gallery details updated successfully']);
     }
+    public function deleteGallery($id)
+    {
 
-
+        try {
+            $gallery = Gallery::find(Crypt::decrypt($id));
+            $gallery->delete();
+            Toastr::success('Gallery Image deleted successfully', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
+    }
 }

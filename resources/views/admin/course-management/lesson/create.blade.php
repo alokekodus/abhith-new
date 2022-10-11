@@ -1,5 +1,8 @@
 @extends('layout.admin.layout.admin')
 @section('title', 'Course Management - Lesson')
+@section('head')
+<link rel="stylesheet" href="{{ asset('asset_admin/css/lesson.css') }}">
+@endsection
 @section('content')
 @section('lesson-type') Lesson @endsection
 <div class="page-header">

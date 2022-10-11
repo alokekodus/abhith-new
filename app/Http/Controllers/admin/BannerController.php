@@ -5,7 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
-
+use Illuminate\Support\Facades\Crypt;
+use Brian2694\Toastr\Facades\Toastr;
 class BannerController extends Controller
 {
     //
@@ -97,5 +98,16 @@ class BannerController extends Controller
         }
 
         return response()->json(['status' => 1, 'message' => 'Banner details updated successfully']);
+    }
+    public function deleteBanner($id){
+        try {
+            $banner=Banner::find(Crypt::decrypt($id));
+            $banner->delete();
+            Toastr::success('Banner deleted successfully', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
     }
 }
