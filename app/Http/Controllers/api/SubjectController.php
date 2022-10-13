@@ -152,7 +152,7 @@ class SubjectController extends Controller
                 'total_article' => $total_article,
                 'rating' => $rating_average,
                 'already_purchase' => subjectAlreadyPurchase($subject->id),
-                'already_incart'=>subjectAlreadyInCart($subject->id),
+                
 
             ];
 
