@@ -107,7 +107,7 @@
         let board_id=$("#assignedBoard").val();
         console.log(board_id);
           $.ajax({
-                url:"{{route('board.class')}}",
+                url:"{{route('webboard.class')}}",
                 type:"POST",
                 data:{
                     '_token' : "{{csrf_token()}}",
@@ -156,130 +156,6 @@
      });
     
 </script>
-{{-- <script>
-    $('#verifyOtpBtn').attr('disabled',true);
-
-        let interval = '';
-        let no_of_otp_sent = 0;
-        let nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
-        let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
-
-        $('#sendOtpBtn').on('click',function(e){
-            e.preventDefault();
-
-            if($('#name').val().length == 0){
-                toastr.error('Name is required');
-            }else if(!nameRegex.test($('#name').val())){
-                toastr.error('Name should contain letters only.');
-            }else if($('#signupEmail').val().length == 0){
-                toastr.error('Email is required');
-            }else if(!emailRegex.test($('#signupEmail').val())){
-                toastr.error('Email is invalid');
-            }else if($('#phone').val().length < 10){
-                toastr.error('Phone number is required. Enter valid phone number');
-            }else if(!phoneRegex.test($('#phone').val())){
-                toastr.error('Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)');
-            }else{
-                
-
-
-                if(no_of_otp_sent < 2){
-                    no_of_otp_sent += 1;
-                    var prefix=@json($prefix);
-                     if(prefix=="teacher"){
-                        var url="{{route('teacher.signup')}}";
-                     }else{
-                        var url="{{route('website.auth.signup')}}";
-                     }
-                    $.ajax({
-                        url:url,
-                        type:'POST',
-                        data:{
-                            '_token': '{{ csrf_token() }}',
-                            'name' : $('#name').val(),
-                            'email' : $('#signupEmail').val(),
-                            'phone' : $('#phone').val()
-                        },
-                        success:function(data){
-                           
-                            if(data.status == 1){
-                                $('#sendOtpBtn').attr('disabled',true); 
-                                $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
-                                $('#sendOtpBtn').text('OTP Sent');
-                                $('.verify-otp-div').css('display','block');
-                               
-                                interval = setInterval(updateTimer, 2000);
-                                toastr.success(data.message);
-                            }else{
-                                toastr.error(data.message);
-                            }
-                        },
-                        error:function(xhr, status, error){
-                            if(xhr.status == 500 || xhr.status == 422){
-                                toastr.error('Whoops! Something went wrong while sending OTP');
-                            }
-                        }
-                    });
-                }else{
-                    $('#sendOtpBtn').attr('disabled',true); 
-                    toastr.info('You have reached maximum attempts for sending otp. Please wait for 1 hour to resume the service. ');
-                }
-            }
-            
-            
-        });
-
-       
-        // $('#verifyOtpBtn').on('click',function(e){
-        //     e.preventDefault();
-        //     let otpRegex = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
-
-        //     if($('#enterOtp').val().length > 6){
-        //         toastr.error('Not a valid OTP');
-        //     }else if(!otpRegex.test($('#enterOtp').val())){
-        //         toastr.error('Enter numbers only');
-        //     }else{
-        //         var prefix=@json($prefix);
-        //              if(prefix=="teacher"){
-        //                 var url="{{route('teacher.verifyOtp')}}";
-        //              }else{
-        //                 var url="{{route('website.auth.verify.otp')}}";
-        //              }
-        //         $.ajax({
-        //             url:url,
-        //             type:'POST',
-        //             data:{
-        //                 '_token': '{{ csrf_token() }}',
-        //                 'email' : $('#signupEmail').val(),
-        //                 'phone' : $('#phone').val(),
-        //                 'otp' :  $('#enterOtp').val(),
-        //             },
-        //             success:function(data){
-        //                 if(data.status == 1){
-        //                     toastr.success(data.message);
-        //                     $('#phone').prop('readonly',true);
-        //                     $('#enterOtp').prop('readonly',true);
-        //                     $('#sendOtpBtn').attr('disabled',true);
-        //                     $('#verifyOtpBtn').attr('disabled',true);
-        //                     $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
-        //                     $('#pwd').css('display','block');
-        //                     $('#confPwd').css('display','block');
-
-        //                 }else{
-        //                     toastr.error(data.message);
-        //                 }
-        //             },
-        //             error:function(xhr, status, error){
-        //                 if(xhr.status == 500 || xhr.status == 422){
-        //                     toastr.error('Whoops! Something went wrong while sending OTP');
-        //                 }
-        //             }
-        //         });
-        //     }
-            
-        // });      
-</script> --}}
 
 
 <script>
@@ -387,6 +263,42 @@
                         required:"Please upload demo video",
                     }
                 },
+                submitHandler: function() {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+             var data = new FormData(document.getElementById("applyForm"));
+                
+            $.ajax({
+                url: "{{route('teacher.store')}}" ,
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function( response ) {
+                    console.log(response);
+                    toastr.options.timeOut = 3000;
+                    if(response.status==1){
+                        
+                        toastr.success(response.message);
+                        $('#applicationSubmit').html('Submit');
+                        
+                        location.reload();
+                    }
+                    if(response.status==0){
+                        $.each(response.message,function(prefix,val){
+                            toastr.error(val[0]);
+                        })
+                       
+                        $('#applicationSubmit').html('Submit');
+                    }
+                           
+                }
+            });
+        }
             //     submitHandler: function(form) {
             //     $.ajaxSetup({
             //         headers: {

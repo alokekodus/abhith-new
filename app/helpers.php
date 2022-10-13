@@ -298,6 +298,17 @@ function subjectAlreadyPurchase($subject_id)
         return 1;
     }
 }
+function subjectAlreadyInCart($subject_id){
+    $subject=AssignSubject::find($subject_id);
+    $cart_check = Cart::whereHas('assignSubject', function ($q) use ($subject) {
+        $q->whereIn('assign_subject_id', $subject->id);
+    })->where('board_id', $subject->board_id)->where('assign_class_id', $subject->assign_class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
+    if($cart_check){
+        return 1;
+    }else{
+        return 0;
+    }
+}
 function checkemail($str)
 {
     return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;

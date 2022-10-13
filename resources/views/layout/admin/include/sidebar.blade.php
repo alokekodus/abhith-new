@@ -31,7 +31,7 @@
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
                 <span class="menu-title">Course Management</span>
                 <i class="menu-arrow"></i>
@@ -42,7 +42,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{route('teacher.course')}}">Subjects</a></li>
                 </ul>
             </div>
-        </li>
+        </li> --}}
         @endif
         @else
         <li class="nav-item">

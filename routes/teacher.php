@@ -4,6 +4,7 @@ use App\Http\Controllers\teacher\LessonController;
 use App\Http\Controllers\teacher\StudentController;
 use App\Http\Controllers\teacher\TeacherController;
 use App\Http\Controllers\website\WebsiteAuthController;
+use App\Http\Controllers\admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('login',[WebsiteAuthController::class,'viewLogin'])->name('teacher.login');
@@ -12,6 +13,7 @@ Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp'])->name('te
 Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup'])->name('teacher.completeSignup');
 Route::post('login', [WebsiteAuthController::class, 'login'])->name('teacher.auth.login');
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('admin');
     Route::prefix('apply')->group(function () {
         Route::post('/', [TeacherController::class, 'store'])->name('teacher.store');
         Route::get('/application',[TeacherController::class,'index'])->name('teacher.application');
