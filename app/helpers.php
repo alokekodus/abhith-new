@@ -305,12 +305,17 @@ function subjectAlreadyInCart($subject_id){
     $class_id=$subject->assign_class_id;
     
     $cart_check = Cart::where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
-    $subject_in_cart=$cart_check->assignSubject->where('assign_subject_id',$subject_id)->first();
-    if($subject_in_cart){
-        return 1;
+    if($cart_check){
+        $subject_in_cart=$cart_check->assignSubject->where('assign_subject_id',$subject_id)->first();
+        if($subject_in_cart){
+            return 1;
+        }else{
+            return 0;
+        }
     }else{
         return 0;
     }
+   
 }
 function checkemail($str)
 {
