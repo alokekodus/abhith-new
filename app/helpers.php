@@ -304,9 +304,8 @@ function subjectAlreadyInCart($subject_id){
     $board_id=$subject->board_id;
     $class_id=$subject->assign_class_id;
     
-    $cart_check = Cart::whereHas('assignSubject', function ($q) use ($subject_id) {
-        $q->where('assign_subject_id', $subject_id);
-    })->where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
+    $cart_check = Cart::where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
+    $subject_in_cart=$cart_check->assignSubject->where('assign_subject_id',$subject_id)->first();
     if($cart_check){
         return 1;
     }else{
