@@ -217,7 +217,9 @@ class AssignSubjectController extends Controller
     }
     public function assignSubjectLesson($lesson_id)
     {
+       
         $lesson = Lesson::where('id', Crypt::decrypt($lesson_id))->first();
+        
         return view('admin.course-management.subjects.lesson')->with(['lesson' => $lesson]);
     }
 }
