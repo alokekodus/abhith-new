@@ -27,8 +27,9 @@
                             <tr>
                                 <th> # </th>
                                 <th> Exam Board </th>
-                                <th>Created At</th>
+                                <th> Created At </th>
                                 <th> Status </th>
+                                <th> Action </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,7 @@
                                         </label>
                                     @endif
                                 </td>
+                                <td><button class="btn btn-warning btn-sm openEditModal" data-board="{{$item->exam_board}}" data-id="{{Crypt::encrypt($item->id)}}">Edit</button></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -78,6 +80,34 @@
           </div>
         </div>
     </div>
+  
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="#" id="updateBoardForm">
+            @csrf
+            <div class="modal-body">
+                <input type="hidden" id="boardId" name="boardId" value="">
+                <div class="mb-3">
+                    <label for="boardName">Board</label>
+                    <input type="text" id="boardName" name="boardName" class="form-control">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="updateBoardBtn">Update</button>
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
@@ -177,5 +207,63 @@
             });
 
         });
+    </script>
+
+    <script>
+        // Open edit modal
+        $('.openEditModal').on('click', function(){
+            $('#editModal').modal('show');
+            $('#boardName').val($(this).data('board'));
+            $('#boardId').val($(this).data('id'));
+            // console.log($(this).data('board'));
+        })
+    </script>
+
+    <script>
+        // Submit update board
+        $('#updateBoardForm').on('submit', function(e){
+            e.preventDefault();
+            
+            $('#updateBoardBtn').attr('disabled', true);
+            $('#updateBoardBtn').text('Please wait...');    
+
+            let formData = new FormData(this);
+             $.ajax({
+                url:"{{route('admin.course.management.board.update')}}",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data:formData,
+                success:function(data){
+                    if(data.error != null){
+                        $.each(data.error, function(key ,val){
+                            toastr.error(val[0]);
+                        });
+                        $('#addBoardSubmitBtn').attr('disabled', false);
+                        $('#addBoardSubmitBtn').text('Submit');
+                        $('#addBoardCancelBtn').attr('disabled', false);
+                    }
+                    
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        $('#editModal').modal('hide');
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('#updateBoardBtn').attr('disabled', false);
+                        $('#updateBoardBtn').text('Submit');                
+                    }
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong.');
+                    }
+                    $('#updateBoardBtn').attr('disabled', false);
+                    $('#updateBoardBtn').text('Submit');            
+                }
+
+            });
+        })
+
     </script>
 @endsection

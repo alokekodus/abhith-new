@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('', [BoardController::class, 'allBoard'])->name('admin.course.management.board.all');
             Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
             Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
+            Route::post('update-board', [BoardController::class, 'updateBoard'])->name('admin.course.management.board.update');
         });
         Route::prefix('teacher')->group(function () {
             Route::get('', [TeacherController::class, 'index'])->name('admin.teacher.all');

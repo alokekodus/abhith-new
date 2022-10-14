@@ -7,7 +7,9 @@ use App\Models\AssignClass;
 use App\Models\AssignSubject;
 use App\Models\Board;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class BoardController extends Controller
 {
@@ -34,8 +36,44 @@ class BoardController extends Controller
             if($create){
                 return response()->json(['message' => 'Board added successfully', 'status' => 1]);
             }else{
-                return response()->json(['message' => 'Whoops! Somethinf went wrong. Failed to add board', 'status' => 2]);
+                return response()->json(['message' => 'Whoops! Something went wrong. Failed to add board', 'status' => 2]);
             }
+        }
+    }
+
+    public function updateBoard(Request $request){
+        try {
+            $validator = Validator::make($request->all(),[
+                'boardId' => 'required',
+                'boardName' => 'required'
+            ],
+            [
+                'boardId.required' => 'ID mismatch',
+                'boardName.required' => 'Board name cannot be null',
+            ]);
+
+            if($validator->fails()){
+                return response()->json(['message' => 'Whoops! Something went wrong', 'error' => $validator->errors()]);
+            }
+
+            $dec_id = Crypt::decrypt($request->boardId);
+
+            $board = Board::find($dec_id);
+            if(Str::lower($request->boardName) === Str::lower($board->exam_board)){
+                return response()->json(['message' => 'Board already exists', 'status' => 2]);
+            }
+            
+            $update = Board::find($dec_id)->update([
+                'exam_board' => $request->boardName
+            ]);
+
+            if(!$update){
+                return response()->json(['message' => 'Error on board update', 'status' => 1]);
+            }            
+            return response()->json(['message' => 'Board updated successfully', 'status' => 1]);
+        } catch (\Throwable $th) {
+            //throw $th->getMessage();
+            return response()->json(['message' => $th->getMessage(), 'status' => 2]);
         }
     }
 
