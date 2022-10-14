@@ -44,7 +44,7 @@
                             <th> Name </th>
                             <th> Email </th>
                             <th> Phone </th>
-                            <th>Apply For </th>
+                            <th>Apply For (Board/Class/Subject)</th>
                             <th>Total Exprience </th>
                             <th>Status</th>
                             <th>Applyed Date</th>
@@ -54,13 +54,14 @@
                     </thead>
                     <tbody>
                         @foreach ($applications as $key => $item)
+                       
                         <tr>
                             <td>{{$key + 1}}</td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->email}}</td>
                             <td>{{$item->phone}}</td>
-                            <td>{{$item->board->exam_board}}--Class{{$item->assignClass->class}}--{{$item->assignSubject}}</td>
-                            <td> {{$item->total_experience_month??'0'}}Years {{$item->total_experience_month??'0'}}Months</td>
+                            <td>{{$item->board->exam_board}}--Class{{$item->assignClass->class}}--{{$item->assignSubject->subject_name}}</td>
+                            <td> {{$item->total_experience_year??'0'}}Years {{$item->total_experience_month??'0'}}Months</td>
                             <td>@if($item->status==1) <span class="badge badge-warning">Apply for approve</span> @else <span class="badge badge-success">Approved</span>
                                  @endif</td>
                             <td>{{$item->updated_at->format('d-M-Y')}}</td>

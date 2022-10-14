@@ -38,7 +38,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('log.out');
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+   
     //     return view('admin.dashboard.dashboard');
     // })->name('admin.dashboard')->middleware('admin');
 

@@ -43,11 +43,18 @@
             </div>
             @endauth
             @guest
+           
                 <div class="col-lg-6 col-12">
                     <ul class="list-inline login-details">
+                        @if(Route::currentRouteName()=="website.becomeTeacher")
+                        <li>
+                            <a href="{{route('teacher.login')}}" class="login-text" target="_parent"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Login/Sign Up</a>
+                        </li>
+                        @else
                         <li>
                             <a href="{{route('website.login')}}" class="login-text" target="_parent"><span class="icon-user-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>Login/Sign Up</a>
                         </li>
+                        @endif
                         <li>
                             {{-- <a href="{{route('teacher.login')}}" class="login-text" target="_parent">
                                 <span class="icon-user-08 login-details-icon"><span class="path1"></span>
