@@ -582,6 +582,52 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function LessonTopicsDetails(Request $request){
+        try {
+            $id = $_GET['lesson_id'];
+            $lesson=Lesson::find($id);
+            $topics=$lesson->topics;
+            $lessonTopics=[];
+            if($topics){
+                   foreach($lesson->topics as $key=>$topic){
+                    if($topic->type==1){
+                      $type="docs";
+                    }elseif($topic->type==2){
+                        $type="videos";
+                    }else{
+                        $type="articles";
+                    }
+                    $data=[
+                        'title' => $topic->name,
+                        'preview'=>$topic->preview,
+                        'type'=>$type,
+                    ];
+                    $lessonTopics[] = $data;
+                   }
+                   $data = [
+                    "code" => 200,
+                    "message" => "All Topics",
+                    "result"=>$lessonTopics,
+                   
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+                $data = [
+                    "code" => 200,
+                    "message" => "No record found",
+                    "result"=>$lessonTopics,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "message" => "Something went wrong.",
+                
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
     public function LessonTopics(Request $request)
     {
         try {
