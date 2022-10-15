@@ -18,12 +18,16 @@ class AssignClassController extends Controller
 
     public function assignClass(Request $request){
         $validator = Validator::make($request->all(),[
+            'assignedClass' => 'required',
             'board' => 'required',
-            'assignedClass' => 'required'
+        ],
+        [
+            'assignedClass.required' => 'Please select class first',
+            'board.required' => 'Please select board'
         ]);
 
         if($validator->fails()){
-            return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()]);
+            return response()->json(['message' => 'Whoop! Something went wrong.', 'error' => $validator->errors()->first()]);
         }else{
             $is_class_assigned_already = AssignClass::where('class', $request->assignedClass)->where('board_id', $request->board)->exists();
             if($is_class_assigned_already){

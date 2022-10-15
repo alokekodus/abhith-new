@@ -1,4 +1,4 @@
-@if($lesson->topics()->exists())
+@if($lesson->topics()->exists() || $lesson->Sets()->exists())
 
 
 <div class="col-lg-12 grid-margin stretch-card">
@@ -45,7 +45,7 @@
                                     <th> Recources Path </th>
                                     <th> Preview</th>
                                     <th> Status </th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,9 +83,9 @@
                                             class="badge badge-danger">InActive</a>
                                         @endif
                                     </td>
-                                    <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                    {{-- <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                         <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
