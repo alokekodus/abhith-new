@@ -7,6 +7,7 @@ use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
 use App\Models\Board;
+use App\Models\CartOrOrderAssignSubject;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\User;
@@ -74,11 +75,11 @@ class AssignSubjectController extends Controller
 
             $assignedClass = $request->assignedClass;
             $assignedBoard = $request->assignedBoard;
-            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
-            if ($is_in_assignsubject) {
-                return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
+            // $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
+            // if ($is_in_assignsubject) {
+            //     return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
               
-            }
+            // }
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
             $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
@@ -140,6 +141,9 @@ class AssignSubjectController extends Controller
             } else {
                 $assign_subject = AssignSubject::find($request->subject_id);
                 $assign_subject->update($data);
+                if($request->has('subject_amount')){
+                    $cart_subjects=CartOrOrderAssignSubject::where('assign_subject_id',$request->subject_id)->update(['amount' => $request->subject_amount]);
+                }
             }
 
 
