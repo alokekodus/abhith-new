@@ -484,11 +484,11 @@ class LessonController extends Controller
             $lesson = Lesson::find(Crypt::decrypt($lesson_id));
             if ($lesson->status == 0) {
                 $lesson->update(['status' => 1]);
-                Toastr::success('Resource status update from InActive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Resource status update from Inactive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             } else {
                 $lesson->update(['status' => 0]);
-                Toastr::success('Resource status update from Active to InActive successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Resource status update from Active to Inactive successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
         } catch (\Throwable $th) {

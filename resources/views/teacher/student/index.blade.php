@@ -33,8 +33,7 @@
                                         @foreach($assign_orders as $key=>$assign_order)
                                         <tr>
                                             <td>
-                                                <img src="assets/images/faces/face1.jpg" class="me-2" alt="">
-                                                {{$assign_order->order->user->getFullName()}}
+                                                <b style="text-transform: capitalize">{{$assign_order->order->user->name}}</b>
                                             </td>
                                             <td>@if($assign_order->order->is_full_course_selected==1)<label
                                                     class="badge badge-gradient-success">Full Package</label> @else

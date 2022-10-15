@@ -42,7 +42,7 @@ class AssignSubjectController extends Controller
                 [
                     'subjectName' => 'required',
                     'assignedClass' => 'required',
-                    'subject_amount' => 'required|integer|digits_between:3,6',
+                    'subject_amount' => 'required|integer|min:100|digits_between:3,7',
                     'description' => 'required',
                     'why_learn' => 'required',
                     'requirements'=> 'required',
@@ -57,11 +57,14 @@ class AssignSubjectController extends Controller
                     'assignedClass.required' => 'Subject class is required',
                     'subject_amount.required' => 'Amount filed is required',
                     'subject_amount.digits_between'=>'Please insert a valid amount',
+                    'subject_amount.min'=>'Please insert a valid amount',
                     'description.required' => 'Subject descripttion filed is required',
                     'why_learn.required' => 'Why learn filed is required',
                     'requirements.required' => 'Requirements filed is required',
                     'image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
+                    'image_url.mimes' => " Subject cover picture only supports jpg, png and jpeg file type",
                     'video_thumbnail_image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
+                    'video_thumbnail_image_url.mimes' => "Subject promo video thumbnail only supports jpg, png and jpeg file type",
                     'video_url.max' => "Maximum file size to upload is 2GB (2097152 KB).",
                 ]
             );
