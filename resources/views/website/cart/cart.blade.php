@@ -42,17 +42,18 @@
                 
             </div>
         </div>
+       
         <div class="subjectDetails mt-3">
             <p>Subjects</p>
-            <h5>@foreach($cart->assignSubject as $key=> $assign_subject) {{$assign_subject->subject->subject_name}} 
-                 @endforeach</h5>
+            <h5>@foreach($cart->assignSubject as $key=> $assign_subject) {{$assign_subject->subject->subject_name}} @if(($key+1)!==($cart->assignSubject->count())),
+                @endif @endforeach</h5>
         </div>
         <div class="way-to-cart d-flex">
             <div class="remove-cart mr-4">
-                <a href="">Remove</a>
+                <a href="{{route('website.cart.remove',Crypt::encrypt($cart->id))}}">Remove</a>
             </div>
             <div class="go-to-cart">
-                <a href="{{route('website.cart.details',Crypt::encrypt($cart->id))}}">Go to Cart</a>
+                <a href="{{route('website.cart.details',Crypt::encrypt($cart->id))}}">Details</a>
             </div>
         </div>
     </div>

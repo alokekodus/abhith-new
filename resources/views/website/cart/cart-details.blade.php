@@ -72,6 +72,7 @@
                         </div>
                     </div>
                     <div class="price-div">
+                        <span>@if(subjectStatus($all_subject->subject->id)==1) already purchased @elseif(subjectStatus($all_subject->subject->id)==2) This subject is not available @endif</span>
                         <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$all_subject->subject->subject_amount}}</p>
                     </div>
                 </div>

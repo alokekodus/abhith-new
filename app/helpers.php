@@ -373,3 +373,16 @@ function ifSubjectActive($current_route){
         return false;
     }
 }
+function subjectStatus($subject_id){
+    $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
+        $q->where('assign_subject_id', $subject_id);
+    })->where("user_id", auth()->user()->id)->first();
+    if ($isBuy != null) {
+        return 1;
+    }
+    $isSubjectActive=AssignSubject::where('is_activate',1)->where('published',1)->where('id',$subject_id)->first();
+    if( $isSubjectActive!=null){
+        return 2;
+    }
+    return 3;
+}

@@ -133,6 +133,8 @@ Route::prefix('cart')->group(function () {
     Route::get('cart-details/{cart_id}', [CartController::class, 'cartDetails'])->name('website.cart.details');
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('website.add-to-cart');
     Route::post('remove-from-cart', [CartController::class, 'removeFromCart'])->name('website.remove-from-cart');
+    Route::get('remove-cart/{cart_id}', [CartController::class, 'removeCart'])->name('website.cart.remove');
+    
 });
 
 
