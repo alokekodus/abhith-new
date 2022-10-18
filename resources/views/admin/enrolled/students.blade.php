@@ -44,7 +44,7 @@
                             <th> Name </th>
                             <th> Email </th>
                             <th> Board/Course Name </th>
-                            <th> Subject Name/Fees </th>
+                            <th> Subject Name / Fees </th>
                             <th> Enroll Status </th>
                             <th> Payment Status </th>
                             <th> Date of Enrollment </th>
@@ -63,7 +63,9 @@
                                 @foreach($item->assignSubject as $assignSubject)
 
                                 <a href="{{route('admin.course.management.subject.view',Crypt::encrypt($assignSubject->subject->id))}}">{{$assignSubject->subject->subject_name??"NA"}} <span
-                                    class="badge badge-primary">Rs. {{$assignSubject->subject->subject_amount??"NA"}}</a></span>
+                                    class="badge badge-primary">Rs. {{$assignSubject->subject->subject_amount??"NA"}}</a></span> 
+                                <br>
+                                
                                 @endforeach
                             </td>
                             <td>
