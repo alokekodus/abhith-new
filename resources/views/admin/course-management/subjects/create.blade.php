@@ -129,7 +129,13 @@
                     if(response.status==0){
                         $.each(response.message,function(prefix,val){
                             toastr.error(val[0]);
-                        })
+                        })                       
+                       
+                        $('#assignSubjectSubmitBtn').html('Submit');
+                    }
+                    
+                    if(response.status==2){
+                        toastr.error(response.message);                
                        
                         $('#assignSubjectSubmitBtn').html('Submit');
                     }

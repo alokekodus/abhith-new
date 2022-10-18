@@ -8,6 +8,13 @@
             <i class="mdi mdi-bulletin-board"></i>
         </span> All Students
     </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <button onclick="window.history.back();" class="btn btn-gradient-primary btn-fw" data-toggle="modal" data-target="#addExamBoardModal" data-backdrop="static" data-keyboard="false">Back</button>
+            </li>
+        </ul>
+    </nav>
 
 </div>
 <div class="row">

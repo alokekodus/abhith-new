@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('insert-mcq-question', [MultipleChoiceController::class, 'insertQuestions'])->name('admin.insert.mcq.question');
                 Route::get('view-mcq-question/{id}', [MultipleChoiceController::class, 'viewMcq'])->name('admin.view.mcq.question');
                 Route::get('status/{lesson_id}', [MultipleChoiceController::class, 'statusChange'])->name('admin.mcq.status');
+                Route::get('status-set/{set_id}', [MultipleChoiceController::class, 'mcqSetStatusChange'])->name('admin.mcq.set.status');
                 
             });
 

@@ -478,6 +478,7 @@ class LessonController extends Controller
             return redirect()->back();
         }
     }
+    
     public function lessonStatusChange($lesson_id)
     {
         try {

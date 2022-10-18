@@ -77,11 +77,20 @@ class AssignSubjectController extends Controller
 
             $assignedClass = $request->assignedClass;
             $assignedBoard = $request->assignedBoard;
-            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
+            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->first();
             if ($is_in_assignsubject) {
-                return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
+                return response()->json(['status'=> 2,'message' => "'$request->subjectName'.'already active'"]);
               
             }
+
+            // Check same subject on same board
+            // $getAllSubjects = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('board_id', $request->assignedBoard)->first();
+            // if () {
+            //     return response()->json(['status'=> 0, 'message' => "'$request->subjectName'.'already exists'"]);
+            // }
+
+            // Condition ends here
+
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
             $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');

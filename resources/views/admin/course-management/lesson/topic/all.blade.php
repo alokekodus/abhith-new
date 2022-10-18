@@ -237,8 +237,8 @@
                                     <td>{{++$key}}</td>
                                     <td> {{$set->set_name}}</td>
                                     <td> {{$set->question->count()}}</td>
-                                    <td> @if($set->is_activate==1)<a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
-                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
+                                    <td> @if($set->is_activate==1)<a href="{{route('admin.mcq.set.status',Crypt::encrypt($set->id))}}"
+                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.mcq.set.status',Crypt::encrypt($set->id))}}"
                                             class="badge badge-danger">InActive</a> @endif</td>
                                     {{-- <td>@if($topic->status==1)Active @else InActive @endif</td> --}}
                                     <td>
