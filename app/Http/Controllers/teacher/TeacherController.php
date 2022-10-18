@@ -100,8 +100,8 @@ class TeacherController extends Controller
                 'status' => 1,
 
             ];
-            $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->get();
-            if ($user_details == true) {
+            $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->first();
+            if ($user_details) {
                 $user_details=UserDetails::where('user_id', auth()->user()->id)->first();
                 $user_details->update($data);
                 return response()->json(['status'=>1,'message' => 'Application updated successfully.']);
