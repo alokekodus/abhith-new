@@ -15,7 +15,7 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         try {
-           
+
             $validate = Validator::make(
                 $request->all(),
                 [
@@ -60,13 +60,13 @@ class TeacherController extends Controller
                 ]
             );
             if ($validate->fails()) {
-                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
             }
 
             $resume = $request->resume;
             $teacherdemovideo = $request->teacherdemovideo;
             if (!empty($resume)) {
-              
+
                 $new_name = date('d-m-Y-H-i-s') . '_' . $resume->getClientOriginalName();
                 // $new_name = '/images/'.$image.'_'.date('d-m-Y-H-i-s');
                 $resume->move(public_path('/files/teacher/resume/'), $new_name);
@@ -95,38 +95,35 @@ class TeacherController extends Controller
                 'current_organization' => $request->current_organization,
                 'current_designation' => $request->current_designation,
                 'current_ctc' => $request->current_ctc,
-                'resume_url' => url('').'/'.$resume_url,
-                'teacherdemovideo_url' => url('').'/'.$teacherdemovideo_url,
+                'resume_url' => url('') . '/' . $resume_url,
+                'teacherdemovideo_url' => url('') . '/' . $teacherdemovideo_url,
                 'status' => 1,
-
+                'user_id' => auth()->user()->id,
             ];
             $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->first();
             if ($user_details) {
-                $user_details=UserDetails::where('user_id', auth()->user()->id)->first();
+                $user_details = UserDetails::where('user_id', auth()->user()->id)->first();
                 $user_details->update($data);
-                return response()->json(['status'=>1,'message' => 'Application updated successfully.']);
-                    
+                return response()->json(['status' => 1, 'message' => 'Application updated successfully.']);
             } else {
                 UserDetails::create($data);
-                return response()->json(['status'=>1,'message' => 'Application submitted successfully.']);
+                return response()->json(['status' => 1, 'message' => 'Application submitted successfully.']);
             }
-          
-           
         } catch (\Throwable $th) {
             return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
     public function index()
     {
-       
+
         $applications = UserDetails::with('user')->where('status', '!=', 0)->get();
-      
+
         return view('admin.teacher.index', compact('applications'));
     }
     public function details($teacher_id)
     {
         try {
-           
+
             $user_details = UserDetails::with('user')->where('id', Crypt::decrypt($teacher_id))->first();
             $resume = pathinfo(public_path($user_details->resume_url));
             $resume_extension = $resume['extension'];
@@ -138,7 +135,7 @@ class TeacherController extends Controller
     public function approvedApplication($user_detail_id)
     {
         try {
-           
+
             $data = [
                 'status' => 2,
                 'referral_id' => teacherReferralId(),
