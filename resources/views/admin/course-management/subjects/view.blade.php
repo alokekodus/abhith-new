@@ -55,7 +55,7 @@
                         </tr>
                         <tr>
                             <td>Promo Video: </td>
-                            <td colspan="2"><b>@if($subject->subjectAttachment)<a
+                            <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
                                         href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to view</a>
                                     @else NA @endif</b></td>
 
