@@ -240,10 +240,11 @@
                     <div class="tab-pane" id="mycourses" role="tabpanel">
                         <div class="row">
                             <div class="col-lg-12 col-6">
-                                <h4 class="small-heading-black">Courses History</h4>
+                                <h4 class="font-weight-bold">My Courses</h4>
+                                {{-- <h4 class="small-heading-black">My Courses</h4> --}}
                             </div>
-                            <div class="col-lg-12">
-                                <table id="purchase_history_table" class="table table-striped">
+                            <div class="col-lg-12 mt-4">
+                                {{-- <table id="purchase_history_table" class="table table-striped">
                                     <tbody>
                                         @forelse ($purchase_history as $key => $item)
 
@@ -260,11 +261,9 @@
 
 
                                             <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
-                                                class="enroll">view
+                                                class="enroll">View
                                                 Details</a>
                                         </div>
-
-
                                         @empty
                                         <tr>
                                             <div class="text-center">
@@ -276,10 +275,37 @@
                                         </tr>
                                         @endforelse
                                     </tbody>
-                                </table>
+                                </table> --}}
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-3">
+                                        <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px" alt="">
+                                    </div>
+                                    <div class="col-lg-10 col-md-9">
+                                        <div class="d-flex justify-content-between myCourses-details">
+                                            <div>
+                                                <h6>Board</h6>
+                                                <h5 class="font-weight-bold">SEBA</h5>
+                                            </div>
+                                            <div>
+                                                <h6>Class</h6>
+                                                <h5 class="font-weight-bold">Class 9</h5>
+                                            </div>
+                                            <div>
+                                                <h6>Course Type</h6>
+                                                <h5 class="font-weight-bold">Full Course</h5>
+                                            </div>
+                                            <div>
+                                                <h6>Subjects</h6>
+                                                <h5 class="font-weight-bold text-center">8</h5>
+                                            </div>
+                                        </div>
+                                        <div class="myCourses-view-btn">
+                                            <a href="#" class="btn btn-primary">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="tab-pane" id="myperformance" role="tabpanel">
                         <div class="row">
@@ -537,19 +563,20 @@
                                     @if(!$purchase_history->isEmpty())
                                     <thead>
                                         <tr class="text-center">
-                                            <th>Sl No.</th>
+                                            {{-- <th>Sl No.</th> --}}
                                             <th>Board Name</th>
                                             <th>Class Name</th>
                                             <th>Subjects</th>
                                             <th>Total Price</th>
                                             <th>Purchase Date</th>
+                                            <th>E-Receipt</th>
                                         </tr>
                                     </thead>
                                     @endif
                                     <tbody>
                                         @forelse ($purchase_history as $key => $item)
                                         <tr class="text-center">
-                                            <td>{{$key + 1}}</td>
+                                            {{-- <td>{{$key + 1}}</td> --}}
                                             <td>{{$item->board->exam_board}}</td>
                                             <td>{{$item->assignClass->class}}</td>
                                             <td>
@@ -563,6 +590,7 @@
                                             <td>{{number_format($item->assignClass->subjects->sum('subject_amount')??'00',2,'.','')}}
                                             </td>
                                             <td>{{$item->updated_at->format('d-M-Y') }}</td>
+                                            <td><a href="#">Download</a></td>
                                         </tr>
                                         @empty
                                         <tr>

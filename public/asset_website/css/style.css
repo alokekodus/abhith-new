@@ -1265,6 +1265,7 @@ footer {
 .footer-menu-list li {
     margin-right: 30px;
     list-style-type: disc;
+    font-size: 15px;
 }
 
 /* .footer-menu-list li:first-child {
@@ -1273,6 +1274,7 @@ footer {
 
 .footer-mid-right {
     text-align: right;
+    font-size: 15px;
 }
 
 .social-media {
@@ -4417,5 +4419,8 @@ svg{
 }
 .progress-main-div {
     padding-left: 100px;
+    margin-top: 25px;
+}
+.myCourses-view-btn{
     margin-top: 25px;
 }
