@@ -386,3 +386,20 @@ function subjectStatus($subject_id){
     }
     return 3;
 }
+function totalAmountCart($cart_id){
+    
+    $cart = Cart::with('board', 'assignClass', 'assignSubject')->where('id', $cart_id)->first();
+    $all_subjects = $cart->assignSubject;
+    
+    $total=0;
+   foreach($all_subjects as $key=>$all_subject){
+  
+    if(subjectStatus($all_subject->id)==3){
+       
+      $total=$total+$all_subject->amount;
+    
+
+    }
+    return $total;
+   }
+}
