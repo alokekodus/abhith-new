@@ -2,6 +2,15 @@
 @section('title', 'Course Management - Subjects')
 @section('head')
 <link rel="stylesheet" href="{{ asset('asset_admin/css/lesson.css') }}">
+
+<style>
+    p span.heading{
+        display: inline-block;
+        width: 150px !important;
+        font-style: italic;
+        font-weight: 600
+    }
+</style>
 @endsection
 @section('content')
 <div class="page-header">
@@ -21,7 +30,64 @@
     </nav>
 </div>
 
+
 <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <p>
+                <span class="heading">Subject Name:</span>
+                <span class="text">{{$subject->subject_name}}</span>
+            </p>
+
+            <p>
+                <span class="heading">Board:</span>
+                <span class="text">{{$subject->boards->exam_board}}</span>
+            </p>
+
+            <p>
+                <span class="heading">Class:</span>
+                <span class="text">{{$subject->assignClass->class}}</span>
+            </p>            
+            
+            <p>
+                <span class="heading">Image:</span>
+                <span class="text"><a target="_blank" href="{{asset($subject->image)}}">Click to view</a></span>
+            </p>
+
+            <p>
+                <span class="heading">Thumbnail Image:</span>
+                <span class="text">@if($subject->subjectAttachment)<a target="_blank"
+                    href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to view</a>
+                @else NA @endif</span>
+            </p>
+
+            <p>
+                <span class="heading">Promo Video:</span>
+                <span class="text">
+                    @if($subject->subjectAttachment)<a target="_blank"
+                    href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to view</a>
+                @else NA @endif</span>
+            </p>
+
+            <p>
+                <span class="heading">Description:</span>
+                <span class="text">{!!$subject->description!!}</span>
+            </p>
+            
+            <p>
+                <span class="heading">Why Learn:</span>
+                <span class="text">{!!$subject->why_learn!!}</span>
+            </p>
+            
+            <p>
+                <span class="heading">Requirements:</span>
+                <span class="text">{!!$subject->requirements??'NA'!!}</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+{{-- <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Subject Details</h4>
@@ -80,7 +146,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 @include('admin.course-management.lesson.all')
 
