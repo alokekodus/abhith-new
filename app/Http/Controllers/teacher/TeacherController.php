@@ -113,7 +113,7 @@ class TeacherController extends Controller
           
            
         } catch (\Throwable $th) {
-            return response()->json(['status' => 0, 'message' => 'Something Went Wrong.']);
+            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
     public function index()
