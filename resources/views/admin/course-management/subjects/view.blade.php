@@ -45,18 +45,18 @@
                         </tr>
                         <tr>
                             <td>Image: </td>
-                            <td colspan="2"><b><a href="{{asset($subject->image)}}">{{basename($subject->image)}}</a></b></td>
+                            <td colspan="2"><b><a target="_blank" href="{{asset($subject->image)}}">Click to view</a></b></td>
                         </tr>
                         <tr>
                             <td>Thumbnail Image: </td>
-                            <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                        href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->video_thumbnail_image)}}</a>
+                            <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
+                                        href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to view</a>
                                     @else NA @endif</b></td>
                         </tr>
                         <tr>
                             <td>Promo Video: </td>
-                            <td colspan="2"><b>@if($subject->subjectAttachment)<a
-                                        href="{{asset($subject->subjectAttachment)}}">{{basename($subject->subjectAttachment->attachment_origin_url)}}</a>
+                            <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
+                                        href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to view</a>
                                     @else NA @endif</b></td>
 
                         </tr>

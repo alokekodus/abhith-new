@@ -43,10 +43,10 @@
                             <th> # </th>
                             <th> Name </th>
                             <th> Email </th>
-                            <th> Course Name </th>
-                            <th> Subject Name </th>
+                            <th> Board/Course Name </th>
+                            <th> Subject Name/Fees </th>
                             <th> Enroll Status </th>
-                            <th>Payment Status</th>
+                            <th> Payment Status </th>
                             <th> Date of Enrollment </th>
                             {{-- <th>Details</th> --}}
                         </tr>

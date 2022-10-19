@@ -106,7 +106,7 @@
             $('#boardsTable').DataTable({
                 "processing": true,
                 "searching" : true,
-                "ordering" : false
+                "ordering" : true
             });
         });
 

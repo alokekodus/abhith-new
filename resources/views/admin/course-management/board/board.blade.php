@@ -118,7 +118,7 @@
             $('#exam_board_table').DataTable({
                 "processing": true,
                 "searching" : false,
-                "ordering" : false
+                "ordering" : true
             });
         });
 

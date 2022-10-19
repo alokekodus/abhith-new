@@ -45,22 +45,22 @@
         $('#lessonTable').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         });
         $('#lessonTableVideo').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         });
         $('#lessonTableArticle').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         });
         $('#lessonTableMcq').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         })
     });
 

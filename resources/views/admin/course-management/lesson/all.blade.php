@@ -38,7 +38,7 @@
                             <td style="text-align: center">{{$lesson->topics->where('type',1)->count()}} </td>
                             <td style="text-align: center">{{$lesson->topics->where('type',3)->count()}}</td>
                             <td><a  href="{{route('admin.course.management.lesson.edit',Crypt::encrypt($lesson->id))}}" title="Edit Lesson"><i
-                                        class="mdi mdi-grease-pencil"></i></a>
+                                        class="mdi mdi-grease-pencil mr-2"></i></a>
                                 <a href="{{route('admin.course.management.lesson.topic.display',Crypt::encrypt($lesson->id))}}"
                                     title="View Details"><i class="mdi mdi-eye"></i></a>
                             </td>
