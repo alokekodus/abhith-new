@@ -102,6 +102,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('view/{lesson_id}', [LessonController::class, 'resourceView'])->name('admin.course.management.lesson.view'); // view resources
             Route::get('edit/{lesson_id}', [LessonController::class, 'resourceEdit'])->name('admin.course.management.lesson.edit'); //edit video resources
             Route::post('update', [LessonController::class, 'resourceupdate'])->name('admin.course.management.lesson.update'); //update video resources
+            Route::post('update-lesson', [LessonController::class, 'updateLesson'])->name('admin.course.management.lesson.update.name'); //update video resources
             /* ------------------------------- Multiple Choice Questions ------------------------------------ */
             Route::prefix('multiple-choice')->group(function () {
                 Route::get('multiple-choice-question', [MultipleChoiceController::class, 'index'])->name('admin.index.multiple.choice');

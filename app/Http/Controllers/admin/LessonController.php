@@ -497,4 +497,40 @@ class LessonController extends Controller
             return redirect()->back();
         }
     }
+
+    public function updateLesson(Request $request){
+        try {
+            $validator = Validator::make($request->all(),[
+                'lessonId' => 'required',
+                'lessonName' => 'required'
+            ],
+            [
+                'lessonId.required' => 'ID mismatch',
+                'lessonName.required' => 'Lesson name cannot be null',
+            ]);
+
+            if($validator->fails()){
+                return response()->json(['message' => 'Whoops! Something went wrong', 'error' => $validator->errors()]);
+            }
+
+            $dec_id = Crypt::decrypt($request->lessonId);
+
+            $lesson = Lesson::find($dec_id);
+            if(Str::lower($request->lessonName) === Str::lower($lesson->name)){
+                return response()->json(['message' => 'Lesson already exists', 'status' => 2]);
+            }
+            
+            $update = Lesson::find($dec_id)->update([
+                'name' => $request->lessonName
+            ]);
+
+            if(!$update){
+                return response()->json(['message' => 'Error on lesson update', 'status' => 1]);
+            }            
+            return response()->json(['message' => 'Lesson updated successfully', 'status' => 1]);
+        } catch (\Throwable $th) {
+            //throw $th->getMessage();
+            return response()->json(['message' => $th->getMessage(), 'status' => 2]);
+        }
+    }
 }
