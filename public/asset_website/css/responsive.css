@@ -339,6 +339,16 @@
     .circleOne{
         margin-top: -18px;
     }
+    .monthly-progress-bar .monthly-bar .monthly-percent::before {
+        left: 6px;
+        right: 8px;
+    }
+    .progress-bar-left p {
+        font-size: 10px;
+    }
+    .monthly-progress-bar .monthly-bar .month-name {
+        font-size: 13px;
+    }
 }
 @media (max-width: 767px) {
     a {
@@ -1096,6 +1106,13 @@
     }
     #myperformance .dropdown-toggle::after {
         margin-left: 10.75rem;
+    }
+    .monthly-progress-bar .monthly-bar .monthly-percent::before {
+        left: 6px;
+        right: 6px;
+    }
+    .monthly-progress-bar .monthly-bar .month-name{
+        font-size: 12px;
     }
     .monthly-progress-bar {
         position: unset;

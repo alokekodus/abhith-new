@@ -427,47 +427,77 @@
                                     </div>
                                     <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
                                         <div class="monthly-progress-bar">
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 25%">
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 25%">
                                                     <div class="percent">15</div>
                                                 </div>
-                                                <div class="weekday-name">Mon</div>
+                                                <div class="month-name">Jan</div>
                                             </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 65%">
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 65%">
                                                     <div class="percent">45</div>
                                                 </div>
-                                                <div class="weekday-name">Tue</div>
+                                                <div class="month-name">Feb</div>
                                             </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 30%">
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 30%">
                                                     <div class="percent">20</div>
                                                 </div>
-                                                <div class="weekday-name">Wed</div>
+                                                <div class="month-name">Mar</div>
                                             </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 67%">
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 67%">
                                                     <div class="percent">47</div>
                                                 </div>
-                                                <div class="weekday-name">Thu</div>
+                                                <div class="month-name">Apr</div>
                                             </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 60%">
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 60%">
                                                     <div class="percent">40</div>
                                                 </div>
-                                                <div class="weekday-name">Fri</div>
+                                                <div class="month-name">May</div>
                                             </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 23%">
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 23%">
                                                     <div class="percent">13</div>
                                                 </div>
-                                                <div class="weekday-name">Sat</div>
+                                                <div class="month-name">Jun</div>
                                             </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 60%">
-                                                    <div class="percent">40</div>
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 50%">
+                                                    <div class="percent">35</div>
                                                 </div>
-                                                <div class="weekday-name">Sun</div>
+                                                <div class="month-name">Jul</div>
+                                            </div>
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 45%">
+                                                    <div class="percent">30</div>
+                                                </div>
+                                                <div class="month-name">Aug</div>
+                                            </div>
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 36%">
+                                                    <div class="percent">25</div>
+                                                </div>
+                                                <div class="month-name">Sep</div>
+                                            </div>
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 53%">
+                                                    <div class="percent">38</div>
+                                                </div>
+                                                <div class="month-name">Oct</div>
+                                            </div>
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 48%">
+                                                    <div class="percent">33</div>
+                                                </div>
+                                                <div class="month-name">Nov</div>
+                                            </div>
+                                            <div class="monthly-bar">
+                                                <div class="monthly-percent" style="height: 28%">
+                                                    <div class="percent">17</div>
+                                                </div>
+                                                <div class="month-name">Dec</div>
                                             </div>
                                         </div>
                                     </div>

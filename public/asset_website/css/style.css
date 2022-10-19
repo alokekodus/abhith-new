@@ -4113,8 +4113,8 @@ svg{
     left: 2px;
     right: 2px;
     bottom: 0;
-    background-color: #01b9f1;
-    /* background: linear-gradient(0deg, #076fef, #05559b); */
+    /* background-color: #01b9f1; */
+    background: linear-gradient(0deg, #076fef, #05559b);
 }
 .monthly-progress-bar .weekly-bar .week-percent::after{
     content: '';
@@ -4135,6 +4135,57 @@ svg{
     font-weight: 600;
 }
 .monthly-progress-bar .weekly-bar .weekday-name{
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 2px 6px;
+    font-size: 14px;
+}
+.monthly-progress-bar .monthly-bar{
+    position: relative;
+    flex: 1;
+    text-align: center;
+    border-bottom: 1px solid rgb(223, 223, 223);
+}
+.monthly-progress-bar .monthly-bar .monthly-percent{
+    position: absolute;
+    width: 35px;
+    /* background: rgb(0,0,0,1); */
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+.monthly-progress-bar .monthly-bar .monthly-percent::before{
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 0;
+    /* background-color: #01b9f1; */
+    background: linear-gradient(0deg, #076fef, #05559b);
+}
+.monthly-progress-bar .monthly-bar .monthly-percent::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    /* background: rgba(255, 255, 255, 0.1); */
+}
+.monthly-progress-bar .monthly-bar .monthly-percent .percent{
+    position: absolute;  
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: black;
+    font-weight: 600;
+}
+.monthly-progress-bar .monthly-bar .month-name{
     position: absolute;
     bottom: -30px;
     left: 50%;
