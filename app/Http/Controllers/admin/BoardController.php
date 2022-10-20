@@ -58,9 +58,11 @@ class BoardController extends Controller
 
             $dec_id = Crypt::decrypt($request->boardId);
 
-            $board = Board::find($dec_id);
-            if(Str::lower($request->boardName) === Str::lower($board->exam_board)){
-                return response()->json(['message' => 'Board already exists', 'status' => 2]);
+            $boards = Board::all();
+            foreach($boards as $board){
+                if(Str::lower($request->boardName) === Str::lower($board->exam_board)){
+                    return response()->json(['message' => 'Board already exists', 'status' => 2]);
+                }
             }
             
             $update = Board::find($dec_id)->update([

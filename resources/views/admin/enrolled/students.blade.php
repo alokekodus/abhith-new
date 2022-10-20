@@ -31,6 +31,13 @@
             <i class="mdi mdi-format-list-bulleted"></i>
         </span>Enrolled Students
     </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <button onclick="window.history.back();" class="btn btn-gradient-primary btn-fw">Back</button>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <div class="col-lg-12 grid-margin stretch-card">

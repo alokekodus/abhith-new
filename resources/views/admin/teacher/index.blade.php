@@ -48,7 +48,7 @@
                             <th>Total Exprience </th>
                             <th>Status</th>
                             <th>Applyed Date</th>
-                            <th>Action</th>
+                            <th>View</th>
                             {{-- <th>Details</th> --}}
                         </tr>
                     </thead>
@@ -60,10 +60,17 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->email}}</td>
                             <td>{{$item->phone}}</td>
-                            <td>{{$item->board->exam_board}}--Class{{$item->assignClass->class}}--{{$item->assignSubject->subject_name}}</td>
-                            <td> {{$item->total_experience_year??'0'}}Years {{$item->total_experience_month??'0'}}Months</td>
-                            <td>@if($item->status==1) <span class="badge badge-warning">Apply for approve</span> @else <span class="badge badge-success">Approved</span>
-                                 @endif</td>
+                            <td>{{$item->board->exam_board}} / Class{{$item->assignClass->class}} / {{$item->assignSubject->subject_name}}</td>
+                            <td>{{$item->total_experience_year??'0'}}Years {{$item->total_experience_month??'0'}}Months</td>
+                            <td>
+                                @if($item->status==1) 
+                                    @if(auth()->user()->hasRole("Teacher"))
+                                        <span class="badge badge-warning">Pending Approval</span> @else <span class="badge badge-success">Approved</span>
+                                    @else
+                                        <span class="badge badge-warning">Apply for approve</span> @else <span class="badge badge-success">Approved</span>
+                                    @endif                                
+                                @endif
+                            </td>
                             <td>{{$item->updated_at->format('d-M-Y')}}</td>
                             <td>@if(auth()->user()->hasRole("Teacher")) <a href="{{route('teacher.application.view',Crypt::encrypt($item->id))}}"> @else <a href="{{route('admin.teacher.details',Crypt::encrypt($item->id))}}"> @endif<i class="mdi mdi-eye"></i></a></td>
                             {{-- <td><a href="#">view</a></td> --}}

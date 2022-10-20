@@ -454,6 +454,9 @@ class LessonController extends Controller
                         return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
                     }
                 }
+                else{
+                    return response()->json(['status' => 3, 'message' => "No file found"]);
+                }
             }
         } catch (\Throwable $th) {
 
