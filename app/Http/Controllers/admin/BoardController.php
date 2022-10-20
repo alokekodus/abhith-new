@@ -66,11 +66,14 @@ class BoardController extends Controller
                 $request->all(),
                 [
                     'boardId' => 'required',
-                    'boardName' => 'required'
+                    'boardName' => 'required',
+                    'examLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:500'
                 ],
                 [
                     'boardId.required' => 'ID mismatch',
                     'boardName.required' => 'Board name cannot be null',
+                    'examLogo.image' => 'Logo must be an image',
+                    'examLogo.max' => 'Logo size can not exceed 500KB'
                 ]
             );
 
@@ -80,16 +83,36 @@ class BoardController extends Controller
 
             $dec_id = Crypt::decrypt($request->boardId);
 
-            $boards = Board::all();
-            foreach ($boards as $board) {
-                if (Str::lower($request->boardName) === Str::lower($board->exam_board)) {
-                    return response()->json(['message' => 'Board already exists', 'status' => 2]);
+            $document = $request->examLogo;
+
+            // If logo
+            if (isset($document) && !empty($document)) {
+
+                $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
+                $document->move(public_path('/files/examboard/'), $new_name);
+                $file = 'files/examboard/' . $new_name;
+
+                $update = Board::find($dec_id)->update([
+                    'exam_board' => $request->boardName,
+                    'logo' => $file
+                ]);
+            } else {
+                // Check if already exists
+                $boards = Board::all();
+                foreach ($boards as $board) {
+                    if (Str::lower($request->boardName) === Str::lower($board->exam_board)) {
+                        return response()->json(['message' => 'Board already exists', 'status' => 2]);
+                    }
                 }
+
+                $update = Board::find($dec_id)->update([
+                    'exam_board' => $request->boardName
+                ]);
             }
 
-            $update = Board::find($dec_id)->update([
-                'exam_board' => $request->boardName
-            ]);
+            // $update = Board::find($dec_id)->update([
+            //     'exam_board' => $request->boardName
+            // ]);
 
             if (!$update) {
                 return response()->json(['message' => 'Error on board update', 'status' => 1]);

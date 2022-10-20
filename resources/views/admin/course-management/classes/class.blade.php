@@ -160,7 +160,7 @@
                         toastr.success(data.message);
                         location.reload(true);
                     }else{
-                        // toastr.error(data.message);
+                        toastr.error(data.message);
                         $('#assignClassSubmitBtn').attr('disabled', false);
                         $('#assignClassSubmitBtn').text('Submit');
                         $('#assignClassCancelBtn').attr('disabled', false);

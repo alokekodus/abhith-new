@@ -431,6 +431,7 @@ class LessonController extends Controller
                 $assign_class_id = $lesson->assign_class_id;
                 $assign_subject_id = $lesson->assign_subject_id;
                 $lesson_id = $lesson->id;
+                $teacher_id = $request->teacher_id;
                 $questionFile = $request->questionExcel;
                 if ($request->hasFile('questionExcel')) {
 
@@ -446,7 +447,7 @@ class LessonController extends Controller
                         $questionFile = $request->file('questionExcel');
 
                         $questionFile = $request->file('questionExcel')->store('imports');
-                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id);
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id, $teacher_id);
                       
                         $import->import($questionFile);
 
@@ -460,7 +461,7 @@ class LessonController extends Controller
             }
         } catch (\Throwable $th) {
 
-            return response()->json(['status' => 0, 'message' => $th]);
+            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
     public function previewStatusChange($lesson_id)

@@ -89,7 +89,7 @@
 
                         <div class="form-group">
                             <label for="">Logo</label>
-                            <input type="file" name="examLogo" id="examLogo" class="form-control" required>
+                            <input type="file" name="examLogo" class="form-control" required>
                         </div>
                         <div style="float: right;">
                             <button type="button" class="btn btn-md btn-default" id="addBoardCancelBtn">Cancel</button>
@@ -118,6 +118,10 @@
                         <div class="mb-3">
                             <label for="boardName">Board</label>
                             <input type="text" id="boardName" name="boardName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Logo</label>
+                            <input type="file" name="examLogo" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
