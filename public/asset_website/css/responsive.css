@@ -291,6 +291,54 @@
     #documents .doc-content p {
         font-size: 10px;
     }
+    #mcq_result h4 {
+        margin-left: 20px;
+        margin-bottom: 16px;
+    }
+    #mcq_result {
+        margin-top: 40px;
+    }
+    .progress-main-div {
+        padding-left: 0px;
+    }
+    .total-div h3 {
+        font-size: 16px;
+        margin-bottom: 0;
+    }
+    .total-div {
+        height: auto;
+        width: auto;
+    }
+    .totalQuestion {
+        padding: 25px 0;
+    }
+    .circular_text {
+        margin-top: 35px;
+        margin-left: 25px;
+    }
+    .circular_text p {
+        font-size: 14px;
+    }
+    .circular-progress {
+        height: 215px;
+        width: 215px;
+    }
+    .circular-progress::before{
+        height: 175px;
+        width: 175px;
+    }
+    .circular_text .watched .dot {
+        margin-top: 3px;
+    }
+    .circular_text .not-watched .dot{
+        margin-top: 3px;
+    }
+    .circular_text .unattempt .dot{
+        margin-top: 3px;
+    }
+    .circleOne{
+        margin-top: -18px;
+    }
 }
 @media (max-width: 767px) {
     a {
