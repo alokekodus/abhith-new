@@ -10,9 +10,12 @@ use App\Models\Order;
 use App\Models\AssignSubject;
 use App\Models\CartOrOrderAssignSubject;
 use App\Models\Subject;
+use App\Models\UserDetails;
 use Illuminate\Support\Facades\Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Crypt;
+use Razorpay\Api\Api;
+use Razorpay\Api\Errors\SignatureVerificationError;
 
 class CartController extends Controller
 {
@@ -23,7 +26,7 @@ class CartController extends Controller
             $countCartItem = 0;
             $price = [];
             if (Auth::check()) {
-                $carts = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
+                $carts = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->where('is_buy',0)->get();
             } else {
                 return redirect()->route('website.login');
             }
@@ -52,7 +55,7 @@ class CartController extends Controller
     {
          
         try {
-           
+             
             if (!Auth::check()) {
 
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
@@ -67,7 +70,63 @@ class CartController extends Controller
             } else {
                 $all_subjects = AssignSubject::whereIn('id', $request->subjects)->get();
             }
+            if($request->buynow==1){
+                $cart = Cart::create([
+                    'user_id' => auth()->user()->id,
+                    'board_id' => $board_id, //board_id
+                    'assign_class_id' => $class_id, //class_id
+                    'is_full_course_selected' => $course_type,
+                    'is_buy' => $request->buynow
+                ]);
+                foreach ($all_subjects as $key => $subject) {
+                    $data = [
+                        'cart_id' => $cart->id,
+                        'assign_subject_id' => $all_subjects[$key]['id'],
+                        'amount' => $all_subjects[$key]['subject_amount'],
+                        'type' => 1,
+                    ];
 
+                    $assign_subject = CartOrOrderAssignSubject::create($data);
+                }
+                $user_detail = UserDetails::where('user_id', Auth::user()->id)->first();
+                $total_amount=totalAmountCart($cart->id);
+                /**********************  For Razorpay  *************************/
+                $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+                $orderData = [
+                    'receipt'         => now()->timestamp,
+                    'amount'          => $total_amount * 100, // 39900 rupees in paise
+                    'currency'        => 'INR'
+                ];
+
+                $razorpayOrder = $api->order->create($orderData);
+
+                $checkout_params = [
+                    "key"               => env('RAZORPAY_KEY'),
+                    "amount"            => ($total_amount * 100),
+                    "name"              => "Abhith Shiksha",
+                    "image"             => "https://cdn.razorpay.com/logos/FFATTsJeURNMxx_medium.png",
+                    "prefill"           => [
+                        "name"              => Auth::user()->name . Auth::user()->lastname,
+                        "email"             => Auth::user()->email,
+                        "contact"           => auth()->user()->phone,
+                    ],
+                    "theme"             => [
+                        "color"             => "#528FF0"
+                    ],
+                    "order_id"          =>  $razorpayOrder['id'],
+                ];
+
+               
+                    Order::create([
+                        'user_id' => Auth::user()->id,
+                        'board_id' => $cart->board_id,
+                        'assign_class_id' => $cart->assign_class_id,
+                        'rzp_order_id' => $razorpayOrder['id'],
+                        'payment_status' => 'pending',
+                    ]);
+                    return view('website.cart.checkout')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
+                
+            }
             $cart = Cart::with('assignSubject')->where([['user_id', '=', Auth::user()->id], ['assign_class_id', '=', $class_id], ['board_id', '=', $board_id], ['is_paid', '=', 0], ['is_remove_from_cart', '=', 0], ['is_full_course_selected', '=', $course_type]])->first();
             if ($cart) {
                 $assignSubjectAlreadyInCart = CartOrOrderAssignSubject::whereNotIn('assign_subject_id', $request->subjects)->get();

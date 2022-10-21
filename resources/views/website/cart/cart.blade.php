@@ -33,7 +33,7 @@
                     </div>
                     <div class="course-type">
                         <p>Course Type</p>
-                        <h5>@if($cart->is_full_course_selected)Full Package @else Custom Package @endif</h5>
+                        <h5>@if($cart->is_full_course_selected==1)Full Package @else Custom Package @endif</h5>
                     </div>
                 </div>
                 <div class="coursePrice">

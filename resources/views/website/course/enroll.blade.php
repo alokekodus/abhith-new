@@ -379,7 +379,7 @@
                             {{number_format($data['subjectamount'], 2, '.', '')}}</span>
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart" name="buynow" value="0">Add to cart</button>
-                    <button type="submit" class="btn btn-warning btn-lg btn-block buy-now" id="buy-now" name="buynow" value="1">Buy Now</button>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block buy-now" id="buy-now" name="buynow" value="1" style="color: white;">Buy Now</button>
                 </div>
             </div>
 
