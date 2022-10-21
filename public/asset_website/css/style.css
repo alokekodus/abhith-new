@@ -611,6 +611,7 @@ main {
 
 .home-slide img {
     height: 100%;
+    object-fit: cover;
 }
 
 .home-desc {
@@ -1397,6 +1398,7 @@ footer {
 
 .counter-list li:nth-child(3) {
     width: 50%;
+    height: 601px;
     background-image: linear-gradient(to right, #076fef, #01b9f1);
     color: #fff;
     padding: 17px 40px;
