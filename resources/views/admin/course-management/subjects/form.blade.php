@@ -12,7 +12,7 @@
         <div class="form-group">
             <label for="">Belongs to Board<span class="text-danger">*</span></label>
             <select name="assignedBoard" id="assignedBoard" class="form-control" onchange="changeBoard()">
-                <option value="">-- Select -- </option>
+                <option value="" disabled selected>-- Select -- </option>
                 @forelse ($boards as $key => $item)
                  <option value="{{$item->id}}" @isset($subject){{$subject->board_id==$item->id ? 'selected':''}} @endisset>{{$item->exam_board}}</option>
                 @empty

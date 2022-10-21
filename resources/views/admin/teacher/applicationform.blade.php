@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Become a teacher</h4>
-            <form class="forms-sample" id="applyForm" enctype="multipart/form-data" method="post" action="{{route('teacher.store')}}">
+            <form class="forms-sample" id="applyForm" enctype="multipart/form-data">
                 @csrf
                 <p class="card-description"> Personal Details </p>
 
@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-gradient-primary me-2" id="applicationSubmit">Submit</button>
-                <button class="btn btn-light">Cancel</button>
+                <button class="btn btn-light" id="applicationCancel">Cancel</button>
             </form>
         </div>
     </div>

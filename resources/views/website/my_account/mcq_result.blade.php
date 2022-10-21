@@ -22,7 +22,7 @@
             <h3>Multiple Choice Questions For Class 
                 <span>Board</span>
             </h3>
-            <p>1/10 Questions</p>
+            <p></p>
         </div>
     </div>
     

@@ -56,13 +56,17 @@
                                 @endif
                             </td>
 
-                            <td class="d-flex">
+                          
+                                <td>
+                                    <a href="{{route('admin.edit.gallery',Crypt::encrypt($item->id))}}"
+                                        title="Edit Gallery"><i class="mdi mdi-grease-pencil"></i></a>
+                                    <a href="{{route('admin.delete.gallery',Crypt::encrypt($item->id))}}"
+                                        title="Delete Gallery" onclick="return confirm('Are you sure,you want to delete this gallery image?')"><i class="mdi mdi-delete"></i></a>
+    
+                                </td>
+                            
 
-                                <a href="{{route('admin.edit.gallery',['id'=>\Crypt::encrypt($item->id)])}}" data-toggle="tooltip" data-placement="top" title="Edit Gallery" class="btn mr-2 btn-gradient-primary btn-rounded btn-icon anchor_rounded">
-                                    <i class="mdi mdi-pencil-outline"></i>
-                                </a>
-
-                            </td>
+                            
                         </tr>
                     @endforeach
 

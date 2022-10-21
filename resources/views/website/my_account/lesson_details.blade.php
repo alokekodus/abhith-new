@@ -46,15 +46,20 @@
     <div class="topic-content mb-5">
         <div class="topic-content-heading d-flex">
             <div class="topic-name">
-                <h2>Topic: {{$lesson->name}}</h2>
+                <h2>Lesson: {{$lesson->name}}</h2>
             </div>
+           
             <div class="topic-next-btn d-flex">
+                @if($previous_lesson_id)
                 <div class="topic-previous">
-                    <button type="button" class="btn btn-outline-success text-white mr-2">Previous Lesson</button>
+                    <a href="{{route('getLessonDetails',[Crypt::encrypt($lesson->id),1])}}" class="btn btn-outline-success text-white mr-2">Previous Lesson</a>
                 </div>
+                @endif
+                @if($next_lesson_id)
                 <div class="topic-next">
-                    <button type="button" class="btn btn-outline-danger text-white">Next Lesson</button>
+                    <a href="{{route('getLessonDetails',[Crypt::encrypt($lesson->id),2])}}"  class="btn btn-outline-danger text-white">Next Lesson</a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="topic-content-body">
@@ -145,7 +150,7 @@
                                <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
                             </div>
                             <div class="mcq-content">
-                                <h5><a href="{{route('website.subject.mcqstart',Crypt::encrypt($set->id))}}">{{$set->set_name}}</a></h5>
+                                <h5><a href="{{route('website.subject.mcqstart',Crypt::encrypt($set->id))}}" target="_blank">{{$set->set_name}} </a></h5>
                                 <h6>{{$set->question->count()}} Questions</h6>
                                 <p>{{dateFormat($set->created_at,"D ,F j, Y")}}</p>
                             </div>
@@ -159,7 +164,7 @@
         </div>
     </div>
 </div>
-
+@section('scripts')
 <script>
     function openFile(evt, fileName) {
         let i, lessonContent, lessonLinks;
@@ -178,6 +183,6 @@
     // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
 </script>
-
+@endsection
 
 @endsection

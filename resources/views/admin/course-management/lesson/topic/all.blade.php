@@ -1,4 +1,4 @@
-@if($lesson->topics()->exists())
+@if($lesson->topics()->exists() || $lesson->Sets()->exists())
 
 
 <div class="col-lg-12 grid-margin stretch-card">
@@ -31,9 +31,8 @@
             </nav>
             <br><br>
             <div class="tab-content" id="nav-tabContent">
+
                 <div class="tab-pane fade show active" id="nav-pdf" role="tabpanel" aria-labelledby="nav-pdf-tab">
-
-
                     <div style="overflow-x:auto;">
                         <table class="table table-striped" id="lessonTable">
                             <thead>
@@ -42,10 +41,11 @@
                                     <th> Lesson Name </th>
                                     <th> Recources Topics </th>
                                     <th> Type </th>
-                                    <th> Recources Path </th>
+                                    <th> Recources </th>
+                                    <th> Teacher </th>
                                     <th> Preview</th>
                                     <th> Status </th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,14 +58,21 @@
                                     <td> @if($topic->type==1)pdf @elseif($topic->type==2) video @else
                                         article @endif </article>
                                     </td>
-                                    <td> @if($topic->type==1)<a href="{{asset($topic->lessonAttachment->img_url)}}"
+                                    <td> @if($topic->type==1)<a target="_blank" href="{{asset($topic->lessonAttachment->img_url)}}"
                                             target="_blank">
-                                            {{basename($topic->lessonAttachment->img_url)}}</a>
+                                            {{-- {{basename($topic->lessonAttachment->img_url)}} --}}
+                                            Click to view
+                                        </a>
                                         @elseif($topic->type==2) <a
                                             href="{{asset($topic->lessonAttachment->video_origin_url)}}"
                                             target="_blank">
-                                            {{ substr($topic->lessonAttachment->video_origin_url, 0,40)
-                                            }}</a> @else NA @endif</td>
+                                            {{-- {{ substr($topic->lessonAttachment->video_origin_url, 0,40)}} --}}
+                                            Click to view
+                                        </a> @else NA @endif
+                                    </td>
+
+                                    <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
+
                                     <td>
                                         @if ($topic->preview==0)
                                         <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
@@ -83,31 +90,30 @@
                                             class="badge badge-danger">InActive</a>
                                         @endif
                                     </td>
-                                    <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                    {{-- <td><a href="" title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                         <a href="" title="View Details"><i class="mdi mdi-eye"></i></a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-
-
                 </div>
-                <div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
 
+                <div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
                     <div style="overflow-x:auto;">
                         <table class="table table-striped" id="lessonTableVideo">
                             <thead>
                                 <tr>
-                                    <th>#No</th>
+                                    <th> #No </th>
                                     <th> Lesson Name </th>
                                     <th> Recources Topics </th>
                                     <th> Type </th>
-                                    <th> Recources Path </th>
+                                    <th> Recources </th>
+                                    <th> Teacher</th>
                                     <th> Thumbnail image </th>
-                                    <th>Video Duration</th>
-                                    <th>Preview</th>
+                                    <th> Video Duration </th>
+                                    <th> Preview </th>
                                     <th> Status </th>
                                 </tr>
                             </thead>
@@ -123,16 +129,23 @@
                                     </td>
                                     <td> @if($topic->type==1)<a href="{{asset($topic->lessonAttachment->img_url)}}"
                                             target="_blank">
-                                            {{basename($topic->lessonAttachment->img_url)}}</a>
+                                            {{-- {{basename($topic->lessonAttachment->img_url)}} --}}
+                                            Preview
+                                        </a>
                                         @elseif($topic->type==2) <a
                                             href="{{asset($topic->lessonAttachment->video_origin_url)}}"
                                             target="_blank">
-                                            {{ substr($topic->lessonAttachment->video_origin_url, 0,40)
-                                            }}</a> @else NA @endif</td>
+                                            {{-- {{ substr($topic->lessonAttachment->video_origin_url, 0,40)}} --}}
+                                            Preview
+                                        </a> @else NA @endif
+                                    </td>
+                                    <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
                                     <td> @if($topic->type==2)<a
                                             href="{{asset($topic->lessonAttachment->video_thumbnail_image)}}"
                                             target="_blank">
-                                            {{substr($topic->lessonAttachment->video_thumbnail_image,0,10)}}</a>
+                                            {{-- {{substr($topic->lessonAttachment->video_thumbnail_image,0,10)}} --}}
+                                            Image
+                                        </a>
                                         @else NA @endif
                                     </td>
                                     <td>{{round($topic->lessonAttachment->video_duration, 2)}} minutes</td>
@@ -160,6 +173,7 @@
                         </table>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                     <div style="overflow-x:auto;">
                         <table class="table table-striped" id="lessonTableArticle">
@@ -170,7 +184,8 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Article </th>
-                                    <th>Preview</th>
+                                    <th> Teacher </th>
+                                    <th> Preview </th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -187,6 +202,7 @@
                                     </td>
                                     <td>{{substr($topic->content, 0, 20)}}</td>
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
+                                    <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
                                     <td>
                                         @if ($topic->preview==0)
                                         <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
@@ -212,14 +228,16 @@
                         </table>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="nav-practice-test" role="tabpanel" aria-labelledby="nav-practice-test">
                     <div style="overflow-x:auto;">
                         <table class="table table-striped" id="lessonTableMcq">
                             <thead>
                                 <tr>
-                                    <th>#No</th>
+                                    <th> #No </th>
                                     <th> Set Name </th>
                                     <th> Total Question </th>
+                                    <th> Teacher </th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -230,8 +248,9 @@
                                     <td>{{++$key}}</td>
                                     <td> {{$set->set_name}}</td>
                                     <td> {{$set->question->count()}}</td>
-                                    <td> @if($set->is_activate==1)<a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
-                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
+                                    <td>{{$set->assignTeacher->name ?? 'Not Assigned'}}</td>
+                                    <td> @if($set->is_activate==1)<a href="{{route('admin.mcq.set.status',Crypt::encrypt($set->id))}}"
+                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.mcq.set.status',Crypt::encrypt($set->id))}}"
                                             class="badge badge-danger">InActive</a> @endif</td>
                                     {{-- <td>@if($topic->status==1)Active @else InActive @endif</td> --}}
                                     <td>
@@ -244,6 +263,7 @@
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

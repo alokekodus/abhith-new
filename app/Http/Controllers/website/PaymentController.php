@@ -10,25 +10,20 @@ use App\Models\UserDetails;
 use App\Models\Order;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Razorpay\Api\Api;
 use Razorpay\Api\Errors\SignatureVerificationError;
 
 
 class PaymentController extends Controller
 {
-    public function checkout(Request $request)
+    public function checkout($cart_id)
     {
 
-        $cart = [];
-        $countCartItem = 0;
-        $price = [];
+       
         if (Auth::check()) {
-            $cart = Cart::with('board', 'assignClass')->where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->get();
-            $countCartItem = Cart::where('user_id', Auth::user()->id)->where('is_paid', 0)->where('is_remove_from_cart', 0)->count();
-            $total_amount = 0;
-            foreach ($cart as $item) {
-                $total_amount = $total_amount + $item->assignSubject->sum('amount');
-            }
+            $cart=Cart::with('board', 'assignClass','assignSubject')->where('id',Crypt::decrypt($cart_id))->where('user_id',auth()->user()->id)->first();
+            $total_amount=totalAmountCart($cart->id);
 
             if ($total_amount == 0) {
                 return redirect()->route('website.dashboard');
@@ -61,18 +56,18 @@ class PaymentController extends Controller
                     "order_id"          =>  $razorpayOrder['id'],
                 ];
 
-                foreach ($cart as $item) {
+               
                     Order::create([
                         'user_id' => Auth::user()->id,
-                        'board_id' => $item->board_id,
-                        'assign_class_id' => $item->assign_class_id,
+                        'board_id' => $cart->board_id,
+                        'assign_class_id' => $cart->assign_class_id,
                         'rzp_order_id' => $razorpayOrder['id'],
                         'payment_status' => 'pending',
                     ]);
-                }
+                
 
 
-                return view('website.cart.checkout')->with(['cart' => $cart, 'countCartItem' => $countCartItem, 'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
+                return view('website.cart.checkout')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
             }
         }
     }
@@ -102,14 +97,18 @@ class PaymentController extends Controller
                     ]);
 
                     foreach ($order as $item) {
-                        $cart = Cart::where('user_id', Auth::user()->id)->where('board_id', $item->board_id)->where('assign_class_id', $item->assign_class_id)->first();
+                        $cart = Cart::where('id',$request->cart_id)->first();
 
                         $cart_update = $cart->update(['is_paid' => 1, 'is_remove_from_cart' => 1]);
 
                         $cart_assign_subjects = $cart->assignSubject;
                         foreach ($cart_assign_subjects as $key => $cart_assign_subject) {
-
-                            $cart_assign_subject_update = $cart_assign_subject->update(['order_id' => $item->id]);
+                            if(subjectStatus($cart_assign_subject->assign_subject_id)==3){
+                                $cart_assign_subject_update = $cart_assign_subject->update(['order_id' => $item->id]);
+                            }else{
+                                $cart_assign_subject_update =$cart_assign_subject->delete();
+                            }
+                            
                         }
                     }
 

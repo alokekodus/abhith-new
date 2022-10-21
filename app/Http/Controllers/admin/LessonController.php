@@ -431,6 +431,7 @@ class LessonController extends Controller
                 $assign_class_id = $lesson->assign_class_id;
                 $assign_subject_id = $lesson->assign_subject_id;
                 $lesson_id = $lesson->id;
+                $teacher_id = $request->teacher_id;
                 $questionFile = $request->questionExcel;
                 if ($request->hasFile('questionExcel')) {
 
@@ -446,7 +447,7 @@ class LessonController extends Controller
                         $questionFile = $request->file('questionExcel');
 
                         $questionFile = $request->file('questionExcel')->store('imports');
-                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id);
+                        $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id, $teacher_id);
                       
                         $import->import($questionFile);
 
@@ -454,10 +455,13 @@ class LessonController extends Controller
                         return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
                     }
                 }
+                else{
+                    return response()->json(['status' => 3, 'message' => "No file found"]);
+                }
             }
         } catch (\Throwable $th) {
 
-            return response()->json(['status' => 0, 'message' => $th]);
+            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
     public function previewStatusChange($lesson_id)
@@ -478,22 +482,59 @@ class LessonController extends Controller
             return redirect()->back();
         }
     }
+    
     public function lessonStatusChange($lesson_id)
     {
         try {
             $lesson = Lesson::find(Crypt::decrypt($lesson_id));
             if ($lesson->status == 0) {
                 $lesson->update(['status' => 1]);
-                Toastr::success('Resource status update from InActive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Resource status update from Inactive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             } else {
                 $lesson->update(['status' => 0]);
-                Toastr::success('Resource status update from Active to InActive successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Resource status update from Active to Inactive successfully.', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             }
         } catch (\Throwable $th) {
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
+        }
+    }
+
+    public function updateLesson(Request $request){
+        try {
+            $validator = Validator::make($request->all(),[
+                'lessonId' => 'required',
+                'lessonName' => 'required'
+            ],
+            [
+                'lessonId.required' => 'ID mismatch',
+                'lessonName.required' => 'Lesson name cannot be null',
+            ]);
+
+            if($validator->fails()){
+                return response()->json(['message' => 'Whoops! Something went wrong', 'error' => $validator->errors()]);
+            }
+
+            $dec_id = Crypt::decrypt($request->lessonId);
+
+            $lesson = Lesson::find($dec_id);
+            if(Str::lower($request->lessonName) === Str::lower($lesson->name)){
+                return response()->json(['message' => 'Lesson already exists', 'status' => 2]);
+            }
+            
+            $update = Lesson::find($dec_id)->update([
+                'name' => $request->lessonName
+            ]);
+
+            if(!$update){
+                return response()->json(['message' => 'Error on lesson update', 'status' => 1]);
+            }            
+            return response()->json(['message' => 'Lesson updated successfully', 'status' => 1]);
+        } catch (\Throwable $th) {
+            //throw $th->getMessage();
+            return response()->json(['message' => $th->getMessage(), 'status' => 2]);
         }
     }
 }

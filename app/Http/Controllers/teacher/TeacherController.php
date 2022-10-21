@@ -24,8 +24,8 @@ class TeacherController extends Controller
                     'phone' => 'required',
                     'gender' => 'required',
                     'dob' => 'required',
-                    'total_experience_year' => 'numeric',
-                    'total_experience_month' => 'numeric',
+                    // 'total_experience_year' => 'numeric',
+                    // 'total_experience_month' => 'numeric',
                     'education' => 'required|string',
                     'board_id' => 'required',
                     'assign_class_id' => 'required',
@@ -41,8 +41,8 @@ class TeacherController extends Controller
                     'phone.required' => 'Phone number is required',
                     'gender.required' => 'gender is required',
                     'dob.required' => 'DOB is required',
-                    'total_experience_year.numeric' => 'Insert a valide total experience year',
-                    'total_experience_month.numeric' => 'Insert a valide total experience year',
+                    // 'total_experience_year.numeric' => 'Insert a valide total experience year',
+                    // 'total_experience_month.numeric' => 'Insert a valide total experience year',
                     'education.required' => 'Education filed is required',
                     'board_id.required' => 'Board is required',
                     'assign_class_id' => 'Class is required',
@@ -60,13 +60,13 @@ class TeacherController extends Controller
                 ]
             );
             if ($validate->fails()) {
-                return response()->json(['status' => 0, 'message' => 'Whoop! Something went wrong.', 'error' => $validate->errors()]);
+                return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
             }
 
             $resume = $request->resume;
             $teacherdemovideo = $request->teacherdemovideo;
             if (!empty($resume)) {
-              
+
                 $new_name = date('d-m-Y-H-i-s') . '_' . $resume->getClientOriginalName();
                 // $new_name = '/images/'.$image.'_'.date('d-m-Y-H-i-s');
                 $resume->move(public_path('/files/teacher/resume/'), $new_name);
@@ -87,43 +87,44 @@ class TeacherController extends Controller
                 'total_experience_year' => $request->total_experience_year,
                 'total_experience_month' => $request->total_experience_month,
                 'education' => $request->education,
-                'assign_board_id' => 1,
-                'assign_class_id' => 1,
-                'assign_subject_id' => 1,
+                'assign_board_id' => $request->board_id,
+                'assign_class_id' => $request->assign_class_id,
+                'assign_subject_id' => $request->assign_subject_id,
                 'hslc_percentage' => $request->hslc_percentage,
                 'hs_percentage' => $request->hs_percentage,
                 'current_organization' => $request->current_organization,
                 'current_designation' => $request->current_designation,
                 'current_ctc' => $request->current_ctc,
-                'resume_url' => url('').'/'.$resume_url,
-                'teacherdemovideo_url' => url('').'/'.$teacherdemovideo_url,
+                'resume_url' => url('') . '/' . $resume_url,
+                'teacherdemovideo_url' => url('') . '/' . $teacherdemovideo_url,
                 'status' => 1,
-
+                'user_id' => auth()->user()->id,
             ];
-            $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->get();
-            if ($user_details == true) {
-                UserDetails::where('user_id', auth()->user()->id)
-                    ->update(
-                        $data
-                    );
+            $user_details = UserDetails::where('user_id', auth()->user()->id)->where('status', '!=', 0)->first();
+            if ($user_details) {
+                $user_details = UserDetails::where('user_id', auth()->user()->id)->first();
+                $user_details->update($data);
+                return response()->json(['status' => 1, 'message' => 'Application updated successfully.']);
             } else {
                 UserDetails::create($data);
+                return response()->json(['status' => 1, 'message' => 'Application submitted successfully.']);
             }
-            return response()->json(['status' => 1, 'message' => 'Application submitted successfully']);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 0, 'message' => 'Something Went Wrong.']);
+            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
     public function index()
     {
+
         $applications = UserDetails::with('user')->where('status', '!=', 0)->get();
+
         return view('admin.teacher.index', compact('applications'));
     }
     public function details($teacher_id)
     {
         try {
-          
-            $user_details = UserDetails::with('user')->where('user_id', Crypt::decrypt($teacher_id))->first();
+
+            $user_details = UserDetails::with('user')->where('id', Crypt::decrypt($teacher_id))->first();
             $resume = pathinfo(public_path($user_details->resume_url));
             $resume_extension = $resume['extension'];
             return view('admin.teacher.application', compact('user_details', 'resume_extension'));
@@ -134,6 +135,7 @@ class TeacherController extends Controller
     public function approvedApplication($user_detail_id)
     {
         try {
+
             $data = [
                 'status' => 2,
                 'referral_id' => teacherReferralId(),

@@ -38,7 +38,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::group(['middleware' => ['auth']], function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('log.out');
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+   
     //     return view('admin.dashboard.dashboard');
     // })->name('admin.dashboard')->middleware('admin');
 
@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('', [BoardController::class, 'allBoard'])->name('admin.course.management.board.all');
             Route::post('add-board', [BoardController::class, 'addBoard'])->name('admin.course.management.board.add');
             Route::post('update-board-status', [BoardController::class, 'updateBoardStatus'])->name('admin.course.management.board.update.status');
+            Route::post('update-board', [BoardController::class, 'updateBoard'])->name('admin.course.management.board.update');
         });
         Route::prefix('teacher')->group(function () {
             Route::get('', [TeacherController::class, 'index'])->name('admin.teacher.all');
@@ -101,6 +102,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('view/{lesson_id}', [LessonController::class, 'resourceView'])->name('admin.course.management.lesson.view'); // view resources
             Route::get('edit/{lesson_id}', [LessonController::class, 'resourceEdit'])->name('admin.course.management.lesson.edit'); //edit video resources
             Route::post('update', [LessonController::class, 'resourceupdate'])->name('admin.course.management.lesson.update'); //update video resources
+            Route::post('update-lesson', [LessonController::class, 'updateLesson'])->name('admin.course.management.lesson.update.name'); //update video resources
             /* ------------------------------- Multiple Choice Questions ------------------------------------ */
             Route::prefix('multiple-choice')->group(function () {
                 Route::get('multiple-choice-question', [MultipleChoiceController::class, 'index'])->name('admin.index.multiple.choice');
@@ -111,6 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('insert-mcq-question', [MultipleChoiceController::class, 'insertQuestions'])->name('admin.insert.mcq.question');
                 Route::get('view-mcq-question/{id}', [MultipleChoiceController::class, 'viewMcq'])->name('admin.view.mcq.question');
                 Route::get('status/{lesson_id}', [MultipleChoiceController::class, 'statusChange'])->name('admin.mcq.status');
+                Route::get('status-set/{set_id}', [MultipleChoiceController::class, 'mcqSetStatusChange'])->name('admin.mcq.set.status');
                 
             });
 
@@ -155,6 +158,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('creating', [BannerController::class, 'create'])->name('admin.creating.banner');
             Route::post('active', [BannerController::class, 'active'])->name('admin.active.banner');
             Route::get('edit/{id}', [BannerController::class, 'editBanner'])->name('admin.edit.banner');
+            Route::get('delete/{id}', [BannerController::class, 'deleteBanner'])->name('admin.delete.banner');
             Route::post('editing', [BannerController::class, 'edit'])->name('admin.editing.banner');
         });
 
@@ -178,6 +182,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('creating', [GalleryController::class, 'create'])->name('admin.creating.gallery');
             Route::post('active', [GalleryController::class, 'active'])->name('admin.active.gallery');
             Route::get('edit/{id}', [GalleryController::class, 'editGallery'])->name('admin.edit.gallery');
+            Route::get('delete/{id}', [GalleryController::class, 'deleteGallery'])->name('admin.delete.gallery');
             Route::post('editing', [GalleryController::class, 'edit'])->name('admin.editing.gallery');
         });
     });

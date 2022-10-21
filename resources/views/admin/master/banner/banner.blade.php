@@ -41,7 +41,8 @@
                         @foreach ($banners as $key => $item)
                         <tr>
                             <td> {{ $key + 1 }} </td>
-                            <td> @if($item->name){!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 50, $end = '...')
+                            <td> @if($item->name){!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 50,
+                                $end = '...')
                                 !!}@else NA @endif </td>
                             <td>
                                 <img src="{{ asset($item->banner_image) }}" alt="" srcset="">
@@ -62,14 +63,16 @@
                             <td>
                                 {{-- {!! $item->description !!} --}}
                                 {{-- {!! Illuminate\Support\Str::limit($item->description, 100, ' ...')!!} --}}
-                               @if($item->description) {!! Illuminate\Support\Str::limit(strip_tags($item->description), $limit = 50, $end =
+                                @if($item->description) {!!
+                                Illuminate\Support\Str::limit(strip_tags($item->description), $limit = 50, $end =
                                 '...') !!}@else NA @endif
                             </td>
                             <td>
                                 <a href="{{route('admin.edit.banner',Crypt::encrypt($item->id))}}"
                                     title="View Details"><i class="mdi mdi-grease-pencil"></i></a>
-                               
-                                
+                                <a href="{{route('admin.delete.banner',Crypt::encrypt($item->id))}}"
+                                    title="Delete Banner" onclick="return confirm('Are you sure,you want to delete this banner?')"><i class="mdi mdi-delete"></i></a>
+
                             </td>
                         </tr>
                         @endforeach
@@ -77,7 +80,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
     </div>
 </div>

@@ -39,7 +39,7 @@
                             @include('admin.course-management.lesson.common.form')
                             <div style="float: right;">
                                 <button type="button" class="btn btn-gradient-light btn-fw"
-                                    id="assignTopicCancelBtn">Cancel</button>
+                                    id="assignTopicCancelBtn" onclick="window.history.back();">Cancel</button>
                                 <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn"
                                     name="type" value="create-topic">Submit</button>
                             </div>
@@ -63,22 +63,22 @@
         $('#lessonTable').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         });
         $('#lessonTableVideo').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         });
         $('#lessonTableArticle').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         });
         $('#lessonTableMcq').DataTable({
             "processing": true,
             "searching": true,
-            "ordering": false
+            "ordering": true
         })
     });
 
@@ -253,6 +253,11 @@ function setFileInfo() {
                         $.each(response.message,function(prefix,val){
                             toastr.error(val[0]);
                         })
+                       
+                        $('#assignTopicSubmitBtn').html('Submit');
+                    }
+                    if(response.status==3){
+                        toastr.error(response.message);
                        
                         $('#assignTopicSubmitBtn').html('Submit');
                     }

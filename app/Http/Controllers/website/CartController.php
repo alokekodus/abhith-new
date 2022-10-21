@@ -36,12 +36,11 @@ class CartController extends Controller
     public function cartDetails($cart_id)
     {
         try {
-           
+
             if (Auth::check()) {
-                $cart = Cart::with('board', 'assignClass','assignSubject')->where('id', Crypt::decrypt($cart_id))->first();
-                $all_subjects=$cart->assignSubject;
-                $totalPrice=$cart->assignSubject->sum('amount');
-                
+                $cart = Cart::with('board', 'assignClass', 'assignSubject')->where('id', Crypt::decrypt($cart_id))->first();
+                $all_subjects = $cart->assignSubject;
+                $totalPrice = $cart->assignSubject->sum('amount');
             }
             return view('website.cart.cart-details')->with(['cart' => $cart, 'all_subjects' => $all_subjects, 'countPrice' => $totalPrice]);
         } catch (\Throwable $th) {
@@ -51,25 +50,24 @@ class CartController extends Controller
     }
     public function addToCart(Request $request)
     {
-
+         
         try {
-
+           
             if (!Auth::check()) {
 
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->route('website.login');
             }
-             
+           
             $board_id = $request->board_id;
             $class_id = $request->class_id;
             $course_type = $request->course_type;
             if ($course_type == 1) {
                 $all_subjects = AssignSubject::where(['board_id' => $board_id, 'assign_class_id' => $class_id, 'is_activate' => 1])->get();
-                
             } else {
                 $all_subjects = AssignSubject::whereIn('id', $request->subjects)->get();
             }
-            
+
             $cart = Cart::with('assignSubject')->where([['user_id', '=', Auth::user()->id], ['assign_class_id', '=', $class_id], ['board_id', '=', $board_id], ['is_paid', '=', 0], ['is_remove_from_cart', '=', 0], ['is_full_course_selected', '=', $course_type]])->first();
             if ($cart) {
                 $assignSubjectAlreadyInCart = CartOrOrderAssignSubject::whereNotIn('assign_subject_id', $request->subjects)->get();
@@ -101,7 +99,7 @@ class CartController extends Controller
                     'board_id' => $board_id, //board_id
                     'assign_class_id' => $class_id, //class_id
                     'is_full_course_selected' => $course_type,
-                    'is_buy' => $request->is_buy
+                    'is_buy' => $request->buynow
                 ]);
 
                 foreach ($all_subjects as $key => $subject) {
@@ -118,12 +116,24 @@ class CartController extends Controller
                 return redirect()->back();
             }
         } catch (\Throwable $th) {
-            dd($th);
+           
             Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
     }
-
+    public function removeCart($cart_id)
+    {
+        try {
+            $cart=Cart::find(Crypt::decrypt($cart_id));
+            $cart->delete();
+            $cart->assignSubject()->delete();
+            Toastr::success('Cart item remove successfully.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Toastr::error('Something want wrong.', '', ["positionClass" => "toast-top-right"]);
+            return redirect()->back();
+        }
+    }
 
     public function removeFromCart(Request $request)
     {

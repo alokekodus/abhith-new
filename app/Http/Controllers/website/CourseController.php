@@ -13,6 +13,7 @@ use App\Models\Board;
 use App\Models\Subject;
 use App\Models\Chapter;
 use App\Models\Cart;
+use App\Models\Lesson;
 use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\MultipleChoice;
@@ -100,6 +101,7 @@ class CourseController extends Controller
     }
     public function enrollPackage($subject_id)
     {
+      
         try {
             $subject = AssignSubject::find(Crypt::decrypt($subject_id));
             $subject_id=$subject->id;
@@ -168,13 +170,59 @@ class CourseController extends Controller
     }
     public function  subjectDetails($subject_id)
     {
+        
         $subject_id = Crypt::decrypt($subject_id);
 
         $subject = AssignSubject::with(['lesson' => function ($query) {
             $query->with('lessonAttachment');
         }, 'subjectAttachment', 'assignClass', 'boards'])->where('id', $subject_id)->first();
-        $lessons = $subject->lesson;
+        $lesson = $subject->lesson->first();
+        $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
+        $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
+        $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
+        $mcq_questions=Lesson::with('Sets')->where('id',$lesson->id)->first();
+        $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id',null)->orderBy('id')->first();
+        if($next_lesson_id==null){
+            $next_lesson_id=false;
+        }else{
+            $next_lesson_id=true;
+        }
+        $previous_lesson_id=false;
+        // $previous_lesson_id = Lesson::where('id', '<', $lesson->id)->orderBy('id','desc')->first()->id;
+        // $next_lesson_id = Lesson::where('id', '>', $lesson->id)->orderBy('id')->first()->id;
+        return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions','next_lesson_id','previous_lesson_id'));
+        
+    }
+    public function getLessonDetails($lesson_id,$type){
 
-        return view('website.user.lesson-details', compact('lessons', 'subject'));
+        try {
+           
+           $lesson=Lesson::find(Crypt::decrypt($lesson_id));
+           if($type==1){
+            $lesson = Lesson::where('id', '<', $lesson->id)->orderBy('id','desc')->first();
+           }else{
+            $lesson = Lesson::where('id', '>', $lesson->id)->orderBy('id')->first();
+           }
+           $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
+           $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
+           $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
+           $mcq_questions=Lesson::with('Sets')->where('id',$lesson->id)->first();
+           $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id',null)->orderBy('id')->first();
+           $previous_lesson_id = Lesson::where('id', '<', $lesson->id)->where('parent_id',null)->orderBy('id','desc')->first();
+           if($next_lesson_id==null){
+               $next_lesson_id=false;
+           }else{
+               $next_lesson_id=true;
+           }
+           if($previous_lesson_id==null){
+            $previous_lesson_id=false;
+           }else{
+            $previous_lesson_id=true;
+           }
+          
+           return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions','next_lesson_id','previous_lesson_id'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

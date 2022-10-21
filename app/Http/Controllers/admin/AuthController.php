@@ -50,8 +50,14 @@ class AuthController extends Controller
 
   protected function logout()
   {
-    Auth::logout();
-    return redirect()->route('login');
+    if( Auth::user()->type_id==3){
+      Auth::logout();
+      return redirect()->route('website.becomeTeacher');
+    }else{
+      Auth::logout();
+      return redirect()->route('login');
+    }
+   
   }
   
   public function userLogin(){

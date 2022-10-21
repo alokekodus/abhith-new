@@ -378,8 +378,8 @@
                         <span class="course-price1 mr-2" id="total_price"><i class="fa fa-inr" aria-hidden="true"></i>
                             {{number_format($data['subjectamount'], 2, '.', '')}}</span>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart">Add to cart</button>
-
+                    <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart" name="buynow" value="0">Add to cart</button>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block buy-now" id="buy-now" name="buynow" value="1">Buy Now</button>
                 </div>
             </div>
 

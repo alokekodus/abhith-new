@@ -7,6 +7,7 @@ use App\Jobs\ConvertVideoForResolution;
 use App\Models\AssignClass;
 use App\Models\AssignSubject;
 use App\Models\Board;
+use App\Models\CartOrOrderAssignSubject;
 use App\Models\Lesson;
 use App\Models\LessonAttachment;
 use App\Models\User;
@@ -42,7 +43,7 @@ class AssignSubjectController extends Controller
                 [
                     'subjectName' => 'required',
                     'assignedClass' => 'required',
-                    'subject_amount' => 'required|integer|digits_between:3,6',
+                    'subject_amount' => 'required|integer|min:100|digits_between:3,7',
                     'description' => 'required',
                     'why_learn' => 'required',
                     'requirements'=> 'required',
@@ -57,11 +58,14 @@ class AssignSubjectController extends Controller
                     'assignedClass.required' => 'Subject class is required',
                     'subject_amount.required' => 'Amount filed is required',
                     'subject_amount.digits_between'=>'Please insert a valid amount',
-                    'description.required' => 'Subject descripttion filed is required',
-                    'why_learn.required' => 'Why learn filed is required',
-                    'requirements.required' => 'Requirements filed is required',
+                    'subject_amount.min'=>'Please insert a valid amount',
+                    'description.required' => 'Subject descripttion filed can not be null',
+                    'why_learn.required' => 'Why will students learn this subject filed can not be null',
+                    'requirements.required' => 'Requirements filed can nit be null',
                     'image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
+                    'image_url.mimes' => " Subject cover picture only supports jpg, png and jpeg file type",
                     'video_thumbnail_image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
+                    'video_thumbnail_image_url.mimes' => "Subject promo video thumbnail only supports jpg, png and jpeg file type",
                     'video_url.max' => "Maximum file size to upload is 2GB (2097152 KB).",
                 ]
             );
@@ -74,11 +78,20 @@ class AssignSubjectController extends Controller
 
             $assignedClass = $request->assignedClass;
             $assignedBoard = $request->assignedBoard;
-            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->where('is_activate', 1)->first();
+            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->first();
             if ($is_in_assignsubject) {
-                return response()->json(['status'=>0,'message' => "'$request->subjectName'.'already active'"]);
+                return response()->json(['status'=> 2,'message' => "'$request->subjectName'.'already active'"]);
               
             }
+
+            // Check same subject on same board
+            // $getAllSubjects = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('board_id', $request->assignedBoard)->first();
+            // if () {
+            //     return response()->json(['status'=> 0, 'message' => "'$request->subjectName'.'already exists'"]);
+            // }
+
+            // Condition ends here
+
             $document = $request->file('image_url');
             $lessonVideo = $request->file('video_url');
             $videoThumbnailImageUrl = $request->file('video_thumbnail_image_url');
@@ -140,6 +153,9 @@ class AssignSubjectController extends Controller
             } else {
                 $assign_subject = AssignSubject::find($request->subject_id);
                 $assign_subject->update($data);
+                if($request->has('subject_amount')){
+                    $cart_subjects=CartOrOrderAssignSubject::where('assign_subject_id',$request->subject_id)->update(['amount' => $request->subject_amount]);
+                }
             }
 
 
@@ -217,7 +233,9 @@ class AssignSubjectController extends Controller
     }
     public function assignSubjectLesson($lesson_id)
     {
+       
         $lesson = Lesson::where('id', Crypt::decrypt($lesson_id))->first();
+        
         return view('admin.course-management.subjects.lesson')->with(['lesson' => $lesson]);
     }
 }

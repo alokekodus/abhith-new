@@ -298,6 +298,25 @@ function subjectAlreadyPurchase($subject_id)
         return 1;
     }
 }
+function subjectAlreadyInCart($subject_id){
+
+    $subject=AssignSubject::find($subject_id);
+    $board_id=$subject->board_id;
+    $class_id=$subject->assign_class_id;
+    
+    $cart_check = Cart::where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
+    if($cart_check){
+        $subject_in_cart=$cart_check->assignSubject->where('assign_subject_id',$subject_id)->first();
+        if($subject_in_cart){
+            return 1;
+        }else{
+            return 0;
+        }
+    }else{
+        return 0;
+    }
+   
+}
 function checkemail($str)
 {
     return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;
@@ -353,4 +372,37 @@ function ifSubjectActive($current_route){
     }else{
         return false;
     }
+}
+function subjectStatus($subject_id){
+    $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
+        $q->where('assign_subject_id', $subject_id);
+    })->where("user_id", auth()->user()->id)->first();
+   
+    $isSubjectActive=AssignSubject::where('is_activate',1)->where('published',1)->where('id',$subject_id)->first();
+    if( $isSubjectActive){
+        return 3;
+    }elseif($isBuy){
+         return 1;
+    }else{
+        return 2;
+    }
+   
+}
+function totalAmountCart($cart_id){
+    
+    $cart = Cart::with('board', 'assignClass', 'assignSubject')->where('id', $cart_id)->first();
+    $all_subjects = $cart->assignSubject;
+    
+    $total=0;
+    
+   foreach($all_subjects as $key=>$all_subject){
+  
+    if(subjectStatus($all_subject->assign_subject_id)==3)
+    {
+        $total=$total+$all_subject->amount;
+    }
+       
+    
+   }
+   return $total;
 }

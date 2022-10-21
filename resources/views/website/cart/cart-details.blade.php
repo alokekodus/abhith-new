@@ -72,6 +72,7 @@
                         </div>
                     </div>
                     <div class="price-div">
+                        <span>@if(subjectStatus($all_subject->subject->id)==1) <span class="badge badge-info">already purchased</span>  @elseif(subjectStatus($all_subject->subject->id)==2) <span class="badge badge-warning"> subject is not available </span> @endif</span>
                         <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$all_subject->subject->subject_amount}}</p>
                     </div>
                 </div>
@@ -87,7 +88,7 @@
                     <label class="bold-600">Apply Promo Code If Any Available:</label> --}}
                     <div class="checkout-details d-flex justify-content-between">
                         <p class="checkout-details-text">Course Price</p>
-                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$countPrice}}</p>
+                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{totalAmountCart($cart->id)}}</p>
                     </div>
                     <div class="checkout-details d-flex justify-content-between">
                         <p class="checkout-details-text">Discount</p>
@@ -102,13 +103,13 @@
                     </div>
                     <div class="total-price d-flex justify-content-between">
                         <p class="checkout-details-text">Total</p>
-                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$countPrice}}</p>
+                        <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{totalAmountCart($cart->id)}}</p>
                     </div>
                     @if ($countPrice == 0)
                     <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a>
                     @else
-                    <button class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn"
-                        data-checkout="{{number_format($countPrice,2,'.','')}}">Checkout</button>
+                    <a class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn" href="{{route('website.checkout',Crypt::encrypt($cart->id))}}"
+                        data-checkout="{{number_format(totalAmountCart($cart->id),2,'.','')}}">Checkout</a>
                     @endif
                 </div>
                 @endauth
@@ -157,9 +158,6 @@
         let checkoutPrice = $(this).data('checkout');
         if(checkoutPrice > 500000){
             toastr.error('At a time user can checkout with a maximum amount of Rs 5,00,000.');
-        }else{
-          
-            window.location.href="{{route('website.checkout')}}";
         }
     });
 </script>

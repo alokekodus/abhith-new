@@ -71,16 +71,17 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Select Class</label>
-                        <select name="assignedClass" id="assignedClass" class="form-control">
-                            <option value="">-- Select -- </option>
+                        <select name="assignedClass" id="assignedClass" class="form-control" required oninvalid="this.setCustomValidity('Please select the class')" 
+                        onchange="this.setCustomValidity('')">
+                            <option value="" selected disabled> -- Select -- </option>
                             @for ($i = 1; $i < 13; $i++) <option value="{{$i}}">Class {{$i}}</option>
                                 @endfor
                         </select>
                     </div>
                     <div class="form-group assignedBoardDiv" style="display:none;">
                         <label for="">Belongs to Board</label>
-                        <select name="board" id="board" class="form-control">
-                            <option value="">-- Select -- </option>
+                        <select name="board" id="board" class="form-control" required>
+                            <option value="" selected disabled> -- Select -- </option>
                             @forelse ($boards as $item)
                             <option value="{{$item->id}}">{{$item->exam_board}}</option>
                             @empty
@@ -106,7 +107,7 @@
             $('#boardsTable').DataTable({
                 "processing": true,
                 "searching" : true,
-                "ordering" : false
+                "ordering" : true
             });
         });
 
@@ -147,9 +148,10 @@
                 success:function(data){
 
                     if(data.error != null){
-                        $.each(data.error, function(key, val){
-                            toastr.error(val[0]);
-                        });
+                        toastr.error(data.error);
+                        // $.each(data.error, function(key, val){
+                        //     toastr.error(val[0]);
+                        // });
                         $('#assignClassSubmitBtn').attr('disabled', false);
                         $('#assignClassSubmitBtn').text('Submit');
                         $('#assignClassCancelBtn').attr('disabled', false);

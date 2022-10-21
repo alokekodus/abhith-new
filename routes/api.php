@@ -14,6 +14,7 @@ use App\Http\Controllers\api\PerformanceController;
 use App\Http\Controllers\api\ReviewController;
 use App\Http\Controllers\api\SubjectController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\website\SubjectController as WebsiteSubjectController;
 use App\Http\Controllers\website\WebsiteAuthController;
 use App\Models\MobileAndEmailVerification;
 
@@ -75,6 +76,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('subject/mcq/submit', [SubjectController::class, 'startMcq']);
     Route::get('subject/mcq/result', [SubjectController::class, 'practiceTestReport']);
     Route::get('/gallery', [GalleryController::class, 'index']);
+    Route::get('subject/lesson/topic-details', [SubjectController::class, 'LessonTopicsDetails']);
     //get board
     Route::get('/board', [SubjectController::class, 'getBoard']);
 });

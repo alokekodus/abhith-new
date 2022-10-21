@@ -217,4 +217,24 @@ class MultipleChoiceController extends Controller
             return redirect()->back();
         }
     }
+
+    public function mcqSetStatusChange($set_id)
+    {
+        try {
+            $set = Set::find(Crypt::decrypt($set_id));
+            if ($set->is_activate == 0) {
+                $set->update(['is_activate' => 1]);
+                Toastr::success('Resource status update from Inactive to Active successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            } else {
+                $set->update(['is_activate' => 0]);
+                Toastr::success('Resource status update from Active to Inactive successfully.', '', ["positionClass" => "toast-top-right"]);
+                return redirect()->back();
+            }
+        } catch (\Throwable $th) {
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
+            // dd($th->getMessage());
+            return redirect()->back();
+        }
+    }
 }
