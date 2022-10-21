@@ -5,7 +5,7 @@
         width: 100%;
     }
     .subject-heading-black {
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 700;
         color: #000;
     }
@@ -132,7 +132,7 @@
                 </div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
-                    <h4 class="subject-heading-black">
+                    <h4 class="subject-heading-black mb-3">
                         {{$subject->subject_name}}
                         (Class-{{$subject->assignClass->class}}, {{$subject->boards->exam_board}})
                     </h4>

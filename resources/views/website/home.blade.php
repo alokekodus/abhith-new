@@ -37,9 +37,9 @@
         position: relative;
     }
 
-    .course-desc {
+    /* .course-desc {
         padding: 15px 20px 30px;
-    }
+    } */
 
     .course-wrapper .enroll {
         position: absolute;
@@ -203,7 +203,7 @@
                 </div>
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
-                    <h4 class="subject-heading-black">
+                    <h4 class="subject-heading-black mb-3">
                         {{$subject->subject_name}}
                         (Class-{{$subject->assignClass->class}},{{$subject->boards->exam_board}})
                     </h4>
@@ -212,7 +212,7 @@
                             2,'.','')}}</h6>
                     </span>
                     <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
-                        class="enroll mb-3">Enroll Now</a>
+                        class="enroll mb-2">Enroll Now</a>
                 </div>
             </div>
             @endforeach

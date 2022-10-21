@@ -789,10 +789,11 @@ main {
     right: 15px;
     font-weight: 600;
     background-image: linear-gradient(to left, #076fef, #01b9f1);
-    padding: 10px 20px;
+    padding: 10px;
     bottom: 10px;
     color: #fff;
     border-radius: 5px;
+    font-size: 14px;
 }
 
 .rightBlock .inputGroup a{
