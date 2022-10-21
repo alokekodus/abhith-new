@@ -108,8 +108,8 @@
                     @if ($countPrice == 0)
                     <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a>
                     @else
-                    <button class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn"
-                        data-checkout="{{number_format(totalAmountCart($cart->id),2,'.','')}}">Checkout</button>
+                    <a class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn" href="{{route('website.checkout',Crypt::encrypt($cart->id))}}"
+                        data-checkout="{{number_format(totalAmountCart($cart->id),2,'.','')}}">Checkout</a>
                     @endif
                 </div>
                 @endauth
@@ -158,9 +158,6 @@
         let checkoutPrice = $(this).data('checkout');
         if(checkoutPrice > 500000){
             toastr.error('At a time user can checkout with a maximum amount of Rs 5,00,000.');
-        }else{
-          
-            window.location.href="{{route('website.checkout')}}";
         }
     });
 </script>

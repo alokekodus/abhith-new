@@ -139,7 +139,7 @@ Route::prefix('cart')->group(function () {
 
 
 /* ------------------------------- Checkout / Payment------------------------------------ */
-Route::get('checkout', [PaymentController::class, 'checkout'])->name('website.checkout');
+Route::get('checkout/{cart_id}', [PaymentController::class, 'checkout'])->name('website.checkout');
 
 Route::prefix('payment')->group(function () {
     Route::post('verify-payment', [PaymentController::class, 'verifyPayment'])->name('payment.verify');

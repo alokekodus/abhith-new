@@ -101,6 +101,7 @@ class CourseController extends Controller
     }
     public function enrollPackage($subject_id)
     {
+      
         try {
             $subject = AssignSubject::find(Crypt::decrypt($subject_id));
             $subject_id=$subject->id;

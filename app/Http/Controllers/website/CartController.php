@@ -50,15 +50,15 @@ class CartController extends Controller
     }
     public function addToCart(Request $request)
     {
-
+         
         try {
-
+           
             if (!Auth::check()) {
 
                 Toastr::success('please login for add the package!', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->route('website.login');
             }
-
+           
             $board_id = $request->board_id;
             $class_id = $request->class_id;
             $course_type = $request->course_type;
@@ -99,7 +99,7 @@ class CartController extends Controller
                     'board_id' => $board_id, //board_id
                     'assign_class_id' => $class_id, //class_id
                     'is_full_course_selected' => $course_type,
-                    'is_buy' => $request->is_buy
+                    'is_buy' => $request->buynow
                 ]);
 
                 foreach ($all_subjects as $key => $subject) {

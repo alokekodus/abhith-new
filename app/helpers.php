@@ -377,14 +377,16 @@ function subjectStatus($subject_id){
     $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
         $q->where('assign_subject_id', $subject_id);
     })->where("user_id", auth()->user()->id)->first();
-    if ($isBuy != null) {
-        return 1;
-    }
+   
     $isSubjectActive=AssignSubject::where('is_activate',1)->where('published',1)->where('id',$subject_id)->first();
-    if( $isSubjectActive!=null){
+    if( $isSubjectActive){
+        return 3;
+    }elseif($isBuy){
+         return 1;
+    }else{
         return 2;
     }
-    return 3;
+   
 }
 function totalAmountCart($cart_id){
     
@@ -392,14 +394,15 @@ function totalAmountCart($cart_id){
     $all_subjects = $cart->assignSubject;
     
     $total=0;
+    
    foreach($all_subjects as $key=>$all_subject){
   
-    if(subjectStatus($all_subject->id)==3){
-       
-      $total=$total+$all_subject->amount;
-    
-
+    if(subjectStatus($all_subject->assign_subject_id)==3)
+    {
+        $total=$total+$all_subject->amount;
     }
-    return $total;
+       
+    
    }
+   return $total;
 }

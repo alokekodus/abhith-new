@@ -3769,8 +3769,8 @@ input {
 .video-lesson-overlay{
     position: absolute;
     top: 0%;
-    width: 347px;
-    height: 250px;
+    width: 100%;
+    height: 100%;
     background-color: #00000079;    
     border-radius: 10px;
     transition: 0.8s;

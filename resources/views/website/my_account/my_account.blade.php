@@ -244,12 +244,39 @@
                                 {{-- <h4 class="small-heading-black">My Courses</h4> --}}
                             </div>
                             <div class="col-lg-12 mt-4">
-                                {{-- <table id="purchase_history_table" class="table table-striped">
+                                <table id="purchase_history_table" class="table table-striped">
                                     <tbody>
                                         @forelse ($purchase_history as $key => $item)
 
-
-                                        <div class="course-pic"><img src="{{asset('files/course/courses.jpeg')}}"
+                                        <div class="row">
+                                            <div class="col-lg-2 col-md-3">
+                                                <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px" alt="">
+                                            </div>
+                                            <div class="col-lg-10 col-md-9">
+                                                <div class="d-flex justify-content-between myCourses-details">
+                                                    <div>
+                                                        <h6>Board</h6>
+                                                        <h5 class="font-weight-bold">{{$item->board->exam_board}}</h5>
+                                                    </div>
+                                                    <div>
+                                                        <h6>Class</h6>
+                                                        <h5 class="font-weight-bold">{{$item->assignClass->class??''}}</h5>
+                                                    </div>
+                                                    <div>
+                                                        <h6>Course Type</h6>
+                                                        <h5 class="font-weight-bold">Full Course</h5>
+                                                    </div>
+                                                    <div>
+                                                        <h6>Subjects</h6>
+                                                        <h5 class="font-weight-bold text-center">{{$item->assignSubject->count()}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="myCourses-view-btn">
+                                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}" class="btn btn-primary">View Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="course-pic"><img src="{{asset('files/course/courses.jpeg')}}"
                                                 class="w100">
                                             <div class="img-top-left"><b>{{$item->board->exam_board}} ||
                                                     Class-{{$item->assignClass->class??''}}</b></div>
@@ -263,7 +290,7 @@
                                             <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
                                                 class="enroll">View
                                                 Details</a>
-                                        </div>
+                                        </div> --}}
                                         @empty
                                         <tr>
                                             <div class="text-center">
@@ -275,8 +302,11 @@
                                         </tr>
                                         @endforelse
                                     </tbody>
-                                </table> --}}
-                                <div class="row">
+                                </table>
+
+
+
+                                {{-- <div class="row">
                                     <div class="col-lg-2 col-md-3">
                                         <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px" alt="">
                                     </div>
@@ -303,7 +333,7 @@
                                             <a href="#" class="btn btn-primary">View Details</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

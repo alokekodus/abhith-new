@@ -18,7 +18,7 @@
                     <h4 data-brackets-id="12020" class="small-heading-black mb20">Order Summary</h4>
                     <div style="margin-top:10px;">
                         <ul class="list-inline cart-course-list" style="border:none;">
-                            @forelse ($cart as $item)
+                            @forelse ($cart->assignSubject as $subject)
                             @include('website.cart.cart-items')
                                
                             @empty
@@ -37,6 +37,7 @@
                     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                     <form name='razorpayform' action="{{route('payment.verify')}}" method="POST">
                         @csrf
+                        <input type="hidden" name="cart_id" value={{$cart->id}}>
                         <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
                         <input type="hidden" name="razorpay_signature"  id="razorpay_signature" >
                         <input type="hidden" name="razorpay_order_id"  id="razorpay_order_id" >

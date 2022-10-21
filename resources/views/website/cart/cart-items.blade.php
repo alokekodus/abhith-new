@@ -1,4 +1,4 @@
-@foreach($item->assignSubject as $key=>$subject)
+@if(subjectStatus($subject->subject->id)==3)
 <div class="cart-course-description d-flex justify-content-between">
     <div class="subject-div d-flex">
         <div class="subject-img mr-3">
@@ -14,7 +14,7 @@
         <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$subject->subject->subject_amount}}</p>
     </div>
 </div>
-@endforeach
+@endif
 {{-- <div class="col-lg-4">
     <h6> Course Type:
         @if($item->is_full_course_selected==1)Full Course
