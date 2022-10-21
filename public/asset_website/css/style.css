@@ -4255,11 +4255,21 @@ svg{
     margin-top: 20px;
     margin-left: 25px;
     margin-right: 25px;
+    border-bottom: 1px solid #dbd0ce66;
 }
 .price-div p{
     font-size: 22px;
     font-weight: 700;
     margin-top: 15px;
+    padding-right: 10px;
+    text-align: end;
+}
+.price-div .badge {
+    font-size: 16px;
+    padding: 6px;
+}
+.price-div .badge-warning {
+    color: #0f01ff;
 }
 #leftBlock{
     padding-right: 110px;

@@ -1205,12 +1205,17 @@
     .price-div p {
         font-size: 16px;
         padding-right: 10px;
+        margin-top: 5px;
     }
     .cart-checkout {
         padding: 30px 15px;
     }
     .cart-coupon {
         padding: 0px 20px;
+    }
+    .price-div .badge {
+        font-size: 10px;
+        padding: 5px;
     }
     .mcq-head {
         justify-content: space-between;
