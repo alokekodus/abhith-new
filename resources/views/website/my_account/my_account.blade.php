@@ -248,7 +248,7 @@
                                     <tbody>
                                         @forelse ($purchase_history as $key => $item)
 
-                                        <div class="row">
+                                        <div class="row mb-4">
                                             <div class="col-lg-2 col-md-3">
                                                 <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px" alt="">
                                             </div>

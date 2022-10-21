@@ -20,7 +20,7 @@
         <div class="row">
             @foreach($subjects as $key=>$subject)
     
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
                 <div class="course-pic">
                     <img src="{{asset($subject->image)}}" class="w100">
                 </div>
