@@ -338,8 +338,8 @@ class WebsiteAuthController extends Controller
             $validator = Validator::make($request->all(), [
 
                 'name' => 'required',
-                'email' => 'required|email',
-                'phone' => 'required|numeric',
+                'email' => 'required|email|unique:users',
+                'phone' => 'required|numeric|unique:users',
 
 
             ]);

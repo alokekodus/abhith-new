@@ -35,7 +35,6 @@ class AssignSubjectController extends Controller
     public function store(Request $request)
     {
         
-        
         try {
             
             $validate = Validator::make(
@@ -78,11 +77,14 @@ class AssignSubjectController extends Controller
 
             $assignedClass = $request->assignedClass;
             $assignedBoard = $request->assignedBoard;
-            $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->first();
-            if ($is_in_assignsubject) {
-                return response()->json(['status'=> 2,'message' => "'$request->subjectName'.'already active'"]);
-              
-            }
+            
+            // Check request ID for update
+            if ($request->subject_id == null) {
+                $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->first();
+                if ($is_in_assignsubject) {
+                    return response()->json(['status'=> 2,'message' => "'$request->subjectName'.'already active'"]);               
+                }
+            } 
 
             // Check same subject on same board
             // $getAllSubjects = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('board_id', $request->assignedBoard)->first();
