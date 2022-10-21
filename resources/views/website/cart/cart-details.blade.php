@@ -72,7 +72,13 @@
                         </div>
                     </div>
                     <div class="price-div">
-                        <span>@if(subjectStatus($all_subject->subject->id)==1) <span class="badge badge-info">already purchased</span>  @elseif(subjectStatus($all_subject->subject->id)==2) <span class="badge badge-warning"> subject is not available </span> @endif</span>
+                        <span>
+                            @if(subjectStatus($all_subject->subject->id)==1) 
+                            <span class="badge badge-info">Already Purchased</span>  
+                            @elseif(subjectStatus($all_subject->subject->id)==2) 
+                            <span class="badge badge-warning"> Subject is not Available </span>
+                            @endif
+                        </span>
                         <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$all_subject->subject->subject_amount}}</p>
                     </div>
                 </div>
