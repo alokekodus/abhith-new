@@ -19,6 +19,9 @@ class Set extends Model
     {
         return $this->belongsTo(assignClass::class);
     }
+    public function assignTeacher(){
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
     public function assignSubject()
     {
         return $this->belongsTo(assignSubject::class);

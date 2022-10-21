@@ -31,6 +31,13 @@
             <i class="mdi mdi-format-list-bulleted"></i>
         </span>Enrolled Students
     </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <button onclick="window.history.back();" class="btn btn-gradient-primary btn-fw">Back</button>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <div class="col-lg-12 grid-margin stretch-card">
@@ -44,7 +51,7 @@
                             <th> Name </th>
                             <th> Email </th>
                             <th> Board/Course Name </th>
-                            <th> Subject Name/Fees </th>
+                            <th> Subject Name / Fees </th>
                             <th> Enroll Status </th>
                             <th> Payment Status </th>
                             <th> Date of Enrollment </th>
@@ -63,7 +70,9 @@
                                 @foreach($item->assignSubject as $assignSubject)
 
                                 <a href="{{route('admin.course.management.subject.view',Crypt::encrypt($assignSubject->subject->id))}}">{{$assignSubject->subject->subject_name??"NA"}} <span
-                                    class="badge badge-primary">Rs. {{$assignSubject->subject->subject_amount??"NA"}}</a></span>
+                                    class="badge badge-primary">Rs. {{$assignSubject->subject->subject_amount??"NA"}}</a></span> 
+                                <br>
+                                
                                 @endforeach
                             </td>
                             <td>

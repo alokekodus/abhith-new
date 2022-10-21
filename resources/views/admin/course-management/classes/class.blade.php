@@ -71,7 +71,8 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Select Class</label>
-                        <select name="assignedClass" id="assignedClass" class="form-control" required>
+                        <select name="assignedClass" id="assignedClass" class="form-control" required oninvalid="this.setCustomValidity('Please select the class')" 
+                        onchange="this.setCustomValidity('')">
                             <option value="" selected disabled> -- Select -- </option>
                             @for ($i = 1; $i < 13; $i++) <option value="{{$i}}">Class {{$i}}</option>
                                 @endfor
@@ -159,7 +160,7 @@
                         toastr.success(data.message);
                         location.reload(true);
                     }else{
-                        // toastr.error(data.message);
+                        toastr.error(data.message);
                         $('#assignClassSubmitBtn').attr('disabled', false);
                         $('#assignClassSubmitBtn').text('Submit');
                         $('#assignClassCancelBtn').attr('disabled', false);

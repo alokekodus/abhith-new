@@ -42,6 +42,7 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Recources </th>
+                                    <th> Teacher </th>
                                     <th> Preview</th>
                                     <th> Status </th>
                                     {{-- <th>Action</th> --}}
@@ -67,7 +68,11 @@
                                             target="_blank">
                                             {{-- {{ substr($topic->lessonAttachment->video_origin_url, 0,40)}} --}}
                                             Click to view
-                                        </a> @else NA @endif</td>
+                                        </a> @else NA @endif
+                                    </td>
+
+                                    <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
+
                                     <td>
                                         @if ($topic->preview==0)
                                         <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
@@ -105,9 +110,10 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Recources </th>
+                                    <th> Teacher</th>
                                     <th> Thumbnail image </th>
-                                    <th>Video Duration</th>
-                                    <th>Preview</th>
+                                    <th> Video Duration </th>
+                                    <th> Preview </th>
                                     <th> Status </th>
                                 </tr>
                             </thead>
@@ -131,7 +137,9 @@
                                             target="_blank">
                                             {{-- {{ substr($topic->lessonAttachment->video_origin_url, 0,40)}} --}}
                                             Preview
-                                        </a> @else NA @endif</td>
+                                        </a> @else NA @endif
+                                    </td>
+                                    <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
                                     <td> @if($topic->type==2)<a
                                             href="{{asset($topic->lessonAttachment->video_thumbnail_image)}}"
                                             target="_blank">
@@ -176,7 +184,8 @@
                                     <th> Recources Topics </th>
                                     <th> Type </th>
                                     <th> Article </th>
-                                    <th>Preview</th>
+                                    <th> Teacher </th>
+                                    <th> Preview </th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -193,6 +202,7 @@
                                     </td>
                                     <td>{{substr($topic->content, 0, 20)}}</td>
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
+                                    <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
                                     <td>
                                         @if ($topic->preview==0)
                                         <a href="{{route('admin.preview.lesson',Crypt::encrypt($topic->id))}}"
@@ -224,9 +234,10 @@
                         <table class="table table-striped" id="lessonTableMcq">
                             <thead>
                                 <tr>
-                                    <th>#No</th>
+                                    <th> #No </th>
                                     <th> Set Name </th>
                                     <th> Total Question </th>
+                                    <th> Teacher </th>
                                     <th> Status </th>
                                     <th>Action</th>
                                 </tr>
@@ -237,8 +248,9 @@
                                     <td>{{++$key}}</td>
                                     <td> {{$set->set_name}}</td>
                                     <td> {{$set->question->count()}}</td>
-                                    <td> @if($set->is_activate==1)<a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
-                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.lesson.status',Crypt::encrypt($set->id))}}"
+                                    <td>{{$set->assignTeacher->name ?? 'Not Assigned'}}</td>
+                                    <td> @if($set->is_activate==1)<a href="{{route('admin.mcq.set.status',Crypt::encrypt($set->id))}}"
+                                        class="badge badge-success">Active</a> @else <a href="{{route('admin.mcq.set.status',Crypt::encrypt($set->id))}}"
                                             class="badge badge-danger">InActive</a> @endif</td>
                                     {{-- <td>@if($topic->status==1)Active @else InActive @endif</td> --}}
                                     <td>
