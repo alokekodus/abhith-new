@@ -216,6 +216,7 @@ class SubjectController extends Controller
                         'total_image' => $img,
                         'total_video' => $total_video,
                         'total_article' => $total_article,
+                        'total_mcq_set'=>$lesson->activeSets->count(),
                     ];
 
                 $lesson = [
