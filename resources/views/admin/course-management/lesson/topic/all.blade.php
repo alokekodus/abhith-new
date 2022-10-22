@@ -183,7 +183,6 @@
                                     <th> Lesson Name </th>
                                     <th> Recources Topics </th>
                                     <th> Type </th>
-                                    <th> Article </th>
                                     <th> Teacher </th>
                                     <th> Preview </th>
                                     <th> Status </th>
@@ -200,7 +199,6 @@
                                     <td> @if($topic->type==1)pdf @elseif($topic->type==2) video @else
                                         article @endif </article>
                                     </td>
-                                    <td>{{substr($topic->content, 0, 20)}}</td>
                                     {{-- <td>@if($topic->lessonAttachment->free_demo==0)No @else Yes @endif</td> --}}
                                     <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
                                     <td>

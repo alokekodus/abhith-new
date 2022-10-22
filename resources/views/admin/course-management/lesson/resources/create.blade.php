@@ -256,6 +256,11 @@ function setFileInfo() {
                        
                         $('#assignTopicSubmitBtn').html('Submit');
                     }
+                    if(response.status==2){
+                        toastr.error(response.message);
+                       
+                        $('#assignTopicSubmitBtn').html('Submit');
+                    }
                     if(response.status==3){
                         toastr.error(response.message);
                        
