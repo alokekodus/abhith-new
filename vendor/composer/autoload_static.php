@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5
+class ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -591,7 +591,7 @@ class ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5
         ),
         'Doctrine\\Common\\' => 
         array (
-            0 => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common',
+            0 => __DIR__ . '/..' . '/doctrine/event-manager/src',
         ),
         'Dflydev\\DotAccessData\\' => 
         array (
@@ -1093,9 +1093,9 @@ class ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5
         'Doctrine\\Common\\Cache\\Psr6\\DoctrineProvider' => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/DoctrineProvider.php',
         'Doctrine\\Common\\Cache\\Psr6\\InvalidArgument' => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/InvalidArgument.php',
         'Doctrine\\Common\\Cache\\Psr6\\TypedCacheItem' => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/TypedCacheItem.php',
-        'Doctrine\\Common\\EventArgs' => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common/EventArgs.php',
-        'Doctrine\\Common\\EventManager' => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common/EventManager.php',
-        'Doctrine\\Common\\EventSubscriber' => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common/EventSubscriber.php',
+        'Doctrine\\Common\\EventArgs' => __DIR__ . '/..' . '/doctrine/event-manager/src/EventArgs.php',
+        'Doctrine\\Common\\EventManager' => __DIR__ . '/..' . '/doctrine/event-manager/src/EventManager.php',
+        'Doctrine\\Common\\EventSubscriber' => __DIR__ . '/..' . '/doctrine/event-manager/src/EventSubscriber.php',
         'Doctrine\\Common\\Lexer\\AbstractLexer' => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer/AbstractLexer.php',
         'Doctrine\\DBAL\\ArrayParameters\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception.php',
         'Doctrine\\DBAL\\ArrayParameters\\Exception\\MissingNamedParameter' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception/MissingNamedParameter.php',
@@ -7902,10 +7902,10 @@ class ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitc1c2ebfaedc01de457fb0d93f272d8e5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$classMap;
 
         }, null, ClassLoader::class);
     }

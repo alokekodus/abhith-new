@@ -3,11 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-<<<<<<< HEAD
-        'reference' => 'dfa937d35ffa082dec00381dee8aaa2c5c9028f3',
-=======
-        'reference' => 'f0f7a3c83b740f24eca7026c183fa13693c64fdb',
->>>>>>> e13727f3fdafe095cce330fca7a2095d01f9b12a
+        'reference' => 'a30de11a0b3c6189978d6f7f095b1216d2b13647',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -135,9 +131,9 @@
             'dev_requirement' => false,
         ),
         'doctrine/inflector' => array(
-            'pretty_version' => '2.0.5',
-            'version' => '2.0.5.0',
-            'reference' => 'ade2b3bbfb776f27f0558e26eed43b5d9fe1b392',
+            'pretty_version' => '2.0.6',
+            'version' => '2.0.6.0',
+            'reference' => 'd9d313a36c872fd6ee06d9a6cbcf713eaa40f024',
             'type' => 'library',
             'install_path' => __DIR__ . '/../doctrine/inflector',
             'aliases' => array(),
@@ -518,11 +514,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-<<<<<<< HEAD
-            'reference' => 'dfa937d35ffa082dec00381dee8aaa2c5c9028f3',
-=======
-            'reference' => 'f0f7a3c83b740f24eca7026c183fa13693c64fdb',
->>>>>>> e13727f3fdafe095cce330fca7a2095d01f9b12a
+            'reference' => 'a30de11a0b3c6189978d6f7f095b1216d2b13647',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -601,15 +593,9 @@
             'dev_requirement' => false,
         ),
         'maatwebsite/excel' => array(
-<<<<<<< HEAD
-            'pretty_version' => '3.1.43',
-            'version' => '3.1.43.0',
-            'reference' => '3c5b95478fb6f76b9a6ab527d54afbb3afbda611',
-=======
             'pretty_version' => '3.1.44',
             'version' => '3.1.44.0',
             'reference' => '289c3320982510dacfe0dd00de68061a2b7f4a43',
->>>>>>> e13727f3fdafe095cce330fca7a2095d01f9b12a
             'type' => 'library',
             'install_path' => __DIR__ . '/../maatwebsite/excel',
             'aliases' => array(),
@@ -993,8 +979,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0 || 3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -1009,8 +995,8 @@
         'psr/simple-cache-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0',
-                1 => '1.0',
+                0 => '1.0',
+                1 => '1.0|2.0',
             ),
         ),
         'psy/psysh' => array(
@@ -1227,9 +1213,9 @@
             'dev_requirement' => true,
         ),
         'spatie/laravel-permission' => array(
-            'pretty_version' => '5.5.12',
-            'version' => '5.5.12.0',
-            'reference' => '81254462a93ed274d3e18159f04f5e842f813d00',
+            'pretty_version' => '5.5.14',
+            'version' => '5.5.14.0',
+            'reference' => '87850d72185278b65a33b58b6016dd3564d3a583',
             'type' => 'library',
             'install_path' => __DIR__ . '/../spatie/laravel-permission',
             'aliases' => array(),
