@@ -26,6 +26,7 @@
                     </div>
                     <div class="knowledge-forum-profile-bottom1">
                         <div class="knowledge-pic">
+                           
                             @if($user_details != null)
                             <img src="{{asset('/files/profile/'.$user_details->image)}}"
                                 onerror="this.onerror=null;this.src='{{asset('asset_website/img/noimage.png')}}';"

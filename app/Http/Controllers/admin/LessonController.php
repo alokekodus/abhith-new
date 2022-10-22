@@ -161,6 +161,7 @@ class LessonController extends Controller
     public function resourceView($id)
     {
         try {
+            
             $lesson_id = Crypt::decrypt($id);
             $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
             return view('admin.course-management.lesson.resources.view', compact('lesson'));
