@@ -7,7 +7,7 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> Add Resources
+        </span> Edit Resources
     </h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

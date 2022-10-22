@@ -461,7 +461,7 @@ class LessonController extends Controller
             }
         } catch (\Throwable $th) {
 
-            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
+            return response()->json(['status' => 2, 'message' => $th->getMessage()]);
         }
     }
     public function previewStatusChange($lesson_id)
