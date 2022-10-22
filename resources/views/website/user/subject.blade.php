@@ -22,15 +22,15 @@
     
             <div class="col-md-4 mb-4">
                 <div class="course-pic">
-                    <img src="{{asset($subject->image)}}" class="w100">
+                    <img src="{{asset($subject->subject->image)}}" class="w100">
                 </div>
                 <div class="course-desc">
-                    <h4 class="small-heading-black">{{$subject->subject_name}}</h4>
+                    <h4 class="small-heading-black">{{$subject->subject->subject_name}}</h4>
                     Board:{{$order->board->exam_board}} Class:{{$order->assignClass->class}}<br>
                     <span>Created by : Demo Teacher</span><br>
                     <span></i>Total Lesson:
-                        {{$subject->lesson->count()}}</span>
-                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}" class="enroll">View Details</a>
+                        {{$subject->subject->lesson->count()??'NA'}}</span>
+                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->subject->id))}}" class="enroll">View Details</a>
                 </div>
             </div>
             @endforeach

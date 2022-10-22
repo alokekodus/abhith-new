@@ -264,7 +264,7 @@
                                                     </div>
                                                     <div>
                                                         <h6>Course Type</h6>
-                                                        <h5 class="font-weight-bold">Full Course</h5>
+                                                        <h5 class="font-weight-bold">@if($item->is_full_course_selected==1)Full Course @else Custom package @endif</h5>
                                                     </div>
                                                     <div>
                                                         <h6>Subjects</h6>

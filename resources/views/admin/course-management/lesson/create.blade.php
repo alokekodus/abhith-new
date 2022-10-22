@@ -42,7 +42,7 @@
                         </div>
 
                         <div style="float: right;">
-                            <a href="{{url()->previous()}}" type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</a>
+                            <input  type="button" value="Reset" onClick="resetLesson()" class="btn btn-md btn-default" id="assignLessonCancelBtn">
                             <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type"
                                 value="lesson-create">Submit</button>
                         </div>
@@ -137,5 +137,10 @@
             });
         })
     </script>
+    <script>
+      function  resetLesson(){
+        document.getElementById("assignLessonForm").reset();
+      }
+        </script>
 
 @endsection

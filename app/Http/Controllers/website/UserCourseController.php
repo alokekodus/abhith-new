@@ -16,9 +16,8 @@ class UserCourseController extends Controller
         try {
             $order_id = Crypt::decrypt($order_id);
             $order = Order::find($order_id);
-            if ($order->is_full_course_selected == 1) {
-                $subjects = AssignSubject::where('assign_class_id', $order->assign_class_id)->where('board_id', $order->board_id)->get();
-            }
+           
+            $subjects=$order->assignSubject;
             return view('website.user.subject', compact('subjects', 'order'));
         } catch (\Throwable $th) {
 
