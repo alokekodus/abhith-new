@@ -42,7 +42,7 @@
                         </div>
 
                         <div style="float: right;">
-                            <button type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</button>
+                            <a href="{{url()->previous()}}" type="button" class="btn btn-md btn-default" id="assignLessonCancelBtn">Cancel</a>
                             <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type"
                                 value="lesson-create">Submit</button>
                         </div>

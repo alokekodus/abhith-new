@@ -43,7 +43,7 @@
                             <th> # </th>
                             <th> Name </th>
                             <th> Email </th>
-                           
+                           <th>Phone number</th>
                         </tr>
 
                     </thead>
@@ -53,6 +53,7 @@
                             <td>{{$key + 1}}</td>
                             <td>{{$user->name??"NA"}}</td>
                             <td>{{$user->email}}</td>
+                            <td>{{$user->phone??'NA'}}</td>
                             {{-- <td><a href="#">view</a></td> --}}
                         </tr>
                         @empty
