@@ -4487,4 +4487,11 @@ svg{
 }
 .myCourses-view-btn{
     margin-top: 25px;
+    
+}
+.myCourses-view-btn a{
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px;
+    background-image: linear-gradient(to left, #076fef, #01b9f1);
 }
