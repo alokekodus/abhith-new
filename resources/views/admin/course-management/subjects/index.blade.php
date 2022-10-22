@@ -86,9 +86,11 @@
                                 </td>
                                 <td>
                                     @if ($subject->is_activate == 1)
-                                    <a href="{{route('admin.active.subject',Crypt::encrypt($subject->id))}}" class="badge badge-success">Active</a>
+                                    <a href="{{route('admin.active.subject',Crypt::encrypt($subject->id))}}"
+                                        class="badge badge-success">Active</a>
                                     @else
-                                    <a href="{{route('admin.active.subject',Crypt::encrypt($subject->id))}}" class="badge badge-danger">Inactive</a>
+                                    <a href="{{route('admin.active.subject',Crypt::encrypt($subject->id))}}"
+                                        class="badge badge-danger">Inactive</a>
                                     @endif
                                 </td>
                                 <td>
@@ -205,8 +207,16 @@
             data: formDat,
 
             success: function(data) {
-                location.reload();
+                console.log(data);
+                if(data.status==0){
+                    location.reload();
+                    toastr.error(data.message);
+                }
+                else{
+                    location.reload();
                 toastr.success(data.message);
+                }
+                
             }
         });
     });
