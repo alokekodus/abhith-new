@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.course.management.subject.all') }}">Subject</a></li>
                 <li class="breadcrumb-item" aria-current="page"><a
-                        href="{{ route('admin.course.management.lesson.topic.create', ['lesson_id' => Crypt::encrypt($lesson->assignSubject->id)]) }}">{{ $lesson->assignSubject->subject_name }}</a>
+                        href="{{ route('admin.course.management.lesson.topic.create', Crypt::encrypt($lesson->parent_id)) }}">{{ $lesson->assignSubject->subject_name }}</a>
                 </li>
                 <li class="breadcrumb-item" aria-current="page">{{ $lesson->name }}</li>
             </ol>

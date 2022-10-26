@@ -26,6 +26,7 @@
                     </div>
                     <div class="knowledge-forum-profile-bottom1">
                         <div class="knowledge-pic">
+                           
                             @if($user_details != null)
                             <img src="{{asset('/files/profile/'.$user_details->image)}}"
                                 onerror="this.onerror=null;this.src='{{asset('asset_website/img/noimage.png')}}';"
@@ -272,7 +273,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="myCourses-view-btn">
-                                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}" class="btn btn-primary">View Details</a>
+                                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}" class="btn-sm btn-primary">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
