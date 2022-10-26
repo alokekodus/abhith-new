@@ -29,7 +29,7 @@
     <h3 class="page-title">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-format-list-bulleted"></i>
-        </span>  @if auth()->user()->hasRole('Teacher') My Application @else All Teacher Applications @endif
+        </span> @if(auth()->user()->hasRole('Teacher')) My Application @else All Teacher Applications @endif
     </h3>
 </div>
 
