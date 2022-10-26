@@ -37,7 +37,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{route('website.cart')}}" class="login-text"><span class="icon-cart-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>Cart ( {{ $cart_items }} )</a>                            
+                        <a href="{{route('website.cart')}}" class="login-text"><span class="icon-cart-08 login-details-icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>Cart ( {{totalCartItem()}} )</a>                            
                     </li>
                 </ul>
             </div>

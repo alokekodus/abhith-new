@@ -406,3 +406,7 @@ function totalAmountCart($cart_id){
    }
    return $total;
 }
+function totalCartItem(){
+    $cart=Cart::where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->get();
+    return $cart->count();
+}

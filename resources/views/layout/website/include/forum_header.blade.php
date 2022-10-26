@@ -10,7 +10,7 @@
             </div>
            
             <div class="col-lg-7">
-                <ul class="list-inline knowledge-header-list">
+                <ul class="list-inline knowledge-header-list" style="display: none;">
                     <li>
                         <a href="{{route('website.dashboard')}}">Home</a>
                     </li>
