@@ -170,7 +170,7 @@ class CourseController extends Controller
     }
     public function  subjectDetails($subject_id)
     {
-        
+       
         $subject_id = Crypt::decrypt($subject_id);
 
         $subject = AssignSubject::with(['lesson' => function ($query) {

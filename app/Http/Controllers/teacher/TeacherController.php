@@ -115,8 +115,12 @@ class TeacherController extends Controller
     }
     public function index()
     {
-
-        $applications = UserDetails::with('user')->where('status', '!=', 0)->get();
+        if(auth()->user()->hasRole('Teacher')){
+            $applications=UserDetails::with('user')->where('status', '!=', 0)->where('user_id',auth()->user()->id)->get();
+        }else{
+            $applications = UserDetails::with('user')->where('status', '!=', 0)->get();
+        }
+        
 
         return view('admin.teacher.index', compact('applications'));
     }
