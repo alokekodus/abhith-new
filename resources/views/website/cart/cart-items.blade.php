@@ -7,7 +7,7 @@
         <div class="subjectName">
             <h4>{{$subject->subject->subject_name}}</h4>
             <p> {{$subject->subject->lesson->count()}} Lessons</p>
-            <a href="#">View</a>
+            <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->subject->id))}}">View</a>
         </div>
     </div>
     <div class="price-div">

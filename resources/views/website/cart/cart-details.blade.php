@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="heading-black mb0">Cart(2)</h2>
+                <h2 class="heading-black mb0">Cart({{totalCartItem()}})</h2>
             </div>
         </div>
     </div>
@@ -68,11 +68,12 @@
                         <div class="subjectName">
                             <h4>{{$all_subject->subject->subject_name}}</h4>
                             <p> {{$all_subject->subject->lesson->count()}} Lessons</p>
-                            <a href="#">View</a>
+                            <a href="{{route('website.subject.detatils',Crypt::encrypt($all_subject->subject->id))}}">View</a>
                         </div>
                     </div>
                     <div class="price-div">
                         <span>
+                           
                             @if(subjectStatus($all_subject->subject->id)==1) 
                             <span class="badge badge-info">Already Purchased</span>  
                             @elseif(subjectStatus($all_subject->subject->id)==2) 
@@ -111,7 +112,7 @@
                         <p class="checkout-details-text">Total</p>
                         <p><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{totalAmountCart($cart->id)}}</p>
                     </div>
-                    @if ($countPrice == 0)
+                    @if (totalAmountCart($cart->id) == 0)
                     <a href="javascript:void(0)" class="btn btn-block btn-secondary bold-600" disabled>Checkout</a>
                     @else
                     <a class="btn btn-block knowledge-link-new checkoutBtn" id="checkoutBtn" href="{{route('website.checkout',Crypt::encrypt($cart->id))}}"

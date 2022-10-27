@@ -379,7 +379,7 @@ function subjectStatus($subject_id){
     })->where("user_id", auth()->user()->id)->first();
    
     $isSubjectActive=AssignSubject::where('is_activate',1)->where('published',1)->where('id',$subject_id)->first();
-    if( $isSubjectActive){
+    if( $isSubjectActive && (!$isBuy)){
         return 3;
     }elseif($isBuy){
          return 1;
