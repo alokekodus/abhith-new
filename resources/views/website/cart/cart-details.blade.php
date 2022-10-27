@@ -57,7 +57,7 @@
                         class="shipping-btn">Continue Enrolling</a></div> --}}
                 <div class="cart-course d-flex justify-content-between">
                     <p class="courseName">{{$cart->board->exam_board}} - Class {{$cart->assignClass->class}}</p>
-                    <p>@if($cart->is_full_course_selected==1)Full Package @else Custom Package @endi</p>
+                    <p>@if($cart->is_full_course_selected==1)Full Package @else Custom Package @endif</p>
                 </div>
                 @foreach($all_subjects as $key=>$all_subject)
                 <div class="cart-course-description d-flex justify-content-between">
