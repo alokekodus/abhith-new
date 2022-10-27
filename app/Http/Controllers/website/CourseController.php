@@ -103,38 +103,38 @@ class CourseController extends Controller
     {
       
         try {
+           
             $subject = AssignSubject::find(Crypt::decrypt($subject_id));
             $subject_id=$subject->id;
-
             $subjects = AssignSubject::with('review')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('board_id', $subject->board_id)->where('assign_class_id', $subject->assign_class_id)->where('is_activate', 1)->where('published', 1)->get();
             $total_subject=$subjects->count();
             $board = Board::find($subject->board_id);
             $Assignclass = AssignClass::find($subject->assign_class_id);
             $total_amount = 0;
-            foreach ($subjects as $key => $subject) {
-                if (subjectAlreadyPurchase($subject->id) == 1) {
+            foreach ($subjects as $key => $subjectDetail) {
+                if (subjectAlreadyPurchase($subjectDetail->id) == 1) {
                     $total_amount = $total_amount + 0;
                 } else {
-                    $total_amount = $total_amount + $subject->subject_amount;
+                    $total_amount = $total_amount + $subjectDetail->subject_amount;
                 }
             }
 
             $all_subject = [];
-            foreach ($subjects as $key => $subject) {
-                if ($subject->review->count() > 0) {
-                    $total_rating = $subject->review()->count() * 5;
-                    $rating_average = $subject->review()->sum('rating') / $total_rating * 5;
+            foreach ($subjects as $key => $subjectDetail) {
+                if ($subjectDetail->review->count() > 0) {
+                    $total_rating = $subjectDetail->review()->count() * 5;
+                    $rating_average = $subjectDetail->review()->sum('rating') / $total_rating * 5;
                 } else {
                     $rating_average = "No reviews yet";
                 }
 
                 $data = [
-                    'id' => $subject->id,
-                    'subject_name' => $subject->subject_name,
-                    'image' => $subject->image,
-                    'subject_amount' => $subject->subject_amount,
-                    'rating' => $rating_average,
-                    'already_purchase' => subjectAlreadyPurchase($subject->id),
+                    'id' => $subjectDetail->id,
+                    'subject_name' => $subjectDetail->subject_name,
+                    'image' => $subjectDetail->image,
+                    'subject_amount' => $subjectDetail->subject_amount,
+                    'rating' => $subjectDetail,
+                    'already_purchase' => subjectAlreadyPurchase($subjectDetail->id),
 
                 ];
                 $all_subject[] = $data;
@@ -150,7 +150,7 @@ class CourseController extends Controller
                 'assignclass' => $Assignclass,
                 'subjectamount'=>$subject->subject_amount,
             ];
-
+           
             return view('website.course.enroll', compact('data','subject_id','total_subject'));
         } catch (\Throwable $th) {
             //throw $th;
