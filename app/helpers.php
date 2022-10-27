@@ -410,3 +410,9 @@ function totalCartItem(){
     $cart=Cart::where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->where('is_buy',0)->get();
     return $cart->count();
 }
+function orderNo()
+{
+    $order_count = Order::count() + 1;
+    $order_no         = date('dmY') . '/' . $order_count;
+    return $order_no;
+}

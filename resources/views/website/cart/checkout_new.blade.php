@@ -68,7 +68,7 @@
                     </div>
                     <div class="checkout-details d-flex justify-content-between">
                         <p class="checkout-details-text">Order Id</p>
-                        <p><b>#1234</b></p>
+                        <p><b>#{{$order->order_no}}</b></p>
                     </div>
 
                     @auth

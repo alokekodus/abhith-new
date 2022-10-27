@@ -57,18 +57,19 @@ class PaymentController extends Controller
                 ];
 
                
-                    Order::create([
+                   $order= Order::create([
                         'user_id' => Auth::user()->id,
                         'board_id' => $cart->board_id,
                         'assign_class_id' => $cart->assign_class_id,
                         'rzp_order_id' => $razorpayOrder['id'],
                         'payment_status' => 'pending',
+                        'order_no'=>orderNo()
                     ]);
                 
 
 
                 // return view('website.cart.checkout')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
-                return view('website.cart.checkout_new')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
+                return view('website.cart.checkout_new')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params,'order'=>$order]);
             }
         }
     }
