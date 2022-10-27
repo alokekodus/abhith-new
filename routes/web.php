@@ -19,6 +19,7 @@ use App\Http\Controllers\website\CartController;
 use App\Http\Controllers\website\RazorpayPaymentController;
 use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\admin\TimeTableController;
+use App\Http\Controllers\api\PerformanceController;
 use App\Http\Controllers\website\SubjectController;
 use App\Http\Controllers\website\UserCourseController;
 use App\Http\Middleware\WebSite;
@@ -103,7 +104,7 @@ Route::prefix('account')->middleware([WebSite::class])->group(function () {
     Route::get('my-lesson/{topic_id}', [UserDetailsController::class, 'myLessonDetails'])->name('website.user.lesson.details');
     Route::post('attachment', [UserDetailsController::class, 'displayAttachment'])->name('website.user.lesson.attachment');
     Route::get('lesson/{id}', [LessonController::class, 'LessonDetails'])->name('website.user.lessonbyid');
-    Route::get('performance',[UserDetailsController::class,'myPerformance'])->name('web.user.performance');
+    Route::get('/performance', [PerformanceController::class, 'allPerformance'])->name('website.user.performance');
 });
 
 

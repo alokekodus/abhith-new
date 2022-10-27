@@ -26,7 +26,7 @@
                     </div>
                     <div class="knowledge-forum-profile-bottom1">
                         <div class="knowledge-pic">
-                           
+
                             @if($user_details != null)
                             <img src="{{asset('/files/profile/'.$user_details->image)}}"
                                 onerror="this.onerror=null;this.src='{{asset('asset_website/img/noimage.png')}}';"
@@ -251,7 +251,8 @@
 
                                         <div class="row mb-4">
                                             <div class="col-lg-2 col-md-3">
-                                                <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px" alt="">
+                                                <img src="{{asset('asset_website/img/Image.png')}}"
+                                                    style="height: 125px" alt="">
                                             </div>
                                             <div class="col-lg-10 col-md-9">
                                                 <div class="d-flex justify-content-between myCourses-details">
@@ -261,19 +262,24 @@
                                                     </div>
                                                     <div>
                                                         <h6>Class</h6>
-                                                        <h5 class="font-weight-bold">{{$item->assignClass->class??''}}</h5>
+                                                        <h5 class="font-weight-bold">{{$item->assignClass->class??''}}
+                                                        </h5>
                                                     </div>
                                                     <div>
                                                         <h6>Course Type</h6>
-                                                        <h5 class="font-weight-bold">@if($item->is_full_course_selected==1)Full Course @else Custom package @endif</h5>
+                                                        <h5 class="font-weight-bold">
+                                                            @if($item->is_full_course_selected==1)Full Course @else
+                                                            Custom package @endif</h5>
                                                     </div>
                                                     <div>
                                                         <h6>Subjects</h6>
-                                                        <h5 class="font-weight-bold text-center">{{$item->assignSubject->count()}}</h5>
+                                                        <h5 class="font-weight-bold text-center">
+                                                            {{$item->assignSubject->count()}}</h5>
                                                     </div>
                                                 </div>
                                                 <div class="myCourses-view-btn">
-                                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}" class="btn-sm btn-primary">View Details</a>
+                                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
+                                                        class="btn-sm btn-primary">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,7 +315,8 @@
 
                                 {{-- <div class="row">
                                     <div class="col-lg-2 col-md-3">
-                                        <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px" alt="">
+                                        <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px"
+                                            alt="">
                                     </div>
                                     <div class="col-lg-10 col-md-9">
                                         <div class="d-flex justify-content-between myCourses-details">
@@ -401,62 +408,68 @@
                                     <div class="progress-bar-right">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item mb-2" role="presentation">
-                                              <button class="nav-link active" id="daily-tab" data-toggle="tab" data-target="#daily" type="button" role="tab" aria-controls="daily" aria-selected="true">Daily</button>
+                                                <button class="nav-link active" id="daily-tab" data-toggle="tab"
+                                                    data-target="#daily" type="button" role="tab" aria-controls="daily"
+                                                    aria-selected="true">Daily</button>
                                             </li>
-                                            <li class="nav-item" role="presentation">
-                                              <button class="nav-link" id="monthly-tab" data-toggle="tab" data-target="#monthly" type="button" role="tab" aria-controls="monthly" aria-selected="false">Monthly</button>
-                                            </li>
-                                          </ul>
+                                            {{-- <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="monthly-tab" data-toggle="tab"
+                                                    data-target="#monthly" type="button" role="tab"
+                                                    aria-controls="monthly" aria-selected="false">Monthly</button>
+                                            </li> --}}
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="daily" role="tabpanel" aria-labelledby="daily-tab">
+                                    <div class="tab-pane fade show active" id="daily" role="tabpanel"
+                                        aria-labelledby="daily-tab">
                                         <div class="monthly-progress-bar">
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 25%">
-                                                    <div class="percent">15</div>
+                                                    <div class="percent"><span id="monday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Mon</div>
                                             </div>
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 65%">
-                                                    <div class="percent">45</div>
+                                                    <div class="percent"><span id="tueday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Tue</div>
                                             </div>
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 30%">
-                                                    <div class="percent">20</div>
+                                                    <div class="percent"><span id="wedday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Wed</div>
                                             </div>
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 67%">
-                                                    <div class="percent">47</div>
+                                                    <div class="percent"><span id="thuday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Thu</div>
                                             </div>
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 60%">
-                                                    <div class="percent">40</div>
+                                                    <div class="percent"><span id="friday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Fri</div>
                                             </div>
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 23%">
-                                                    <div class="percent">13</div>
+                                                    <div class="percent"><span id="satday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Sat</div>
                                             </div>
                                             <div class="weekly-bar">
                                                 <div class="week-percent" style="height: 60%">
-                                                    <div class="percent">40</div>
+                                                    <div class="percent"><span id="sunday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Sun</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
+                                    {{-- <div class="tab-pane fade" id="monthly" role="tabpanel"
+                                        aria-labelledby="monthly-tab">
                                         <div class="monthly-progress-bar">
                                             <div class="monthly-bar">
                                                 <div class="monthly-percent" style="height: 25%">
@@ -531,7 +544,7 @@
                                                 <div class="month-name">Dec</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="col-md-4 mt-5">
@@ -883,12 +896,13 @@
     
     $(document).ready(function(){
         $.ajax({
-					url: "{{route('web.user.performance')}}",
+					url: "{{route('website.user.performance')}}",
 					method: 'get',
                    
 					success: function(result) {
                       
                        progreceGraph(result.result);
+                       dailyGraph(result.result);
                     }
     })
 })
@@ -933,6 +947,17 @@
         }
     })
  }
+ function dailyGraph(result){
+   var time_spent=result.time_spent;
+   console.log(time_spent);
+        $("#monday").html(time_spent['Mon']);
+        $("#tueday").html(time_spent['Tue']);
+        $("#wedday").html(time_spent['Wed']); 
+        $("#thuday").html(time_spent['Thu']);
+        $("#friday").html(time_spent['Fri']);
+        $("#satday").html(time_spent['Sat']);
+        $("#sunday").html(time_spent['Sun']);
+    }
     
 </script>
 @endsection
