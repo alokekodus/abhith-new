@@ -54,10 +54,27 @@
 
                 </div>
                 <div class="col-lg-4">
+                    <div class="checkout-details d-flex justify-content-between">
+                        <p class="checkout-details-text">Name</p>
+                        <p><b>{{ auth()->user()->name }}</b></p>
+                    </div>
+                    <div class="checkout-details d-flex justify-content-between">
+                        <p class="checkout-details-text">Email</p>
+                        <p><b>{{ auth()->user()->email }}</b></p>
+                    </div>
+                    <div class="checkout-details d-flex justify-content-between">
+                        <p class="checkout-details-text">Phone</p>
+                        <p><b>{{ auth()->user()->phone }}</b></p>
+                    </div>
+                    <div class="checkout-details d-flex justify-content-between">
+                        <p class="checkout-details-text">Order Id</p>
+                        <p><b>#1234</b></p>
+                    </div>
+
                     @auth
-                        <div class="cart-checkout" style="background: unset">
+                        <div class="cart-checkout p-0" style="background: unset;">
                             <div class="" style="border-left:2px solid #ddd;">
-                                <button id="rzp-button1" class="btn btn-lg btn-success bold-600">Pay &nbsp; <i class="fa fa-inr"
+                                <button id="rzp-button" class="btn btn-lg btn-success bold-600">Pay &nbsp; <i class="fa fa-inr"
                                         aria-hidden="true"></i> {{ $countPrice }}</span></button>
                                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                                 <form name='razorpayform' action="{{ route('payment.verify') }}" method="POST">
@@ -119,7 +136,7 @@
         // Boolean whether to show image inside a white frame. (default: true)
         options.theme.image_padding = false;
         var rzp = new Razorpay(options);
-        document.getElementById('rzp-button1').onclick = function(e) {
+        document.getElementById('rzp-button').onclick = function(e) {
             rzp.open();
             e.preventDefault();
         }
