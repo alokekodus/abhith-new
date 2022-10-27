@@ -67,7 +67,8 @@ class PaymentController extends Controller
                 
 
 
-                return view('website.cart.checkout')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
+                // return view('website.cart.checkout')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
+                return view('website.cart.checkout_new')->with(['cart' => $cart,'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
             }
         }
     }
