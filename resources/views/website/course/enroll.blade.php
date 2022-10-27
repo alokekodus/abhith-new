@@ -446,10 +446,13 @@
      
       $("#total_price").html(amount+totalAmount.toFixed(2));
       const box = document.getElementById('add-to-cart');
+      const buynow=document.getElementById('buy-now');
       if(count==0){
         box.style.display = 'none';
+        buynow.style.display='none';
       }else{
         box.style.display = 'block';
+        buynow.style.display='block';
       }  
     }
 </script>

@@ -407,6 +407,6 @@ function totalAmountCart($cart_id){
    return $total;
 }
 function totalCartItem(){
-    $cart=Cart::where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->get();
+    $cart=Cart::where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->where('is_buy',0)->get();
     return $cart->count();
 }
