@@ -1,6 +1,21 @@
 @extends('layout.admin.layout.admin')
 @section('title', 'Course Management - Board')
 
+@section('head')
+    <style>
+        .actionBtn {
+            width: 40px;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background-color: #007BFF;
+        }
+
+        .actionBtn i {
+            color: #fff;
+        }
+    </style>
+@endsection
+
 @section('content')
 
     <div class="page-header">
@@ -63,9 +78,9 @@
                                             </label>
                                         @endif
                                     </td>
-                                    <td><button class="btn btn-warning btn-sm openEditModal"
-                                            data-board="{{ $item->exam_board }}"
-                                            data-id="{{ Crypt::encrypt($item->id) }}">Edit</button></td>
+                                    <td><button class="btn btn-sm openEditModal actionBtn" data-board="{{ $item->exam_board }}"
+                                            data-id="{{ Crypt::encrypt($item->id) }}"><i
+                                                class="mdi mdi-grease-pencil"></i></button></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -126,7 +141,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="updateBoardBtn">Update</button>
+                        <button type="submit" class="btn btn-success" id="updateBoardBtn">Update</button>
                     </div>
                 </form>
             </div>
