@@ -455,7 +455,7 @@
                                                 <div class="weekday-name">Fri</div>
                                             </div>
                                             <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 23%">
+                                                <div class="week-percent" style="height: 23git %">
                                                     <div class="percent"><span id="satday"></span></div>
                                                 </div>
                                                 <div class="weekday-name">Sat</div>
