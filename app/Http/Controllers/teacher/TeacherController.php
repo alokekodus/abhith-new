@@ -115,12 +115,12 @@ class TeacherController extends Controller
     }
     public function index()
     {
-        if(auth()->user()->hasRole('Teacher')){
-            $applications=UserDetails::with('user')->where('status', '!=', 0)->where('user_id',auth()->user()->id)->get();
-        }else{
+        if (auth()->user()->hasRole('Teacher')) {
+            $applications = UserDetails::with('user')->where('status', '!=', 0)->where('user_id', auth()->user()->id)->get();
+        } else {
             $applications = UserDetails::with('user')->where('status', '!=', 0)->get();
         }
-        
+
 
         return view('admin.teacher.index', compact('applications'));
     }
@@ -151,6 +151,36 @@ class TeacherController extends Controller
         } catch (\Throwable $th) {
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
+        }
+    }
+
+    public function rejectApplication(Request $request)
+    {
+        try {
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'teacher_id' => 'required'
+                ],
+                [
+                    'teacher_id.required' => 'ID not found'
+                ]
+            );
+
+            // If error
+            if ($validate->fails()) {
+                return response()->json(['status' => 0, 'message' => $validate->errors()->first()]);
+            }
+
+            // If success
+            UserDetails::find(Crypt::decrypt($request->teacher_id))->update([
+                'status' => 3
+            ]);
+
+            return response()->json(['status' => 1, 'message' => 'Teacher rejected']);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
 }
