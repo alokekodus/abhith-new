@@ -17,14 +17,14 @@ class Set extends Model
     }
     public function assignClass()
     {
-        return $this->belongsTo(assignClass::class);
+        return $this->belongsTo(AssignClass::class);
     }
     public function assignTeacher(){
         return $this->belongsTo(User::class, 'teacher_id', 'id');
     }
     public function assignSubject()
     {
-        return $this->belongsTo(assignSubject::class);
+        return $this->belongsTo(AssignSubject::class);
     }
     public function question(){
         return $this->hasMany(Question::class);
