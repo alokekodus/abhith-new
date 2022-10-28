@@ -231,7 +231,7 @@ class CourseController extends Controller
     }
 
     public function video($id){
-        $data['video'] = LessonAttachment::find(Crypt::decrypt($id));
+        $data['video'] = LessonAttachment::where('id', Crypt::decrypt($id))->with('lesson')->first();
         return view('website.my_account.video')->with($data);
     }
 }
