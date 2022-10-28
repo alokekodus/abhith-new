@@ -228,7 +228,7 @@
                                     <input type="password" class="form-control" name="confirmPassword"
                                         placeholder="Confirm Password" id="confirmPassword" required>
                                 </div>
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-lg-7">
                                     <div class="button-div1">
                                         <button type="submit"
                                             class="btn btn-block knowledge-link change-password-btn">Change
