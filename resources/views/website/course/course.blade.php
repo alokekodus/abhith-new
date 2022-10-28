@@ -121,7 +121,7 @@
             </div>
         </div>
 
-        @if ($subjects->count() != 0)
+        @if ($subjects->count() != 0 && Request::get('assignedBoard') && Request::get('class_id'))
         <div class="container-fluid">
             <h2 class="mb-4">Search result for "{{$subjects[0]->boards->exam_board}} Class {{$subjects[0]->assignClass->class}}"</h2>
         </div>
