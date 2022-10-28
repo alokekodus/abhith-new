@@ -21,7 +21,7 @@
             @foreach($subjects as $key=>$subject)
     
             <div class="col-md-4 mb-4">
-                <div class="course-pic">
+                {{-- <div class="course-pic">
                     <img src="{{asset($subject->subject->image)}}" class="w100">
                 </div>
                 <div class="course-desc">
@@ -31,6 +31,13 @@
                     <span></i>Total Lesson:
                         {{$subject->subject->lesson->count()??'NA'}}</span>
                     <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->subject->id))}}" class="enroll">View Details</a>
+                </div> --}}
+                <div class="course-desc">
+                    <h4 class="small-heading-black">{{$subject->subject->subject_name}}</h4>
+                    <p>Board : {{$order->board->exam_board}} Class : {{$order->assignClass->class}}</p>
+                    <p>Created by : Demo Teacher</p>
+                    <p>Total Lesson : {{$subject->subject->lesson->count()??'NA'}}</p>
+                    <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->subject->id))}}" class="btn-sm enroll">View Details</a>
                 </div>
             </div>
             @endforeach
