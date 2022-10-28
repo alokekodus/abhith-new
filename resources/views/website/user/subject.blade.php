@@ -32,6 +32,9 @@
                         {{$subject->subject->lesson->count()??'NA'}}</span>
                     <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->subject->id))}}" class="enroll">View Details</a>
                 </div> --}}
+                <div class="course-pic">
+                    <img src="{{asset($subject->subject->image)}}" class="w100">
+                </div>
                 <div class="course-desc">
                     <h4 class="small-heading-black">{{$subject->subject->subject_name}}</h4>
                     <p>Board : {{$order->board->exam_board}} Class : {{$order->assignClass->class}}</p>
