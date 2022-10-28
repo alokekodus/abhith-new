@@ -14,6 +14,7 @@ use App\Models\Subject;
 use App\Models\Chapter;
 use App\Models\Cart;
 use App\Models\Lesson;
+use App\Models\LessonAttachment;
 use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\MultipleChoice;
@@ -227,5 +228,10 @@ class CourseController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
+    }
+
+    public function video($id){
+        $data['video'] = LessonAttachment::find(Crypt::decrypt($id));
+        return view('website.my_account.video')->with($data);
     }
 }

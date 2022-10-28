@@ -98,7 +98,7 @@
                                         <img src="{{ asset($video->lessonAttachment->video_thumbnail_image) }}"
                                             alt="">
                                         <div class="video-lesson-overlay">
-                                            <a href="" class="btn btn-default video-lesson-overlay-eye-icon"><i
+                                            <a href="{{route('website.course.package.subject.video', ['id' => Crypt::encrypt($video->lessonAttachment->id)])}}" class="btn btn-default video-lesson-overlay-eye-icon"><i
                                                     class="fa fa-play-circle-o" aria-hidden="true"></i></a>
                                         </div>
                                     </div>
