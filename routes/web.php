@@ -48,12 +48,13 @@ Route::prefix('course')->group(function () {
     Route::get('lesson/{lesson_id}/{type}',[CourseController::class, 'getLessonDetails'])->name('getLessonDetails');
     Route::middleware([WebSite::class])->any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
     Route::get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
+    Route::get('video/{id}', [CourseController::class, 'video'])->name('website.course.package.subject.video');
 });
 Route::prefix('subject')->group(function () {
     Route::get('/{subject_id}', [SubjectController::class, 'subjectDetails'])->name('website.subject.detatils');
     Route::prefix('mcq')->group(function () {
-        Route::get('{set_id}', [SubjectController::class, 'mcqStart'])->name('website.subject.mcqstart');
-        Route::get('get/report', [SubjectController::class, 'mcqResult'])->name('website.subject.mcqresult');
+        Route::get('/{set_id}', [SubjectController::class, 'mcqStart'])->name('website.subject.mcqstart');
+        Route::get('/report/{id}', [SubjectController::class, 'mcqResult'])->name('website.subject.mcqresult');
         Route::post('/question',[SubjectController::class,'mcqGetQuestion'])->name('website.subject.mcqgetquestion');
     });
     Route::get('/topic/{topic_id}',[SubjectController::class,'topicDetails'])->name('subject.topic.details');
