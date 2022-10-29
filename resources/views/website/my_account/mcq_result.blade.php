@@ -5,7 +5,7 @@
 @section('head')
 <link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
 <style>
-    main{
+    main {
         margin: 0;
     }
 </style>
@@ -19,13 +19,13 @@
             <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
         </div>
         <div class="mcq-header-text">
-            <h3>Multiple Choice Questions For Class 
+            <h3>Multiple Choice Questions For Class
                 <span>Board</span>
             </h3>
             <p></p>
         </div>
     </div>
-    
+
 </div>
 {{-- <div class="container-fluid" id="mcq-question">
     <div class="row">
@@ -40,7 +40,7 @@
                         <div class="mcq-option-div">
                             <div class="options">
                                 <input type="radio" id="html" name="fav_language" value="HTML">
-                            <label for="html">HTML</label>
+                                <label for="html">HTML</label>
                             </div>
                             <div class="options">
                                 <input type="radio" id="css" name="fav_language" value="CSS">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
     <h4>MCQ Test</h4>
     <div class="row">
         <div class="col-md-6">
-            <div class="d-flex progress-main-div">
+            {{-- <div class="d-flex progress-main-div">
                 <div class="circleOne">
                     <div class="circular-progress">
                         <span class="progress-value"></span>
@@ -86,7 +86,10 @@
                         <p>Unattempted</p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
+
+            <canvas id="myChart"></canvas>
+
         </div>
         <div class="col-md-6">
             <div class="total-div">
@@ -118,7 +121,7 @@
                         <h3>Total Question: <span>9</span></h3>
                     </div>
                 </div>
-                <div class="col-md-6 random"> 
+                <div class="col-md-6 random">
                     <div class="attempted">
                         <h3>Attempt: <span>9</span></h3>
                     </div>
@@ -128,7 +131,7 @@
                         <h3>Unattempted: <span>9</span></h3>
                     </div>
                 </div>
-                <div class="col-md-6 random"> 
+                <div class="col-md-6 random">
                     <div class="correct">
                         <h3>Correct: <span>9</span></h3>
                     </div>
@@ -147,4 +150,42 @@
 
 
 
+@endsection
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var alldata=@json($data);
+    
+    var correct=alldata.correct_attempted;
+    var Incorrect=alldata.incorrect_attempted;
+    var Unattempted=alldata.total_question-(alldata.correct_attempted+alldata.incorrect_attempted);
+   const data = {
+  labels: [
+    'Correct',
+    'Incorrect',
+    'Unattempted'
+  ],
+  datasets: [{
+    label: 'MCQ Report',
+    data: [correct, Incorrect, Unattempted],
+    backgroundColor: [
+      'rgb(47, 224, 53)',
+      'rgb(255, 99, 132)',
+      'rgb(255, 205, 86)'
+    ],
+    hoverOffset: 4
+  }]
+};
+  
+const config = {
+  type: 'doughnut',
+  data: data,
+};
+</script>
+<script>
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+</script>
 @endsection

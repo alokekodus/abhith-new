@@ -75,6 +75,7 @@ class SubjectController extends Controller
         }
     }
     public function mcqResult(Request $request){
+       
         $id = $request->get('id');
         $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
         $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
