@@ -91,22 +91,22 @@
         <div class="col-md-6">
             <div class="total-div">
                 <div class="totalQuestion">
-                    <h3>Total Question: <span>10</span></h3>
+                    <h3>Total Question: <span>{{$data['total_question']}}</span></h3>
                 </div>
                 <div class="attempted-div d-flex">
                     <div class="col-md-6 attempted">
-                        <h3>Attempted: <span>9</span></h3>
+                        <h3>Attempted: <span>{{$data['attempted_question']}}</span></h3>
                     </div>
                     <div class="col-md-6 unattempted">
-                        <h3>Unattempted: <span>1</span></h3>
+                        <h3>Unattempted: <span>{{$data['total_question']-$data['attempted_question']}}</span></h3>
                     </div>
                 </div>
                 <div class="answered d-flex">
                     <div class="col-md-6 correct">
-                        <h3>Correct: <span>7</span></h3>
+                        <h3>Correct: <span>{{$data['correct_attempted']}}</span></h3>
                     </div>
                     <div class="col-md-6 incorrect">
-                        <h3>Incorrect: <span>2</span></h3>
+                        <h3>Incorrect: <span>{{$data['incorrect_attempted']}}</span></h3>
                     </div>
                 </div>
             </div>

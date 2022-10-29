@@ -74,9 +74,23 @@ class SubjectController extends Controller
             //throw $th;
         }
     }
-    public function mcqResult(){
-        
-        return view('website.my_account.mcq_result');
+    public function mcqResult(Request $request){
+        $id = $request->get('id');
+        $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
+        $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
+        $correct_attempted = $user_practice_test->correctAnswer->count();
+        $analysis_on_attempted_question = ($correct_attempted / $attempted_question) * 100;
+        $data = [
+
+            'set_title' => $user_practice_test->set->set_name,
+            'total_question' => $user_practice_test->set->question->count(),
+            'attempted_question' => $attempted_question,
+            'correct_attempted' => $correct_attempted,
+            'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
+            'analysis_on_attempted_question' => number_format((float)$analysis_on_attempted_question, 2, '.', ''),
+        ];
+       
+        return view('website.my_account.mcq_result',compact('data'));
     }
 
     public function topicDetails($topic_id){
