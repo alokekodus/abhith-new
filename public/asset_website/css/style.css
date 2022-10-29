@@ -739,6 +739,11 @@ main {
 .course-desc h6{
     font-weight: 600;
 }
+.course-desc p{
+    font-size: 15px;
+    color: rgb(32, 32, 32);
+    margin-bottom: 2px;
+}
 .course-desc .fa-inr{
     color: #07a807;
     font-weight: 600;
