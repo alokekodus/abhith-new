@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="mcq-cross-icon">
-        <a href="{{route('website.subject.mcqresult')}}" type="button" class="btn">Submit Test</a>
+        <a onclick="mcqFinalSubmit()" type="button" class="btn">Submit Test</a>
     </div>
 </div>
 <div class="container-fluid" id="mcq-question">
@@ -191,6 +191,40 @@ function mcqSubmit(){
     window.location.href = redirectURL
     // return 0;
 
+}
+function mcqFinalSubmit(){
+    var question_id=document.getElementById('question_id').value;
+    var question_answer = $("input[name='question_option']:checked").val();
+    var user_practice_test_store_id=$("#user_practice_test_store_id").val();
+    var set_id=@json($set['id']);
+    if(question_answer==undefined){
+        question_answer==null;
+    }
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+         });
+       
+
+        $.ajax({
+                url: "{{ route('website.subject.mcqSubmit') }}" ,
+                type: "POST",
+                data: {
+                    "set_id":set_id,
+                    "question_answer":question_answer,
+                    "user_practice_test_store_id":user_practice_test_store_id,
+                    "question_id":question_id
+                    
+                    },
+                 success: function( response ) {
+                    if(response.code==200){
+                        const redirectURL = "{{ route('website.subject.mcqresult') }}"+"?id="+response.user_practice_test_id;
+   
+                        window.location.href = redirectURL
+                    }
+                 }
+        });  
 }
 </script>
 @endsection

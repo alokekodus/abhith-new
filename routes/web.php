@@ -57,6 +57,7 @@ Route::prefix('subject')->group(function () {
         Route::get('/get/report', [SubjectController::class, 'mcqResult'])->name('website.subject.mcqresult');
         Route::get('/get/analysis/{id}', [SubjectController::class, 'mcqAnalysis'])->name('website.subject.analysis');
         Route::post('/question',[SubjectController::class,'mcqGetQuestion'])->name('website.subject.mcqgetquestion');
+        Route::post('/final/submit',[SubjectController::class,'finalSubmit'])->name('website.subject.mcqSubmit');
     });
     Route::get('/topic/{topic_id}',[SubjectController::class,'topicDetails'])->name('subject.topic.details');
 });

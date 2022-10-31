@@ -292,4 +292,58 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $th]);
         }
     }
+    public function finalSubmit(Request $request){
+        try {
+          
+
+            $user_practice_test = UserPracticeTest::find($request->user_practice_test_store_id);
+
+            $end_time = date('Y-m-d H:i:s');
+            $start_time = $user_practice_test->start_time;
+            $total_duration = timeDifference($start_time, $end_time);
+            $update_data = [
+                'end_time' => $end_time,
+                'total_duration' => $total_duration,
+            ];
+            $user_practice_test->update($update_data);
+            if($request->question_answer!=null){
+                $question = Question::find($request->question_id);
+                if ($question->correct_answer == $request->question_answer) {
+                    $is_correct = 1;
+                } else {
+                    $is_correct = 0;
+                }
+                $data = [
+                    'user_practice_test_id' => $request->user_practice_test_store_id,
+                    'question_id' => $question->id,
+                    'answer' => $question->correct_answer,
+                    'user_answer' => $request->question_answer,
+                    'is_correct' => $is_correct
+                ];
+    
+                $user_pract_test_answer = UserPracticeTestAnswer::create($data);
+            }
+           
+
+          
+            $update_user_practice_test_store =
+                [
+                    'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
+                    'total_correct_count' => $user_practice_test->correctAnswer->count(),
+                ];
+            $user_practice_test->update($update_user_practice_test_store);
+
+            $data=[
+                'code'=>200,
+                'user_practice_test_id'=>$user_practice_test->id,
+            ];
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            $data=[
+                'code'=>400,
+               
+            ];
+            return response()->json($data);
+        }
+    }
 }
