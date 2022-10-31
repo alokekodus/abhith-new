@@ -17,40 +17,38 @@ class SubjectController extends Controller
 {
     public function subjectDetails($subject_id)
     {
-      
+
         $subject_id = Crypt::decrypt($subject_id);
         $subject = AssignSubject::with('lesson', 'subjectAttachment')->where('id', $subject_id)->first();
         $lessons = $subject->lesson;
 
-        $reviews=Review::with(['user'=>function($q){
-            $q->with('userDetail');
-        }
-        ])->where('subject_id',$subject_id)->where('is_visible',1)->get();
-        if(!$reviews->isEmpty()){
-            $all_reviews=[];
-            $total_rating=$reviews->count()*5;
-            $rating_average=$reviews->sum('rating') / $total_rating * 5;
-            foreach($reviews as $key=>$review){
-                $review=[
-                    'user_name'=>$review->user->userDetail->name,
-                    'image'=>$review->user->userDetail->image,
-                    'rating'=>$review->rating,
-                    'review'=>$review->review,
+        $reviews = Review::with([
+            'user' => function ($q) {
+                $q->with('userDetail');
+            }
+        ])->where('subject_id', $subject_id)->where('is_visible', 1)->get();
+        if (!$reviews->isEmpty()) {
+            $all_reviews = [];
+            $total_rating = $reviews->count() * 5;
+            $rating_average = $reviews->sum('rating') / $total_rating * 5;
+            foreach ($reviews as $key => $review) {
+                $review = [
+                    'user_name' => $review->user->userDetail->name,
+                    'image' => $review->user->userDetail->image,
+                    'rating' => $review->rating,
+                    'review' => $review->review,
 
                 ];
-                $all_reviews[]=$review;
+                $all_reviews[] = $review;
             }
-            $total_review=$reviews->count();
-           
-           
-        }else{
+            $total_review = $reviews->count();
+        } else {
             $reviews = null;
-            $total_review=0;
-            $rating_average=0;
-            
+            $total_review = 0;
+            $rating_average = 0;
         }
-        
-        return view('website.user.lesson', compact('lessons', 'subject','reviews','total_review','rating_average'));
+
+        return view('website.user.lesson', compact('lessons', 'subject', 'reviews', 'total_review', 'rating_average'));
     }
     public function subjectMCQ($subject_id)
     {
@@ -62,20 +60,22 @@ class SubjectController extends Controller
             //throw $th;
         }
     }
-    public function mcqStart($set_id){
+    public function mcqStart($set_id)
+    {
         try {
-            $set_id=Crypt::decrypt($set_id);
-            $set=Set::with('question')->where('id',$set_id)->first();
-            $total_question=$set->question->count();
-            $start=true;
-            
-            return view('website.my_account.mcq_start',compact('set','start','total_question'));
+            $set_id = Crypt::decrypt($set_id);
+            $set = Set::with('question')->where('id', $set_id)->first();
+            $total_question = $set->question->count();
+            $start = true;
+
+            return view('website.my_account.mcq_start', compact('set', 'start', 'total_question'));
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-    public function mcqResult(Request $request){
-       
+    public function mcqResult(Request $request)
+    {
+
         $id = $request->get('id');
         $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
         $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
@@ -90,33 +90,52 @@ class SubjectController extends Controller
             'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
             'analysis_on_attempted_question' => number_format((float)$analysis_on_attempted_question, 2, '.', ''),
         ];
-       
-        return view('website.my_account.mcq_result',compact('data'));
-    }
 
-    public function topicDetails($topic_id){
+        return view('website.my_account.mcq_result', compact('data'));
+    }
+    public function mcqAnalysis($id)
+    {
+        $practice_test_id=Crypt::decrypt($id);
+        $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $practice_test_id)->first();
+        $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
+        $correct_attempted = $user_practice_test->correctAnswer->count();
+        $analysis_on_attempted_question = ($correct_attempted / $attempted_question) * 100;
+        $data = [
+
+            'set_title' => $user_practice_test->set->set_name,
+            'total_question' => $user_practice_test->set->question->count(),
+            'attempted_question' => $attempted_question,
+            'correct_attempted' => $correct_attempted,
+            'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
+            'analysis_on_attempted_question' => number_format((float)$analysis_on_attempted_question, 2, '.', ''),
+        ];
+        return view('website.my_account.mcq_analysis', compact('data'));
+    }
+    public function topicDetails($topic_id)
+    {
         try {
-            $lesson=Lesson::find(Crypt::decrypt($topic_id));
-            $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
-            $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
-            $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
-            $mcq_questions=Lesson::with('Sets')->where('id',$lesson->id)->first();
-            
-            return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions'));
+            $lesson = Lesson::find(Crypt::decrypt($topic_id));
+            $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->get();
+            $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->get();
+            $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->get();
+            $mcq_questions = Lesson::with('Sets')->where('id', $lesson->id)->first();
+
+            return view('website.my_account.lesson_details', compact('lesson', 'topicDocuments', 'topicVideos', 'topicArticles', 'mcq_questions'));
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-    public function mcqGetQuestion(Request $request){
+    public function mcqGetQuestion(Request $request)
+    {
         try {
             $set_id = $request->set_id;
             $page = $request->page;
-            $type=$request->type;
-            $last=$request->last;
-            $user_practice_test_store_id=$request->user_practice_test_store_id;
-            $question_id=$request->question_id;
-             
-            
+            $type = $request->type;
+            $last = $request->last;
+            $user_practice_test_store_id = $request->user_practice_test_store_id;
+            $question_id = $request->question_id;
+
+
             $set_question = Set::with('question')->where('id', $set_id)->first();
             if (!$set_question) {
                 $result = [
@@ -133,22 +152,23 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
             if (!$set_question->question->isEmpty()) {
-                if($type=="start"){
+                if ($type == "start") {
                     $user_practice_test = [
                         'user_id' => auth()->user()->id,
                         'set_id' => $set_question->id,
                         'start_time' => date('Y-m-d H:i:s'),
-                        
+
                     ];
-        
+
                     $user_practice_test_store = UserPracticeTest::create($user_practice_test);
-                }if($type=="next"){
-                  
-                    $question=Question::find($request->question_id);
-                    
+                }
+                if ($type == "next") {
+
+                    $question = Question::find($request->question_id);
+
                     if ($question->correct_answer == $request->question_answer) {
                         $is_correct = 1;
-                    }else{
+                    } else {
                         $is_correct = 0;
                     }
                     $data = [
@@ -158,45 +178,42 @@ class SubjectController extends Controller
                         'user_answer' => $request->question_answer,
                         'is_correct' => $is_correct
                     ];
-                    
+
                     $user_pract_test_answer = UserPracticeTestAnswer::create($data);
-                   
                 }
-              
-                if($type=="skip" && $page==($last+1)){
-                      
-                    $user_practice_tests = UserPracticeTest::with('userPracticeTestAnswer')->where('set_id', $set_id)->where('user_id', auth()->user()->id)->where('id', '!=' , $user_practice_test_store_id)->get();
-                   
+
+                if ($type == "skip" && $page == ($last + 1)) {
+
+                    $user_practice_tests = UserPracticeTest::with('userPracticeTestAnswer')->where('set_id', $set_id)->where('user_id', auth()->user()->id)->where('id', '!=', $user_practice_test_store_id)->get();
+
                     if ($user_practice_tests) {
-                        
-                        foreach($user_practice_tests as $key=>$user_practice_test){
-                            
+
+                        foreach ($user_practice_tests as $key => $user_practice_test) {
+
                             $user_practice_test->delete();
-                            if( $user_practice_test->userPracticeTestAnswer!=null){
+                            if ($user_practice_test->userPracticeTestAnswer != null) {
                                 $user_practice_test->userPracticeTestAnswer()->delete();
                             }
-                           
                         }
-                       
                     }
-                   
-                    $user_practice_test=UserPracticeTest::find($request->user_practice_test_store_id);
-                   
+
+                    $user_practice_test = UserPracticeTest::find($request->user_practice_test_store_id);
+
                     $end_time = date('Y-m-d H:i:s');
-                    $start_time=$user_practice_test->start_time;
+                    $start_time = $user_practice_test->start_time;
                     $total_duration = timeDifference($start_time, $end_time);
-                    $update_data=[
-                        'end_time'=>$end_time,
-                        'total_duration'=>$total_duration,
+                    $update_data = [
+                        'end_time' => $end_time,
+                        'total_duration' => $total_duration,
                     ];
                     $user_practice_test->update($update_data);
-                    $question=Question::find($request->question_id);
+                    $question = Question::find($request->question_id);
                     if ($question->correct_answer == $request->question_answer) {
                         $is_correct = 1;
-                    }else{
+                    } else {
                         $is_correct = 0;
                     }
-                    
+
                     $data = [
                         'user_practice_test_id' => $request->user_practice_test_store_id,
                         'question_id' => $question->id,
@@ -204,19 +221,18 @@ class SubjectController extends Controller
                         'user_answer' => $request->question_answer,
                         'is_correct' => $is_correct
                     ];
-                   
+
                     $user_pract_test_answer = UserPracticeTestAnswer::create($data);
                     $update_user_practice_test_store =
-                    [
-                        'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
-                        'total_correct_count' => $user_practice_test->correctAnswer->count(),
-                    ];
+                        [
+                            'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
+                            'total_correct_count' => $user_practice_test->correctAnswer->count(),
+                        ];
                     $user_practice_test->update($update_user_practice_test_store);
-               
                 }
-               
+
                 $all_questions = $set_question->question()->paginate(1);
-                  
+
                 $options = [];
                 foreach ($all_questions as $key => $question) {
 
@@ -232,19 +248,19 @@ class SubjectController extends Controller
 
                     ];
                 }
-                if($type=="start"){
-                   $user_practice_test_store_id= $user_practice_test_store->id;
-                }else{
-                    $user_practice_test_store_id=$request->user_practice_test_store_id;
+                if ($type == "start") {
+                    $user_practice_test_store_id = $user_practice_test_store->id;
+                } else {
+                    $user_practice_test_store_id = $request->user_practice_test_store_id;
                 }
                 $result = [
                     'set_name' => $set_question->set_name,
                     'total_question' => $set_question->question->count(),
                     'mcq_question' => $data,
-                    'page'=>$page,
-                    'user_practice_test_store'=>$user_practice_test_store_id,
+                    'page' => $page,
+                    'user_practice_test_store' => $user_practice_test_store_id,
                 ];
-               
+
                 $data = [
                     "code" => 200,
                     "status" => 1,

@@ -245,6 +245,14 @@ function isPracticeTestPlayed($set_id)
         return 0;
     }
 }
+function getPracticeTestId($set_id){
+    $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->first();
+    if ($user_practice_tests) {
+        return $user_practice_tests->id;
+    } else {
+        return 0;
+    }
+}
 function subjectTotalVideo($subject_id)
 {
     $total_video = Lesson::where('assign_subject_id', $subject_id)->where('type', 2)->get()->count();
