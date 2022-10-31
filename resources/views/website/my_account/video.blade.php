@@ -17,5 +17,3 @@
     </div>
 @section('scripts')
 @endsection
-
-@endsection
