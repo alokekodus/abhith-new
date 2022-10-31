@@ -122,7 +122,7 @@ class UserController extends Controller
     {
         try {
             $carts = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
-                ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
+                ->with(['assignClass:id,class', 'board:id,exam_board,logo', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
                 ->where('user_id', auth()->user()->id)
                 ->where('is_paid', 1)
                 ->where('is_remove_from_cart', 1)
@@ -143,6 +143,7 @@ class UserController extends Controller
                         'user_id' => $cart->user_id,
                         'type' => $cart->is_full_course_selected,
                         'board' => $cart->board->exam_board,
+                        'board_logo'=>$cart->board->logo,
                         'class_name' => $cart->assignClass->class,
                         'total_subject' => $cart->assignSubject->count(),
                         'total_amount' => $cart->assignSubject->sum("amount"),
