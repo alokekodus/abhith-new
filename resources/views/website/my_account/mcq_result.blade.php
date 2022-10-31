@@ -3,31 +3,31 @@
 @section('title', 'My Account')
 
 @section('head')
-<link href="{{asset('asset_website/css/my_account.css')}}" rel="stylesheet">
-<style>
-    main {
-        margin: 0;
-    }
-</style>
+    <link href="{{ asset('asset_website/css/my_account.css') }}" rel="stylesheet">
+    <style>
+        main {
+            margin: 0;
+        }
+    </style>
 @endsection
 
 @section('content')
 
-<div class="mcq-head  d-flex">
-    <div class="mcq-head-text d-flex">
-        <div class="mcq-head-icon mr-3">
-            <img src="{{asset('asset_website/img/mcq.png')}}" alt="">
+    <div class="mcq-head  d-flex">
+        <div class="mcq-head-text d-flex">
+            <div class="mcq-head-icon mr-3">
+                <img src="{{ asset('asset_website/img/mcq.png') }}" alt="">
+            </div>
+            <div class="mcq-header-text">
+                <h3>Multiple Choice Questions For Class
+                    <span>Board</span>
+                </h3>
+                <p></p>
+            </div>
         </div>
-        <div class="mcq-header-text">
-            <h3>Multiple Choice Questions For Class
-                <span>Board</span>
-            </h3>
-            <p></p>
-        </div>
-    </div>
 
-</div>
-{{-- <div class="container-fluid" id="mcq-question">
+    </div>
+    {{-- <div class="container-fluid" id="mcq-question">
     <div class="row">
         <div class="col-md-10 mx-auto">
             <div class="card">
@@ -62,11 +62,11 @@
         </div>
     </div>
 </div> --}}
-<div class="container-fluid" id="mcq_result">
-    <h4>MCQ Test</h4>
-    <div class="row">
-        <div class="col-md-6">
-            {{-- <div class="d-flex progress-main-div">
+    <div class="container-fluid" id="mcq_result">
+        <h4>MCQ Test</h4>
+        <div class="row">
+            <div class="col-md-6">
+                {{-- <div class="d-flex progress-main-div">
                 <div class="circleOne">
                     <div class="circular-progress">
                         <span class="progress-value"></span>
@@ -88,33 +88,33 @@
                 </div>
             </div> --}}
 
-            <canvas id="myChart"></canvas>
+                <canvas id="myChart"></canvas>
 
-        </div>
-        <div class="col-md-6">
-            <div class="total-div">
-                <div class="totalQuestion">
-                    <h3>Total Question: <span>{{$data['total_question']}}</span></h3>
-                </div>
-                <div class="attempted-div d-flex">
-                    <div class="col-md-6 attempted">
-                        <h3>Attempted: <span>{{$data['attempted_question']}}</span></h3>
+            </div>
+            <div class="col-md-6">
+                <div class="total-div">
+                    <div class="totalQuestion">
+                        <h3>Total Question: <span>{{ $data['total_question'] }}</span></h3>
                     </div>
-                    <div class="col-md-6 unattempted">
-                        <h3>Unattempted: <span>{{$data['total_question']-$data['attempted_question']}}</span></h3>
+                    <div class="attempted-div d-flex">
+                        <div class="col-md-6 attempted">
+                            <h3>Attempted: <span>{{ $data['attempted_question'] }}</span></h3>
+                        </div>
+                        <div class="col-md-6 unattempted">
+                            <h3>Unattempted: <span>{{ $data['total_question'] - $data['attempted_question'] }}</span></h3>
+                        </div>
                     </div>
-                </div>
-                <div class="answered d-flex">
-                    <div class="col-md-6 correct">
-                        <h3>Correct: <span>{{$data['correct_attempted']}}</span></h3>
-                    </div>
-                    <div class="col-md-6 incorrect">
-                        <h3>Incorrect: <span>{{$data['incorrect_attempted']}}</span></h3>
+                    <div class="answered d-flex">
+                        <div class="col-md-6 correct">
+                            <h3>Correct: <span>{{ $data['correct_attempted'] }}</span></h3>
+                        </div>
+                        <div class="col-md-6 incorrect">
+                            <h3>Incorrect: <span>{{ $data['incorrect_attempted'] }}</span></h3>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {{-- <div class="col-md-6" id="mcq-result">
+            {{-- <div class="col-md-6" id="mcq-result">
             <div class="row">
                 <div class="col-md-12">
                     <div class="totalQuestion">
@@ -144,48 +144,60 @@
             </div>
         </div> --}}
 
+        </div>
     </div>
-</div>
 
 
 
 
 @endsection
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var alldata=@json($data);
-    
-    var correct=alldata.correct_attempted;
-    var Incorrect=alldata.incorrect_attempted;
-    var Unattempted=alldata.total_question-(alldata.correct_attempted+alldata.incorrect_attempted);
-   const data = {
-  labels: [
-    'Correct',
-    'Incorrect',
-    'Unattempted'
-  ],
-  datasets: [{
-    label: 'MCQ Report',
-    data: [correct, Incorrect, Unattempted],
-    backgroundColor: [
-      'rgb(47, 224, 53)',
-      'rgb(255, 99, 132)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-};
-  
-const config = {
-  type: 'doughnut',
-  data: data,
-};
-</script>
-<script>
-    const myChart = new Chart(
-      document.getElementById('myChart'),
-      config
-    );
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var alldata = @json($data);
+
+        var correct = alldata.correct_attempted;
+        var Incorrect = alldata.incorrect_attempted;
+        var Unattempted = alldata.total_question - (alldata.correct_attempted + alldata.incorrect_attempted);
+        const data = {
+            labels: [
+                'Correct',
+                'Incorrect',
+                'Unattempted'
+            ],
+            datasets: [{
+                label: 'MCQ Report',
+                data: [correct, Incorrect, Unattempted],
+                backgroundColor: [
+                    'rgb(47, 224, 53)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }],
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+
+        };
+    </script>
+    <script>
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config,
+        );
+    </script>
 @endsection
