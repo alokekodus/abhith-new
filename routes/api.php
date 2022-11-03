@@ -43,7 +43,7 @@ Route::post('get-class', [CourseController::class, 'findClass'])->name('webboard
 //singup verify otp
 Route::post('send-mobile-otp', [WebsiteAuthController::class, 'sendMobileOtp']);
 Route::post('verify-mobile-otp', [WebsiteAuthController::class, 'verifyMobileOtp']);
-Route::post('send-email-otp', [WebsiteAuthController::class, 'sendEmailOtp']);
+Route::post('send-email-otp', [WebsiteAuthController::class, 'sendEmailOtp'])->name('apiemailotpsend');
 Route::post('verify-email-otp', [WebsiteAuthController::class, 'verifyEmailOtp']);
 
 //get banner

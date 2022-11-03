@@ -105,6 +105,7 @@ class CourseController extends Controller
     }
     public function enrollPackage($subject_id)
     {
+        
       
         try {
            

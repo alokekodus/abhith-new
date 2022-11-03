@@ -356,6 +356,7 @@
                     <input type="hidden" name="board_id" value="{{$data['board']->id}}">
                     <input type="hidden" name="class_id" value="{{$data['assignclass']->id}}">
                     @foreach($data['subjects'] as $key=>$subject)
+                   
                     <div class="inputGroup">
                         <input class="chapter_value" id="option{{$key}}" type="checkbox" value="{{$data['subjects'][$key]['id']}}"
                             name="subjects[]" data-price="{{number_format($data['subjects'][$key]['subject_amount'],2,'.','')}}"
@@ -367,7 +368,7 @@
                                     <i class="fa fa-inr" aria-hidden="true"></i>
                                     {{number_format($data['subjects'][$key]['subject_amount'],2,'.','')
                                     }}
-                                )
+                                )already_purchase:{{$data['subjects'][$key]['already_purchase']}}
                             </a>
                         </label>
                     </div>

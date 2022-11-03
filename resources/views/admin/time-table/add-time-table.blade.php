@@ -18,28 +18,46 @@
                 <form id="addTimeTableForm">
                     @csrf
                     <div class="form-group">
-                        <label for="exampleSelectGender">Courses</label>
-                        <select class="form-control" name="course" id="selectCourse" required>
-                            <option value="" disabled selected>-- Select Course --</option>
-                            @foreach ($course as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        <label for="exampleSelectGender">Boards</label>
+                        <select class="form-control" name="board" id="selectBoard" required>
+                            <option value="" disabled selected>-- Select Board --</option>
+                            @foreach ($boards as $board)
+                                <option value="{{ $board->id }}">{{ $board->exam_board }}</option>
                             @endforeach
                         </select>
                         <span class="text-danger">
-                            @error('course')
+                            @error('board')
                                 {{$message}}
                             @enderror
                         </span>
                     </div>
-                    <div class="form-group chapter-div"  style="display:none;">
-                        <label for="exampleSelectGender">Chapters</label>
-                        <select class="form-control" name="chapter" id="selectChapter" required></select>
+
+                    <div class="form-group">
+                        <label for="exampleSelectGender">Class</label>
+                        <select class="form-control" name="class" id="selectClass" required>
+                            <option value="" disabled selected>-- Select Class --</option>
+                           
+                        </select>
                         <span class="text-danger">
-                            @error('chapter')
+                            @error('class')
                                 {{$message}}
                             @enderror
                         </span>
                     </div>
+
+                    <div class="form-group">
+                        <label for="exampleSelectGender">Subject</label>
+                        <select class="form-control" name="subject" id="selectSubject" required>
+                            <option value="" disabled selected>-- Select Subject --</option>
+                           
+                        </select>
+                        <span class="text-danger">
+                            @error('subject')
+                                {{$message}}
+                            @enderror
+                        </span>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="exampleInputCity1">Add Date</label>
                         <input type="text" class="form-control" name="add_date" id="add_date" autocomplete="off" placeholder="Add Date" required>

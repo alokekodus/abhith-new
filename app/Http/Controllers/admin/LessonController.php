@@ -139,7 +139,7 @@ class LessonController extends Controller
     }
     public function topicCreate($id)
     {
-
+         
         $lesson_id = Crypt::decrypt($id);
         $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
 
@@ -448,6 +448,7 @@ class LessonController extends Controller
                         $questionFile = $request->file('questionExcel');
 
                         $questionFile = $request->file('questionExcel')->store('imports');
+                       
                         $import = new QuestionImport($setName, $subject_id, $board_id, $assign_class_id, $lesson_id, $teacher_id);
                       
                         $import->import($questionFile);

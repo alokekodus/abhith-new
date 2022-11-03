@@ -184,7 +184,7 @@ const config = {
 </script>
 <script>
     const myChart = new Chart(
-      document.getElementById('myChart'),
+       document.getElementById('myChart'),
       config
     );
 </script>
