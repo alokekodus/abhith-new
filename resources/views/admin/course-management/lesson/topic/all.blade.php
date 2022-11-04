@@ -136,7 +136,7 @@
                                             href="{{asset($topic->lessonAttachment->video_origin_url)}}"
                                             target="_blank">
                                             {{-- {{ substr($topic->lessonAttachment->video_origin_url, 0,40)}} --}}
-                                            Preview
+                                            Click to view
                                         </a> @else NA @endif
                                     </td>
                                     <td>{{$topic->assignTeacher->name ?? 'Not Assigned'}}</td>
@@ -148,7 +148,7 @@
                                         </a>
                                         @else NA @endif
                                     </td>
-                                    <td>{{round($topic->lessonAttachment->video_duration, 2)}} minutes</td>
+                                    <td>{{gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00"}}</td>
 
                                     <td>
                                         @if ($topic->preview==0)
