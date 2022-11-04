@@ -9,6 +9,8 @@ use App\Models\Course;
 use App\Models\Chapter;
 use App\Models\Order;
 use App\Common\Activation;
+use App\Models\AssignClass;
+use App\Models\Board;
 use App\Models\TimeTable;
 
 use Illuminate\Support\Facades\Auth;
@@ -44,15 +46,15 @@ class TimeTableController extends Controller
     }
 
     public function adminCreateTimeTable(Request $request){
-
-        $courses = Course::where('is_activate', Activation::Activate)->orderBy('id', 'DESC')->get();
+        // $class_details =  AssignClass::with('boards')->where('is_activate', 1)->orderBy('id', 'DESC')->get();
+        $boards =  Board::orderBy('id', 'DESC')->get();
         $chapters = [];
         if($request->ajax()){
                 $chapters = Chapter::where('course_id', $request->course_id)->get();
             return response()->json(['chapter' => $chapters]);
         }
         
-        return view('admin.time-table.add-time-table')->with(['chapter' => $chapters, 'course' => $courses]);
+        return view('admin.time-table.add-time-table')->with(['boards' => $boards]);
     }
 
     public function saveTimeTable(Request $request){

@@ -232,6 +232,7 @@ class WebsiteAuthController extends Controller
 
     public function login(Request $request)
     {
+        
         try {
 
             if (getPrefix($request) == "api") {

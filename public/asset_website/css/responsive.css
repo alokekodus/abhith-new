@@ -612,7 +612,10 @@
         font-size: 14px;
     }
     .small-heading-black {
-        font-size: 12px;
+        font-size: 18px;
+    }
+    .aboutLeft-text {
+        font-size: 14px;
     }
     .about-left {
         margin-top: 100px;
@@ -803,7 +806,9 @@
     .cart-desc-list1 li {
         width: 100%;
     }
-
+    .projectFactsWrap .item {
+        padding: 0px;
+    }
     .course-desc-list li:first-child,
     .course-desc-list1 {
         padding: 15px 0px;
