@@ -52,17 +52,17 @@
                             recognition for every learning program that you complete. </p> -->
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 pl-0">
                             <span class="icon-best-learning--09" style="font-size: 35px"></span>
-                            <h3 class="about-small-heading-black">Best Learning Communities</h3>
+                            <h3 class="small-heading-black">Best Learning Communities</h3>
                             <p class="aboutLeft-text">Abith Siksha is an interactive learning platform created to improve student engagement
                                 and teacher efficiency. Join millions of learners from around the world, find the right
                                 instructor for you, choose from many topics, skill levels, and languages.</p>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 pl-0">
                             <span class="icon-learn-online-09" style="font-size: 35px"></span>
-                            <h3 class="about-small-heading-black">Learn Courses Online</h3>
+                            <h3 class="small-heading-black">Learn Courses Online</h3>
                             <p class="aboutLeft-text">Unlimited access to a wide range of courses, specializations, and certifications. Earn
                                 recognition for every learning program that you complete. </p>
                         </div>
