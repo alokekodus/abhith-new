@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="row footer-mid">
-            <div class="col-lg-6 p0 footer-mid-left">
+            <div class="col-lg-7 p0 footer-mid-left">
                 <ul class="list-inline footer-menu-list mb0">
                     <li><a href="{{route('website.faq')}}">FAQ</a></li>
                     <li><a href="{{route('website.privacy')}}">Privacy Policy </a></li>
@@ -64,7 +64,7 @@
                     <li><a href="{{route('website.refund')}}">Refund & Cancellation Policy</a></li>
                 </ul>
             </div>
-            <div class="col-lg-6 p0 footer-mid-right">
+            <div class="col-lg-5 p0 footer-mid-right">
                 <p class="mb0">&copy; 2021 Abhith Sikhsha, All Rights Reserved</p>
             </div>
         </div>
