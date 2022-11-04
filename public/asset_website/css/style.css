@@ -1221,9 +1221,13 @@ main {
     font-weight: 700;
     color: #000;
 }
+.about-small-heading-black {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
 .aboutLeft-text{
-    font-size: 16px;
-    text-align: justify;
+    font-size: 15px;
 }
 
 /*footer*/
