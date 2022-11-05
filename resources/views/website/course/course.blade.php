@@ -154,7 +154,7 @@
                                     </h6>
                                 </span>
                                 @if(auth()->check() && subjectAlreadyPurchase($subject->id)==1)
-                                <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+                                <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}"
                                     class="enroll mb-2">Start Learning</a>
                                
                                 @else
