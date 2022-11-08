@@ -1221,9 +1221,14 @@ main {
     font-weight: 700;
     color: #000;
 }
+.about-small-heading-black {
+    /* font-size: 26px; */
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+}
 .aboutLeft-text{
     font-size: 16px;
-    text-align: justify;
 }
 
 /*footer*/
@@ -1268,6 +1273,7 @@ footer {
 
 .footer-list li {
     margin-right: 30px;
+    font-size: 16px;
 }
 
 .footer-menu-list {
@@ -1277,7 +1283,10 @@ footer {
 .footer-menu-list li {
     margin-right: 30px;
     list-style-type: disc;
-    font-size: 15px;
+    font-size: 14px;
+}
+.footer-first p{
+    font-size: 16px;
 }
 
 /* .footer-menu-list li:first-child {

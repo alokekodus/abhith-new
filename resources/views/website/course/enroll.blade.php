@@ -305,39 +305,39 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-sm-12">
-                        <div class="leftBlock d-flex justify-content-around">
-                            <div class="mb-4">
-                                <label for="radio-card-1" class="radio-card">
-                                    <input class="course_type" type="radio" name="course_type" id="radio-card-1" value="1"
-                                        onclick="changeCourse(this.value)"  />
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content" style="width:100%; text-align:center">
-                                            <img src="{{asset('asset_website/img/fullcourse.png')}}" alt=""
-                                                class="course-type" />
-                                            <h4>FULL COURSE</h4>
-                                        </div>
+                    <div class="leftBlock d-flex justify-content-around">
+                        <div class="mb-4">
+                            <label for="radio-card-1" class="radio-card">
+                                <input class="course_type" type="radio" name="course_type" id="radio-card-1" value="1"
+                                    onclick="changeCourse(this.value)" />
+                                <div class="card-content-wrapper">
+                                    <span class="check-icon"></span>
+                                    <div class="card-content" style="width:100%; text-align:center">
+                                        <img src="{{asset('asset_website/img/fullcourse.png')}}" alt=""
+                                            class="course-type" />
+                                        <h4>FULL COURSE</h4>
                                     </div>
-                                </label>
-                            </div>
-                            <div>
-                                <label for="radio-card-2" class="radio-card">
-                                    <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
-                                        onclick="changeCourse(this.value)" checked/>
-                                    <div class="card-content-wrapper">
-                                        <span class="check-icon"></span>
-                                        <div class="card-content" style="width:100%; text-align:center">
-                                            <img src="{{asset('asset_website/img/custompackage.png')}}" alt=""
-                                                class="course-type" />
-                                            <h4>CUSTOM COURSE</h4>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
+                                </div>
+                            </label>
                         </div>
-                        <!-- /.radio-card -->
+                        <div>
+                            <label for="radio-card-2" class="radio-card">
+                                <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
+                                    onclick="changeCourse(this.value)" checked />
+                                <div class="card-content-wrapper">
+                                    <span class="check-icon"></span>
+                                    <div class="card-content" style="width:100%; text-align:center">
+                                        <img src="{{asset('asset_website/img/custompackage.png')}}" alt=""
+                                            class="course-type" />
+                                        <h4>CUSTOM COURSE</h4>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.radio-card -->
 
-                        <!-- <label for="radio-card-2" class="radio-card">
+                    <!-- <label for="radio-card-2" class="radio-card">
                             <input type="radio" class="course_type" name="course_type" id="radio-card-2" value="2"
                                 onclick="changeCourse(this.value)" />
                             <div class="card-content-wrapper">
@@ -349,29 +349,32 @@
                                 </div>
                             </div>
                         </label> -->
-                        <!-- /.radio-card -->
+                    <!-- /.radio-card -->
                 </div>
                 <div class="rightBlock col-lg-6 col-md-12">
                     @csrf
                     <input type="hidden" name="board_id" value="{{$data['board']->id}}">
                     <input type="hidden" name="class_id" value="{{$data['assignclass']->id}}">
                     @foreach($data['subjects'] as $key=>$subject)
-                   
+                    @if($data['subjects'][$key]['already_purchase']==0)
                     <div class="inputGroup">
-                        <input class="chapter_value" id="option{{$key}}" type="checkbox" value="{{$data['subjects'][$key]['id']}}"
-                            name="subjects[]" data-price="{{number_format($data['subjects'][$key]['subject_amount'],2,'.','')}}"
-                            onclick="checkedSubject()"  />
+                        <input class="chapter_value" id="option{{$key}}" type="checkbox"
+                            value="{{$data['subjects'][$key]['id']}}" name="subjects[]"
+                            data-price="{{number_format($data['subjects'][$key]['subject_amount'],2,'.','')}}"
+                            onclick="checkedSubject()" />
                         <label for="option{{$key}}">
-                            <a href="{{route('website.subject.detatils',Crypt::encrypt($data['subjects'][$key]['id']))}}">
-                                <i class="fa fa-external-link mr-2" aria-hidden="true"></i>    
-                                {{$data['subjects'][$key]['subject_name']}}( 
-                                    <i class="fa fa-inr" aria-hidden="true"></i>
-                                    {{number_format($data['subjects'][$key]['subject_amount'],2,'.','')
-                                    }}
-                                )already_purchase:{{$data['subjects'][$key]['already_purchase']}}
+                            <a
+                                href="{{route('website.subject.detatils',Crypt::encrypt($data['subjects'][$key]['id']))}}">
+                                <i class="fa fa-external-link mr-2" aria-hidden="true"></i>
+                                {{$data['subjects'][$key]['subject_name']}}(
+                                <i class="fa fa-inr" aria-hidden="true"></i>
+                                {{number_format($data['subjects'][$key]['subject_amount'],2,'.','')
+                                }}
+                                )
                             </a>
                         </label>
                     </div>
+                    @endif
                     @endforeach
                     <hr>
                     <div class="total">
@@ -379,8 +382,10 @@
                         <span class="course-price1 mr-2" id="total_price"><i class="fa fa-inr" aria-hidden="true"></i>
                             {{number_format($data['subjectamount'], 2, '.', '')}}</span>
                     </div>
-                    <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart" name="buynow" value="0">Add to cart</button>
-                    <button type="submit" class="btn btn-warning btn-lg btn-block buy-now" id="buy-now" name="buynow" value="1" style="color: white;">Buy Now</button>
+                    <button type="submit" class="btn btn-success btn-lg btn-block add-to-cart" id="add-to-cart"
+                        name="buynow" value="0">Add to cart</button>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block buy-now" id="buy-now" name="buynow"
+                        value="1" style="color: white;">Buy Now</button>
                 </div>
             </div>
 

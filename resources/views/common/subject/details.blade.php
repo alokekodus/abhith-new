@@ -184,10 +184,10 @@
             <div class="mt-5" id="requirements">
                 <h4>Requirements</h4>
                 <div class="mt-3">
-                    
-                        {!!$subject->requirements!!}
-                        
-                    
+
+                    {!!$subject->requirements!!}
+
+
                 </div>
             </div>
             <!-- End Requirements -->
@@ -244,7 +244,8 @@
                         <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
                             class="btn btn-success btn-lg btn-block mt-2 course-details-add-to-cart-btn">
                             <i class="fa fa-shopping-cart"></i> &nbsp; Add to cart</a>
-                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}" class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
+                        <a href="{{route('website.course.package.enroll.all',Crypt::encrypt($subject->id))}}"
+                            class="btn btn-primary btn-lg btn-block mt-3 mb-3">Buy it Now</a>
                     </div>
                     <div class="details-bottom d-flex justify-content-between mx-4">
                         <p class="details-bottom-text">
@@ -324,7 +325,7 @@
                     </div>
                 </div>
             </div><!-- panel-group --> --}}
-
+            <p>Subject content</p>
             <div class="accordion" id="accordionExample">
                 <div class="card">
                     @foreach($subject->lesson as $key=>$lesson)
@@ -346,19 +347,17 @@
                             <div class="lesson-content d-flex mx-3">
                                 <p> @if($topic->type==1) <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                     @elseif($topic->type==2)<i class="fa fa-play-circle"></i>@else<i
-                                        class="fa fa-book"></i>@endif &nbsp;<a
-                                        href="{{route('subject.topic.details',Crypt::encrypt($topic->id))}}"
-                                        target="_blank"> {{$topic->name}}</a></p>
+                                        class="fa fa-book"></i>@endif &nbsp; {{$topic->name}}</p>
                                 <div class="d-flex course-duration-div">
 
-                                    @if($topic->type==2 && $topic->preview==1 ) <p
-                                        data-toggle="modal" data-target="#exampleModalLong" data-lesson="{{$topic->id}}"
-                                        id="previewVideo">preview
+                                    @if($topic->type==2 && $topic->preview==1 ) <p data-toggle="modal"
+                                        data-target="#exampleModalLong" data-lesson="{{$topic->id}}" id="previewVideo">
+                                        preview
                                     </p>
                                     <p> {{gmdate("H:i:s", $topic->lessonAttachment->video_duration)}}
                                     </p> @endif
-                                    @if($topic->type==2) @if($topic->preview==1)<i
-                                        class="fa fa-play mt-2"></i>@endif @endif
+                                    @if($topic->type==2) @if($topic->preview==1)<i class="fa fa-play mt-2"></i>@endif
+                                    @endif
                                 </div>
                             </div>
                             @endforeach
@@ -404,7 +403,7 @@
         <div class="col-lg-8 col-md-12">
 
             <h4>Students Reviews</h4>
-           
+
             @foreach($reviews as $key=>$review)
             <div class="d-md-flex mt-4">
                 <div class="studentImageBox mr-4">
@@ -429,7 +428,7 @@
                 </div>
             </div>
             @endforeach
-            
+
         </div>
     </div>
 </div>

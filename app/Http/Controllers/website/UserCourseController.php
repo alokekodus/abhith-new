@@ -14,6 +14,7 @@ class UserCourseController extends Controller
     public function displayUserSubjects($order_id)
     {
         try {
+            
             $order_id = Crypt::decrypt($order_id);
             $order = Order::find($order_id);
            

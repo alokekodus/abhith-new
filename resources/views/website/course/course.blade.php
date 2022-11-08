@@ -153,8 +153,14 @@
                                         {{ number_format($subject->subject_amount, 2, '.', '') }}
                                     </h6>
                                 </span>
+                                @if(auth()->check() && subjectAlreadyPurchase($subject->id)==1)
+                                <a href="{{route('website.subject.detatils',Crypt::encrypt($subject->id))}}"
+                                    class="enroll mb-2">Start Learning</a>
+                               
+                                @else
                                 <a href="{{ route('website.course.package.enroll.all', Crypt::encrypt($subject->id)) }}"
                                     class="enroll mb-2">Enroll Now</a>
+                                @endif
                             </div>
                         </div>
                     @endforeach

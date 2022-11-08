@@ -129,12 +129,12 @@ class CartController extends Controller
                 return view('website.cart.checkout')->with(['cart' => $cart, 'countPrice' => $total_amount, 'checkoutParam' => $checkout_params]);
             }
             $cart = Cart::with('assignSubject')->where([['user_id', '=', Auth::user()->id], ['assign_class_id', '=', $class_id], ['board_id', '=', $board_id], ['is_paid', '=', 0], ['is_remove_from_cart', '=', 0], ['is_full_course_selected', '=', $course_type], ['is_buy', '=', $request->buynow]])->first();
-
+            
             if ($cart) {
 
                 $assignSubjectAlreadyInCart = CartOrOrderAssignSubject::where('cart_id', $cart['id'])->whereIn('assign_subject_id', $request->subjects)->get();
-
-                if ($assignSubjectAlreadyInCart->count() == 0) {
+                
+                if ($assignSubjectAlreadyInCart->count() == count($request->subjects)) {
                     Toastr::error('Package already in Cart!', '', ["positionClass" => "toast-top-right"]);
                     return redirect()->back();
                 } else {

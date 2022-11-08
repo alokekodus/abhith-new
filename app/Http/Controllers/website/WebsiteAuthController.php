@@ -242,6 +242,7 @@ class WebsiteAuthController extends Controller
             } else {
                 $type = Type::User;
             }
+           
             if (getPrefix($request) == "api") {
                 $validator = Validator::make($request->all(), [
                     'email' => 'required|email',
