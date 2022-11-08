@@ -183,6 +183,7 @@ class WebsiteAuthController extends Controller
 
     public function completeSignup(Request $request)
     {
+       
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
@@ -195,37 +196,73 @@ class WebsiteAuthController extends Controller
                 return response()->json(['status' => false, 'message' => $validator->errors()]);
             }
 
-            $details = User::where([['email', $request->email], ['phone', $request->phone], ['verify_otp', 1], ['is_activate', 0]])->first();
+            $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
+            $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
+            $user_mobile_in_use = User::where('phone', $request->phone)->where('is_activate', 1)->first();
+            $user_email_in_use = User::where('email', $request->phone)->where('is_activate', 1)->first();
+            if ($is_mobile_verified == null) {
+                return response()->json(['message' => 'Please verify your mobile number', 'status' => 0]);
+            }
+            if ($is_email_verified == null) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => "Please verify your email address",
+                ]);
+            }
+            if ($user_mobile_in_use) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => "This mobile number already exists",
+                ]);
+            }
+            if ($user_email_in_use) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => "This email address already exists",
+                ]);
+            }
 
-            if ($details == null) {
-                return response()->json(['message' => 'Something went wrong. Signup failed.', 'status' => 0]);
-            } else {
+
+
+
+
+
+
+            $details = User::where('email', $request->email)->where('phone', $request->phone)->where('verify_otp', 1)->where('is_activate', 1)->first();
+            
+            if ($details==null) {
                 if (getPrefix($request) == "teacher") {
                     $roles = 3;
                 } else {
                     $roles = 2;
                 }
-
-                $details->assignRole($roles);
-                $details->password = Hash::make($request->password);
-                $details->is_activate = 1;
-                $details->save();
-                $token = $details->createToken('auth_token')->plainTextToken;
-
-                if (getPrefix($request) == "api") {
-                    return response()->json([
-                        'status' => 1,
-                        'message' => "Signed up successfully",
-                        'data' => $details,
-                        'access_token' => $token,
-                        'token_type' => 'Bearer',
-                    ]);
-                } else {
-                    return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
-                }
+                $data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'otp' => 00000,
+                    'verify_otp' => 1,
+                    'type_id' => 2,
+                    'password' => Hash::make($request->password),
+                    'is_active' => 1,
+                ];
+               
+                $user = User::create($data);
+                $assign_role = $user->assignRole(2);
+                $token = $user->createToken('auth_token')->plainTextToken;
+                $userDetails = UserDetails::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'user_id' => $user->id,
+                ]);
+                return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
+                
+            } else {
+                return response()->json(['message' => 'Already registered user.', 'status' => 0]);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Whoops! Something Went Wrong', 'status' => 0]);
+            return response()->json(['message' => $th, 'status' => 0]);
         }
     }
 
@@ -527,9 +564,9 @@ class WebsiteAuthController extends Controller
     public function sendEmailOtp(Request $request)
     {
         try {
-
+           
             $user = User::where('email', $request->email)->where('is_activate', 1)->first();
-
+            
             if ($user != null) {
                 $data = [
                     "code" => 400,

@@ -41,10 +41,10 @@ Route::post('login', [WebsiteAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->get('logout', [WebsiteAuthController::class, 'userLogout']);
 Route::post('get-class', [CourseController::class, 'findClass'])->name('webboard.class');
 //singup verify otp
-Route::post('send-mobile-otp', [WebsiteAuthController::class, 'sendMobileOtp']);
-Route::post('verify-mobile-otp', [WebsiteAuthController::class, 'verifyMobileOtp']);
+Route::post('send-mobile-otp', [WebsiteAuthController::class, 'sendMobileOtp'])->name('apimobileotpsend');
+Route::post('verify-mobile-otp', [WebsiteAuthController::class, 'verifyMobileOtp'])->name('verifymobileotp');
 Route::post('send-email-otp', [WebsiteAuthController::class, 'sendEmailOtp'])->name('apiemailotpsend');
-Route::post('verify-email-otp', [WebsiteAuthController::class, 'verifyEmailOtp']);
+Route::post('verify-email-otp', [WebsiteAuthController::class, 'verifyEmailOtp'])->name('verifyemailotp');
 
 //get banner
 Route::middleware('auth:sanctum')->get('banner', [BannerController::class, 'index']);

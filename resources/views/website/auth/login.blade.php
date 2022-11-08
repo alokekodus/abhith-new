@@ -71,7 +71,7 @@
                                     <div class="form-group col-lg-12">
                                         <input type="text" class="form-control" name="name" placeholder="Name" id="name"
                                             maxlength="20" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only."
-                                            value="{{old('fname')}}" required>
+                                            value="{{old('fname')}}">
                                         <span class="text-danger">@error('name'){{$message}}@enderror</span>
                                     </div>
 
@@ -83,8 +83,8 @@
 
                                     <div class="form-group col-lg-12">
                                         <div class="input-group">
-                                            <input type="email" name="email" class="form-control"
-                                                placeholder="e.g. abc@gmail.com" id="email"
+                                            <input type="email" name="signupEmail" class="form-control"
+                                                placeholder="e.g. abc@gmail.com" id="signupEmail"
                                                 pattern="(0|91)?[6-9][0-9]{9}" title="Please enter valid email ID"
                                                 required>
                                             <div class="input-group-append">
@@ -141,15 +141,15 @@
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <input type="password" name="password" class="form-control"
-                                            placeholder="Password" id="pwd" style="display:none;" required>
+                                            placeholder="Password" id="pwd"  required>
                                         <span class="text-danger">@error('password'){{$message}}@enderror</span>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <input type="password" name="password_confirmation" class="form-control"
-                                            placeholder="Confirm Password" id="confPwd" style="display:none;" required>
+                                            placeholder="Confirm Password" id="confPwd"  required>
                                     </div>
                                     <div class="form-group mb0 col-lg-12">
-                                        <button type="submit" class="btn btn-block sign-btn" disabled
+                                        <button type="submit" class="btn btn-block sign-btn" 
                                             id="signupBtn">Sign up</button>
                                     </div>
                                 </form>
@@ -174,7 +174,7 @@
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
    $("#sendEmailOtpBtn").on('click',function(){
-    if($('#email').val().length == 0){
+    if($('#signupEmail').val().length == 0){
                 toastr.error('Email is required');
             }else{
                 if(no_of_otp_sent < 2){
@@ -190,10 +190,10 @@
                         type:'POST',
                         data:{
                             '_token': '{{ csrf_token() }}',  
-                            'email' : $('#email').val(),
+                            'email' : $('#signupEmail').val(),
                         },
                         success:function(data){
-                           
+                           console.log(data);
                             if(data.result.code == 200){
                                 $('#sendEmailOtpBtn').attr('disabled',true); 
                                 $('#sendEmailOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
@@ -219,20 +219,11 @@
             }
    });
         $('#sendOtpBtn').on('click',function(e){
+          
             e.preventDefault();
 
-            if($('#name').val().length == 0){
-                toastr.error('Name is required');
-            }else if(!nameRegex.test($('#name').val())){
-                toastr.error('Name should contain letters only.');
-            }else if($('#signupEmail').val().length == 0){
-                toastr.error('Email is required');
-            }else if(!emailRegex.test($('#signupEmail').val())){
-                toastr.error('Email is invalid');
-            }else if($('#phone').val().length < 10){
+            if($('#phone').val().length < 10){
                 toastr.error('Phone number is required. Enter valid phone number');
-            }else if(!phoneRegex.test($('#phone').val())){
-                toastr.error('Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)');
             }else{
                 
 
@@ -240,32 +231,37 @@
                 if(no_of_otp_sent < 2){
                     no_of_otp_sent += 1;
                     var prefix=@json($prefix);
-                     if(prefix=="teacher"){
-                        var url="{{route('teacher.signup')}}";
-                     }else{
-                        var url="{{route('website.auth.signup')}}";
-                     }
+                    var url="{{route('apimobileotpsend')}}";
+                    //  if(prefix=="teacher"){
+                    //     var url="{{route('teacher.signup')}}";
+                    //  }else{
+                    //     var url="{{route('website.auth.signup')}}";
+                    //  }
                     $.ajax({
                         url:url,
                         type:'POST',
                         data:{
                             '_token': '{{ csrf_token() }}',
-                            'name' : $('#name').val(),
-                            'email' : $('#signupEmail').val(),
                             'phone' : $('#phone').val()
                         },
                         success:function(data){
-                           
+                           console.log(data);
                             if(data.status == 1){
+                                if(data.result.code==200){
                                 $('#sendOtpBtn').attr('disabled',true); 
                                 $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
                                 $('#sendOtpBtn').text('OTP Sent');
                                 $('.verify-otp-div').css('display','block');
                                
                                 interval = setInterval(updateTimer, 2000);
-                                toastr.success(data.message);
+                                toastr.success(data.result.message);
+                                }
+                                else{
+                                    toastr.error(data.result.message);
+                                }
+                               
                             }else{
-                                toastr.error(data.message);
+                                toastr.error(data.result.message);
                             }
                         },
                         error:function(xhr, status, error){
@@ -307,6 +303,7 @@
         });
 
         $('#verifyOtpBtn').on('click',function(e){
+            
             e.preventDefault();
             let otpRegex = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
 
@@ -316,11 +313,13 @@
                 toastr.error('Enter numbers only');
             }else{
                 var prefix=@json($prefix);
-                     if(prefix=="teacher"){
-                        var url="{{route('teacher.verifyOtp')}}";
-                     }else{
-                        var url="{{route('website.auth.verify.otp')}}";
-                     }
+                
+                var url="{{route('verifymobileotp')}}";
+                    //  if(prefix=="teacher"){
+                    //     var url="{{route('teacher.verifyOtp')}}";
+                    //  }else{
+                    //     var url="{{route('website.auth.verify.otp')}}";
+                    //  }
                 $.ajax({
                     url:url,
                     type:'POST',
@@ -331,8 +330,10 @@
                         'otp' :  $('#enterOtp').val(),
                     },
                     success:function(data){
+                       
                         if(data.status == 1){
-                            toastr.success(data.message);
+                            if(data.result.code==200){
+                                toastr.success(data.result.message);
                             $('#phone').prop('readonly',true);
                             $('#enterOtp').prop('readonly',true);
                             $('#sendOtpBtn').attr('disabled',true);
@@ -340,9 +341,13 @@
                             $('#verifyOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
                             $('#pwd').css('display','block');
                             $('#confPwd').css('display','block');
+                            }else{
+                                toastr.error(data.result.message);
+                            }
+                           
 
                         }else{
-                            toastr.error(data.message);
+                            toastr.error(data.result.message);
                         }
                     },
                     error:function(xhr, status, error){
@@ -354,7 +359,63 @@
             }
             
         });
+        $('#verifyEmailOtpBtn').on('click',function(e){
+            
+            e.preventDefault();
+            let otpRegex = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
 
+            if($('#enterEmailOtp').val().length > 6){
+                toastr.error('Not a valid OTP');
+            }else if(!otpRegex.test($('#enterEmailOtp').val())){
+                toastr.error('Enter numbers only');
+            }else{
+                var prefix=@json($prefix);
+                
+                var url="{{route('verifyemailotp')}}";
+                    //  if(prefix=="teacher"){
+                    //     var url="{{route('teacher.verifyOtp')}}";
+                    //  }else{
+                    //     var url="{{route('website.auth.verify.otp')}}";
+                    //  }
+                  
+                $.ajax({
+                    url:url,
+                    type:'POST',
+                    data:{
+                        '_token': '{{ csrf_token() }}',
+                        'email' : $('#signupEmail').val(),
+                        'otp' :  $('#enterEmailOtp').val(),
+                    },
+                    success:function(data){
+                     
+                        if(data.status == 1){
+                            if(data.result.code==200){
+                                toastr.success(data.result.message);
+                            $('#phone').prop('readonly',true);
+                            $('#enterEmailOtp').prop('readonly',true);
+                            $('#sendEmailOtpBtn').attr('disabled',true);
+                            $('#verifyEmailOtpBtn').attr('disabled',true);
+                            $('#verifyEmailOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)');
+                            $('#pwd').css('display','block');
+                            $('#confPwd').css('display','block');
+                            }else{
+                                toastr.error(data.result.message);
+                            }
+                           
+
+                        }else{
+                            toastr.error(data.result.message);
+                        }
+                    },
+                    error:function(xhr, status, error){
+                        if(xhr.status == 500 || xhr.status == 422){
+                            toastr.error('Whoops! Something went wrong while sending OTP');
+                        }
+                    }
+                });
+            }
+            
+        });
          
 
         const startingMinutes = 0.05;
@@ -386,6 +447,7 @@
         });
 
         $('#signupBtn').on('click',function(e){
+           
             e.preventDefault();
 
             if($('#pwd').val().length < 5){
@@ -399,6 +461,7 @@
                      }else{
                         var url="{{route('website.auth.complete.signup')}}";
                      }
+                     
                 $.ajax({
                     url:url,
                     type:'POST',
@@ -407,8 +470,10 @@
                         'email' : $('#signupEmail').val(),
                         'phone' : $('#phone').val(),
                         'password': $('#pwd').val(),
+                        'name':$('#name').val(),
                     },
                     success:function(data){
+                        console.log(data);
                         if(data.status == 1){
                             toastr.success(data.message);
                         }else{
