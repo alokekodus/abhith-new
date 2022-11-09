@@ -48,7 +48,7 @@
                 <div class="form-row">
 
                     <div class="form-group col-md-4">
-                        <label for="inputCity">Total Experience in Year </label>
+                        <label for="inputCity">Total Experience in Year <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="total_experience_year" name="total_experience_year" min="1" max="100">
                     </div>
                     <div class="form-group col-md-4">

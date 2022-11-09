@@ -139,7 +139,7 @@
 
         <div class="form-group">
             <label for="">Upload questions in excel format</label>
-            <input type="file" name="questionExcel" class="form-control">
+            <input type="file" name="questionExcel" class="form-control" accept=".xlsx">
         </div>
     </div>
 </div>

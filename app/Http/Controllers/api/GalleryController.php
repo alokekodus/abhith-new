@@ -12,7 +12,7 @@ class GalleryController extends Controller
     {
         try {
             $gallerries = Gallery::select('name','gallery','is_activate','created_at')->where('is_activate',1)->orderBy('created_at', 'DESC')->get();
-            if (!$gallerries->isEmpty()) {
+            if ($gallerries->count()>0) {
                 $data = [
                     "code" => 200,
                     "status" => 1,
@@ -25,7 +25,7 @@ class GalleryController extends Controller
                 $data = [
                     "code" => 200,
                     "status" => 1,
-                    "message" => "No record found",
+                    "message" => "No pictures found",
                     "result" => $gallerries,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);

@@ -426,6 +426,23 @@ class LessonController extends Controller
                 return response()->json(['status' => 1, 'message' => "Resource stored successfully."]);
             }
             if ($request->resource_type == 4) {
+                $validate = Validator::make(
+                    $request->all(),
+                    [
+                        'name' => 'required',
+                        'type' => 'required',
+                        'questionExcel' => 'required|mimes:xlsx'
+                    ],
+                    [
+                        'name.required' => 'Resource Name is required',
+                        'type.required' => 'Resource type is required',
+                        'questionExcel.required' => 'Resource should be on .xlsx formate'
+                    ]
+                );
+                if ($validate->fails()) {
+                    return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
+                }
+
                 $lesson = Lesson::find($request->parent_id);
                 $setName = $request->name;
                 $board_id = $lesson->board_id;

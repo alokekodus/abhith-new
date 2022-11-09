@@ -189,6 +189,7 @@ class WebsiteAuthController extends Controller
                 'email' => 'required|email',
                 'phone' => 'required|numeric',
                 'password' => 'required',
+                'name'=>'required'
 
             ]);
 

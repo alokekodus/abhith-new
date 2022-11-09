@@ -204,7 +204,7 @@
                 <div class="course-desc">
                     {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
                     <h4 class="subject-heading-black mb-3">
-                        {{$subject->subject_name}}
+                        {{mb_strimwidth($subject->subject_name, 0, 15, "")}}
                         (Class-{{$subject->assignClass->class}},{{$subject->boards->exam_board}})
                     </h4>
                     <span>
