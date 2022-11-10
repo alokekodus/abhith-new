@@ -180,6 +180,17 @@
 const config = {
   type: 'doughnut',
   data: data,
+  options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
 };
 </script>
 <script>

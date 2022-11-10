@@ -54,14 +54,22 @@
 <div class="lesson-details-main-div">
     <div class="lesson-details-sidebar">
         <div class="lesson-sidebar-btn">
+            @if($topicVideos->count()>0)
             <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen">{{ $topicVideos->count() }}
                 Videos</button>
+            @endif
+            @if($topicArticles->count()>0)
             <button class="lessonLinks" onclick="openFile(event, 'articles')"> {{ $topicArticles->count() }}
                 Articles</button>
+            @endif
+            @if( $topicDocuments->count())
             <button class="lessonLinks" onclick="openFile(event, 'documents')">{{ $topicDocuments->count() }}
                 Documents</button>
+            @endif
+            @if($mcq_questions->Sets()->count())
             <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{ $mcq_questions->Sets()->count() }}
                 MCQ Test</button>
+            @endif
         </div>
     </div>
     <div class="topic-content mb-5">
@@ -86,6 +94,7 @@
             </div>
         </div>
         <div class="topic-content-body">
+            @if($topicVideos->count()>0)
             <div class="container lessonContent" id="videos">
                 <div class="topic-content-sub-heading mt-4">
                     <h3>Videos</h3>
@@ -97,7 +106,7 @@
                         <div class="card video-lesson-pic">
                             <img src="{{ asset($video->lessonAttachment->video_thumbnail_image) }}" alt="">
                             <div class="video-lesson-overlay">
-                                <a href="{{route('website.course.package.subject.video', ['id' => Crypt::encrypt($video->lessonAttachment->id)])}}"
+                                <a href="{{route('website.course.package.subject.video', ['id' => Crypt::encrypt($video->lessonAttachment->id)])}}" target="_blank"
                                     class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o"
                                         aria-hidden="true"></i></a>
                             </div>
@@ -112,7 +121,8 @@
 
                 </div>
             </div>
-
+            @endif
+            @if($topicArticles->count()>0)
             <div class="container lessonContent" id="articles">
                 <div class="topic-content-sub-heading mt-4">
                     <h3>Articles</h3>
@@ -140,7 +150,8 @@
                     @endif
                 </div>
             </div>
-
+            @endif
+            @if( $topicDocuments->count())
             <div class="container lessonContent" id="documents">
                 <div class="topic-content-sub-heading mt-4">
                     <h3>Documents</h3>
@@ -169,7 +180,8 @@
                     @endif
                 </div>
             </div>
-
+            @endif
+            @if($mcq_questions->Sets()->count())
             <div class="container lessonContent" id="mcq_test">
                 <div class="topic-content-sub-heading mt-4">
                     <h3>MCQ Test</h3>
@@ -190,7 +202,9 @@
                             </div>
                             @if(isPracticeTestPlayed($set->id)==1)
                             @php $get_practice_test_id=getPracticeTestId($set->id) @endphp
-                            <a href="{{route('website.subject.analysis',crypt::encrypt($get_practice_test_id))}}" class="btn btn-sm ml-auto" style="background-color: #f2f2f2"><i class="fa fa-line-chart" aria-hidden="true"></i> analysis</a>
+                            <a href="{{route('website.subject.analysis',crypt::encrypt($get_practice_test_id))}}"
+                                class="btn btn-sm ml-auto" style="background-color: #f2f2f2"><i class="fa fa-line-chart"
+                                    aria-hidden="true"></i> analysis</a>
                             @endif
                         </div>
                     </div>
@@ -199,6 +213,7 @@
                     @endif
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </div>
