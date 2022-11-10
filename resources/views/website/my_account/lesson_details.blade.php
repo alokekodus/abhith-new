@@ -54,6 +54,7 @@
 <div class="lesson-details-main-div">
     <div class="lesson-details-sidebar">
         <div class="lesson-sidebar-btn">
+            <h4 class="text-center"><b>{{$lesson->assignSubject->subject_name}}</b></h4>
             @if($topicVideos->count()>0)
             <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen">{{ $topicVideos->count() }}
                 Videos</button>
@@ -106,9 +107,9 @@
                         <div class="card video-lesson-pic">
                             <img src="{{ asset($video->lessonAttachment->video_thumbnail_image) }}" alt="">
                             <div class="video-lesson-overlay">
-                                <a href="{{route('website.course.package.subject.video', ['id' => Crypt::encrypt($video->lessonAttachment->id)])}}" target="_blank"
-                                    class="btn btn-default video-lesson-overlay-eye-icon"><i class="fa fa-play-circle-o"
-                                        aria-hidden="true"></i></a>
+                                <a href="{{route('website.course.package.subject.video', ['id' => Crypt::encrypt($video->lessonAttachment->id)])}}"
+                                    target="_blank" class="btn btn-default video-lesson-overlay-eye-icon"><i
+                                        class="fa fa-play-circle-o" aria-hidden="true"></i></a>
                             </div>
                         </div>
                         <div class="video-lesson-text">

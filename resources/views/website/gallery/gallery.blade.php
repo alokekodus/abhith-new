@@ -24,7 +24,7 @@
                 <div class="col-lg-12 p0">
                     <div class="galleryWrap">
                         <ul class="list-inline gallery-list" id="portfoliolist">
-                            @foreach ($gallery as $item)
+                            @forelse ($gallery as $item)
                                 <li class="portfolio">
                                     <a href="{{asset($item->gallery) }}"
                                         class='portfolio- cwrapper fancybox imgContainer' data-fancybox="images" data-caption="{{$item->name}}"
@@ -32,7 +32,9 @@
                                         <img src="{{ asset($item->gallery) }}"/>
                                     </a>
                                 </li>
-                            @endforeach
+                                @empty                                    
+                                <h4 class="text-center">*No pictures found</h4>
+                            @endforelse
                         </ul>
                     </div>
 

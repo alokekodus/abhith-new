@@ -70,8 +70,8 @@
                                     @csrf
                                     <div class="form-group col-lg-12">
                                         <input type="text" class="form-control" name="name" placeholder="Name" id="name"
-                                            maxlength="20" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only."
-                                            value="{{old('fname')}}">
+                                            maxlength="50" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only."
+                                            value="{{old('fname')}}" required>
                                         <span class="text-danger">@error('name'){{$message}}@enderror</span>
                                     </div>
 

@@ -17,6 +17,7 @@
 @include('layout.website.include.forum_header')
 <section class="account-section">
     <div class="container-fluid mt-2">
+        <h4 class="mb-3"><b>My Courses</b></h4>
         <div class="row">
             @foreach($subjects as $key=>$subject)
     
