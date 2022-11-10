@@ -54,6 +54,7 @@
 <div class="lesson-details-main-div">
     <div class="lesson-details-sidebar">
         <div class="lesson-sidebar-btn">
+            <h4 class="text-center"><b>{{$lesson->assignSubject->subject_name}}</b></h4>
             <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen">{{ $topicVideos->count() }}
                 Videos</button>
             <button class="lessonLinks" onclick="openFile(event, 'articles')"> {{ $topicArticles->count() }}
