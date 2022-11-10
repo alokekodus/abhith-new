@@ -223,7 +223,7 @@
                         class="enroll">View Details</a> --}}
 
                     @if(auth()->check() && (subjectAlreadyPurchase($subject->id)==1))
-                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}" target="_blank"
                         class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
                         Course</a>
                     @else

@@ -260,8 +260,15 @@
                                             @forelse ($purchase_history as $key => $item)
                                                 <div class="row mb-4">
                                                     <div class="col-lg-2 col-md-3">
+                                                        @if ($item->board->logo == '')
                                                         <img src="{{ asset('asset_website/img/Image.png') }}"
-                                                            style="height: 125px" alt="">
+                                                            style="height: 125px; width:125px; object-fit:cover; border-radius:10px" alt="">
+                                                            
+                                                        @else
+                                                        <img src="{{ asset($item->board->logo) }}"
+                                                            style="height: 125px; width:125px; object-fit:cover; border-radius:10px" alt="">
+                                                        
+                                                        @endif
                                                     </div>
                                                     <div class="col-lg-10 col-md-9">
                                                         <div class="d-flex justify-content-between myCourses-details">
@@ -271,7 +278,7 @@
                                                                     {{ $item->board->exam_board }}</h5>
 
                                                                 <div class="myCourses-view-btn">
-                                                                    <a href="{{ route('website.user.courses', Crypt::encrypt($item->id)) }}"
+                                                                    <a href="{{ route('website.user.courses', Crypt::encrypt($item->id)) }}" target="_blank"
                                                                         class="btn-sm btn-primary">View Details</a>
                                                                 </div>
                                                             </div>
@@ -657,6 +664,7 @@
                                                 <tr class="text-center">
                                                     {{-- <th>Sl No.</th> --}}
                                                     <th>Board Name</th>
+                                                    <th>Subject</th>
                                                     <th>Class Name</th>
                                                     <th>Subjects</th>
                                                     <th>Total Price</th>
@@ -670,6 +678,7 @@
                                                 <tr class="text-center">
                                                     {{-- <td>{{$key + 1}}</td> --}}
                                                     <td>{{ $item->board->exam_board }}</td>
+                                                    <td></td>
                                                     <td>{{ $item->assignClass->class }}</td>
                                                     <td>
                                                         @if ($item->is_full_course_selected == '1')
