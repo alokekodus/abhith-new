@@ -256,16 +256,21 @@
                                             </div>
                                             <div class="col-lg-10 col-md-9">
                                                 <div class="d-flex justify-content-between myCourses-details">
-                                                    <div>
+                                                    <div style="width: 25%; display:flex; flex-direction: column">
                                                         <h6>Board</h6>
                                                         <h5 class="font-weight-bold">{{$item->board->exam_board}}</h5>
+
+                                                        <div class="myCourses-view-btn">
+                                                            <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
+                                                                class="btn-sm btn-primary">View Details</a>
+                                                        </div>
                                                     </div>
-                                                    <div>
+                                                    <div style="width: 25%">
                                                         <h6>Class</h6>
                                                         <h5 class="font-weight-bold">{{$item->assignClass->class??''}}
                                                         </h5>
                                                     </div>
-                                                    <div>
+                                                    <div style="width: 25%">
                                                         <h6>Course Type</h6>
                                                         <h5 class="font-weight-bold">
                                                             @if($item->is_full_course_selected==1)Full Course @else
@@ -277,10 +282,7 @@
                                                             {{$item->assignSubject->count()}}</h5>
                                                     </div>
                                                 </div>
-                                                <div class="myCourses-view-btn">
-                                                    <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
-                                                        class="btn-sm btn-primary">View Details</a>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                         {{-- <div class="course-pic"><img src="{{asset('files/course/courses.jpeg')}}"
