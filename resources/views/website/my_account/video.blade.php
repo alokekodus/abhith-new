@@ -10,9 +10,9 @@
 @include('layout.website.include.forum_header')
 @section('content')
 <div class="container-fluid">
-    
-        <h3 class="text-center">{{$data->lesson->name}}</h3>
-  
+
+    <h3 class="text-center">{{$data->lesson->name}}</h3>
+
 
     {{-- <video poster="{{ asset($video->video_thumbnail_image) }}" controls style="width: 100%;">
         <source src="{{ asset($video->video_origin_url) }}" type="video/mp4">
@@ -24,17 +24,11 @@
 </div>
 @endsection
 @section('scripts')
-<script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script>
+{{-- <script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script> --}}
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
     $(document).ready(function() {
-    var myPlayer = videojs('player');
-   });
-   
-  
-</script>
-<script>
-    var lesson_attachment=@json($data);
+        var lesson_attachment=@json($data);
         var storagePath = "{!! storage_path() !!}";
         var FULLHD= lesson_attachment['origin_video_url'] ;
         var SD= lesson_attachment['video_resize_480'] ;
@@ -48,6 +42,7 @@
             }
         }
         });
+        // console.log(player.duration()); 
         player.updateSrc([
         {
             src: 'http://localhost/abhith-new/public'+SD,
@@ -73,5 +68,30 @@
         //     file: 'http://localhost/abhith-new/public/asset_website/img/home/logo_.png',
            
         // });
+        if (player.readyState() < 1) {
+        // wait for loadedmetdata event
+        player.one("loadedmetadata", onLoadedMetadata);
+       }
+        else {
+            // metadata already loaded
+            onLoadedMetadata();
+        }
+    
+    function onLoadedMetadata() {
+        alert(player.duration());
+        
+        
+    }
+    console.log(player.paused());
+    player.on("play", function () {
+        console.log(player.currentTime());
+     });
+    player.on("pause", function () {
+        console.log(player.currentTime());
+     });
+   });
+   
+ 
 </script>
+
 @endsection

@@ -89,8 +89,12 @@
         margin-bottom: 15px;
     }
     .footer-menu-list li {
-        font-size: 15px;
+        font-size: 14px;
         margin-bottom: 14px;
+    }
+    .footer-mid-right {
+        text-align: center;
+        font-size: 14px;
     }
 
     .course-header-and-back-to-pckg-btn a {

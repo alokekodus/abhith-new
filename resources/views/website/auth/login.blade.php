@@ -193,14 +193,14 @@
                             'email' : $('#signupEmail').val(),
                         },
                         success:function(data){
-                           console.log(data);
+                          
                             if(data.result.code == 200){
                                 $('#sendEmailOtpBtn').attr('disabled',true); 
                                 $('#sendEmailOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
                                 $('#sendEmailOtpBtn').text('OTP Sent');
                                 $('.verify-email-otp-div').css('display','block');
                                
-                                interval = setInterval(updateTimer, 2000);
+                                interval = setInterval(updateTimerPhone, 2000);
                                 toastr.success(data.result.message);
                             }else{
                                 toastr.error(data.result.message);
@@ -245,10 +245,10 @@
                             'phone' : $('#phone').val()
                         },
                         success:function(data){
-                           console.log(data);
+                          
                             if(data.status == 1){
                                 if(data.result.code==200){
-                                $('#sendOtpBtn').attr('disabled',true); 
+                                // $('#sendOtpBtn').attr('disabled',true); 
                                 $('#sendOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
                                 $('#sendOtpBtn').text('OTP Sent');
                                 $('.verify-otp-div').css('display','block');
@@ -391,7 +391,7 @@
                         if(data.status == 1){
                             if(data.result.code==200){
                                 toastr.success(data.result.message);
-                            $('#phone').prop('readonly',true);
+                            // $('#phone').prop('readonly',true);
                             $('#enterEmailOtp').prop('readonly',true);
                             $('#sendEmailOtpBtn').attr('disabled',true);
                             $('#verifyEmailOtpBtn').attr('disabled',true);
@@ -426,18 +426,33 @@
             let seconds = time % 60;
             // seconds = seconds < 10 ? '0' + seconds : seconds;
 
-            $('#sendOtpBtn').text(` Resend in ${seconds} s`);
+            $('#sendEmailOtpBtn').text(` Resend in ${seconds} s`);
             if (time == 0) {
                
-                $('#sendOtpBtn').attr('disabled',false); 
-                $('#sendOtpBtn').text('Send OTP');
-                $('#sendOtpBtn').css('background-image','linear-gradient(to left, #076fef, #01b9f1)');
+                $('#sendEmailOtpBtn').attr('disabled',false); 
+                $('#sendEmailOtpBtn').text('Send OTP');
+                $('#sendEmailOtpBtn').css('background-image','linear-gradient(to left, #076fef, #01b9f1)');
                 clearInterval(interval);
             } else {
                 time--;
             }
         }
+        function updateTimerPhone() {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            // seconds = seconds < 10 ? '0' + seconds : seconds;
 
+            $('#sendEmailOtpBtn').text(` Resend in ${seconds} s`);
+            if (time == 0) {
+               
+                $('#sendEmailOtpBtn').attr('disabled',false); 
+                $('#sendEmailOtpBtn').text('Send OTP');
+                $('#sendEmailOtpBtn').css('background-image','linear-gradient(to left, #076fef, #01b9f1)');
+                clearInterval(interval);
+            } else {
+                time--;
+            }
+        }
         $('#confPwd').on('keyup',function(){
             if( $('#confPwd').val().length == 0){
                $('#signupBtn').attr('disabled',true);      
