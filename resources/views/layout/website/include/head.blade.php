@@ -42,6 +42,7 @@
     <link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
     <link href="https://unpkg.com/video.js@7/dist/video-js.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @yield('head')
 
 </head>

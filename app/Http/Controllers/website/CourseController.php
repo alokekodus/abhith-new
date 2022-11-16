@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use App\Models\MultipleChoice;
 use App\Models\Set;
 use App\Models\Question;
+use App\Models\SubjectLessonVisitor;
 use Illuminate\Support\Facades\Crypt;
 use PhpParser\Node\Expr\Assign;
 
@@ -233,6 +234,47 @@ class CourseController extends Controller
 
     public function video($id){
         $data= LessonAttachment::where('id', Crypt::decrypt($id))->with('lesson')->first();
-        return view('website.my_account.video',compact('data'));
+        $lesson_id=$data->lesson->id;
+        $subject_id=$data->lesson->parent_id;
+        $user_id=auth()->user()->id;
+      
+        return view('website.my_account.video',compact('data','lesson_id','subject_id','user_id'));
+    }
+    public function LessonVideoWatchTime(Request $request){
+        try {
+            $lesson_id=$request->lesson_id;
+            $subject_id=$request->subject_id;
+            $user_id=$request->user_id;
+            $lesson=Lesson::find($lesson_id);
+            $total_video_duration = $lesson->lessonAttachment->video_duration;
+            $data=[
+                'subject_id'=>$subject_id,
+                'lesson_subject_id'=>$lesson_id,
+                'visitor_id'=>$user_id,
+                'type'=>2,
+                'video_watch_time'=>$total_video_duration,
+                'total_video_duration' => $total_video_duration,
+            ];
+            $subjectlessonvisitor = SubjectLessonVisitor::create($data);
+            $returnData = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "Data stored successfully",
+                "data"=>$subjectlessonvisitor,
+
+            ];
+            return response()->json(['status' => 1, 'result' => $returnData]);
+
+           
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function LessonVideoWatchTimeUpdate(Request $request){
+        try {
+            return response()->json($request->all());
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

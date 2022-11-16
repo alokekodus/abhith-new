@@ -46,7 +46,7 @@ class SubjectController extends Controller
     protected function published(Request $request)
     {
         $subject = AssignSubject::find($request->subjectId);
-        if(($subject->lesson->count()==0) || ($request->published == 1)){
+        if(($subject->lesson->count()==0)){
             return response()->json(['status' => 0, 'message' => 'Please add lesson before published the subject']);
         }
         $subject->published = $request->published;

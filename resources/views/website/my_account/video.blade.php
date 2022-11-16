@@ -27,6 +27,11 @@
 {{-- <script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script> --}}
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
 <script>
+     $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $(document).ready(function() {
         var lesson_attachment=@json($data);
         var storagePath = "{!! storage_path() !!}";
@@ -78,16 +83,40 @@
         }
     
     function onLoadedMetadata() {
-        alert(player.duration());
+        var lesson_id=@json($lesson_id);
+        var subject_id=@json($subject_id);
+        var user_id=@json($user_id);
+        $.ajax({
+            type:'POST',
+            url:"{{route('website.course.package.subject.video.duration')}}",
+            data:{lesson_id:lesson_id,subject_id:subject_id,user_id:user_id},
+            success:function(Responsedata){
+                localStorage['subject_lesson_visitor_id']=Responsedata.result.data.id;
+               
+            }
+        });
         
         
     }
-    console.log(player.paused());
+    
     player.on("play", function () {
-        console.log(player.currentTime());
+        localStorage['play_time']=new Date();
+       
      });
     player.on("pause", function () {
-        console.log(player.currentTime());
+        var playTime=localStorage['play_time'];
+        var pauseTime=new Date();
+        var lessonVisitorId=localStorage['subject_lesson_visitor_id'];
+        $.ajax({
+            type:'POST',
+            url:"{{route('website.course.package.subject.video.duration.update')}}",
+            data:{subject_lesson_visitor_id:lessonVisitorId,play_time:playTime,pause_time:pauseTime},
+            success:function(Responsedata){
+              console.log(Responsedata);
+               
+            }
+        });
+    
      });
    });
    
