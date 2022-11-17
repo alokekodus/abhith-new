@@ -18,7 +18,7 @@
         <source src="{{ asset($video->video_origin_url) }}" type="video/mp4">
         Your browser does not support the video tag.
     </video> --}}
-    <video id="player" class="video-js" controls preload="auto" autoplay loop muted
+    <video id="player" class="video-js" controls preload="auto" autoplay muted
         poster="{{ asset($data->video_thumbnail_image) }}" loading="lazy">
     </video>
 </div>
@@ -26,6 +26,7 @@
 @section('scripts')
 {{-- <script src="{{asset('asset_website/js/videojs.watermark.js')}}"></script> --}}
 <script src="{{asset('asset_website/js/videojs-resolution-switcher.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script>
      $.ajaxSetup({
         headers: {
@@ -104,8 +105,9 @@
        
      });
     player.on("pause", function () {
-        var playTime=localStorage['play_time'];
-        var pauseTime=new Date();
+        
+        var playTime=moment(localStorage['play_time']).format('YYYY-MM-DD HH:mm:ss');
+        var pauseTime=moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
         var lessonVisitorId=localStorage['subject_lesson_visitor_id'];
         $.ajax({
             type:'POST',

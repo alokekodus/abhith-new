@@ -30,14 +30,14 @@ class CourseController extends Controller
     {
         $class_id = null;
         $board_details = Board::where('is_activate', 1)->get();
-        $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('published',1)->get();
+        $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('published', 1)->get();
 
         if ($request->has('assignedBoard') && $request->has('class_id')) {
             $class_id = $request->has('class_id');
-            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('assign_class_id', $request->class_id)->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published',1)->get();
-        }elseif($request->has('assignedBoard')){
+            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('assign_class_id', $request->class_id)->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published', 1)->get();
+        } elseif ($request->has('assignedBoard')) {
             $class_id = $request->has('class_id');
-            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published',1)->get();
+            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published', 1)->get();
         }
 
 
@@ -106,14 +106,14 @@ class CourseController extends Controller
     }
     public function enrollPackage($subject_id)
     {
-        
-      
+
+
         try {
-           
+
             $subject = AssignSubject::find(Crypt::decrypt($subject_id));
-            $subject_id=$subject->id;
+            $subject_id = $subject->id;
             $subjects = AssignSubject::with('review')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('board_id', $subject->board_id)->where('assign_class_id', $subject->assign_class_id)->where('is_activate', 1)->where('published', 1)->get();
-            $total_subject=$subjects->count();
+            $total_subject = $subjects->count();
             $board = Board::find($subject->board_id);
             $Assignclass = AssignClass::find($subject->assign_class_id);
             $total_amount = 0;
@@ -154,10 +154,10 @@ class CourseController extends Controller
                 'total_amount' => $total_amount,
                 'board' => $board,
                 'assignclass' => $Assignclass,
-                'subjectamount'=>$subject->subject_amount,
+                'subjectamount' => $subject->subject_amount,
             ];
-           
-            return view('website.course.enroll', compact('data','subject_id','total_subject'));
+
+            return view('website.course.enroll', compact('data', 'subject_id', 'total_subject'));
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -176,83 +176,85 @@ class CourseController extends Controller
     }
     public function  subjectDetails($subject_id)
     {
-       
+
         $subject_id = Crypt::decrypt($subject_id);
 
         $subject = AssignSubject::with(['lesson' => function ($query) {
             $query->with('lessonAttachment');
         }, 'subjectAttachment', 'assignClass', 'boards'])->where('id', $subject_id)->first();
         $lesson = $subject->lesson->first();
-        $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
-        $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
-        $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
-        $mcq_questions=Lesson::with('Sets')->where('id',$lesson->id)->first();
-        $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id',null)->orderBy('id')->first();
-        if($next_lesson_id==null){
-            $next_lesson_id=false;
-        }else{
-            $next_lesson_id=true;
+        $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->get();
+        $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->get();
+        $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->get();
+        $mcq_questions = Lesson::with('Sets')->where('id', $lesson->id)->first();
+        $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id', null)->orderBy('id')->first();
+        if ($next_lesson_id == null) {
+            $next_lesson_id = false;
+        } else {
+            $next_lesson_id = true;
         }
-        $previous_lesson_id=false;
+        $previous_lesson_id = false;
         // $previous_lesson_id = Lesson::where('id', '<', $lesson->id)->orderBy('id','desc')->first()->id;
         // $next_lesson_id = Lesson::where('id', '>', $lesson->id)->orderBy('id')->first()->id;
-        return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions','next_lesson_id','previous_lesson_id'));
-        
+        return view('website.my_account.lesson_details', compact('lesson', 'topicDocuments', 'topicVideos', 'topicArticles', 'mcq_questions', 'next_lesson_id', 'previous_lesson_id'));
     }
-    public function getLessonDetails($lesson_id,$type){
+    public function getLessonDetails($lesson_id, $type)
+    {
 
         try {
-           
-           $lesson=Lesson::find(Crypt::decrypt($lesson_id));
-           if($type==1){
-            $lesson = Lesson::where('id', '<', $lesson->id)->orderBy('id','desc')->first();
-           }else{
-            $lesson = Lesson::where('id', '>', $lesson->id)->orderBy('id')->first();
-           }
-           $topicDocuments=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',1)->get();
-           $topicVideos=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',2)->get();
-           $topicArticles=Lesson::with('lessonAttachment')->where('parent_id',$lesson->id)->where('type',3)->get();
-           $mcq_questions=Lesson::with('Sets')->where('id',$lesson->id)->first();
-           $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id',null)->orderBy('id')->first();
-           $previous_lesson_id = Lesson::where('id', '<', $lesson->id)->where('parent_id',null)->orderBy('id','desc')->first();
-           if($next_lesson_id==null){
-               $next_lesson_id=false;
-           }else{
-               $next_lesson_id=true;
-           }
-           if($previous_lesson_id==null){
-            $previous_lesson_id=false;
-           }else{
-            $previous_lesson_id=true;
-           }
-          
-           return view('website.my_account.lesson_details',compact('lesson','topicDocuments','topicVideos','topicArticles','mcq_questions','next_lesson_id','previous_lesson_id'));
+
+            $lesson = Lesson::find(Crypt::decrypt($lesson_id));
+            if ($type == 1) {
+                $lesson = Lesson::where('id', '<', $lesson->id)->orderBy('id', 'desc')->first();
+            } else {
+                $lesson = Lesson::where('id', '>', $lesson->id)->orderBy('id')->first();
+            }
+            $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->get();
+            $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->get();
+            $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->get();
+            $mcq_questions = Lesson::with('Sets')->where('id', $lesson->id)->first();
+            $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id', null)->orderBy('id')->first();
+            $previous_lesson_id = Lesson::where('id', '<', $lesson->id)->where('parent_id', null)->orderBy('id', 'desc')->first();
+            if ($next_lesson_id == null) {
+                $next_lesson_id = false;
+            } else {
+                $next_lesson_id = true;
+            }
+            if ($previous_lesson_id == null) {
+                $previous_lesson_id = false;
+            } else {
+                $previous_lesson_id = true;
+            }
+
+            return view('website.my_account.lesson_details', compact('lesson', 'topicDocuments', 'topicVideos', 'topicArticles', 'mcq_questions', 'next_lesson_id', 'previous_lesson_id'));
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
 
-    public function video($id){
-        $data= LessonAttachment::where('id', Crypt::decrypt($id))->with('lesson')->first();
-        $lesson_id=$data->lesson->id;
-        $subject_id=$data->lesson->parent_id;
-        $user_id=auth()->user()->id;
-      
-        return view('website.my_account.video',compact('data','lesson_id','subject_id','user_id'));
+    public function video($id)
+    {
+        $data = LessonAttachment::where('id', Crypt::decrypt($id))->with('lesson')->first();
+        $lesson_id = $data->lesson->id;
+        $subject_id = $data->lesson->parent_id;
+        $user_id = auth()->user()->id;
+
+        return view('website.my_account.video', compact('data', 'lesson_id', 'subject_id', 'user_id'));
     }
-    public function LessonVideoWatchTime(Request $request){
+    public function LessonVideoWatchTime(Request $request)
+    {
         try {
-            $lesson_id=$request->lesson_id;
-            $subject_id=$request->subject_id;
-            $user_id=$request->user_id;
-            $lesson=Lesson::find($lesson_id);
+            $lesson_id = $request->lesson_id;
+            $subject_id = $request->subject_id;
+            $user_id = $request->user_id;
+            $lesson = Lesson::find($lesson_id);
             $total_video_duration = $lesson->lessonAttachment->video_duration;
-            $data=[
-                'subject_id'=>$subject_id,
-                'lesson_subject_id'=>$lesson_id,
-                'visitor_id'=>$user_id,
-                'type'=>2,
-                'video_watch_time'=>$total_video_duration,
+            $data = [
+                'subject_id' => $subject_id,
+                'lesson_subject_id' => $lesson_id,
+                'visitor_id' => $user_id,
+                'type' => 2,
+                'video_watch_time' => $total_video_duration,
                 'total_video_duration' => $total_video_duration,
             ];
             $subjectlessonvisitor = SubjectLessonVisitor::create($data);
@@ -260,19 +262,37 @@ class CourseController extends Controller
                 "code" => 200,
                 "status" => 1,
                 "message" => "Data stored successfully",
-                "data"=>$subjectlessonvisitor,
+                "data" => $subjectlessonvisitor,
 
             ];
             return response()->json(['status' => 1, 'result' => $returnData]);
-
-           
         } catch (\Throwable $th) {
             //throw $th;
         }
     }
-    public function LessonVideoWatchTimeUpdate(Request $request){
+    public function LessonVideoWatchTimeUpdate(Request $request)
+    {
         try {
-            return response()->json($request->all());
+
+            $start_time = $request->pause_time;
+            $end_time = $request->play_time;
+            $subject_lesson_visitor_id = $request->subject_lesson_visitor_id;
+            $subject_lesson_visitor = SubjectLessonVisitor::find($subject_lesson_visitor_id);
+          
+            if($subject_lesson_visitor->video_watch_time==$subject_lesson_visitor->total_video_duration){
+                $previous_time_duration ="00:00:00";
+            }else{
+                $previous_time_duration = $subject_lesson_visitor->video_watch_time;
+            }
+            $second_time = timeDifference($end_time, $start_time);
+
+            $data = [
+                'video_watch_time' => addTime($previous_time_duration, $second_time),
+                'subject_lesson_visitor_id' => $subject_lesson_visitor_id,
+            ];
+            $subject_lesson_visitor = SubjectLessonVisitor::find($subject_lesson_visitor_id);
+            $subject_lesson_visitor->update($data);
+            return response()->json($data);
         } catch (\Throwable $th) {
             //throw $th;
         }

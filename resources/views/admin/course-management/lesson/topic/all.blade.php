@@ -148,7 +148,7 @@
                                         </a>
                                         @else NA @endif
                                     </td>
-                                    <td>{{gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00"}}</td>
+                                    <td>{{$topic->lessonAttachment->video_duration ?? "00:00:00"}}</td>
 
                                     <td>
                                         @if ($topic->preview==0)

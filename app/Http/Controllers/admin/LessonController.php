@@ -368,7 +368,8 @@ class LessonController extends Controller
                     'type' => 2,
                     'progress_status' => 1,
                     'attachment_type' => $request->resource_type,
-                    'video_duration' => $request->duration,
+                    'video_duration'=>gmdate("H:i:s", $request->duration),
+                    
                 ];
 
                 $lesson_attachment = LessonAttachment::create($data_attachment);

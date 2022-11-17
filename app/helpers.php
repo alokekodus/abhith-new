@@ -236,6 +236,11 @@ function timeDifference($from, $to)
     $diff = $to->diff($from);
     return $diff->format('%H:%I:%S');
 }
+function addTime($first, $second)
+{
+    $secs = strtotime($second) - strtotime("00:00:00");
+   return  date("H:i:s", strtotime($first) + $secs);
+}
 function isPracticeTestPlayed($set_id)
 {
     $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->first();
@@ -245,7 +250,8 @@ function isPracticeTestPlayed($set_id)
         return 0;
     }
 }
-function getPracticeTestId($set_id){
+function getPracticeTestId($set_id)
+{
     $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->first();
     if ($user_practice_tests) {
         return $user_practice_tests->id;
@@ -306,116 +312,120 @@ function subjectAlreadyPurchase($subject_id)
         return 1;
     }
 }
-function subjectAlreadyInCart($subject_id){
+function subjectAlreadyInCart($subject_id)
+{
 
-    $subject=AssignSubject::find($subject_id);
-    $board_id=$subject->board_id;
-    $class_id=$subject->assign_class_id;
-    
-    $cart_check = Cart::where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->first();
-    if($cart_check){
-        $subject_in_cart=$cart_check->assignSubject->where('assign_subject_id',$subject_id)->first();
-        if($subject_in_cart){
+    $subject = AssignSubject::find($subject_id);
+    $board_id = $subject->board_id;
+    $class_id = $subject->assign_class_id;
+
+    $cart_check = Cart::where('board_id', $board_id)->where('assign_class_id', $class_id)->where('is_remove_from_cart', 0)->where('user_id', auth()->user()->id)->first();
+    if ($cart_check) {
+        $subject_in_cart = $cart_check->assignSubject->where('assign_subject_id', $subject_id)->first();
+        if ($subject_in_cart) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
-    }else{
+    } else {
         return 0;
     }
-   
 }
 function checkemail($str)
 {
     return (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $str)) ? FALSE : TRUE;
 }
-function totalTime($times) {
-    
-    $time_seconds=0;
-    foreach ($times as $key=>$time) {
-    $time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $time);
+function totalTime($times)
+{
 
-    sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
-    
-    $time_seconds = $time_seconds+$hours * 3600 + $minutes * 60 + $seconds;
+    $time_seconds = 0;
+    foreach ($times as $key => $time) {
+        $time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $time);
 
+        sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
+
+        $time_seconds = $time_seconds + $hours * 3600 + $minutes * 60 + $seconds;
     }
 
     return $time_seconds;
 }
-function converToSec($time){
-    $time_seconds=0;
+function converToSec($time)
+{
+    $time_seconds = 0;
     $time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $time);
 
     sscanf($time, "%d:%d:%d", $hours, $minutes, $seconds);
-    
-    $time_seconds = $time_seconds+$hours * 3600 + $minutes * 60 + $seconds;
+
+    $time_seconds = $time_seconds + $hours * 3600 + $minutes * 60 + $seconds;
     return $time_seconds;
 }
 
-function ifBannerActive($current_route){
-    if($current_route=="admin.get.banner"||$current_route=="admin.create.banner"||$current_route=="admin.creating.banner"||$current_route=="admin.active.banner"||$current_route=="admin.edit.banner"||$current_route=="admin.editing.banner"){
+function ifBannerActive($current_route)
+{
+    if ($current_route == "admin.get.banner" || $current_route == "admin.create.banner" || $current_route == "admin.creating.banner" || $current_route == "admin.active.banner" || $current_route == "admin.edit.banner" || $current_route == "admin.editing.banner") {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
-function ifBlogActive($current_route){
-    if($current_route=="admin.get.blog.by.id"||$current_route=="admin.create.blog"||$current_route=="admin.creating.blog"||$current_route=="upload"||$current_route=="admin.active.blog"||$current_route=="admin.edit.blog"||$current_route=="admin.editing.blog"||$current_route=="admin.read.blog"){
+function ifBlogActive($current_route)
+{
+    if ($current_route == "admin.get.blog.by.id" || $current_route == "admin.create.blog" || $current_route == "admin.creating.blog" || $current_route == "upload" || $current_route == "admin.active.blog" || $current_route == "admin.edit.blog" || $current_route == "admin.editing.blog" || $current_route == "admin.read.blog") {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
-function ifGalleryActive($current_route){
-    if($current_route=="admin.get.gallery"||$current_route=="admin.create.gallery"||$current_route=="admin.creating.gallery"||$current_route=="admin.edit.gallery"||$current_route=="admin.editing.gallery"){
+function ifGalleryActive($current_route)
+{
+    if ($current_route == "admin.get.gallery" || $current_route == "admin.create.gallery" || $current_route == "admin.creating.gallery" || $current_route == "admin.edit.gallery" || $current_route == "admin.editing.gallery") {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
-function ifSubjectActive($current_route){
-    if($current_route=="admin.course.management.subject.all"||$current_route=="admin.course.management.subject.create"||$current_route=="admin.course.management.subject.edit"||$current_route=="admin.course.management.subject.store"||$current_route=="admin.course.management.subject.view"||$current_route=="admin.course.management.subject.assign"||$current_route=="admin.course.management.lesson.topic.display"||$current_route=="admin.published.subject"||$current_route=="admin.active.subject"){
+function ifSubjectActive($current_route)
+{
+    if ($current_route == "admin.course.management.subject.all" || $current_route == "admin.course.management.subject.create" || $current_route == "admin.course.management.subject.edit" || $current_route == "admin.course.management.subject.store" || $current_route == "admin.course.management.subject.view" || $current_route == "admin.course.management.subject.assign" || $current_route == "admin.course.management.lesson.topic.display" || $current_route == "admin.published.subject" || $current_route == "admin.active.subject") {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
-function subjectStatus($subject_id){
+function subjectStatus($subject_id)
+{
     $isBuy = Order::whereHas("assignSubject", function ($q) use ($subject_id) {
         $q->where('assign_subject_id', $subject_id);
     })->where("user_id", auth()->user()->id)->first();
-   
-    $isSubjectActive=AssignSubject::where('is_activate',1)->where('published',1)->where('id',$subject_id)->first();
-    if( $isSubjectActive && (!$isBuy)){
+
+    $isSubjectActive = AssignSubject::where('is_activate', 1)->where('published', 1)->where('id', $subject_id)->first();
+    if ($isSubjectActive && (!$isBuy)) {
         return 3;
-    }elseif($isBuy){
-         return 1;
-    }else{
+    } elseif ($isBuy) {
+        return 1;
+    } else {
         return 2;
     }
-   
 }
-function totalAmountCart($cart_id){
-    
+function totalAmountCart($cart_id)
+{
+
     $cart = Cart::with('board', 'assignClass', 'assignSubject')->where('id', $cart_id)->first();
     $all_subjects = $cart->assignSubject;
-    
-    $total=0;
-    
-   foreach($all_subjects as $key=>$all_subject){
-  
-    if(subjectStatus($all_subject->assign_subject_id)==3)
-    {
-        $total=$total+$all_subject->amount;
+
+    $total = 0;
+
+    foreach ($all_subjects as $key => $all_subject) {
+
+        if (subjectStatus($all_subject->assign_subject_id) == 3) {
+            $total = $total + $all_subject->amount;
+        }
     }
-       
-    
-   }
-   return $total;
+    return $total;
 }
-function totalCartItem(){
-    $cart=Cart::where('is_remove_from_cart',0)->where('user_id',auth()->user()->id)->where('is_buy',0)->get();
+function totalCartItem()
+{
+    $cart = Cart::where('is_remove_from_cart', 0)->where('user_id', auth()->user()->id)->where('is_buy', 0)->get();
     return $cart->count();
 }
 function orderNo()
