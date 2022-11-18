@@ -302,21 +302,7 @@
 
                                             </div>
                                         </div>
-                                        {{-- <div class="course-pic"><img src="{{asset('files/course/courses.jpeg')}}"
-                                                class="w100">
-                                            <div class="img-top-left"><b>{{$item->board->exam_board}} ||
-                                                    Class-{{$item->assignClass->class??''}}</b></div>
-                                        </div>
-                                        <div class="course-desc">
-
-                                            <h5><b>{{$item->board->exam_board}} ||
-                                                    Class-{{$item->assignClass->class??''}}</b></h5>
-
-
-                                            <a href="{{route('website.user.courses',Crypt::encrypt($item->id))}}"
-                                                class="enroll">View
-                                                Details</a>
-                                        </div> --}}
+                                        
                                         @empty
                                         <tr>
                                             <div class="text-center">
@@ -333,35 +319,6 @@
 
 
 
-                                {{-- <div class="row">
-                                    <div class="col-lg-2 col-md-3">
-                                        <img src="{{asset('asset_website/img/Image.png')}}" style="height: 125px"
-                                            alt="">
-                                    </div>
-                                    <div class="col-lg-10 col-md-9">
-                                        <div class="d-flex justify-content-between myCourses-details">
-                                            <div>
-                                                <h6>Board</h6>
-                                                <h5 class="font-weight-bold">SEBA</h5>
-                                            </div>
-                                            <div>
-                                                <h6>Class</h6>
-                                                <h5 class="font-weight-bold">Class 9</h5>
-                                            </div>
-                                            <div>
-                                                <h6>Course Type</h6>
-                                                <h5 class="font-weight-bold">Full Course</h5>
-                                            </div>
-                                            <div>
-                                                <h6>Subjects</h6>
-                                                <h5 class="font-weight-bold text-center">8</h5>
-                                            </div>
-                                        </div>
-                                        <div class="myCourses-view-btn">
-                                            <a href="#" class="btn btn-primary">View Details</a>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -377,8 +334,7 @@
                                         Select Subject
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <div id="subjectoption"></div>
-
+                                        <div id="subjectDisplay"></div>
                                     </div>
                                 </div>
                             </div>
@@ -387,35 +343,14 @@
                             </div>
                             <div class="col-lg-6 circular-left">
                                 <div class="d-flex progress-main">
-                                    <div class="circleOne">
-                                        <div class="circular-progress-one">
-                                            <span class="progress-value-one"></span>
-                                        </div>
-                                    </div>
-                                    <div class="circularText">
-                                        <div class="watched d-flex">
-                                            <span class="dot mr-2"></span>
-                                            <p> Watched Videos</p>
-                                        </div>
-                                        <div class="not-watched d-flex">
-                                            <span class="dot mr-2"></span>
-                                            <p>Not Watched Videos</p>
-                                        </div>
-                                    </div>
+                                    <canvas id="watchedNotWatchedVideo"></canvas>
                                 </div>
                             </div>
 
                             <div class="col-lg-6 circular-right">
                                 <div class="d-flex progress-main">
-                                    <div class="circleTwo">
-                                        <div class="circular-progress-two">
-                                            <span class="progress-value-two">0%</span>
-                                        </div>
-                                    </div>
-                                    <div class="circular-text">
-                                        <h5>Subject Progress</h5>
-                                        <h6>Based on your video</h6>
-                                    </div>
+                                    <canvas id="watchedvideopercentage"></canvas>
+                                    
                                 </div>
                             </div>
                             <div class="col-md-8 mt-5">
@@ -443,130 +378,7 @@
                                     <div>
                                         <canvas id="myChart"></canvas>
                                     </div>
-                                    {{-- <div class="tab-pane fade show active" id="daily" role="tabpanel"
-                                        aria-labelledby="daily-tab">
-                                        <div class="monthly-progress-bar">
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 25%">
-                                                    <div class="percent"><span id="monday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Mon</div>
-                                            </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 65%">
-                                                    <div class="percent"><span id="tueday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Tue</div>
-                                            </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 30%">
-                                                    <div class="percent"><span id="wedday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Wed</div>
-                                            </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 67%">
-                                                    <div class="percent"><span id="thuday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Thu</div>
-                                            </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 60%">
-                                                    <div class="percent"><span id="friday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Fri</div>
-                                            </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 23git %">
-                                                    <div class="percent"><span id="satday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Sat</div>
-                                            </div>
-                                            <div class="weekly-bar">
-                                                <div class="week-percent" style="height: 60%">
-                                                    <div class="percent"><span id="sunday"></span></div>
-                                                </div>
-                                                <div class="weekday-name">Sun</div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="tab-pane fade" id="monthly" role="tabpanel"
-                                        aria-labelledby="monthly-tab">
-                                        <div class="monthly-progress-bar">
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 25%">
-                                                    <div class="percent">15</div>
-                                                </div>
-                                                <div class="month-name">Jan</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 65%">
-                                                    <div class="percent">45</div>
-                                                </div>
-                                                <div class="month-name">Feb</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 30%">
-                                                    <div class="percent">20</div>
-                                                </div>
-                                                <div class="month-name">Mar</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 67%">
-                                                    <div class="percent">47</div>
-                                                </div>
-                                                <div class="month-name">Apr</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 60%">
-                                                    <div class="percent">40</div>
-                                                </div>
-                                                <div class="month-name">May</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 23%">
-                                                    <div class="percent">13</div>
-                                                </div>
-                                                <div class="month-name">Jun</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 50%">
-                                                    <div class="percent">35</div>
-                                                </div>
-                                                <div class="month-name">Jul</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 45%">
-                                                    <div class="percent">30</div>
-                                                </div>
-                                                <div class="month-name">Aug</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 36%">
-                                                    <div class="percent">25</div>
-                                                </div>
-                                                <div class="month-name">Sep</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 53%">
-                                                    <div class="percent">38</div>
-                                                </div>
-                                                <div class="month-name">Oct</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 48%">
-                                                    <div class="percent">33</div>
-                                                </div>
-                                                <div class="month-name">Nov</div>
-                                            </div>
-                                            <div class="monthly-bar">
-                                                <div class="monthly-percent" style="height: 28%">
-                                                    <div class="percent">17</div>
-                                                </div>
-                                                <div class="month-name">Dec</div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
+                                 
                                 </div>
                             </div>
                             <div class="col-md-4 mt-5">
@@ -938,13 +750,128 @@
                 method: 'get',
 
                 success: function(result) {
-                    console.log(result);
+                    displayAllPurchaseSubject(result.result);
+                    watchedNotWatchedVideo(result.result);
+                    subjectProgressInPercentage(result.result);
                     progreceGraph(result.result);
                     mcqTestPerformance(result.result);
                     // dailyGraph(result.result);
                 }
             })
-        })
+        });
+        function performanceById(subjectId){
+           
+            var url = '{{ route("website.user.performance.bysubjectid", ":id") }}';
+            url = url.replace(':id', subjectId);
+            $.ajax({
+                url:url, 
+                method: 'get',
+
+                success: function(result) {
+                    console.log(result);
+                 
+                    watchedNotWatchedVideo(result.result);
+                    subjectProgressInPercentage(result.result);
+                    progreceGraph(result.result);
+                    mcqTestPerformance(result.result);
+                    // dailyGraph(result.result);
+                }
+            })
+        }
+        function displayAllPurchaseSubject(result){
+             const allsubjects=result.all_subjects;
+             let subjects='';
+             allsubjects.forEach(list => {
+                subjects += `<button class="dropdown-item" onClick="performanceById(${list.id})" > Name: ${list.name} Board:${list.board} Class:${list.class} </button>`;
+            });
+            $('#subjectDisplay').html(subjects);  
+        }
+        function watchedNotWatchedVideo(result){
+        
+    
+        var watchedVideo=result.subject_progress.watched_percentage;
+        var notWatchedVideo=result.subject_progress.not_watched_percentage;
+    
+        const data = {
+                        labels: [
+                            'Watched Video',
+                            'Not Watched Video',
+                            
+                        ],
+                        datasets: [{
+                            label: 'Watched Video Report',
+                            data: [watchedVideo, notWatchedVideo],
+                            backgroundColor: [
+                            'rgb(116, 151, 207)',
+                            'rgb(255, 99, 132)'
+                            ],
+                            hoverOffset: 1
+                        }]
+                        };
+                        
+                        const config = {
+                        type: 'doughnut',
+                        data: data,
+                        options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+        };
+
+        const myChart = new Chart(
+        document.getElementById('watchedNotWatchedVideo'),
+        config
+        );
+
+        }
+        function subjectProgressInPercentage(result){
+            
+            var watchedVideoPercentage=result.subject_progress.watched_percentage;
+            var notWatchedVideoPercentage=100-watchedVideoPercentage;
+    
+        const data = {
+                        labels: [
+                            'Watched Video Percebtage',                          
+                        ],
+                        datasets: [{
+                            label: 'Subject progress in percentage Based on your video',
+                            data: [watchedVideoPercentage, notWatchedVideoPercentage],
+                            backgroundColor: [
+                            'rgb(80, 209, 29)',
+                            'rgb(212, 222, 209)'
+                            ],
+                            hoverOffset: 1
+                        }]
+                        };
+                        
+                        const config = {
+                        type: 'doughnut',
+                        data: data,
+                        options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+        };
+
+        const myChart = new Chart(
+        document.getElementById('watchedvideopercentage'),
+        config
+        );
+        }
         function progreceGraph(result){
            
             var TimeSpent=result.time_spent;
@@ -984,49 +911,7 @@
             $("#totaltime").html(result.mcq_performance.total_duration);
         }
 
-        // function progreceGraph(result) {
-        //     let not_watched_percentage = result.subject_progress.not_watched_percentage;
-        //     let watched_percentage = result.subject_progress.watched_percentage;
-        //     let total_video = not_watched_percentage + watched_percentage;
-        //     var total = result.subject_progress.total;
-        //     let circularProgressOne = document.querySelector(".circular-progress-one"),
-        //         progressValueOne = document.querySelector(".progress-value-one");
-
-        //     let progressStartValueOne = 0,
-        //         progressEndValueOne = total,
-        //         speedOne = 100;
-
-        //     let progessOne = setInterval(() => {
-        //         progressStartValueOne++;
-
-        //         progressValueOne.textContent = `${result.subject_progress.not_watched_percentage}/${total_video}`
-        //         circularProgressOne.style.background =
-        //             `conic-gradient(#36b872 ${progressStartValueOne * 3.6}deg, #ededed 0deg)`
-
-        //         if (progressStartValueOne == progressEndValueOne) {
-        //             clearInterval(progessOne);
-        //         }
-        //     })
-
-        //     let circularProgress = document.querySelector(".circular-progress-two"),
-        //         progressValue = document.querySelector(".progress-value-two");
-
-        //     let progressStartValue = 0,
-        //         progressEndValue = result.subject_progress.watched_percentage,
-        //         speed = 100;
-
-        //     let progess = setInterval(() => {
-        //         progressStartValue++;
-
-        //         progressValue.textContent = `${progressStartValue}%`
-        //         circularProgress.style.background =
-        //             `conic-gradient(#36b872 ${progressStartValue * 3.6}deg, #ededed 0deg)`
-
-        //         if (progressStartValue == progressEndValue) {
-        //             clearInterval(progess);
-        //         }
-        //     })
-        // }
+       
 
         function dailyGraph(result) {
             var time_spent = result.time_spent;

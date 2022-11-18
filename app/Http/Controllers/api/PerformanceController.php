@@ -261,11 +261,11 @@ class PerformanceController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function allPerformanceBySubject(Request $request)
+    public function allPerformanceBySubject($subject_id)
     {
         try {
 
-            $subject_id = $_GET['id'];
+            $subject_id = $subject_id;
             $assign_subject = AssignSubject::find($subject_id);
             $total_video_count = 0;
             $total_watch_video_count = 0;
