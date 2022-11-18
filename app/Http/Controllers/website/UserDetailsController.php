@@ -71,7 +71,8 @@ class UserDetailsController extends Controller
         ]);
         $new_imgage_name = time().'-'.Auth::user()->lastname.Auth::user()->name.'.'.$image->extension();
         $image_path = $image->move(public_path('files/profile'), $new_imgage_name);
-        UserDetails::where('email', Auth::user()->email)->update(['image' => $image_path]);
+        $path_name = 'files/profile/' . $new_imgage_name;
+        UserDetails::where('email', Auth::user()->email)->update(['image' => $path_name]);
         return response()->json(['message' => 'Profile photo uploaded']);
     }
 

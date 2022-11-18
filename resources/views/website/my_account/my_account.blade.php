@@ -28,6 +28,7 @@
                         <div class="knowledge-pic">
 
                             @if ($user_details != null)
+                           
                             <img src="{{ asset('/files/profile/' . $user_details->image) }}"
                                 onerror="this.onerror=null;this.src='{{ asset('asset_website/img/noimage.png') }}';"
                                 style="border:3px solid white;" height="110px" width="110px" class="rounded-circle">
@@ -907,7 +908,7 @@
             
             $("#test_attempt").html(result.mcq_performance.test_attempted);
             $("#correct_answer").html(result.mcq_performance.total_correct);
-            $("#accuracy").html(result.mcq_performance.total_correct);
+            $("#accuracy").html(Math.round(result.mcq_performance.accuracy));
             $("#totaltime").html(result.mcq_performance.total_duration);
         }
 
