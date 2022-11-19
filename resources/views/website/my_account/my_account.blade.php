@@ -28,8 +28,8 @@
                         <div class="knowledge-pic">
 
                             @if ($user_details != null)
-                           
-                            <img src="{{ asset('/files/profile/' . $user_details->image) }}"
+
+                            <img src="{{ asset($user_details->image) }}"
                                 onerror="this.onerror=null;this.src='{{ asset('asset_website/img/noimage.png') }}';"
                                 style="border:3px solid white;" height="110px" width="110px" class="rounded-circle">
                             @else
@@ -303,7 +303,7 @@
 
                                             </div>
                                         </div>
-                                        
+
                                         @empty
                                         <tr>
                                             <div class="text-center">
@@ -351,7 +351,7 @@
                             <div class="col-lg-6 circular-right">
                                 <div class="d-flex progress-main">
                                     <canvas id="watchedvideopercentage"></canvas>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-8 mt-5">
@@ -379,7 +379,7 @@
                                     <div>
                                         <canvas id="myChart"></canvas>
                                     </div>
-                                 
+
                                 </div>
                             </div>
                             <div class="col-md-4 mt-5">
@@ -474,9 +474,8 @@
                                         <tr class="text-center">
                                             {{-- <th>Sl No.</th> --}}
                                             <th>Board Name</th>
-                                            <th>Subject</th>
                                             <th>Class Name</th>
-                                            <th>Subjects</th>
+                                            <th>Package Type</th>
                                             <th>Total Price</th>
                                             <th>Purchase Date</th>
                                             <th>E-Receipt</th>
@@ -488,7 +487,6 @@
                                         <tr class="text-center">
                                             {{-- <td>{{$key + 1}}</td> --}}
                                             <td>{{ $item->board->exam_board }}</td>
-                                            <td></td>
                                             <td>{{ $item->assignClass->class }}</td>
                                             <td>
                                                 @if ($item->is_full_course_selected == '1')
