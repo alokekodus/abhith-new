@@ -393,7 +393,7 @@ class SubjectController extends Controller
                             'original_video_path' => $topic->lessonAttachment->attachment_origin_url ?? null,
                             'video_size_480' => $topic->lessonAttachment->video_resize_480 ?? null,
                             'video_size_720' => $topic->lessonAttachment->video_resize_720 ?? null,
-                            'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
+                            'video_duration' => $topic->lessonAttachment->video_duration ?? "00:00:00",
                             'preview' => $topic->preview,
                             'purchase'=>subjectAlreadyPurchase($topic->assign_subject_id),
                         ];
@@ -412,7 +412,7 @@ class SubjectController extends Controller
                                     'original_video_path' => $sub_topic->lessonAttachment->attachment_origin_url ?? null,
                                     'video_size_480' => $sub_topic->lessonAttachment->video_resize_480 ?? null,
                                     'video_size_720' => $sub_topic->lessonAttachment->video_resize_720 ?? null,
-                                    'video_duration' => gmdate("H:i:s", $topic->lessonAttachment->video_duration) ?? "00:00:00",
+                                    'video_duration' => $topic->lessonAttachment->video_duration ?? "00:00:00",
                                     'preview' => $sub_topic->preview,
                                     'purchase'=>subjectAlreadyPurchase($sub_topic->assign_subject_id),
                                 ];
@@ -474,7 +474,7 @@ class SubjectController extends Controller
             $data = [
                 "code" => 400,
                 "status" => 0,
-                "message" => $th->getMessage(),
+                "message" => "Something want wrong.",
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
