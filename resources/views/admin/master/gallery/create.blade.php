@@ -10,10 +10,24 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 @section('title','Gallery')
 
 @section('content')
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-book"></i>
+        </span> Create Gallery
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ route('admin.get.gallery') }}" class="btn btn-gradient-primary btn-fw">All Gallery</a>
+
+            </li>
+        </ul>
+    </nav>
+</div>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Create Gallery</h4>
                 <form class="forms-sample" id="bannerForm" action="{{ route('admin.creating.subject') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf

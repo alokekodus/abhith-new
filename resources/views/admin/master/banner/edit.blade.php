@@ -11,89 +11,107 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 @section('title', 'Banner')
 
 @section('head')
-    <script src="{{ asset('asset_admin/ckeditor/ckeditor.js') }}"></script>
+<script src="{{ asset('asset_admin/ckeditor/ckeditor.js') }}"></script>
 
-    <link rel="stylesheet"
-        href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
+<link rel="stylesheet"
+    href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
+<link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
 @endsection
 
 @section('content')
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Edit Banner</h4>
-                <form class="forms-sample" id="bannerForm" action="{{ route('admin.editing.banner') }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="id" id="id" value="{{\Crypt::encrypt($banner->id)}}">
-                    <div class="form-group">
-                        <label for="exampleInputName1">Name</label>
-                        <input type="text" class="form-control" id="banner_name" value="{{ $banner->name }}" name="name" maxlength="20" placeholder="Enter Banner Name">
-                        <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
-                    </div>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-book"></i>
+        </span> Edit Banner
+    </h3>
+    <nav aria-label="breadcrumb p-2">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ route('admin.get.banner') }}" class="btn btn-gradient-primary btn-fw">All Banners</a>
+                {{-- <span></span>Overview <i
+                    class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i> --}}
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
 
-                    <div class="form-group">
-                        <label>File upload</label>
-                        <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
-                            data-max-files="1" required/>
-                    </div>
+            <form class="forms-sample" id="bannerForm" action="{{ route('admin.editing.banner') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="id" id="id" value="{{\Crypt::encrypt($banner->id)}}">
+                <div class="form-group">
+                    <label for="exampleInputName1">Name</label>
+                    <input type="text" class="form-control" id="banner_name" value="{{ $banner->name }}" name="name"
+                        maxlength="20" placeholder="Enter Banner Name">
+                    <span class="text-muted" style="font-size:12px;">Maximum allowed characters 20.</span>
+                </div>
 
-                    <div class="form-group">
-                        <label for="exampleTextarea1">Description</label>
-                        <textarea class="form-control"  name="description" maxlength="80" placeholder="Describe banner here" rows="4">{{ $banner->description }}</textarea>
-                        <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
-                    </div>
+                <div class="form-group">
+                    <label>File upload</label>
+                    <input type="file" class="filepond" name="pic" id="banner_pic" data-max-file-size="1MB"
+                        data-max-files="1" required />
+                </div>
 
-                    {{-- <div class="form-group">
-                        <label for="exampleSelectGender">Related to Course</label>
-                        <select class="form-control" id="related_course" required>
-                            <option value="" disabled selected>-- Select --</option>
-                            <option value="yes" @if ($banner->course_id!=null)
-                                selected
+                <div class="form-group">
+                    <label for="exampleTextarea1">Description</label>
+                    <textarea class="form-control" name="description" maxlength="80" placeholder="Describe banner here"
+                        rows="4">{{ $banner->description }}</textarea>
+                    <span class="text-muted" style="font-size:12px;">Maximum allowed characters 80.</span>
+                </div>
+
+                {{-- <div class="form-group">
+                    <label for="exampleSelectGender">Related to Course</label>
+                    <select class="form-control" id="related_course" required>
+                        <option value="" disabled selected>-- Select --</option>
+                        <option value="yes" @if ($banner->course_id!=null)
+                            selected
                             @endif>Yes</option>
-                            <option value="no"@if ($banner->course_id==null)
-                                selected
+                        <option value="no" @if ($banner->course_id==null)
+                            selected
                             @endif>No</option>
-                        </select>
-                    </div>
+                    </select>
+                </div>
 
-                    <div class="form-group" id="course_id" @if ($banner->course_id==null)
-                        style="display:none"
+                <div class="form-group" id="course_id" @if ($banner->course_id==null)
+                    style="display:none"
                     @endif>
-                        <label for="exampleSelectGender">Course</label>
-                        <select class="form-control" id="course_list" name="course_list" required>
-                            <option value="" disabled selected> -- Select Course --</option>
-                            @foreach ($course as $item)
-                                <option value="{{ $item->id }}" @if ($banner->course_id == $item->id)
-                                    selected
-                                @endif>{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
+                    <label for="exampleSelectGender">Course</label>
+                    <select class="form-control" id="course_list" name="course_list" required>
+                        <option value="" disabled selected> -- Select Course --</option>
+                        @foreach ($course as $item)
+                        <option value="{{ $item->id }}" @if ($banner->course_id == $item->id)
+                            selected
+                            @endif>{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div> --}}
 
-                    <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+            </form>
         </div>
     </div>
+</div>
 @endsection
 
 @section('scripts')
 
-    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
-    </script>
-    <script
-        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
-    </script>
-    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js">
+</script>
+<script
+    src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js">
+</script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 
 
-    <script>
-        // window.onload = function() {
+<script>
+    // window.onload = function() {
         //     CKEDITOR.replace('editor', {
         //         height: 200,
         //         filebrowserUploadMethod: 'form',
@@ -197,6 +215,6 @@ $course = Course::where('is_activate', Activation::Activate)->get();
             }
             // var firstDropVal = $('#pick').val();
         });
-    </script>
+</script>
 
 @endsection

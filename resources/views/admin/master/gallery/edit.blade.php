@@ -17,6 +17,21 @@ $course = Course::where('is_activate', Activation::Activate)->get();
 @endsection
 
 @section('content')
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-book"></i>
+        </span> Edit Gallery
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ route('admin.get.gallery') }}" class="btn btn-gradient-primary btn-fw">All Gallery</a>
+
+            </li>
+        </ul>
+    </nav>
+</div>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">

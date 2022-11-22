@@ -12,10 +12,24 @@
 @endsection
 
 @section('content')
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-book"></i>
+        </span> Edit Blog
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="{{ route('admin.get.blog.by.id') }}" class="btn btn-gradient-primary btn-fw">All Blogs</a>
+
+            </li>
+        </ul>
+    </nav>
+</div>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Edit Blog</h4>
                 <form class="forms-sample" id="bannerForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{\Crypt::encrypt($blog->id)}}">
