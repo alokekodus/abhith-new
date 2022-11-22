@@ -7,11 +7,21 @@
 @endsection
 
 @section('content')
+
 <section class="cart">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 text-center">
+                @if($carts->count()>0)
                 <h2 class="heading-black mb0">Cart({{$carts->count()}})</h2>
+                @else
+                <div class="text-center">
+                    <p>Oops! No items found.</p>
+                    <div class="shipping-div text-center"><a href="{{route('website.course')}}"
+                            class="shipping-btn">Continue
+                            shoping</a></div>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -39,13 +49,14 @@
                 <div class="coursePrice">
                     <h3><i class="fa fa-inr mr-2" aria-hidden="true"></i>{{$cart->assignSubject->sum('amount')}}</h3>
                 </div>
-                
+
             </div>
         </div>
-       
+
         <div class="subjectDetails mt-3">
             <p>Subjects</p>
-            <h5>@foreach($cart->assignSubject as $key=> $assign_subject) {{$assign_subject->subject->subject_name}} @if(($key+1)!==($cart->assignSubject->count())),
+            <h5>@foreach($cart->assignSubject as $key=> $assign_subject) {{$assign_subject->subject->subject_name}}
+                @if(($key+1)!==($cart->assignSubject->count())),
                 @endif @endforeach</h5>
         </div>
         <div class="way-to-cart d-flex">

@@ -325,6 +325,10 @@
                     </div>
                     <div class="tab-pane" id="myperformance" role="tabpanel">
                         <div class="row">
+                            <div class="col-lg-12 col-6">
+                                <h4 class="font-weight-bold">My Performance</h4>
+                            </div>
+                            @if($purchase_history->count()>0)
                             <div class="col-lg-6">
                                 <h2 class="font-weight-bold">My Performance</h2>
                             </div>
@@ -421,46 +425,18 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {{-- <span class="text">Based on video Watched</span> --}}
-                        {{-- <input type="text" data-plugin="knob" class="dial" data-width="150" data-height="250"
-                            data-fgColor="blue" value="50" data-max="100" data-skin="tron" data-readOnly=true
-                            data-thickness=".2" data-displayInput=false /> --}}
-                        {{-- <div class="col-lg-6">
-                            <input type="text" class="dial" value="93" data-width="125" data-height="125"
-                                data-thickness="0.25" data-fgcolor="#9C27B0"
-                                style="width: 66px; height: 41px; position: absolute; vertical-align: middle; margin-top: 41px; margin-left: -95px; border: 10px; background: none; font: bold 25px Arial; text-align: center; color: rgb(156, 39, 176); padding: 0px; appearance: none;"
-                                data-angleOffset="180">
-                        </div> --}}
-                        {{-- <input data-plugin="knob" class="dial" data-width="120" data-height="120"
-                            data-linecap=round data-fgColor="#2abfcc" value="20" data-max="100" data-skin="tron"
-                            data-angleOffset="180" data-readOnly=true data-thickness=".1" /> --}}
-                        {{-- <div class="skill">
-                            <div class="skill-outer">
-                                <div class="skill-inner">
-                                    <div id="skillNumber"></div>
+                            @else
+                            <div class="col-lg-12 mt-4">
+                                <div class="text-center">
+                                    <p>Oops! No performance details for display.</p>
+                                    <div class="shipping-div text-center"><a href="{{ route('website.course') }}"
+                                            class="shipping-btn">Continue
+                                            shoping</a></div>
                                 </div>
                             </div>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                                <defs>
-                                    <linearGradient id="GradientColor">
-                                        <stop offset="0%" stop-color="#e91e63" />
-                                        <stop offset="100%" stop-color="#673ab7" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="80" cy="80" r="70" />
-                            </svg>
-                        </div> --}}
-                        {{-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
-                            <defs>
-                                <linearGradient id="GradientColor">
-                                    <stop offset="0%" stop-color="#e91e63" />
-                                    <stop offset="100%" stop-color="#673ab7" />
-                                </linearGradient>
-                            </defs>
-                            <circle cx="80" cy="80" r="70" stroke-linecap="round" />
-                        </svg> --}}
+                            @endif
+                        </div>
                     </div>
                     <div class="tab-pane" id="purchase" role="tabpanel">
                         <div class="row">

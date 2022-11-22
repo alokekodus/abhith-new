@@ -26,6 +26,7 @@ class UserDetailsController extends Controller
             $purchase_history = Order::with('board','assignClass','assignSubject')->where('user_id',Auth::user()->id)->where('payment_status','paid')->orderBy('updated_at','DESC')->get();
          
         }
+        
         return view('website.my_account.my_account')->with(['user_details' => $user_details, 'purchase_history' => $purchase_history]);
     }
 
