@@ -75,6 +75,6 @@ class Kernel extends HttpKernel
         'revalidate' => \App\Http\Middleware\RevalidateBackHistory::class,
         'customRedirect' => \App\Http\Middleware\RedirectIfAuthenticatedCustom::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
-        'webSite' => \App\Http\Middleware\WebSite::class,
+        'web' => \App\Http\Middleware\WebSite::class,
     ];
 }

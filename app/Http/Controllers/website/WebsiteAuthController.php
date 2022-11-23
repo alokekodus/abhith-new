@@ -385,7 +385,7 @@ class WebsiteAuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+                return response()->json(['status' => 0, 'message' => $validator->errors()->toArray()]);
             }
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();

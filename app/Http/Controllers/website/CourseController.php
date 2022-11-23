@@ -30,14 +30,14 @@ class CourseController extends Controller
     {
         $class_id = null;
         $board_details = Board::where('is_activate', 1)->get();
-        $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('published', 1)->get();
+        $subject_details = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get();
 
         if ($request->has('assignedBoard') && $request->has('class_id')) {
             $class_id = $request->has('class_id');
-            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('assign_class_id', $request->class_id)->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published', 1)->get();
+            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('assign_class_id', $request->class_id)->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get();
         } elseif ($request->has('assignedBoard')) {
             $class_id = $request->has('class_id');
-            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published', 1)->get();
+            $subject_details =  AssignSubject::with('assignClass', 'boards')->where('board_id', $request->assignedBoard)->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get();
         }
 
 
