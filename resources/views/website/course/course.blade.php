@@ -103,6 +103,7 @@
                             <div class="col-lg-4 col-md-6">
                                 <label class="selectClass">Select Class</label>
                                 <select id="board-class-dd" class="form-control" name="class_id" required>
+                                       
                                 </select>
                             </div>
                             <div class="col-lg-4 col-md-12 py-4 submitBtn">
@@ -218,7 +219,7 @@
                 success: function(data) {
                     if (data.length > 0) {
                         $("#board-class-dd").prop("disabled", false);
-
+                        $('#board-class-dd').html('<option value="">Select Class</option>');
                         data.forEach((boardClass) => {
                             $("#board-class-dd").append('<option value="' + boardClass
                                 .id + '">' + 'Class-' + boardClass.class + '</option>');

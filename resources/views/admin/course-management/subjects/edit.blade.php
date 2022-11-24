@@ -132,7 +132,7 @@
     });
     $('#assignSubjectCancelBtn').on('click', function(){
             
-            $('#addSubject')[0].reset();
+        document.getElementById("addSubject").reset();
     });
 
     imageUpload.onchange = evt => {

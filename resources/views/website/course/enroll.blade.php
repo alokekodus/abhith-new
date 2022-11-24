@@ -278,28 +278,10 @@
     </div>
 </section>
 
-<section class="home-courses-enroll">
-    {{-- <div class="container-fluid">
-        <div class="row">
-            <div class="col-6">
 
-                <div class="icon-box">
-                    <i class="ri-anchor-line" style="color: #b2904f;"></i>
-                    <h3><a href="">ALL SUBJECTS</a></h3>
-                </div>
-
-            </div>
-            <div class="col-6">
-                <div class="icon-box">
-                    <i class="ri-anchor-line" style="color: #b2904f;"></i>
-                    <h3><a href="">CUSTOM PACKAGE</a></h3>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-</section>
 
 <section class="home-courses">
+    <h5 class="mb-4">Board : <b> {{$data['board']->exam_board}}</b> Class : <b>{{$data['assignclass']->class}} </b></h5>
     <form action="{{route('website.add-to-cart')}}" method="post">
         <input type="hidden" name="is_buy" value="0">
         <div class="container-fluid">

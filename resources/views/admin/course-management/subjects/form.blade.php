@@ -30,7 +30,14 @@
         </div>
     </div>
 </div>
-
+{{-- <div class="row">
+    <div class="form-group">
+        <label>Upload Subject Cover Picture</label>
+        <input type="file" class="filepond" name="image_url" id="imageUpload" data-max-file-size="1MB"
+            data-max-files="1" required />
+        <span id="imageUrlError"></span>
+    </div>
+</div> --}}
 <div class="row">
     <div class="col-6">
         <div class="form-group">

@@ -57,7 +57,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#account" role="tab"
-                                aria-controls="account">Account</a>
+                                aria-controls="account">Change Password</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#mycourses" role="tab"

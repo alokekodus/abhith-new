@@ -21,7 +21,8 @@
     <div class="card">
         <div class="card-body">
             <div>
-                <form id="assignLessonForm" enctype="multipart/form-data" method="post" action="{{route('admin.course.management.lesson.store')}}">
+                <form id="assignLessonForm" enctype="multipart/form-data" method="post"
+                    action="{{route('admin.course.management.lesson.store')}}">
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -39,7 +40,8 @@
                     </div>
 
                     <div style="float: right;">
-                        <button type="button" class="btn btn-gradient-light btn-fw" id="assignLessonCancelBtn">Cancel</button>
+                        <button type="button" class="btn btn-gradient-light btn-fw"
+                            id="assignLessonCancelBtn">Cancel</button>
                         <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type"
                             value="lesson-create">Update</button>
                     </div>
@@ -58,7 +60,6 @@
 @section('scripts')
 
 <script>
-   
     $(document).ready(function () {
         $('#lessonTable').DataTable({
             "processing": true,
@@ -84,6 +85,11 @@
 
    
 
+</script>
+<script>
+    $('#assignLessonCancelBtn').on('click', function() {
+            document.getElementById("assignLessonForm").reset();
+        });
 </script>
 
 @endsection

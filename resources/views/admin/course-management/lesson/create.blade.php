@@ -42,7 +42,7 @@
                         </div>
 
                         <div style="float: right;">
-                            <input  type="button" value="Reset" onClick="resetLesson()" class="btn btn-md btn-default" id="assignLessonCancelBtn">
+                            <input  type="button" value="Reset"  class="btn btn-gradient-light btn-fw" id="assignLessonCancelBtn">
                             <button type="submit" class="btn btn-md btn-success" id="assignLessonSubmitBtn" name="type"
                                 value="lesson-create">Submit</button>
                         </div>
@@ -138,9 +138,9 @@
         })
     </script>
     <script>
-      function  resetLesson(){
-        document.getElementById("assignLessonForm").reset();
-      }
+     $('#assignLessonCancelBtn').on('click', function() {
+            document.getElementById("assignLessonForm").reset();
+        });
         </script>
 
 @endsection

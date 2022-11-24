@@ -39,7 +39,7 @@
                             @include('admin.course-management.lesson.common.form')
                             <div style="float: right;">
                                 <button type="button" class="btn btn-gradient-light btn-fw"
-                                    id="assignTopicCancelBtn" onclick="window.history.back();">Cancel</button>
+                                    id="assignTopicCancelBtn">Cancel</button>
                                 <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn"
                                     name="type" value="create-topic">Submit</button>
                             </div>
@@ -158,13 +158,10 @@
    }
    
  }
-    //For hiding modal
-    $('#assignTopicCancelBtn').on('click', function () {
-        $('#assignLessonModal').modal('hide');
-        $('#assignTopicForm')[0].reset();
 
-
-    });
+    $('#assignTopicCancelBtn').on('click', function() {
+            document.getElementById("assignTopicForm").reset();
+        });
     //count video duration
     var myVideos = [];
 
