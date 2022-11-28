@@ -472,7 +472,8 @@
                                                 @endif
                                             </td>
 
-                                            <td>{{ number_format($item->assignClass->subjects->sum('subject_amount') ??
+                                            <td>{{
+                                                number_format($item->assignSubject->sum('amount')??
                                                 '00', 2, '.', '') }}
                                             </td>
                                             <td>{{ $item->updated_at->format('d-M-Y') }}</td>
