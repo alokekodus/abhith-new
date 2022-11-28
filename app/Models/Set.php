@@ -29,4 +29,7 @@ class Set extends Model
     public function question(){
         return $this->hasMany(Question::class);
     }
+    public function activequestion(){
+        return $this->hasMany(Question::class)->where('is_activate',1);  
+    }
 }

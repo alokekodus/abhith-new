@@ -64,7 +64,7 @@ class SubjectController extends Controller
     {
         try {
             $set_id = Crypt::decrypt($set_id);
-            $set = Set::with('question')->where('id', $set_id)->first();
+            $set = Set::with('activequestion')->where('id', $set_id)->first();
             $total_question = $set->question->count();
             $start = true;
 

@@ -198,7 +198,7 @@
                             <div class="mcq-content">
                                 <h5><a href="{{ route('website.subject.mcqstart', Crypt::encrypt($set->id)) }}"
                                         target="_blank">{{ $set->set_name }} </a></h5>
-                                <h6>{{ $set->question->count() }} Questions</h6>
+                                <h6>{{ $set->question->where('is_activate',1)->count() }} Questions</h6>
                                 <p>{{ dateFormat($set->created_at, 'D ,F j, Y') }}</p>
                             </div>
                             @if(isPracticeTestPlayed($set->id)==1)

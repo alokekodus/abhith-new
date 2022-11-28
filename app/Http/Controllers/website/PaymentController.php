@@ -63,6 +63,7 @@ class PaymentController extends Controller
                         'assign_class_id' => $cart->assign_class_id,
                         'rzp_order_id' => $razorpayOrder['id'],
                         'payment_status' => 'pending',
+                        'is_full_course_selected'=>$cart->is_full_course_selected,
                         'order_no'=>orderNo()
                     ]);
                 
@@ -105,11 +106,12 @@ class PaymentController extends Controller
 
                         $cart_assign_subjects = $cart->assignSubject;
                         foreach ($cart_assign_subjects as $key => $cart_assign_subject) {
-                            if(subjectStatus($cart_assign_subject->assign_subject_id)==3){
-                                $cart_assign_subject_update = $cart_assign_subject->update(['order_id' => $item->id]);
-                            }else{
-                                $cart_assign_subject_update =$cart_assign_subject->delete();
-                            }
+                            $cart_assign_subject_update = $cart_assign_subject->update(['order_id' => $item->id]);
+                            // if(subjectStatus($cart_assign_subject->assign_subject_id)==3){
+                            //     $cart_assign_subject_update = $cart_assign_subject->update(['order_id' => $item->id]);
+                            // }else{
+                            //     $cart_assign_subject_update =$cart_assign_subject->delete();
+                            // }
                             
                         }
                     }
