@@ -50,6 +50,8 @@
                         </a>
                         @endauth
                         &nbsp;&nbsp;&nbsp;&nbsp;<a type="button" class="btn btn-default"  data-toggle="dropdown"> <span style="font-size: 15px;"><i class="fa fa-share" aria-hidden="true" ></i> &nbsp; Share</span></a>
+
+                        <span class="badge badge-success mb-3">{{ $blog->category }}</span>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-item social-link-btn">
                                 <a href="#" id="facebookLink" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true" style="color:#1877f2;font-size: 20px;margin-top:10px;"></i></a>&nbsp;&nbsp;&nbsp;

@@ -68,6 +68,7 @@
                                             <div class="block-ellipsis1">
                                                 <h4 class="small-heading-black">
                                                     {!! Illuminate\Support\Str::limit(strip_tags($item->name), $limit = 100, $end = '...') !!}</h4>
+                                                    <span class="badge badge-success mb-3">{{ $item->category }}</span>
                                             </div>
                                             <div class="block-ellipsis2 ">
                                                 {!! Illuminate\Support\Str::limit(strip_tags($item->blog), $limit = 100, $end = '...') !!}
