@@ -39,7 +39,7 @@
                             @include('admin.course-management.lesson.common.form')
                             <div style="float: right;">
                                 <button type="button" class="btn btn-gradient-light btn-fw"
-                                    id="assignTopicCancelBtn">Cancel</button>
+                                    id="assignTopicCancelBtn" onclick="window.history.go(-1);">Cancel</button>
                                 <button type="submit" class="btn btn-md btn-success" id="assignTopicSubmitBtn"
                                     name="type" value="create-topic">Submit</button>
                             </div>

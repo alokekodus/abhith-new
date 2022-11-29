@@ -4,12 +4,13 @@
 
 @section('content')
 <div class="page-header">
-    <h3 class="page-title">
+    <h3 class="page-title" style="width: 50%">
         <span class="page-title-icon bg-gradient-primary text-white mr-2">
             <i class="mdi mdi-bulletin-board"></i>
-        </span> Multiple Choice Questions For - <q><cite> {{$details[0]['set']['set_name']}}
+        </span> Multiple Choice Questions For <br> <q class="ml-5"> - <cite> {{$details[0]['set']['set_name']}}
     </h3>
-    <nav aria-label="breadcrumb">
+    
+    <nav aria-label="breadcrumb" style="width: 50%">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.course.management.subject.all')}}">Subject</a></li>
             <li class="breadcrumb-item" aria-current="page"><a href="{{route('admin.course.management.lesson.create',Crypt::encrypt($lesson->assignSubject->id))}}">{{$lesson->assignSubject->subject_name}}</a></li>
