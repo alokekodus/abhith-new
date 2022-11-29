@@ -126,6 +126,7 @@ class UserController extends Controller
                 ->where('user_id', auth()->user()->id)
                 ->where('is_paid', 1)
                 ->where('is_remove_from_cart', 1)
+                ->orderBy('updated_at','DESC')
                 ->get();
 
             if (!$carts->isEmpty()) {
