@@ -183,11 +183,11 @@ class CourseController extends Controller
             $query->with('lessonAttachment');
         }, 'subjectAttachment', 'assignClass', 'boards'])->where('id', $subject_id)->first();
         $lesson = $subject->lesson->first();
-        $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->where('assign_subject_id', $subject_id)->get();
-        $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->where('assign_subject_id', $subject_id)->get();
-        $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->where('assign_subject_id', $subject_id)->get();
+        $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->where('assign_subject_id', $subject_id)->where('status',1)->get();
+        $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->where('assign_subject_id', $subject_id)->where('status',1)->get();
+        $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->where('assign_subject_id', $subject_id)->where('status',1)->get();
         $mcq_questions = Lesson::with('Sets')->where('id', $lesson->id)->where('assign_subject_id', $subject_id)->first();
-        $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id', null)->orderBy('id')->where('assign_subject_id', $subject_id)->first();
+        $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id', null)->orderBy('id')->where('assign_subject_id', $subject_id)->where('status',1)->first();
         if ($next_lesson_id == null) {
             $next_lesson_id = false;
         } else {
@@ -210,9 +210,9 @@ class CourseController extends Controller
             } else {
                 $lesson = Lesson::where('id', '>', $lesson->id)->where('assign_subject_id', $lesson->assign_subject_id)->where('parent_id', null)->orderBy('id')->first();
             }
-            $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->where('assign_subject_id', $lesson->assign_subject_id)->get();
-            $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->where('assign_subject_id', $lesson->assign_subject_id)->get();
-            $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->where('assign_subject_id', $lesson->assign_subject_id)->get();
+            $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->where('assign_subject_id', $lesson->assign_subject_id)->where('status',1)->get();
+            $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->where('assign_subject_id', $lesson->assign_subject_id)->where('status',1)->get();
+            $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->where('assign_subject_id', $lesson->assign_subject_id)->where('status',1)->get();
             $mcq_questions = Lesson::with('Sets')->where('id', $lesson->id)->where('assign_subject_id', $lesson->assign_subject_id)->first();
             $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id', null)->where('assign_subject_id', $lesson->assign_subject_id)->orderBy('id')->first();
 

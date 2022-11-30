@@ -64,6 +64,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        @if(auth()->check() && (subjectAlreadyPurchase($subject->id)==1))
                         <div class="container p-2">
 
                             <div class="form-group">
@@ -72,7 +73,7 @@
                             </div>
                             <button class="btn btn-success btn-lg btn-block">Post Review</button>
                         </div>
-
+                        @endif
 
                     </div>
                 </div>
@@ -223,7 +224,8 @@
                         class="enroll">View Details</a> --}}
 
                     @if(auth()->check() && (subjectAlreadyPurchase($subject->id)==1))
-                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}" target="_blank"
+                    <a href="{{route('website.course.package.subject.detatils',Crypt::encrypt($subject->id))}}"
+                        target="_blank"
                         class="btn btn-primary btn-lg btn-block mt-2 course-details-start-course-btn">Start Your
                         Course</a>
                     @else
