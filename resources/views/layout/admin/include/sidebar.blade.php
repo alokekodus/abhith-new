@@ -119,6 +119,8 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.get.enrolled.students')}}">Enrolled</a></li>
+                    <li class="nav-item"> <a class="nav-link"
+                            href="{{route('admin.get.enrolled.pending')}}">Enrolled Pending</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.registered.students')}}">All
                             Registered
                             Student</a></li>
