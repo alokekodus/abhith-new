@@ -20,6 +20,7 @@ use App\Http\Controllers\website\RazorpayPaymentController;
 use App\Http\Controllers\website\PaymentController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\api\PerformanceController;
+use App\Http\Controllers\website\ContactController;
 use App\Http\Controllers\website\SubjectController;
 use App\Http\Controllers\website\UserCourseController;
 use App\Http\Middleware\WebSite;
@@ -171,7 +172,11 @@ Route::view('website/faq', 'website.docs.faq')->name('website.faq');
 Route::view('website/privacy-policy', 'website.docs.privacy')->name('website.privacy');
 Route::view('website/terms-and-conditions', 'website.docs.terms')->name('website.terms');
 Route::view('website/refund-and-cancellation-policy', 'website.docs.refund')->name('website.refund');
-
+//contact details
+Route::prefix('contact')->group(function () {
+    Route::post('save-contact-details', [ContactController::class, 'saveContactDetails'])->name('admin.get.contactus.details');
+    
+});
 
 
 /* --------------------------------------- View -> Become A Teacher ------------------------------------------------------------ */

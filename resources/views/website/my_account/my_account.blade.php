@@ -307,11 +307,10 @@
                                         @empty
                                         <tr>
                                             <div class="text-center">
-                                                <p>Oops! No items purchased yet.</p>
+                                                <p>Oops !! No Courses Purchased yet !!</p>
                                                 <div class="shipping-div text-center"><a
                                                         href="{{ route('website.course') }}"
-                                                        class="shipping-btn">Continue
-                                                        shoping</a></div>
+                                                        class="shipping-btn">Continue Enrolling</a></div>
                                             </div>
                                         </tr>
                                         @endforelse

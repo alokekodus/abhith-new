@@ -133,6 +133,11 @@
                     Details</span>
                 <i class="mdi mdi-account-network menu-icon"></i></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('website.get.contact.details')}}"><span class="menu-title">Contact
+                    Us</span>
+                <i class="mdi mdi-account-network menu-icon"></i></a>
+        </li>
         <li class="nav-item {{ (request()->routeIs('admin.create.time.table')) ? 'active' : '' }}">
             <a class="nav-link" href="{{route('admin.view.time.table')}}"><span class="menu-title">Time-Table</span>
                 <i class="mdi  mdi-calendar-clock menu-icon"></i></a>
