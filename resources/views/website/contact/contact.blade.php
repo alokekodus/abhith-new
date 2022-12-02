@@ -98,7 +98,7 @@
                 btn.attr('disabled', true);
 
                 $.ajax({
-                    url: "{{ route('website.save.enquiry.details') }}",
+                    url: "{{ route('website.save.contact.details') }}",
                     type: 'POST',
                     processData: false,
                     contentType: false,

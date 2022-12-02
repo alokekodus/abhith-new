@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class EnquiryController extends Controller
 {
     public function getEnquiryDetails(Request $request){
-        $details = Enquiry::orderBy('created_at','desc')->get();
+        $details = Enquiry::orderBy('created_at','desc')->where('type',1)->get();
         return view('admin.enquiry.enquiry')->with('details',$details);
     }
 
@@ -26,7 +26,8 @@ class EnquiryController extends Controller
             'email' => $email,
             'message' => $message,
             'date_of_enquiry' => date('Y-m-d'),
-            'marked_as_contacted' => 0
+            'marked_as_contacted' => 0,
+            'type'=>1,
         ]);
         if($create){
             return response()->json(['status' => 1, 'message' => 'Thank you for contacting us. Our customer support will contact you shortly.']);

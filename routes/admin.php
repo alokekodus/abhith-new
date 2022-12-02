@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\admin\LessonController;
 use App\Http\Controllers\teacher\TeacherController;
+use App\Http\Controllers\website\ContactController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\AssignSubject;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -204,6 +205,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('mark-enquiry', [EnquiryController::class, 'markEnquiry'])->name('admin.mark.enquiry');
     });
 
+    Route::prefix('contact')->group(function () {
+        Route::get('get-contact-details', [ContactController::class, 'getContactDetails'])->name('website.get.contact.details');
+        
+    });
 
     /* ------------------------------- Time Table ------------------------------------ */
     Route::prefix('time-table')->group(function () {

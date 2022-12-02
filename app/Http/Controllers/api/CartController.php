@@ -201,8 +201,27 @@ class CartController extends Controller
                 ->first();
                 
             if (!$cart == null) {
-                $cart_total_amount = $cart->assignSubject->sum("amount");
-                 
+                $cart_total_amount = totalAmountCart($cart->id);
+                $cart_subjects=[];
+                foreach($cart->assignSubject as $key=>$assign_subject){
+                    $is_available=0;
+                    if(subjectStatus($assign_subject->subject->id)==3){
+                        $is_available=1;
+                    }
+
+                    $data = [
+                       'id'=>$assign_subject->id,
+                       'cart_id'=>$assign_subject->cart_id,
+                       'assign_subject_id'=>$assign_subject->subject->id,
+                       'amount'=>$assign_subject->amount,
+                       'subject_name'=>$assign_subject->subject->subject_name,
+                       'image'=>$assign_subject->subject->image,
+                       'is_available'=>$is_available,
+                       
+                    ];
+                    $cart_subjects[]=$data;
+                }
+
                 $cart_details = [
                     'id' => $cart->id,
                     'user_id' => $cart->user_id,
@@ -210,7 +229,7 @@ class CartController extends Controller
                     'board' => $cart->board->exam_board,
                     'class_name' => $cart->assignClass->class,
                     'total_amount' => $cart_total_amount,
-                    'cart_subject_details' => $cart->assignSubject,
+                    'cart_subject_details' => $cart_subjects,
 
                 ];
 

@@ -307,11 +307,10 @@
                                         @empty
                                         <tr>
                                             <div class="text-center">
-                                                <p>Oops! No items purchased yet.</p>
+                                                <p>Oops !! No Courses Purchased yet !!</p>
                                                 <div class="shipping-div text-center"><a
                                                         href="{{ route('website.course') }}"
-                                                        class="shipping-btn">Continue
-                                                        shoping</a></div>
+                                                        class="shipping-btn">Continue Enrolling</a></div>
                                             </div>
                                         </tr>
                                         @endforelse
@@ -449,8 +448,8 @@
                                     <thead>
                                         <tr class="text-center">
                                             {{-- <th>Sl No.</th> --}}
-                                            <th>Board Name</th>
-                                            <th>Class Name</th>
+                                            <th>Board - Class</th>
+                                            <th>Subject(s) </th>
                                             <th>Package Type</th>
                                             <th>Total Price</th>
                                             <th>Purchase Date</th>
@@ -462,8 +461,8 @@
                                         @forelse ($purchase_history as $key => $item)
                                         <tr class="text-center">
                                             {{-- <td>{{$key + 1}}</td> --}}
-                                            <td>{{ $item->board->exam_board }}</td>
-                                            <td>{{ $item->assignClass->class }}</td>
+                                            <td>{{ $item->board->exam_board }} - Class {{ $item->assignClass->class }}</td>
+                                            <td style="text-align: left">@foreach ($item->assignSubject as $key=>$assign_subject) {{$key+1}}.{{$assign_subject->subject->subject_name??'NA'}} <br> @endforeach </td>
                                             <td>
                                                 @if ($item->is_full_course_selected == '1')
                                                 All Subjects
