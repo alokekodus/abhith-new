@@ -42,8 +42,8 @@
                             <tr>
                                 <th> # </th>
                                 <th> Name </th>
-                                <th> Phone </th>
-                                <th> Email </th>
+                                {{-- <th> Phone </th> --}}
+                                {{-- <th> Email </th> --}}
                                 <th> Message </th>
                                 <th> Date of Enquiry </th>
                                 <th>Status</th>
@@ -55,9 +55,9 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->phone }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ Str::limit($item->message, 20) }}</td>
+                                    {{-- <td>{{ $item->phone }}</td> --}}
+                                    {{-- <td>{{ $item->email }}</td> --}}
+                                    <td><p style="display: block; width: 200px; overflow-x:hidden">{{ $item->message }}</p></td>
                                     <td>{{ dateFormat($item->date_of_enquiry, 'd-m-Y') }}</td>
                                     <td>
 

@@ -328,7 +328,7 @@ class WebsiteAuthController extends Controller
                         }
                         if (auth()->user()->hasRole('Student')) {
 
-                            Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right"]);
+                            Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                             return redirect()->route('website.dashboard');
                         }
                     } else {
@@ -356,7 +356,7 @@ class WebsiteAuthController extends Controller
                 return response()->json(['message' => 'Loged out successfully.', 'status' => 1]);
             } else {
                 Auth::logout();
-                Toastr::success('Logged out successfully.', '', ["positionClass" => "toast-top-right"]);
+                Toastr::success('Logged out successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                 return redirect('');
             }
         } catch (\Throwable $th) {
