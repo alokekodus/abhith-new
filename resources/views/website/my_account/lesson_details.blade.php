@@ -57,19 +57,19 @@
             <h4 class="text-center"><b>{{$lesson->assignSubject->subject_name}}</b></h4>
             @if($topicVideos->count()>0)
             <button class="lessonLinks" onclick="openFile(event, 'videos')" id="defaultOpen">{{ $topicVideos->count() }}
-                Videos</button>
+                Video(s)</button>
             @endif
             @if($topicArticles->count()>0)
             <button class="lessonLinks" onclick="openFile(event, 'articles')"> {{ $topicArticles->count() }}
-                Articles</button>
+                Article(s)</button>
             @endif
             @if( $topicDocuments->count())
             <button class="lessonLinks" onclick="openFile(event, 'documents')">{{ $topicDocuments->count() }}
-                Documents</button>
+                Document(s)</button>
             @endif
             @if($mcq_questions->Sets()->count())
             <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{ $mcq_questions->Sets()->count() }}
-                MCQ Test</button>
+                MCQ Test(s)</button>
             @endif
         </div>
     </div>
@@ -98,7 +98,7 @@
             @if($topicVideos->count()>0)
             <div class="container lessonContent" id="videos">
                 <div class="topic-content-sub-heading mt-4">
-                    <h3>Videos</h3>
+                    <h3>Video(s)</h3>
                 </div>
                 <div class="row">
                     @if ($topicVideos->count() > 0)
@@ -126,7 +126,7 @@
             @if($topicArticles->count()>0)
             <div class="container lessonContent" id="articles">
                 <div class="topic-content-sub-heading mt-4">
-                    <h3>Articles</h3>
+                    <h3>Article(s)</h3>
                 </div>
                 <div class="row">
                     @if ($topicArticles->count() > 0)
@@ -155,7 +155,7 @@
             @if( $topicDocuments->count())
             <div class="container lessonContent" id="documents">
                 <div class="topic-content-sub-heading mt-4">
-                    <h3>Documents</h3>
+                    <h3>Document(s)</h3>
                 </div>
                 <div class="row">
                     @if ($topicDocuments->count() > 0)
@@ -185,7 +185,7 @@
             @if($mcq_questions->Sets()->count())
             <div class="container lessonContent" id="mcq_test">
                 <div class="topic-content-sub-heading mt-4">
-                    <h3>MCQ Test</h3>
+                    <h3>MCQ Test(s)</h3>
                 </div>
                 <div class="row">
                     @if ($mcq_questions->Sets()->count() > 0)

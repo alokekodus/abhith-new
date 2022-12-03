@@ -51,19 +51,19 @@
         // console.log(player.duration()); 
         player.updateSrc([
         {
-            src: 'http://localhost/abhith-new/public'+SD,
+            src: 'http://206.189.132.212/abhith-siksha/public/'+SD,
             type: 'video/mp4',
             res: 480,
             label: '480px'
         },
         {
-            src: 'http://localhost/abhith-new/public'+HD,
+            src: 'http://206.189.132.212/abhith-siksha/public/'+HD,
             type: 'video/mp4',
             res: 720,
             label: '720px'
         },
             {
-            src: 'http://localhost/abhith-new/public'+FULLHD,
+            src: 'http://206.189.132.212/abhith-siksha/public/'+FULLHD,
             type: 'video/mp4',
             res: 1080,
             label: '1080px'
