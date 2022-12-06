@@ -424,12 +424,26 @@
                     </div>
                     <div class="studentReview">
                         <p>
-                            {{$review->review??''}}
+                            {{$review->review??'No review found'}}
                         </p>
                     </div>
                 </div>
             </div>
             @endforeach
+
+        </div>
+    </div>
+</div>
+@else
+<div class="container-fluid mt-5" id="student-feedback">
+    <div class="row">
+        <div class="col-lg-8 col-md-12">
+
+            <h4>Students Reviews</h4>
+
+            <div class="d-md-flex mt-4">
+                <p>No review found</p>
+            </div>
 
         </div>
     </div>
