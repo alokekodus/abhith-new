@@ -32,7 +32,7 @@
                                 <td> {{ $reportedBlogs->firstItem() + $key }} </td>
                                 <td>
                                     <a href="{{ route('admin.get.blog.by.id',['id'=>\Crypt::encrypt($item->blogs_id)]) }}" target="_blank">
-                                        {!! Illuminate\Support\Str::limit(strip_tags($item->blogs->name), $limit = 50, $end = '...') !!}</td>
+                                        {!! Illuminate\Support\Str::limit(strip_tags($item->blogs->name??'..'), $limit = 50, $end = '...') !!}</td>
                                     </a>
                                 <td>{{ $item->report_count }}</td>
                                 <td>
