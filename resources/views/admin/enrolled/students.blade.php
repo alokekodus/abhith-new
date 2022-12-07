@@ -84,9 +84,9 @@
                             </td>
                             <td>
                                 @if ($item->payment_status == 'paid')
-                                <span style="color: green;">{{$item->payment_status}}</span>
+                                <span style="color: green; text-transform: capitalize">{{$item->payment_status}}</span>
                                 @else
-                                <span style="color: red;">{{$item->payment_status}}</span>
+                                <span style="color: red; text-transform: capitalize">{{$item->payment_status}}</span>
                                 @endif
                             </td>
                             <td>{{$item->updated_at->format('d-M-Y')}}</td>
