@@ -61,25 +61,25 @@
                 </ul>
             </div>
         </li>
+        {{-- course management sidebar --}}
         <li class="nav-item">
-            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
-                <span class="menu-title">Course Management</span>
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Course Managemen</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-            <div class="collapse" id="course-management">
+            <div @if(ifSubjectActive(Route::currentRouteName())==true||ifClassActive(Route::currentRouteName())==true||ifExamBoardActive(Route::currentRouteName())==true) class="collapse show" @else  class="collapse" @endif id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{route('admin.course.management.class.all')}}">Classes</a></li>
-                    <li class="nav-item"> <a class="nav-link"
-                            href="{{route('admin.course.management.subject.all')}}">Subjects</a></li>
-                    {{-- <li class="nav-item"> <a class="nav-link"
-                            href="{{route('admin.course.management.lesson.all')}}">Lesson</a></li> --}}
+
+                    <li @if(ifExamBoardActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifExamBoardActive(Route::currentRouteName())==true) class="nav-link active" @else class="nav-link" @endif href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>
+                    <li @if(ifClassActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifClassActive(Route::currentRouteName())==true) class="nav-link active" @else class="nav-link" @endif href="{{route('admin.course.management.class.all')}}">Classes</a></li>
+                    <li @if(ifSubjectActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifSubjectActive(Route::currentRouteName())==true) class="nav-link active" @else class="nav-link" @endif href="{{route('admin.course.management.subject.all')}}">Subjects</a></li>
+
                 </ul>
             </div>
         </li>
+
+        
         <li class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" href="#teacher-management" aria-expanded="false">
                 <span class="menu-title">Teacher</span>

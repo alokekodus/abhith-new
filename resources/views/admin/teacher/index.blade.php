@@ -70,8 +70,8 @@
                                     <td>{{ $item->name }}</td>
                                     {{-- <td>{{ $item->email }}</td>
                             <td>{{ $item->phone }}</td> --}}
-                                    <td>{{ $item->board->exam_board }} / Class{{ $item->assignClass->class }} /
-                                        {{ $item->assignSubject->subject_name ?? 'NA' }}</td>
+                                    <td>{{ $item->board->exam_board ??''}} / Class{{ $item->assignClass->class ??''}} /
+                                        {{ $item->assignSubject->subject_name ?? '' }}</td>
                                     <td>{{ $item->total_experience_year ?? '0' }}Years
                                         {{ $item->total_experience_month ?? '0' }}Months</td>
                                     <td>

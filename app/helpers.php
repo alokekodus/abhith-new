@@ -386,7 +386,22 @@ function ifGalleryActive($current_route)
 }
 function ifSubjectActive($current_route)
 {
-    if ($current_route == "admin.course.management.subject.all" || $current_route == "admin.course.management.subject.create" || $current_route == "admin.course.management.subject.edit" || $current_route == "admin.course.management.subject.store" || $current_route == "admin.course.management.subject.view" || $current_route == "admin.course.management.subject.assign" || $current_route == "admin.course.management.lesson.topic.display" || $current_route == "admin.published.subject" || $current_route == "admin.active.subject") {
+   
+    if ($current_route == "admin.course.management.subject.all" || $current_route == "admin.course.management.subject.create" || $current_route == "admin.course.management.subject.edit" || $current_route == "admin.course.management.subject.store" || $current_route == "admin.course.management.subject.view" || $current_route == "admin.course.management.subject.assign" || $current_route == "admin.course.management.lesson.topic.display" || $current_route == "admin.published.subject" || $current_route == "admin.active.subject" || $current_route =="admin.course.management.lesson.all" || $current_route =="admin.course.management.lesson.create" ||$current_route =="admin.course.management.lesson.topic.create"||$current_route =="admin.course.management.lesson.view" ||$current_route="admin.course.management.lesson.create" || $current_route="admin.course.management.lesson.create" ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function ifClassActive($current_route){
+    if ($current_route == "admin.course.management.class.all") {
+        return true;
+    } else {
+        return false;
+    }
+}
+function ifExamBoardActive($current_route){
+    if ($current_route == "admin.course.management.board.all") {
         return true;
     } else {
         return false;
