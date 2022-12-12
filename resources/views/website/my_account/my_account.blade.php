@@ -255,12 +255,12 @@
                                             <div class="col-lg-2 col-md-3">
                                                 @if ($item->board->logo == '')
                                                 <img src="{{ asset('asset_website/img/Image.png') }}"
-                                                    style="height: 125px; width:125px; object-fit:cover; border-radius:10px"
+                                                    style="width:100%; aspect-ratio: 1/1; object-fit:cover; border-radius:10px"
                                                     alt="">
 
                                                 @else
                                                 <img src="{{ asset($item->board->logo) }}"
-                                                    style="height: 125px; width:125px; object-fit:cover; border-radius:10px"
+                                                    style="width:100%; aspect-ratio: 1/1; object-fit:cover; border-radius:10px"
                                                     alt="">
 
                                                 @endif
