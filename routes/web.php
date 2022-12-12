@@ -174,7 +174,7 @@ Route::view('website/terms-and-conditions', 'website.docs.terms')->name('website
 Route::view('website/refund-and-cancellation-policy', 'website.docs.refund')->name('website.refund');
 //contact details
 Route::prefix('contact')->group(function () {
-    Route::post('save-contact-details', [ContactController::class, 'saveContactDetails'])->name('admin.get.contactus.details');
+    Route::post('save-contact-details', [ContactController::class, 'saveContactDetails'])->name('website.save.contact.details');
     
 });
 

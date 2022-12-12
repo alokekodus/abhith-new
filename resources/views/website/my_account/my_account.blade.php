@@ -295,7 +295,7 @@
                                                         </h5>
                                                     </div>
                                                     <div>
-                                                        <h6>Subjects</h6>
+                                                        <h6>Total Subject(s)</h6>
                                                         <h5 class="font-weight-bold text-center">
                                                             {{ $item->assignSubject->count() }}</h5>
                                                     </div>
