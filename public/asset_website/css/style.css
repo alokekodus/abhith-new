@@ -744,6 +744,7 @@ main {
     color: rgb(32, 32, 32);
     margin-bottom: 2px;
 }
+
 .course-desc .fa-inr{
     color: #07a807;
     font-weight: 600;
@@ -791,12 +792,14 @@ main {
 }
 
 .enroll {
-    position: absolute;
-    right: 15px;
+    /* position: absolute;
+    right: 15px; */
+    /* bottom: 10px; */
+    display: inline-block;
+    margin-top: 5px;
     font-weight: 600;
     background-image: linear-gradient(to left, #076fef, #01b9f1);
     padding: 10px;
-    bottom: 10px;
     color: #fff;
     border-radius: 5px;
     font-size: 14px;

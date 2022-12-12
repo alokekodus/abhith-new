@@ -222,10 +222,10 @@
                 success: function(data) {
                     console.log(data);
                     if (data.status == 0) {
-                        location.reload();
+                        // location.reload();
                         toastr.error(data.message);
                     } else {
-                        location.reload();
+                        // location.reload();
                         toastr.success(data.message);
                     }
                 }

@@ -164,8 +164,8 @@
                     <div class="card-body">
                         <blockquote class="blockquote blockquote-primary">
 
-                            <h4 class="card-title"> SUBJECT : {{$assign_orders[0]->subject->subject_name}} <span
-                                    style="float: right">STUDENT NAME: {{strtoupper($student->getFullName())}}</span>
+                            <h4 class="card-title"> Subject : {{$assign_orders[0]->subject->subject_name}} <span
+                                    style="float: right">Student Name: {{strtoupper($student->name)}}</span>
                             </h4>
                             <hr>
                             <h4 class="card-title text-primary">All Content</h4>
