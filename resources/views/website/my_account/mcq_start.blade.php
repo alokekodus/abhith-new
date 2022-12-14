@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="mcq-cross-icon">
-        <a onclick="mcqFinalSubmit()" type="button" class="btn">Submit Test</a>
+        <button onclick="mcqFinalSubmit()" type="button" class="btn" id="submit_test">Submit Test</button>
     </div>
 </div>
 <div class="container-fluid" id="mcq-question">
@@ -42,8 +42,10 @@
 </div>
 
 @endsection @section('scripts')
+
 <script>
     $(document).ready(function() {
+            $('#submit_test').prop('disabled', true);
             var page=1;
             var set_id=@json($set['id']);
             var last=@json($total_question);
@@ -56,10 +58,14 @@
 
     function nextQuestion(current_page) {
         var current_page=current_page;
-
-          var question_answer = $("input[name='question_option']:checked").val();
-
-
+        $('#submit_test').prop('disabled', false);
+        var question_answer = $("input[name='question_option']:checked").val();
+         
+        if(question_answer==undefined){
+            toastr.error('Please selete an answer first');
+        }else{
+             toastr.success('Answer submited successfully');
+        }
         var question_id=document.getElementById('question_id').value;
         var user_practice_test_store_id=$("#user_practice_test_store_id").val();
         var page=current_page+1;
@@ -70,7 +76,7 @@
         getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id,question_id);
     }
     function skipQuestion(current_page){
-
+        $('#submit_test').prop('disabled', false);
         var current_page=current_page;
         var page=current_page+1;
         var set_id=@json($set['id']);
@@ -112,9 +118,10 @@
 
                         },
                      success: function( response ) {
-                        console.log(response);
+                       
                             var code=response.result.code;
                             var result=response.result.result;
+                          
 
                     if(code==200){
                                 var question_option=result.mcq_question.options;
