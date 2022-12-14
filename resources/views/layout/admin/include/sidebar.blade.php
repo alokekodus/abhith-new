@@ -120,7 +120,7 @@
                     <li class="nav-item"> <a class="nav-link"
                             href="{{route('admin.get.enrolled.students')}}">Enrolled</a></li>
                     <li class="nav-item"> <a class="nav-link"
-                            href="{{route('admin.get.enrolled.pending')}}">Enrolled Pending</a></li>
+                            href="{{route('admin.get.enrolled.pending')}}">Enrollment Pending</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.registered.students')}}">All
                             Registered
                             Student</a></li>

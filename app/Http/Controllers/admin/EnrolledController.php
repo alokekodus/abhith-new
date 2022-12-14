@@ -10,7 +10,7 @@ use App\Models\User;
 class EnrolledController extends Controller
 {
     public function getEnrolledStudents(){       
-        $stu_details = Order::with('board','assignClass','assignSubject','user')->orderBy('created_at','DESC')->get();
+        $stu_details = Order::with('board','assignClass','assignSubject','user')->where('payment_status', 'paid')->orderBy('created_at','DESC')->get();
         return view('admin.enrolled.students')->with('details', $stu_details);
     }
 
