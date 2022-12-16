@@ -65,7 +65,7 @@ class SubjectController extends Controller
         try {
             $set_id = Crypt::decrypt($set_id);
             $set = Set::with('activequestion')->where('id', $set_id)->first();
-            $total_question = $set->question->count();
+            $total_question = $set->activequestion->count();
             $start = true;
 
             return view('website.my_account.mcq_start', compact('set', 'start', 'total_question'));

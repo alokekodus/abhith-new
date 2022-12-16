@@ -16,6 +16,7 @@ class AuthController extends Controller
   protected function customLogin(Request $request)
   {
     try {
+      
     
         $request->validate([
           'email' => 'required',

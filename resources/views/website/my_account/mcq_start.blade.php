@@ -45,6 +45,7 @@
 
 <script>
     $(document).ready(function() {
+        
             $('#submit_test').prop('disabled', true);
             var page=1;
             var set_id=@json($set['id']);

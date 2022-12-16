@@ -326,10 +326,12 @@ class WebsiteAuthController extends Controller
                         if (auth()->user()->hasRole('Teacher')) {
                             return redirect()->route('admin.dashboard');
                         }
-                        if (auth()->user()->hasRole('Student')) {
+                        elseif (auth()->user()->hasRole('Student')) {
 
                             Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                             return redirect()->route('website.dashboard');
+                        }else{
+                            return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
                         }
                     } else {
                         return redirect($request->current_route);
