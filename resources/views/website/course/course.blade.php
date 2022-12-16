@@ -91,7 +91,7 @@
                                 <label>Select Board</label>
                                 <select name="assignedBoard" id="assignedBoard" class="form-control"
                                     onchange="changeBoard()" required>
-                                    <option value="">-- Select -- </option>
+                                    <option value="">Select Board </option>
                                     @forelse ($boards as $item)
                                         <option value="{{ $item->id }}">
                                             {{ $item->exam_board }}</option>

@@ -48,7 +48,7 @@ Route::prefix('course')->group(function () {
     Route::post('package', [CourseController::class, 'coursePackageFilter'])->name('website.course.package.filter');
     Route::get('lesson/{lesson_id}/{type}',[CourseController::class, 'getLessonDetails'])->name('getLessonDetails');
     Route::middleware([WebSite::class])->any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
-    Route::get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
+    Route::middleware([WebSite::class])->get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
     Route::get('video/{id}', [CourseController::class, 'video'])->name('website.course.package.subject.video');
     Route::post('video/watch-time', [CourseController::class, 'LessonVideoWatchTime'])->name('website.course.package.subject.video.duration');
     Route::post('video/watch-time-update',[CourseController::class,'LessonVideoWatchTimeUpdate'])->name('website.course.package.subject.video.duration.update');
