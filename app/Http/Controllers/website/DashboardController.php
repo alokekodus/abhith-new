@@ -18,7 +18,6 @@ class DashboardController extends Controller
     //
     protected function index()
     {
-       
         
         $banner = Banner::where('is_activate', Activation::Activate)->take(6)->orderBy('id', 'DESC')->get();
         $blogs = Blog::where('is_activate', Activation::Activate)->take(3)->orderBy('id', 'DESC')->get();
