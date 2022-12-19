@@ -177,7 +177,7 @@ function otpSendForgotPassword($phone, $otp)
     $errorMessage = true;
 
     //Your message to send, Adding URL encoding.
-    $message = urlencode("<#> $otp is abhith Siksha verification code.");
+    $message = urlencode("<#> Use $otp as your verification code. The OTP expires within 10 mins. Do not share it with anyone. -regards Abhith Siksha");
     
     //Preparing post parameters
     $postData = array(

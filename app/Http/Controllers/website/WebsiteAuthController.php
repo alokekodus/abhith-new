@@ -223,12 +223,6 @@ class WebsiteAuthController extends Controller
                 ]);
             }
 
-
-
-
-
-
-
             $details = User::where('email', $request->email)->where('phone', $request->phone)->where('verify_otp', 1)->where('is_activate', 1)->first();
             
             if ($details==null) {
