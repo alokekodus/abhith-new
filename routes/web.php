@@ -46,25 +46,27 @@ Route::prefix('course')->group(function () {
     Route::get('', [CourseController::class, 'index'])->name('website.course');
     Route::get('details/{id}', [CourseController::class, 'details'])->name('website.course.details');
     Route::post('package', [CourseController::class, 'coursePackageFilter'])->name('website.course.package.filter');
-    Route::get('lesson/{lesson_id}/{type}',[CourseController::class, 'getLessonDetails'])->name('getLessonDetails');
+    Route::get('lesson/{lesson_id}/{type}', [CourseController::class, 'getLessonDetails'])->name('getLessonDetails');
     Route::group(['middleware' => WebSite::class], function () {
-    Route::any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
-    Route::get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
-    Route::get('video/{id}', [CourseController::class, 'video'])->name('website.course.package.subject.video');
-    Route::post('video/watch-time', [CourseController::class, 'LessonVideoWatchTime'])->name('website.course.package.subject.video.duration');
-    Route::post('video/watch-time-update',[CourseController::class,'LessonVideoWatchTimeUpdate'])->name('website.course.package.subject.video.duration.update');
+        Route::any('enroll/{subject_id}', [CourseController::class, 'enrollPackage'])->name('website.course.package.enroll.all');
+        Route::get('start/{subject_id}', [CourseController::class, 'subjectDetails'])->name('website.course.package.subject.detatils');
+        Route::get('video/{id}', [CourseController::class, 'video'])->name('website.course.package.subject.video');
+        Route::post('video/watch-time', [CourseController::class, 'LessonVideoWatchTime'])->name('website.course.package.subject.video.duration');
+        Route::post('video/watch-time-update', [CourseController::class, 'LessonVideoWatchTimeUpdate'])->name('website.course.package.subject.video.duration.update');
     });
 });
-Route::prefix('subject')->group(['middleware' => WebSite::class],function () {
-    Route::get('/{subject_id}', [SubjectController::class, 'subjectDetails'])->name('website.subject.detatils');
-    Route::prefix('mcq')->group(function () {
-        Route::get('/{set_id}', [SubjectController::class, 'mcqStart'])->name('website.subject.mcqstart');
-        Route::get('/get/report', [SubjectController::class, 'mcqResult'])->name('website.subject.mcqresult');
-        Route::get('/get/analysis/{id}', [SubjectController::class, 'mcqAnalysis'])->name('website.subject.analysis');
-        Route::post('/question',[SubjectController::class,'mcqGetQuestion'])->name('website.subject.mcqgetquestion');
-        Route::post('/final/submit',[SubjectController::class,'finalSubmit'])->name('website.subject.mcqSubmit');
+Route::group(['middleware' => WebSite::class], function(){
+    Route::prefix('subject')->group(function () {
+        Route::get('/{subject_id}', [SubjectController::class, 'subjectDetails'])->name('website.subject.detatils');
+        Route::prefix('mcq')->group(function () {
+            Route::get('/{set_id}', [SubjectController::class, 'mcqStart'])->name('website.subject.mcqstart');
+            Route::get('/get/report', [SubjectController::class, 'mcqResult'])->name('website.subject.mcqresult');
+            Route::get('/get/analysis/{id}', [SubjectController::class, 'mcqAnalysis'])->name('website.subject.analysis');
+            Route::post('/question', [SubjectController::class, 'mcqGetQuestion'])->name('website.subject.mcqgetquestion');
+            Route::post('/final/submit', [SubjectController::class, 'finalSubmit'])->name('website.subject.mcqSubmit');
+        });
+        Route::get('/topic/{topic_id}', [SubjectController::class, 'topicDetails'])->name('subject.topic.details');
     });
-    Route::get('/topic/{topic_id}',[SubjectController::class,'topicDetails'])->name('subject.topic.details');
 });
 
 /* ------------------------------- Blog ------------------------------------ */
@@ -144,7 +146,6 @@ Route::prefix('cart')->group(function () {
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('website.add-to-cart');
     Route::post('remove-from-cart', [CartController::class, 'removeFromCart'])->name('website.remove-from-cart');
     Route::get('remove-cart/{cart_id}', [CartController::class, 'removeCart'])->name('website.cart.remove');
-    
 });
 
 
@@ -165,7 +166,7 @@ Route::prefix('time-table')->group(function () {
 Route::view('about-us', 'website.about.about')->name('website.about');
 
 Route::view('contact', 'website.contact.contact')->name('website.contact');
-Route::get('website/login',[WebsiteAuthController::class,'viewLogin'])->name('website.login');
+Route::get('website/login', [WebsiteAuthController::class, 'viewLogin'])->name('website.login');
 Route::view('website/forgot-password', 'website.auth.forgot')->name('website.forgot.password');
 Route::view('website/new-password', 'website.auth.newpassword')->name('website.new.password');
 Route::view('admin/course/view', 'admin.course.view')->name('admin.course.view');
@@ -177,7 +178,6 @@ Route::view('website/refund-and-cancellation-policy', 'website.docs.refund')->na
 //contact details
 Route::prefix('contact')->group(function () {
     Route::post('save-contact-details', [ContactController::class, 'saveContactDetails'])->name('website.save.contact.details');
-    
 });
 
 
