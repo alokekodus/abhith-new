@@ -142,6 +142,12 @@
             <a class="nav-link" href="{{route('admin.view.time.table')}}"><span class="menu-title">Time-Table</span>
                 <i class="mdi  mdi-calendar-clock menu-icon"></i></a>
         </li>
+        
+        {{-- Testimonial --}}
+        <li class="nav-item {{ (request()->routeIs('admin.testimonial.index')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('admin.testimonial.index')}}"><span class="menu-title">Testimonial</span>
+                <i class="mdi  mdi-calendar-clock menu-icon"></i></a>
+        </li>
         @endif
     </ul>
 </nav>

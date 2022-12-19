@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\admin\LessonController;
 use App\Http\Controllers\teacher\TeacherController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\website\ContactController;
 use App\Http\Middleware\IsAdmin;
 use App\Models\AssignSubject;
@@ -217,6 +218,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('save-time-table', [TimeTableController::class, 'saveTimeTable'])->name('admin.save.time.table');
         Route::post('change-visibility-time-table', [TimeTableController::class, 'changeVisibility'])->name('admin.change.visibility.time.table');
     });
+
+        /* ------------------------------- Testimonial ------------------------------------ */
+        Route::prefix('testimonial')->group(function () {
+            Route::get('', [TestimonialController::class, 'index'])->name('admin.testimonial.index');
+            Route::get('add', [TestimonialController::class, 'add'])->name('admin.testimonial.add');
+            Route::post('submit', [TestimonialController::class, 'submit'])->name('admin.testimonial.submit');
+            Route::post('delete', [TestimonialController::class, 'delete'])->name('admin.testimonial.delete');
+        });
 });
 Route::get('course-management/subject/demovideo/{subject_id}', [SubjectController::class, 'getDemoVideo'])->name('admin.subject.promovideo');
 
