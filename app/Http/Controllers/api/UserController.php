@@ -19,14 +19,14 @@ class UserController extends Controller
     {
         try {
             $user_details = UserDetails::select('name', 'email', 'phone', 'education', 'gender', 'image', 'address')->where('email', auth()->user()->email)->first();
-            $cart= Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
-            ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
-            ->where('user_id', auth()->user()->id)
-            ->where('is_paid',0)
-            ->where('is_remove_from_cart',0)
-            ->where('is_buy',0)
-            ->get()->count();
-            $result = ["user_details" => $user_details,"cart_total_count"=>$cart];
+            $cart = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
+                ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
+                ->where('user_id', auth()->user()->id)
+                ->where('is_paid', 0)
+                ->where('is_remove_from_cart', 0)
+                ->where('is_buy', 0)
+                ->get()->count();
+            $result = ["user_details" => $user_details, "cart_total_count" => $cart];
             if (!$user_details = null) {
                 $data = [
                     "code" => 200,
@@ -126,12 +126,12 @@ class UserController extends Controller
                 ->where('user_id', auth()->user()->id)
                 ->where('is_paid', 1)
                 ->where('is_remove_from_cart', 1)
-                ->orderBy('updated_at','DESC')
+                ->orderBy('updated_at', 'DESC')
                 ->get();
 
             if (!$carts->isEmpty()) {
                 $all_courses = [];
-               
+
                 foreach ($carts as $key => $cart) {
                     $subject = [];
                     foreach ($cart->assignSubject as $key => $assign_subject) {
@@ -144,7 +144,7 @@ class UserController extends Controller
                         'user_id' => $cart->user_id,
                         'type' => $cart->is_full_course_selected,
                         'board' => $cart->board->exam_board,
-                        'board_logo'=>$cart->board->logo,
+                        'board_logo' => $cart->board->logo,
                         'class_name' => $cart->assignClass->class,
                         'total_subject' => $cart->assignSubject->count(),
                         'total_amount' => $cart->assignSubject->sum("amount"),
@@ -276,7 +276,7 @@ class UserController extends Controller
     }
     public function sendOtpForgotPassword(Request $request)
     {
-        
+
         try {
             $istype = $request->type;
             if ($istype == 1) {
@@ -308,12 +308,11 @@ class UserController extends Controller
 
                 ];
                 return response()->json(['status' => 0, 'result' => $data]);
-            }
-            else{
-                
-                $user = User::where('email',$request->email)->where('verify_otp', 1)->first();
-               
-                if ($user!=null) {
+            } else {
+
+                $user = User::where('email', $request->email)->where('verify_otp', 1)->first();
+
+                if ($user != null) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
                     $details = [
@@ -321,26 +320,24 @@ class UserController extends Controller
 
                     ];
                     return response()->json(['status' => 1, 'result' => $user->email]);
-                    $send_otp = Mail::to($user->email)->send(new OtpVerfication($details));
-                   
-                    if ($send_otp) {
-                        $data = [
-                            "user_id" => $user->id,
-                            "code" => 200,
-                            "message" => "Verification code send to your registered Email address.",
+                    Mail::to($request->email)->send(new OtpVerfication($details));
 
-                        ];
-                        return response()->json(['status' => 1, 'result' => $data]);
-                    }
-                }else{
+
+                    $data = [
+                        "user_id" => $user->id,
+                        "code" => 200,
+                        "message" => "Verification code send to your registered Email address.",
+
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                } else {
                     $data = [
                         "code" => 400,
                         "message" => "Record not found.",
-    
+
                     ];
                     return response()->json(['status' => 0, 'result' => $data]);
                 }
-               
             }
         } catch (\Throwable $th) {
             $data = [
@@ -364,32 +361,31 @@ class UserController extends Controller
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
 
-           
+
             if (checkemail($request->user_id)) {
                 $user = user::where('email', $request->user_id)->first();
             } else {
-                
+
                 $user = user::where('phone', $request->user_id)->first();
             }
-            
+
             if ($user) {
-                if($user->otp==$request->otp){
+                if ($user->otp == $request->otp) {
                     $data = [
                         "user_id" => $user->id,
                         "code" => 200,
                         "message" => "Account verified successfully please enter your new password.",
-    
+
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
-                }else{
+                } else {
                     $data = [
                         "code" => 400,
                         "message" => "OTP mismatch.",
-        
+
                     ];
                     return response()->json(['status' => 0, 'result' => $data]);
                 }
-               
             }
             $data = [
                 "code" => 400,
@@ -408,13 +404,13 @@ class UserController extends Controller
     }
     public function resetForgotPassword(Request $request)
     {
-       
-       
+
+
         try {
             if (checkemail($request->user_id)) {
                 $user = user::where('email', $request->user_id)->first();
             } else {
-                
+
                 $user = user::where('phone', $request->user_id)->first();
             }
             if (Hash::check($request->old_password, $user->password)) {
@@ -443,15 +439,15 @@ class UserController extends Controller
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
-        }  
-       
-       
-       
-       
-       
-       
-       
-       
+        }
+
+
+
+
+
+
+
+
         try {
             $user = User::find($request->user_id);
             if ($user) {
@@ -480,5 +476,4 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    
 }
