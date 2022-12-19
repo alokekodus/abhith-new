@@ -312,7 +312,7 @@ class UserController extends Controller
             else{
                 
                 $user = User::where('email',$request->email)->where('verify_otp', 1)->first();
-                return response()->json($user);
+               
                 if ($user!=null) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
