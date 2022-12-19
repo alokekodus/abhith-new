@@ -276,6 +276,7 @@ class UserController extends Controller
     }
     public function sendOtpForgotPassword(Request $request)
     {
+        return response()->json($request->all());
         try {
             $istype = $request->type;
             if ($istype == 1) {
