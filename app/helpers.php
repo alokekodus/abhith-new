@@ -177,9 +177,8 @@ function otpSendForgotPassword($phone, $otp)
     $errorMessage = true;
 
     //Your message to send, Adding URL encoding.
-    $message = urlencode("<#> Use $otp as your verification code.");
-
-
+    $message = urlencode("<#> $otp is abhith Siksha verification code.");
+    
     //Preparing post parameters
     $postData = array(
         'authkey' => '19403ARfxb6xCGLJ619221c6P15',

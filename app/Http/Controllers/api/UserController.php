@@ -284,8 +284,8 @@ class UserController extends Controller
                 if ($user) {
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
-                    $send_otp = otpSendForgotPassword($request->phone, $otp);
-                    if ($send_otp) {
+                    $otpsend = otpSendForgotPassword($request->phone, $otp);
+                   
                         $data = [
                             "user_id" => $user->id,
                             "otp" => $otp,
@@ -294,13 +294,8 @@ class UserController extends Controller
 
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
-                    }
-                    $data = [
-                        "code" => 400,
-                        "message" => "Something went wrong.",
-
-                    ];
-                    return response()->json(['status' => 0, 'result' => $data]);
+                    
+                   
                 }
                 $data = [
                     "code" => 400,
