@@ -321,7 +321,7 @@ class UserController extends Controller
 
                     ];
                     $send_otp = Mail::to($user->email)->send(new OtpVerfication($details));
-                   
+                    return response()->json(['status' => 1, 'result' => $send_otp]);
                     if ($send_otp) {
                         $data = [
                             "user_id" => $user->id,
@@ -331,13 +331,15 @@ class UserController extends Controller
                         ];
                         return response()->json(['status' => 1, 'result' => $data]);
                     }
+                }else{
+                    $data = [
+                        "code" => 400,
+                        "message" => "Record not found.",
+    
+                    ];
+                    return response()->json(['status' => 0, 'result' => $data]);
                 }
-                $data = [
-                    "code" => 400,
-                    "message" => "Record not found.",
-
-                ];
-                return response()->json(['status' => 0, 'result' => $data]);
+               
             }
         } catch (\Throwable $th) {
             $data = [
