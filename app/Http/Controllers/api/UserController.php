@@ -319,7 +319,7 @@ class UserController extends Controller
                         'otp' => $otp,
 
                     ];
-                    return response()->json(['status' => 1, 'result' => $user->email]);
+                   
                     Mail::to($request->email)->send(new OtpVerfication($details));
 
 
