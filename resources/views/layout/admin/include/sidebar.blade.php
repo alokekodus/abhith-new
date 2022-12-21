@@ -31,6 +31,13 @@
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('teacher.student.index')}}">
+                <span class="menu-title">My Students</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+        </li>
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
                 <span class="menu-title">Course Management</span>
