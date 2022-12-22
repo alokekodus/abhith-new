@@ -294,9 +294,9 @@
                                                             @endif
                                                         </h5>
                                                     </div>
-                                                    <div>
+                                                    <div style="width: 25%">
                                                         <h6>Total Subject(s)</h6>
-                                                        <h5 class="font-weight-bold text-center">
+                                                        <h5 class="font-weight-bold">
                                                             @foreach($item->assignSubject as $key=>$subject)
                                                             <a href="{{route('website.subject.detatils',Crypt::encrypt( $subject->subject->id))}}">{{$key+1}}. {{ $subject->subject->subject_name }}</a><br>
                                                             @endforeach
