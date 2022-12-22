@@ -297,7 +297,11 @@
                                                     <div>
                                                         <h6>Total Subject(s)</h6>
                                                         <h5 class="font-weight-bold text-center">
-                                                            {{ $item->assignSubject->count() }}</h5>
+                                                            @foreach($item->assignSubject as $key=>$subject)
+                                                            <a href="{{route('website.subject.detatils',Crypt::encrypt( $subject->subject->id))}}">{{$key+1}}. {{ $subject->subject->subject_name }}</a><br>
+                                                            @endforeach
+                                                            
+                                                        </h5>
                                                     </div>
                                                 </div>
 
@@ -461,8 +465,12 @@
                                         @forelse ($purchase_history as $key => $item)
                                         <tr class="text-center">
                                             {{-- <td>{{$key + 1}}</td> --}}
-                                            <td>{{ $item->board->exam_board }} - Class {{ $item->assignClass->class }}</td>
-                                            <td style="text-align: left">@foreach ($item->assignSubject as $key=>$assign_subject) {{$key+1}}.{{$assign_subject->subject->subject_name??'NA'}} <br> @endforeach </td>
+                                            <td>{{ $item->board->exam_board }} - Class {{ $item->assignClass->class }}
+                                            </td>
+                                            <td style="text-align: left">@foreach ($item->assignSubject as
+                                                $key=>$assign_subject)
+                                                {{$key+1}}.{{$assign_subject->subject->subject_name??'NA'}} <br>
+                                                @endforeach </td>
                                             <td>
                                                 @if ($item->is_full_course_selected == '1')
                                                 All Subjects

@@ -69,9 +69,20 @@
                                 <form class="row" id="signupForm">
                                     @csrf
                                     <div class="form-group col-lg-12">
+                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                        <label class="form-check-label" for="defaultCheck1">
+                                            I am above 18 years old.
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-lg-12" style="display: none">
+                                        <input type="text" class="form-control" name="parent_name"
+                                            placeholder="Parent Name" id="parentname" maxlength="50"
+                                            value="{{old('parentname')}}" required>
+                                        <span class="text-danger">@error('parentname'){{$message}}@enderror</span>
+                                    </div>
+                                    <div class="form-group col-lg-12">
                                         <input type="text" class="form-control" name="name" placeholder="Name" id="name"
-                                            maxlength="50" pattern="^([a-zA-Z]+)$" title="Please Enter Letters only."
-                                            value="{{old('fname')}}" required>
+                                            maxlength="50" value="{{old('name')}}" required>
                                         <span class="text-danger">@error('name'){{$message}}@enderror</span>
                                     </div>
 
@@ -141,16 +152,16 @@
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <input type="password" name="password" class="form-control"
-                                            placeholder="Password" id="pwd"  required>
+                                            placeholder="Password" id="pwd" required>
                                         <span class="text-danger">@error('password'){{$message}}@enderror</span>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <input type="password" name="password_confirmation" class="form-control"
-                                            placeholder="Confirm Password" id="confPwd"  required>
+                                            placeholder="Confirm Password" id="confPwd" required>
                                     </div>
                                     <div class="form-group mb0 col-lg-12">
-                                        <button type="submit" class="btn btn-block sign-btn" 
-                                            id="signupBtn">Sign up</button>
+                                        <button type="submit" class="btn btn-block sign-btn" id="signupBtn">Sign
+                                            up</button>
                                     </div>
                                 </form>
                             </div>
@@ -170,54 +181,55 @@
 
         let interval = '';
         let no_of_otp_sent = 0;
+        let no_of_phone_otp_sent=0;
         let nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
         let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         let phoneRegex = /(0|91)?[6-9][0-9]{9}/;
-   $("#sendEmailOtpBtn").on('click',function(){
-    if($('#signupEmail').val().length == 0){
-                toastr.error('Email is required');
-            }else{
-                if(no_of_otp_sent < 2){
-                    no_of_otp_sent += 1;
-                    var prefix=@json($prefix);
-                     if(prefix=="teacher"){
-                        var url="{{route('apiemailotpsend')}}";
-                     }else{
-                        var url="{{route('apiemailotpsend')}}";
-                     }
-                    $.ajax({
-                        url:url,
-                        type:'POST',
-                        data:{
-                            '_token': '{{ csrf_token() }}',  
-                            'email' : $('#signupEmail').val(),
-                        },
-                        success:function(data){
-                          
-                            if(data.result.code == 200){
-                                $('#sendEmailOtpBtn').attr('disabled',true); 
-                                $('#sendEmailOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
-                                $('#sendEmailOtpBtn').text('OTP Sent');
-                                $('.verify-email-otp-div').css('display','block');
-                               
-                                interval = setInterval(updateTimerPhone, 2000);
-                                toastr.success(data.result.message);
+        $("#sendEmailOtpBtn").on('click',function(){
+            if($('#signupEmail').val().length == 0){
+                        toastr.error('Email is required');
+                    }else{
+                        if(no_of_otp_sent < 2){
+                            no_of_otp_sent += 1;
+                            var prefix=@json($prefix);
+                            if(prefix=="teacher"){
+                                var url="{{route('apiemailotpsend')}}";
                             }else{
-                                toastr.error(data.result.message);
+                                var url="{{route('apiemailotpsend')}}";
                             }
-                        },
-                        error:function(xhr, status, error){
-                            if(xhr.status == 500 || xhr.status == 422){
-                                toastr.error('Whoops! Something went wrong while sending OTP');
-                            }
+                            $.ajax({
+                                url:url,
+                                type:'POST',
+                                data:{
+                                    '_token': '{{ csrf_token() }}',  
+                                    'email' : $('#signupEmail').val(),
+                                },
+                                success:function(data){
+                                
+                                    if(data.result.code == 200){
+                                        $('#sendEmailOtpBtn').attr('disabled',true); 
+                                        $('#sendEmailOtpBtn').css('background-image','linear-gradient(to left, #7d9fc9, #79adbd)'); 
+                                        $('#sendEmailOtpBtn').text('OTP Sent');
+                                        $('.verify-email-otp-div').css('display','block');
+                                    
+                                        interval = setInterval(updateTimerPhone, 2000);
+                                        toastr.success(data.result.message);
+                                    }else{
+                                        toastr.error(data.result.message);
+                                    }
+                                },
+                                error:function(xhr, status, error){
+                                    if(xhr.status == 500 || xhr.status == 422){
+                                        toastr.error('Whoops! Something went wrong while sending OTP');
+                                    }
+                                }
+                            });
+                        }else{
+                            $('#sendEmailOtpBtn').attr('disabled',true); 
+                            toastr.info('You have reached maximum attempts for sending otp. Please wait for 1 hour to resume the service. ');
                         }
-                    });
-                }else{
-                    $('#sendEmailOtpBtn').attr('disabled',true); 
-                    toastr.info('You have reached maximum attempts for sending otp. Please wait for 1 hour to resume the service. ');
-                }
-            }
-   });
+                    }
+        });
         $('#sendOtpBtn').on('click',function(e){
           
             e.preventDefault();
@@ -225,10 +237,10 @@
             if($('#phone').val().length < 10){
                 toastr.error('Phone number is required. Enter valid phone number');
             }else{
-                
+                let no_of_phone_otp_sent = 0; 
 
 
-                if(no_of_otp_sent < 2){
+                if(no_of_phone_otp_sent < 2){
                     no_of_otp_sent += 1;
                     var prefix=@json($prefix);
                     var url="{{route('apimobileotpsend')}}";
