@@ -318,7 +318,7 @@ class WebsiteAuthController extends Controller
 
                     if ($request->current_route == null) {
                         if (auth()->user()->hasRole('Teacher')) {
-                            return redirect()->route('admin.dashboard');
+                            return redirect()->route('teacher.dashboard');
                         }
                         elseif (auth()->user()->hasRole('Student')) {
 

@@ -13,7 +13,7 @@ Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp'])->name('te
 Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup'])->name('teacher.completeSignup');
 Route::post('login', [WebsiteAuthController::class, 'login'])->name('teacher.auth.login');
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('admin');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('teacher.dashboard')->middleware('admin');
     Route::prefix('apply')->group(function () {
         Route::post('/', [TeacherController::class, 'store'])->name('teacher.store');
         Route::get('/application',[TeacherController::class,'index'])->name('teacher.application');
