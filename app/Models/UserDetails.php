@@ -33,7 +33,11 @@ class UserDetails extends Model
         'teacherdemovideo_url',
         'address',
         'status',
-        'referral_id'
+        'referral_id',
+        'assign_board_id',
+        'assign_class_id',
+        'parent_name',
+        'is_above_eighteen'
     ];
 
 
