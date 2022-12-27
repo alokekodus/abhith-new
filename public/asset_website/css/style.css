@@ -1,5 +1,5 @@
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: #444444;
     font-size: 17px;
 }
@@ -7,7 +7,6 @@ body {
 a {
     color: #000;
     line-height: 18px;
-
 }
 
 a:hover {
@@ -21,9 +20,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
 }
-
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -55,7 +53,6 @@ h6 {
     color: #fff;
 }
 
-
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -76,11 +73,9 @@ h6 {
     }
 }
 
-
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
-
 
 /* Desktop Navigation */
 
@@ -110,7 +105,7 @@ h6 {
     color: #37423b;
     transition: 0.3s;
     font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 500;
 }
 
@@ -119,7 +114,7 @@ h6 {
 a:hover,
 .nav-menu li:hover > a {
     /* color: #5fcf80; */
-    color: #0770EF;
+    color: #0770ef;
 }
 
 .nav-menu .drop-down ul {
@@ -202,11 +197,7 @@ a:hover,
     .nav-menu .drop-down .drop-down > a:after {
         content: "\ea9d";
     }
-   
 }
-
-
-
 
 /* Mobile Navigation */
 
@@ -449,12 +440,12 @@ a:hover,
     width: 15%;
 }
 
-.desc-text{
+.desc-text {
     margin-top: 0;
     line-height: 32px;
 }
 
-.courseRightBlock{
+.courseRightBlock {
     padding-top: 50px;
 }
 
@@ -480,10 +471,10 @@ main {
 }
 
 .header-social li {
-    margin: 0px 10px
+    margin: 0px 10px;
 }
 
-.login-details{
+.login-details {
     display: flex;
     margin: 0px;
     float: right;
@@ -543,7 +534,6 @@ main {
     font-size: 19px;
 }
 
-
 .login-details li.dropdown:hover ul.dropdown-menu {
     display: block;
 }
@@ -562,26 +552,24 @@ main {
     font-weight: 600;
 }
 
-
-
 .login-details .dropdown-menu {
     position: absolute;
     top: 90%;
-    left: 0!important;
+    left: 0 !important;
     z-index: 1000;
     display: none;
     float: left;
     width: 100%;
     padding: 10px 10px;
-    margin: .125rem 0 0;
+    margin: 0.125rem 0 0;
     font-size: 13px;
     font-weight: 500;
     text-align: left;
     list-style: none;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: .25rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.25rem;
 }
 
 .account-list li {
@@ -596,12 +584,10 @@ main {
     border-radius: 50%;
 }
 
-
 /*home-banner*/
 .home-banner {
     margin: 0px 80px;
 }
-
 
 .home-slide {
     position: relative;
@@ -641,7 +627,7 @@ main {
 /* about us */
 
 .about-us {
-    background-image: url('../img/home/banner2.png');
+    background-image: url("../img/home/banner2.png");
     margin: 60px 80px 0px 80px;
     background-position: bottom;
     background-repeat: no-repeat;
@@ -717,7 +703,6 @@ main {
     font-weight: 600;
 }
 
-
 .clock-icon1 {
     margin-right: 10px;
     font-weight: 600;
@@ -736,16 +721,16 @@ main {
     /* box-shadow: 0px 0px 10px #d4d3d3; */
     border: 1px solid rgb(238, 238, 238);
 }
-.course-desc h6{
+.course-desc h6 {
     font-weight: 600;
 }
-.course-desc p{
+.course-desc p {
     font-size: 15px;
     color: rgb(32, 32, 32);
     margin-bottom: 2px;
 }
 
-.course-desc .fa-inr{
+.course-desc .fa-inr {
     color: #07a807;
     font-weight: 600;
 }
@@ -758,15 +743,15 @@ main {
     padding: 10px 20px 0px;
 }
 
-.course-header-and-back-to-pckg-btn{
+.course-header-and-back-to-pckg-btn {
     justify-content: space-between;
     align-items: center;
 }
 
-.course-header-and-back-to-pckg-btn a{
-   font-size: 15px;
-   color: #05559b;
-   font-weight: 500;
+.course-header-and-back-to-pckg-btn a {
+    font-size: 15px;
+    color: #05559b;
+    font-weight: 500;
 }
 
 .course-desc1 > span {
@@ -781,12 +766,12 @@ main {
     border-top-right-radius: 10px;
 }
 
-.course-details-add-to-cart-btn{
+.course-details-add-to-cart-btn {
     box-shadow: 0px 10px 15px #09bf1836;
     border-radius: 5px 5px 5px 5px;
 }
 
-.course-details-start-course-btn{
+.course-details-start-course-btn {
     box-shadow: 0px 10px 15px #0949bf36;
     border-radius: 0px 0px 5px 5px;
 }
@@ -805,14 +790,13 @@ main {
     font-size: 14px;
 }
 
-.rightBlock .inputGroup a{
+.rightBlock .inputGroup a {
     font-size: 16px;
     font-weight: 600;
 }
-.rightBlock .inputGroup a i:nth-child(1){
+.rightBlock .inputGroup a i:nth-child(1) {
     font-size: 12px;
     font-weight: 300;
-
 }
 
 /*select*/
@@ -893,7 +877,6 @@ main {
     visibility: visible;
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
-
 }
 
 .course-btn-list {
@@ -914,7 +897,7 @@ main {
     width: 50%;
 }
 
-.course-image-overlay{
+.course-image-overlay {
     height: 0px;
     width: calc(100% - 30px);
     background-color: #0000007d;
@@ -923,15 +906,14 @@ main {
     border-radius: 10px 10px 0px 0px;
     transition: 0.8s;
     cursor: pointer;
-
 }
-.course-pic:hover .course-image-overlay{
+.course-pic:hover .course-image-overlay {
     height: 250px;
 }
-.course-image-overlay .course-image-overlay-eye-icon{
-    position:absolute;
-    top:50%;
-    left:50%;
+.course-image-overlay .course-image-overlay-eye-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
     font-size: 20px;
@@ -941,12 +923,12 @@ main {
     border-radius: 8px;
 }
 
-.course-pic:hover .course-image-overlay-eye-icon{
+.course-pic:hover .course-image-overlay-eye-icon {
     opacity: 1;
 }
 
 #myInput {
-    background-image: url('../svg/icon/search-44.svg');
+    background-image: url("../svg/icon/search-44.svg");
     background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: 8px 8px;
@@ -1033,7 +1015,6 @@ main {
     outline: none;
 }
 
-
 .upcoming-course .owl-dots button.owl-dot {
     width: 40px;
     height: 5px;
@@ -1052,7 +1033,7 @@ main {
 
 /*knowledge*/
 .knowledge {
-    background-image: url('../img/home/banner3.png');
+    background-image: url("../img/home/banner3.png");
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1085,7 +1066,7 @@ main {
     border: none;
 }
 
-.knowledge-link-post-btn{
+.knowledge-link-post-btn {
     background-image: linear-gradient(to left, #076fef, #01b9f1);
     color: #fff !important;
     padding: 6px 18px;
@@ -1097,7 +1078,6 @@ main {
 .knowledge-para {
     margin: 30px 0px;
 }
-
 
 /*blog-list*/
 .blogs {
@@ -1153,7 +1133,6 @@ main {
     padding: 10px 20px;
 }
 
-
 /*testimonial*/
 .testimonial {
     margin: 60px 80px;
@@ -1177,7 +1156,7 @@ main {
 }
 
 .testimonial-right {
-    padding: 0px 30px
+    padding: 0px 30px;
 }
 
 .heading-white {
@@ -1208,7 +1187,7 @@ main {
 
 /*professionals*/
 .professionals {
-    background-image: url('../img/home/banner4.png');
+    background-image: url("../img/home/banner4.png");
     background-position: bottom;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1216,7 +1195,6 @@ main {
     padding: 130px 50px;
     border-radius: 20px;
 }
-
 
 .small-heading-black {
     /* font-size: 26px; */
@@ -1230,7 +1208,7 @@ main {
     font-weight: 700;
     color: #000;
 }
-.aboutLeft-text{
+.aboutLeft-text {
     font-size: 16px;
 }
 
@@ -1288,7 +1266,7 @@ footer {
     list-style-type: disc;
     font-size: 14px;
 }
-.footer-first p{
+.footer-first p {
     font-size: 16px;
 }
 
@@ -1321,7 +1299,7 @@ footer {
 
 /*about-details*/
 .about-us1 {
-    background-image: url('../img/home/banner2.png');
+    background-image: url("../img/home/banner2.png");
     margin: 60px 80px 0px 80px;
     background-position: bottom;
     background-repeat: no-repeat;
@@ -1365,7 +1343,6 @@ footer {
 
 .moto-list {
     display: inline-block;
-
 }
 
 .moto-list li {
@@ -1401,13 +1378,13 @@ footer {
 .counter-list li{
     height: 520px;
 } */
-.counter-list img{
+.counter-list img {
     height: 100%;
     object-fit: cover;
 }
-.counter-list li:nth-child(1) img{
+.counter-list li:nth-child(1) img {
     border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px 
+    border-bottom-left-radius: 30px;
 }
 .counter-list li {
     float: left;
@@ -1495,7 +1472,7 @@ footer {
 }
 
 .subheader1-desc {
-    padding: 50px 30px
+    padding: 50px 30px;
 }
 
 .subheader1-img img {
@@ -1529,7 +1506,7 @@ footer {
 }
 
 .text-box {
-    margin-top: 40px
+    margin-top: 40px;
 }
 
 /*course-describtion*/
@@ -1572,7 +1549,6 @@ footer {
 .cart-desc-list1 li {
     width: 50%;
     float: left;
-
 }
 
 .course-desc-list li:first-child {
@@ -1589,7 +1565,7 @@ footer {
 }
 
 .cart-box {
-    padding: 0px 50px 0px 0px
+    padding: 0px 50px 0px 0px;
 }
 
 /*course form*/
@@ -1636,7 +1612,6 @@ footer {
     background: #36b872;
     color: #fff;
     border: 1px solid #36b872 !important;
-
 }
 
 .styled-checkbox:disabled + label {
@@ -1663,7 +1638,6 @@ footer {
     padding-top: 0px !important;
     margin-bottom: 5px;
     position: relative;
-
 }
 
 .course-price {
@@ -1696,14 +1670,14 @@ footer {
     width: 48%;
     float: left;
     padding: 0px !important;
-    border: none !important
+    border: none !important;
 }
 
 .enquiry {
     border: 1px solid #000;
     border-radius: 5px;
     padding: 10px 90px;
-    float: right
+    float: right;
 }
 
 .add-cart {
@@ -1753,7 +1727,6 @@ footer {
     background-color: #36b872;
 }
 
-
 .checkmark:after {
     content: "";
     position: absolute;
@@ -1763,7 +1736,6 @@ footer {
 .box1 input:checked ~ .checkmark:after {
     display: block;
 }
-
 
 .box1 .checkmark:after {
     left: 6px;
@@ -1797,7 +1769,8 @@ footer {
     border: none !important;
     margin-bottom: 20px;
 }
-.cart-course-list1 li .centerBlock, .cart-course-list1 li .rightBlock{
+.cart-course-list1 li .centerBlock,
+.cart-course-list1 li .rightBlock {
     margin-top: 15px;
 }
 
@@ -1820,7 +1793,7 @@ footer {
 
 /*course-tooltip*/
 .course-tooltip .dropbtn {
-    color: #04AA6D;
+    color: #04aa6d;
     font-size: 13px;
     border: none;
     font-weight: 700;
@@ -1868,21 +1841,20 @@ footer {
     min-height: 450px;
 }
 
-
 #style-1::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 }
 
 #style-1::-webkit-scrollbar {
     width: 8px;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 }
 
 #style-1::-webkit-scrollbar-thumb {
     border-radius: 20px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #ddd;
 }
 
@@ -1898,7 +1870,6 @@ footer {
     border: none !important;
     margin-top: 0px !important;
     padding: 0px !important;
-
 }
 
 .star {
@@ -1912,7 +1883,6 @@ footer {
     background-color: black;
     position: relative;
 }
-
 
 .box.arrow-top:after {
     content: " ";
@@ -1931,7 +1901,7 @@ footer {
 
 /*coupon-form*/
 .coupon-form {
-    margin: 10px 0px
+    margin: 10px 0px;
 }
 
 /*.btn{border-radius: 0px!important;}*/
@@ -1968,7 +1938,7 @@ footer {
 }
 
 .coupon-form .form-control,
-.form-control {
+.form-control, .custom-select {
     font-size: 13px;
     padding: 9px 15px;
     height: 38px;
@@ -1990,7 +1960,6 @@ footer {
 .price-section li:last-child {
     border: none !important;
 }
-
 
 .original-price {
     position: absolute;
@@ -2031,7 +2000,7 @@ footer {
 
 [type="radio"]:checked + label:before,
 [type="radio"]:not(:checked) + label:before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 0;
@@ -2044,7 +2013,7 @@ footer {
 
 [type="radio"]:checked + label:after,
 [type="radio"]:not(:checked) + label:after {
-    content: '';
+    content: "";
     width: 12px;
     height: 12px;
     background-image: linear-gradient(to left, #076fef, #01b9f1);
@@ -2131,7 +2100,6 @@ footer {
     border: 1px solid #076fef;
 }
 
-
 .checkmark:after {
     content: "";
     position: absolute;
@@ -2142,7 +2110,6 @@ footer {
 .box3 input:checked ~ .checkmark:after {
     display: block;
 }
-
 
 .box2 .checkmark:after,
 .box3 .checkmark:after {
@@ -2159,8 +2126,8 @@ footer {
 
 /*box3*/
 .box3 input:checked ~ .checkmark {
-    background: #04AA6D;
-    border: 1px solid #04AA6D;
+    background: #04aa6d;
+    border: 1px solid #04aa6d;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -2171,7 +2138,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
     -moz-appearance: textfield;
 }
 
@@ -2194,7 +2161,6 @@ input[type=number] {
 }
 
 /*custom select*/
-
 
 /*select*/
 .select {
@@ -2275,7 +2241,6 @@ input[type=number] {
     visibility: visible;
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1);
-
 }
 
 /*cart*/
@@ -2288,7 +2253,6 @@ input[type=number] {
     margin: 0px 80px;
     padding: 0px 0px 40px 0px;
 }
-
 
 .cart-course-list1 {
     display: inline-block;
@@ -2382,7 +2346,6 @@ input[type=number] {
     width: 50%;
 }
 
-
 .block-ellipsis1 {
     display: block;
     display: -webkit-box;
@@ -2394,7 +2357,6 @@ input[type=number] {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-
 }
 
 .block-ellipsis2 {
@@ -2451,7 +2413,7 @@ input[type=number] {
 
 /*gallerey*/
 
-#portfoliolist {  
+#portfoliolist {
     display: block;
 }
 
@@ -2471,7 +2433,6 @@ input[type=number] {
     background: transparent;
     display: block;
     height: 100%;
-
 }
 .portfolio-wrapper img {
     width: 100%;
@@ -2496,8 +2457,8 @@ input[type=number] {
 
 /*login-section*/
 .login-section {
-    background-image: url('../img/login/banner.jpg');
-    height: 100vh;
+    background-image: url("../img/login/banner.jpg");
+    min-height: 100vh;
 }
 
 .login-tabs {
@@ -2534,7 +2495,7 @@ input[type=number] {
 }
 
 .login-div {
-    width: 30%;
+    width: 33%;
     background: #fff;
     margin: 60px auto;
     padding: 40px 50px;
@@ -2550,8 +2511,8 @@ input[type=number] {
 }
 
 .facebook-btn {
-    border: 1px solid #4267B2;
-    background: #4267B2;
+    border: 1px solid #4267b2;
+    background: #4267b2;
     border-radius: 5px;
     padding: 5px 45px;
     text-align: center;
@@ -2576,7 +2537,6 @@ input[type=number] {
     color: #fff !important;
 }
 
-
 .google-div {
     display: grid;
     margin-bottom: 10px;
@@ -2598,15 +2558,16 @@ input[type=number] {
     text-align: center;
 }
 
-.page-close{position: absolute;
+.page-close {
+    position: absolute;
     right: -45px;
     font-size: 30px;
-top: 0px;}
-
+    top: 0px;
+}
 
 /*knowledge forum*/
 #search {
-    background-image: url('../svg/icon/search-44.svg');
+    background-image: url("../svg/icon/search-44.svg");
     background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: 8px 8px;
@@ -2636,7 +2597,7 @@ top: 0px;}
 }
 
 .knowledge-header-list li {
-    float: left
+    float: left;
 }
 
 .knowledge-header-list li:first-child {
@@ -2675,7 +2636,7 @@ top: 0px;}
     /* background: #f1f1f1; */
 }
 
-.answer-list{
+.answer-list {
     display: inline-block;
     width: 100%;
 }
@@ -2686,7 +2647,7 @@ top: 0px;}
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 .answer-list1 {
@@ -2699,7 +2660,7 @@ top: 0px;}
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
-    margin-bottom: 20px
+    margin-bottom: 20px;
 }
 
 .answer-list2 {
@@ -2760,8 +2721,8 @@ top: 0px;}
 .answer-btn-list li a {
     font-size: 12px;
 }
-.answer-btn-list span{
-    font-size:12px;
+.answer-btn-list span {
+    font-size: 12px;
 }
 .admin-icon {
     float: left;
@@ -2817,7 +2778,7 @@ top: 0px;}
     position: absolute;
     right: 0px;
     color: #076fef;
-    font-weight: 700
+    font-weight: 700;
 }
 
 .question-box {
@@ -2850,7 +2811,7 @@ top: 0px;}
 }
 
 .todays-topic-list {
-    margin-bottom: 0px
+    margin-bottom: 0px;
 }
 
 .todays-topic-list li {
@@ -2932,7 +2893,7 @@ input {
 }
 
 #add-question-modal .modal-content {
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 .modal-title {
@@ -2965,7 +2926,7 @@ input {
 }
 
 .btn-box {
-    width:100%;
+    width: 100%;
     border-top: 1px solid #ddd;
     padding: 10px 20px;
 }
@@ -3029,7 +2990,7 @@ input {
 }
 
 .answer-profile-desc1 {
-    display: table
+    display: table;
 }
 
 .small-heading-black1 {
@@ -3056,7 +3017,7 @@ input {
 
 .btn-comment {
     position: absolute;
-    top:50%;
+    top: 50%;
     right: 20px;
     background: transparent;
     color: #076fef !important;
@@ -3065,7 +3026,7 @@ input {
     font-weight: 700;
     z-index: 999;
 }
-.btn-comment:hover{
+.btn-comment:hover {
     box-shadow: 0px 5px 5px rgb(243, 243, 243);
 }
 .comment-form {
@@ -3087,16 +3048,17 @@ input {
     width: 25%;
     float: left;
 }
-.knowledge-tabs .nav-item.show .nav-link, .knowledge-tabs .nav-link.active {
-    color: #076fef!important;
-    background-color:transparent;
-    border-color:transparent;
-}
-
-.knowledge-tabs .nav-link:focus, .knowledge-tabs .nav-link:hover {
+.knowledge-tabs .nav-item.show .nav-link,
+.knowledge-tabs .nav-link.active {
+    color: #076fef !important;
+    background-color: transparent;
     border-color: transparent;
 }
 
+.knowledge-tabs .nav-link:focus,
+.knowledge-tabs .nav-link:hover {
+    border-color: transparent;
+}
 
 .knowledge-forum-left {
     width: 100%;
@@ -3210,7 +3172,7 @@ input {
 }
 
 .card-desc {
-    display: table
+    display: table;
 }
 
 .name-on-card {
@@ -3246,11 +3208,9 @@ input {
 
 /*input*/
 
-
 .avatar-upload {
     position: relative;
     width: 100%;
-
 }
 
 .avatar-upload .avatar-edit {
@@ -3274,7 +3234,7 @@ input {
     height: 38px;
     border-radius: 4px;
     margin-bottom: 0;
-    background: #FFFFFF;
+    background: #ffffff;
     border: 1px solid #ddd;
     cursor: pointer;
     font-weight: normal;
@@ -3306,10 +3266,9 @@ input {
     position: relative;
     border: 1px solid #ddd;
 }
-.avatar-preview #outputImage{
+.avatar-preview #outputImage {
     width: 265px;
     height: 215px;
-
 }
 .avatar-upload .avatar-preview > div {
     width: 100%;
@@ -3326,7 +3285,7 @@ input {
 }
 
 .btn-div2 {
-    margin-top: 20px
+    margin-top: 20px;
 }
 
 /*MCQ test*/
@@ -3376,31 +3335,34 @@ input {
     margin-top: 15px;
 }
 
-.newpass-div{ width: 30%;
+.newpass-div {
+    width: 30%;
     background: #fff;
-    margin:115px auto;
+    margin: 115px auto;
     padding: 40px 50px;
-    border-radius: 20px;position: relative;}
+    border-radius: 20px;
+    position: relative;
+}
 
 /* .edit-btn{
     background-color: #fdfdfd;
     box-shadow: 0 5px 10px #f5f3f3;
 } */
 
-::placeholder{
-    color:aliceblue;
+::placeholder {
+    color: aliceblue;
 }
 
-.ajax-loading p{
+.ajax-loading p {
     position: absolute;
     left: 34%;
 }
 
-#rzp-button1{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
+#rzp-button1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 /* 
 .become-a-teacher-icon{
@@ -3413,24 +3375,29 @@ input {
     text-align: center;
 } */
 
-.support-team{
+.support-team {
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.support-team-icon1 img, .support-team-icon2 img{
+.support-team-icon1 img,
+.support-team-icon2 img {
     width: 450px;
     height: 450px;
 }
 
-#reasons{
+#reasons {
     margin-top: 90px;
 }
-#reasons .leftBlock p, #reasons .centerBlock p, #reasons .rightBlock p{
+#reasons .leftBlock p,
+#reasons .centerBlock p,
+#reasons .rightBlock p {
     font-size: 16px;
 }
-.leftBlock img, .centerBlock img, .rightBlock img{
+.leftBlock img,
+.centerBlock img,
+.rightBlock img {
     width: 100px;
 }
 
@@ -3452,21 +3419,21 @@ input {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.hero-image-for-teacher{
+.hero-image-for-teacher {
     position: relative;
     margin-top: -90px;
 }
-.hero-image-for-teacher .hero-header{
+.hero-image-for-teacher .hero-header {
     position: absolute;
     top: 35%;
     left: 12%;
 }
-.hero-image-for-teacher .hero-image-girl{
+.hero-image-for-teacher .hero-image-girl {
     position: absolute;
     top: 0;
     left: 55%;
 }
-.hero-image-for-teacher img{
+.hero-image-for-teacher img {
     width: 100%;
     height: 715px;
 }
@@ -3478,17 +3445,17 @@ input {
     background: white;
     font-size: 18px;
 }
-.knowledge-link-1:hover{
+.knowledge-link-1:hover {
     background-image: linear-gradient(to left, #7698c3, #326777);
     color: white;
 }
-.hero-header h1{
+.hero-header h1 {
     font-weight: 700;
     font-size: 50px;
     color: white;
     text-transform: capitalize;
 }
-.hero-header p{
+.hero-header p {
     padding: 10px 0px;
     font-size: 21px;
     color: white;
@@ -3498,17 +3465,17 @@ input {
     padding: 15px;
     font-weight: 600;
 }
-#instructor h2{
+#instructor h2 {
     font-size: 38px;
     color: #000;
     font-weight: 700;
 }
-#instructor p{
+#instructor p {
     font-size: 18px;
     color: rgb(51, 51, 51);
     padding: 5px 0px;
 }
-.teacher-btn a{
+.teacher-btn a {
     width: 20%;
     padding: 10px;
 }
@@ -3517,58 +3484,57 @@ input {
     margin-bottom: 60px;
 }
 
-.hover-effect-custom:hover{
+.hover-effect-custom:hover {
     transform: scale(1.04);
     transition: 0.4s;
     /* box-shadow: 0px 0px 10px #d4d3d3; */
 }
 
-.hover-effect-custom:hover .course-desc{
+.hover-effect-custom:hover .course-desc {
     /* transform: scale(1.04);
     transition: 0.4s; */
     box-shadow: 0px 0px 10px #d4d3d3;
 }
 
-
 /* Description page css */
 
-.courseLeftBox p{
+.courseLeftBox p {
     color: rgba(99, 99, 99, 0.993);
 }
-#learning i{
+#learning i {
     color: #076fef;
 }
 .card-button {
     flex-direction: column;
 }
-.details-bottom{
+.details-bottom {
     margin-bottom: 15px;
     border-bottom: 1px solid rgba(207, 207, 207, 0.747);
 }
-.details-bottom-text{
+.details-bottom-text {
     font-size: 18px;
     font-weight: 500;
 }
 
-#description-accordion{
+#description-accordion {
     display: none;
 }
 
-#lesson .accordion{
+#lesson .accordion {
     border: 1px solid #c9c9c994;
 }
 #lesson .card {
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
-#lesson .accordion>.card:not(:last-of-type){
-    border-bottom: 1px solid rgba(0, 0, 0, .125);
+#lesson .accordion > .card:not(:last-of-type) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
-#lesson .btn:focus{
+#lesson .btn:focus {
     border-color: #fff;
     outline: none;
 }
-#lesson .card-header p{
+#lesson .card-header p {
     color: black;
     font-weight: 600;
     font-size: 18px;
@@ -3581,14 +3547,14 @@ input {
     padding: 0px;
 }
 
-.lesson-content{
+.lesson-content {
     margin-bottom: 15px;
     border-bottom: 1px solid rgba(207, 207, 207, 0.747);
     align-items: center;
     justify-content: space-between;
 }
 
-.course-duration-div p:nth-child(1){
+.course-duration-div p:nth-child(1) {
     margin-right: 15px;
     font-size: 12px;
     padding: 10px;
@@ -3597,7 +3563,7 @@ input {
     border-radius: 5px;
     color: #d30808c2;
 }
-.course-duration-div p:nth-child(2){
+.course-duration-div p:nth-child(2) {
     margin-right: 15px;
     font-size: 12px;
     padding: 10px;
@@ -3606,62 +3572,61 @@ input {
     border-radius: 5px;
     color: rgb(0 112 255 / 72%);
 }
-.course-duration-div i{
+.course-duration-div i {
     margin-bottom: 20px;
 }
 
-.discount-percentage{
+.discount-percentage {
     font-size: 12px;
     color: white;
     background: #80808094;
     border-radius: 5px;
     padding: 10px;
-    font-weight:600;
-}
-.board-class-div h5{
     font-weight: 600;
 }
-.board-class-div i{
+.board-class-div h5 {
+    font-weight: 600;
+}
+.board-class-div i {
     color: orange;
 }
-.board-class-div p, .board-class-div span{
+.board-class-div p,
+.board-class-div span {
     color: rgba(133, 133, 133, 0.952);
-
 }
-.studentImageBox img{
+.studentImageBox img {
     width: 100%;
 }
-.studentReviewBox .studentName h5{
+.studentReviewBox .studentName h5 {
     font-weight: 600;
 }
-.studentReviewBox .studentName p{
+.studentReviewBox .studentName p {
     font-size: 14px;
     color: rgba(133, 133, 133, 0.952);
 }
-.studentReviewBox .studentrating i{
+.studentReviewBox .studentrating i {
     color: orange;
 }
-.studentReviewBox .studentReview p{
+.studentReviewBox .studentReview p {
     font-size: 18px;
     color: rgba(133, 133, 133, 0.952);
     line-height: 32px;
 }
 
-.description h4, 
-#learning h4, 
-#requirements h4, 
-#student-feedback h4{
+.description h4,
+#learning h4,
+#requirements h4,
+#student-feedback h4 {
     font-size: 22px;
     font-weight: 600;
 }
-#learning .learningBox2{
-
+#learning .learningBox2 {
     margin-right: 50px;
     margin-left: 60px;
 }
-.learningBox1, .learningBox2{
+.learningBox1,
+.learningBox2 {
     width: 50%;
-
 }
 
 /* Lesson Details Blade */
@@ -3676,30 +3641,30 @@ input {
     height: 100vh;
     overflow-y: hidden;
   } */
-  
-  /* Sidebar links */
-  /* .lesson-details-sidebar a {
+
+/* Sidebar links */
+/* .lesson-details-sidebar a {
     display: block;
     color: black;
     padding: 16px;
     text-decoration: none;
     box-shadow: 1px 2px 1px #eee!important;
   } */
-  
-  /* Active/current link */
-  /* .lesson-details-sidebar a.active {
+
+/* Active/current link */
+/* .lesson-details-sidebar a.active {
     background-color: #04AA6D;
     color: white;
   } */
-  
-  /* Links on mouse-over */
-  /* .lesson-details-sidebar a:hover:not(.active) {
+
+/* Links on mouse-over */
+/* .lesson-details-sidebar a:hover:not(.active) {
     background-color: #555;
     color: white;
   }
    */
-  /* Page content. The value of the margin-left property should match the value of the lesson-details-sidebar's width property */
-  /* .topic-content {
+/* Page content. The value of the margin-left property should match the value of the lesson-details-sidebar's width property */
+/* .topic-content {
     margin-left: 300px;
     padding: 1px 16px;
     height: 500px;
@@ -3712,7 +3677,7 @@ input {
     padding: 10px;
   } */
 
-.lesson-details-sidebar{
+.lesson-details-sidebar {
     float: left;
     border: 1px solid rgba(194, 194, 194, 0.384);
     /* box-shadow: 1px 2px 1px rgb(190, 190, 190)!important; */
@@ -3734,7 +3699,7 @@ input {
     border-radius: 5px;
     font-size: 18px;
 }
-.lesson-sidebar-btn{
+.lesson-sidebar-btn {
     padding: 30px;
 }
 .lesson-details-sidebar button:hover {
@@ -3756,56 +3721,56 @@ input {
     height: 100vh;
     border: 1px solid rgba(194, 194, 194, 0.384);
 }
-.topic-content-heading{
+.topic-content-heading {
     background-image: linear-gradient(to left, #076fef, #01b9f1);
     justify-content: space-between;
 }
-.topic-content-sub-heading h3{
+.topic-content-sub-heading h3 {
     font-size: 18px;
     font-weight: bolder;
 }
-.topic-content-heading h2{
+.topic-content-heading h2 {
     color: white;
     padding: 20px;
     margin-left: 12px;
     font-size: 18px;
     margin-bottom: 0;
 }
-.topic-next-btn{
+.topic-next-btn {
     margin-top: 15px;
     margin-right: 25px;
 }
-.topic-content-details{
+.topic-content-details {
     padding: 20px;
 }
-.topic-content-body{
+.topic-content-body {
     height: 660px;
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
-.video-lesson-pic{
+.video-lesson-pic {
     border-radius: 10px;
     margin-top: 20px;
 }
-.video-lesson-pic img{
+.video-lesson-pic img {
     height: 250px;
     border-radius: 10px;
 }
-.video-lesson-overlay{
+.video-lesson-overlay {
     position: absolute;
     top: 0%;
     width: 100%;
     height: 100%;
-    background-color: #00000079;    
+    background-color: #00000079;
     border-radius: 10px;
     transition: 0.8s;
     cursor: pointer;
 }
-.video-lesson-overlay .video-lesson-overlay-eye-icon{
-    position:absolute;
-    top:50%;
-    left:50%;
+.video-lesson-overlay .video-lesson-overlay-eye-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
     font-size: 50px;
@@ -3814,10 +3779,10 @@ input {
     border-radius: 8px;
     opacity: 1;
 }
-.video-lesson-overlay-eye-icon:hover{
+.video-lesson-overlay-eye-icon:hover {
     color: #076fef;
 }
-.video-lesson-text{
+.video-lesson-text {
     /* background: white;
     border: 1px solid rgba(235, 235, 235, 0.507);
     position: absolute;
@@ -3827,22 +3792,35 @@ input {
     height: 75px;
     border-radius: 10px; */
 
-
     border-left: 7px solid #51aeed;
     outline: none;
     position: absolute;
     top: 75%;
     left: 10%;
     padding: 12px;
-    background-image: linear-gradient(to right, #ffffff, #ffffff, #ffffff, #fefefe, #fefefe, #fafafa, #f5f5f5, #f1f1f1, #e8e8e8, #dfdfdf, #d6d6d6, #cdcdcd);
+    background-image: linear-gradient(
+        to right,
+        #ffffff,
+        #ffffff,
+        #ffffff,
+        #fefefe,
+        #fefefe,
+        #fafafa,
+        #f5f5f5,
+        #f1f1f1,
+        #e8e8e8,
+        #dfdfdf,
+        #d6d6d6,
+        #cdcdcd
+    );
 }
-.video-lesson-text p{
+.video-lesson-text p {
     text-align: center;
     margin-bottom: 0px;
     color: black;
     font-weight: 600;
 }
-#articles .article-div{
+#articles .article-div {
     align-items: center;
     border: 1px solid #bfbaba;
     border-radius: 10px;
@@ -3850,50 +3828,49 @@ input {
     margin: 15px 0px;
 }
 
-#articles .article-div .article-icon i{
+#articles .article-div .article-icon i {
     font-size: 50px;
     color: grey;
 }
-#articles .article-content{
+#articles .article-content {
     margin-left: 15px;
     padding-top: 20px;
 }
-#articles .article-content h5{
+#articles .article-content h5 {
     font-size: 18px;
     font-weight: 600;
 }
-#articles .article-content p{
+#articles .article-content p {
     font-size: 14px;
     color: rgb(143, 143, 143);
 }
- 
 
-#documents .doc-div{
+#documents .doc-div {
     display: flex;
     align-items: center;
     border: 1px solid #bfbaba;
     border-radius: 10px;
     margin: 15px 0px;
-    padding: 15px;    
+    padding: 15px;
 }
-#documents .doc-div .doc-icon i{
+#documents .doc-div .doc-icon i {
     font-size: 50px;
     color: grey;
 }
-#documents .doc-content{
+#documents .doc-content {
     margin-left: 15px;
     padding-top: 20px;
 }
-#documents .doc-content h5{
+#documents .doc-content h5 {
     font-size: 18px;
     font-weight: 600;
 }
-#documents .doc-content p{
+#documents .doc-content p {
     font-size: 14px;
     color: rgb(143, 143, 143);
 }
 
-#mcq_test .mcq-div{
+#mcq_test .mcq-div {
     display: flex;
     align-items: center;
     border: 1px solid #bfbaba;
@@ -3902,22 +3879,22 @@ input {
     margin: 15px 0px;
 }
 
-#mcq_test .mcq-icon img{
+#mcq_test .mcq-icon img {
     width: 100%;
 }
-#mcq_test .mcq-content{
+#mcq_test .mcq-content {
     margin-left: 15px;
     padding-top: 20px;
 }
-#mcq_test .mcq-content h5{
+#mcq_test .mcq-content h5 {
     font-size: 18px;
     font-weight: 600;
 }
-#mcq_test .mcq-content h6{
+#mcq_test .mcq-content h6 {
     font-size: 16px;
     color: rgb(102, 102, 102);
 }
-#mcq_test .mcq-content p{
+#mcq_test .mcq-content p {
     font-size: 14px;
     color: rgb(143, 143, 143);
 }
@@ -3935,7 +3912,7 @@ input {
 
 /* My purchase CSS */
 
-#myperformance .dropdown .btn{
+#myperformance .dropdown .btn {
     width: 450px;
     padding: 10px 0px;
     border-radius: 5px;
@@ -3947,8 +3924,8 @@ input {
     vertical-align: 0;
     color: rgba(151, 151, 151, 0.788);
 }
-#myperformance .btn:focus{
-    border-color: #F5F5F5;
+#myperformance .btn:focus {
+    border-color: #f5f5f5;
     outline: none;
 }
 /* .skill{
@@ -4000,7 +3977,7 @@ svg{
         stroke-dashoffset: 150;
     }
 } */
-.circular-progress-one{
+.circular-progress-one {
     position: relative;
     height: 170px;
     width: 170px;
@@ -4010,15 +3987,15 @@ svg{
     align-items: center;
     justify-content: center;
 }
-.circular-progress-one::before{
-    content: '';
+.circular-progress-one::before {
+    content: "";
     position: absolute;
     height: 140px;
     width: 140px;
     border-radius: 50%;
-    background-color: white ;
+    background-color: white;
 }
-.progress-value-one{
+.progress-value-one {
     position: relative;
     font-size: 24px;
     font-weight: 600;
@@ -4028,11 +4005,11 @@ svg{
     margin-top: 50px;
     margin-left: 40px;
 }
-.circularText p{
+.circularText p {
     font-size: 14px;
     font-weight: 600;
 }
-.circular-progress-two{
+.circular-progress-two {
     position: relative;
     height: 170px;
     width: 170px;
@@ -4042,37 +4019,37 @@ svg{
     align-items: center;
     justify-content: center;
 }
-.circular-progress-two::before{
-    content: '';
+.circular-progress-two::before {
+    content: "";
     position: absolute;
     height: 150px;
     width: 150px;
     border-radius: 50%;
-    background-color: white ;
+    background-color: white;
 }
-.progress-value-two{
+.progress-value-two {
     position: relative;
     font-size: 24px;
     font-weight: 600;
     color: black;
 }
-.circular-text{
+.circular-text {
     margin-left: 30px;
 }
-.circular-text h5{
+.circular-text h5 {
     /* font-size: 12px; */
     margin-top: 50px;
     font-weight: 700;
 }
 .circularText .watched .dot {
     border-radius: 50%;
-    background: #04AA6D;
+    background: #04aa6d;
     height: 15px;
     width: 15px;
     display: inline-block;
     margin-top: 3px;
 }
-.circularText .not-watched .dot{
+.circularText .not-watched .dot {
     border-radius: 50%;
     background: #b6cfeee5;
     height: 15px;
@@ -4080,51 +4057,51 @@ svg{
     display: inline-block;
     margin-top: 3px;
 }
-.circular-left{
+.circular-left {
     border-right: 1px solid rgba(182, 181, 181, 0.486);
 }
-.progress-main{
+.progress-main {
     padding-left: 40px;
 }
-.icon-box{
+.icon-box {
     margin-left: 15px;
     margin-right: 20px;
     margin-top: 10px;
 }
-.icon-box img{
+.icon-box img {
     width: 100%;
     height: 35px;
 }
-.mcq-box{
+.mcq-box {
     border: 1px solid #e9e8e8;
     border-radius: 10px;
     padding: 10px;
 }
-.mcq-text{
+.mcq-text {
     font-size: 24px;
     font-weight: 700;
 }
-.mcq-text p{
+.mcq-text p {
     margin-bottom: 0;
 }
-.progress-bar-left p{
+.progress-bar-left p {
     font-size: 14px;
     font-weight: 600;
 }
-.monthly-progress-bar{
+.monthly-progress-bar {
     position: absolute;
     width: 100%;
     height: 325px;
     display: flex;
     padding-right: 50px;
 }
-.monthly-progress-bar .weekly-bar{
+.monthly-progress-bar .weekly-bar {
     position: relative;
     flex: 1;
     text-align: center;
     border-bottom: 1px solid rgb(223, 223, 223);
 }
-.monthly-progress-bar .weekly-bar .week-percent{
+.monthly-progress-bar .weekly-bar .week-percent {
     position: absolute;
     width: 35px;
     /* background: rgb(0,0,0,1); */
@@ -4132,8 +4109,8 @@ svg{
     bottom: 0;
     transform: translateX(-50%);
 }
-.monthly-progress-bar .weekly-bar .week-percent::before{
-    content: '';
+.monthly-progress-bar .weekly-bar .week-percent::before {
+    content: "";
     position: absolute;
     top: 2px;
     left: 2px;
@@ -4142,8 +4119,8 @@ svg{
     /* background-color: #01b9f1; */
     background: linear-gradient(0deg, #076fef, #05559b);
 }
-.monthly-progress-bar .weekly-bar .week-percent::after{
-    content: '';
+.monthly-progress-bar .weekly-bar .week-percent::after {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -4151,8 +4128,8 @@ svg{
     height: 100%;
     /* background: rgba(255, 255, 255, 0.1); */
 }
-.monthly-progress-bar .weekly-bar .week-percent .percent{
-    position: absolute;  
+.monthly-progress-bar .weekly-bar .week-percent .percent {
+    position: absolute;
     top: -30px;
     left: 50%;
     transform: translateX(-50%);
@@ -4160,7 +4137,7 @@ svg{
     color: black;
     font-weight: 600;
 }
-.monthly-progress-bar .weekly-bar .weekday-name{
+.monthly-progress-bar .weekly-bar .weekday-name {
     position: absolute;
     bottom: -30px;
     left: 50%;
@@ -4169,13 +4146,13 @@ svg{
     padding: 2px 6px;
     font-size: 14px;
 }
-.monthly-progress-bar .monthly-bar{
+.monthly-progress-bar .monthly-bar {
     position: relative;
     flex: 1;
     text-align: center;
     border-bottom: 1px solid rgb(223, 223, 223);
 }
-.monthly-progress-bar .monthly-bar .monthly-percent{
+.monthly-progress-bar .monthly-bar .monthly-percent {
     position: absolute;
     width: 35px;
     /* background: rgb(0,0,0,1); */
@@ -4183,8 +4160,8 @@ svg{
     bottom: 0;
     transform: translateX(-50%);
 }
-.monthly-progress-bar .monthly-bar .monthly-percent::before{
-    content: '';
+.monthly-progress-bar .monthly-bar .monthly-percent::before {
+    content: "";
     position: absolute;
     top: 2px;
     left: 2px;
@@ -4193,8 +4170,8 @@ svg{
     /* background-color: #01b9f1; */
     background: linear-gradient(0deg, #076fef, #05559b);
 }
-.monthly-progress-bar .monthly-bar .monthly-percent::after{
-    content: '';
+.monthly-progress-bar .monthly-bar .monthly-percent::after {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -4202,8 +4179,8 @@ svg{
     height: 100%;
     /* background: rgba(255, 255, 255, 0.1); */
 }
-.monthly-progress-bar .monthly-bar .monthly-percent .percent{
-    position: absolute;  
+.monthly-progress-bar .monthly-bar .monthly-percent .percent {
+    position: absolute;
     top: -30px;
     left: 50%;
     transform: translateX(-50%);
@@ -4211,7 +4188,7 @@ svg{
     color: black;
     font-weight: 600;
 }
-.monthly-progress-bar .monthly-bar .month-name{
+.monthly-progress-bar .monthly-bar .month-name {
     position: absolute;
     bottom: -30px;
     left: 50%;
@@ -4239,11 +4216,11 @@ svg{
 .progress-bar-right .nav-tabs {
     border-bottom: none;
 }
-.total-price{
+.total-price {
     font-size: 22px;
     font-weight: 700;
 }
-.checkout-details-text{
+.checkout-details-text {
     font-weight: 600;
 }
 .cart-coupon {
@@ -4251,38 +4228,39 @@ svg{
     padding: 0px 30px;
     margin-top: 15px;
 }
-.coupon-text, .coupon-arrow{
+.coupon-text,
+.coupon-arrow {
     padding-top: 15px;
 }
-.cart-course{
+.cart-course {
     background: #f0f0f062;
 }
-.cart-course p{
+.cart-course p {
     margin-bottom: 0;
     padding: 10px 15px;
     font-size: 22px;
     font-weight: 700;
 }
-.subjectName h4{
+.subjectName h4 {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 5px;
 }
-.subjectName p{
+.subjectName p {
     font-size: 14px;
     margin-bottom: 5px;
 }
-.subjectName a{
+.subjectName a {
     color: #68b0f0;
     text-decoration: underline;
 }
-.cart-course-description{
+.cart-course-description {
     margin-top: 20px;
     margin-left: 25px;
     margin-right: 25px;
     border-bottom: 1px solid #dbd0ce66;
 }
-.price-div p{
+.price-div p {
     font-size: 22px;
     font-weight: 700;
     margin-top: 15px;
@@ -4296,79 +4274,85 @@ svg{
 .price-div .badge-warning {
     color: #0f01ff;
 }
-#leftBlock{
+#leftBlock {
     padding-right: 110px;
 }
 
-.selected-course{
+.selected-course {
     margin: 0px 80px;
     padding: 0px 0px 40px 0px;
 }
-.coursePrice h3{
+.coursePrice h3 {
     font-size: 28px;
     font-weight: 700;
     margin-top: 15px;
 }
-.board, .class{
+.board,
+.class {
     margin-right: 70px;
 }
-.board p , .class p , .course-type p{
+.board p,
+.class p,
+.course-type p {
     margin-bottom: 0;
     font-size: 16px;
 }
-.board h3, .class h3, .course-type h3{
+.board h3,
+.class h3,
+.course-type h3 {
     font-size: 24px;
     font-weight: 700;
 }
-.subjectDetails p{
+.subjectDetails p {
     margin-bottom: 0;
     text-decoration: underline;
 }
-.subjectDetails h5{
+.subjectDetails h5 {
     font-size: 22px;
     font-weight: 600;
 }
-.way-to-cart{
+.way-to-cart {
     justify-content: end;
     margin-top: 15px;
     margin-bottom: 10px;
 }
-.way-to-cart a{
+.way-to-cart a {
     text-decoration: underline;
     color: white;
 }
-#cart-container{
+#cart-container {
     border: 1px solid;
     border-radius: 10px;
     background: #a102e0a8;
     /* background-image: linear-gradient(to left, #003475, #88e2fd); */
     color: white;
 }
-.course-subject{
+.course-subject {
     margin-top: 25px;
     margin-left: 10px;
     margin-right: 10px;
 }
-.subjectDetails, .way-to-cart{
+.subjectDetails,
+.way-to-cart {
     margin-left: 10px;
     margin-right: 10px;
 }
-.mcq-head{
+.mcq-head {
     justify-content: space-between;
     padding: 20px 30px;
-    background-color: #0770EF;
+    background-color: #0770ef;
 }
-.mcq-head-text h3{
+.mcq-head-text h3 {
     color: white;
     font-weight: 700;
 }
-.mcq-head-text p{
+.mcq-head-text p {
     color: white;
     font-weight: 600;
     font-size: 18px;
     margin-bottom: 0;
 }
-.mcq-cross-icon .btn{
+.mcq-cross-icon .btn {
     color: white;
     margin-top: 8px;
     background-color: black;
@@ -4376,79 +4360,80 @@ svg{
     border: none;
     padding: 15px;
 }
-.options{
+.options {
     font-weight: 700;
     font-size: 18px;
 }
-.mcq-options{
+.mcq-options {
     margin: 30px 0;
 }
-.mcq-option-text{
+.mcq-option-text {
     padding-right: 40px;
 }
-.mcq-option-text h5{
+.mcq-option-text h5 {
     font-weight: 600;
 }
-.mcq-submit-btn{
+.mcq-submit-btn {
     /* float: right; */
     padding-left: 120px;
 }
-.mcq-btn-width{
+.mcq-btn-width {
     width: 100px;
 }
-#mcq-question{
+#mcq-question {
     margin-top: 50px;
 }
-#mcq-question .card{
+#mcq-question .card {
     border: none;
 }
-#mcq_result{
+#mcq_result {
     margin-top: 75px;
 }
-#mcq_result h4{
+#mcq_result h4 {
     margin-left: 100px;
     margin-bottom: 30px;
 }
-.total-div{
+.total-div {
     border: 1px solid rgba(182, 181, 181, 0.486);
     border-radius: 10px;
     height: 290px;
     width: 650px;
     text-align: center;
 }
-.total-div h3{
+.total-div h3 {
     color: rgb(68, 68, 68);
 }
-.total-div h3 span{
+.total-div h3 span {
     color: black;
     font-weight: 800;
 }
-.totalQuestion{
+.totalQuestion {
     padding: 30px 0;
     border-bottom: 1px solid rgba(182, 181, 181, 0.486);
     text-align: center;
 }
-.attempted-div{
+.attempted-div {
     /* margin-top: 15px; */
     justify-content: space-between;
     padding: 25px 0px;
     border-bottom: 1px solid rgba(182, 181, 181, 0.486);
 }
-.answered{
+.answered {
     justify-content: space-between;
     padding: 25px 0px;
 }
-.random{
+.random {
     border-right: 1px solid;
 }
-#mcq-result{
+#mcq-result {
     border: 1px solid;
     border-radius: 10px;
 }
-.attempted, .correct{
+.attempted,
+.correct {
     border-right: 1px solid rgba(182, 181, 181, 0.486);
 }
-.circular-progress{
+.circular-progress {
     position: relative;
     height: 250px;
     width: 250px;
@@ -4458,15 +4443,15 @@ svg{
     align-items: center;
     justify-content: center;
 }
-.circular-progress::before{
-    content: '';
+.circular-progress::before {
+    content: "";
     position: absolute;
     height: 200px;
     width: 200px;
     border-radius: 50%;
-    background-color: white ;
+    background-color: white;
 }
-.progress-value{
+.progress-value {
     position: relative;
     font-size: 24px;
     font-weight: 600;
@@ -4476,19 +4461,19 @@ svg{
     margin-top: 75px;
     margin-left: 70px;
 }
-.circular_text p{
+.circular_text p {
     font-size: 18px;
     font-weight: 600;
 }
 .circular_text .watched .dot {
     border-radius: 50%;
-    background: #04AA6D;
+    background: #04aa6d;
     height: 15px;
     width: 15px;
     display: inline-block;
     margin-top: 5px;
 }
-.circular_text .not-watched .dot{
+.circular_text .not-watched .dot {
     border-radius: 50%;
     background: rgb(255, 145, 0);
     height: 15px;
@@ -4496,7 +4481,7 @@ svg{
     display: inline-block;
     margin-top: 5px;
 }
-.circular_text .unattempt .dot{
+.circular_text .unattempt .dot {
     border-radius: 50%;
     background: rgb(209, 31, 0);
     height: 15px;
@@ -4508,11 +4493,10 @@ svg{
     padding-left: 100px;
     margin-top: 25px;
 }
-.myCourses-view-btn{
+.myCourses-view-btn {
     margin-top: 35px;
-    
 }
-.myCourses-view-btn a{
+.myCourses-view-btn a {
     font-size: 14px;
     font-weight: 600;
     padding: 8px;
