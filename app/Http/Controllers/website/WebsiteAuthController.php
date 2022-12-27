@@ -366,6 +366,7 @@ class WebsiteAuthController extends Controller
         } else {
             $prefix = "user";
         }
+        
         return view('website.auth.login', compact('prefix'));
     }
     public function mobileSignUp(Request $request)
@@ -376,6 +377,8 @@ class WebsiteAuthController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'phone' => 'required|numeric|unique:users',
+                'assign_class_id'=>'required',
+                'board_id'=>'required',
 
 
             ]);
@@ -383,6 +386,7 @@ class WebsiteAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
+            $parent_name=null;
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
             $user_mobile_in_use = User::where('phone', $request->phone)->where('is_activate', 1)->first();
@@ -411,7 +415,11 @@ class WebsiteAuthController extends Controller
                     'message' => "This email address already exists",
                 ]);
             }
+            if($request->has('parent_name')){
+                $parent_name=$request->parent_name;
+            }
             $data = [
+                
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -420,6 +428,7 @@ class WebsiteAuthController extends Controller
                 'type_id' => 2,
                 'password' => Hash::make($request->password),
                 'is_active' => 1,
+                'is_above_eighteen'=>$request->is_above_eighteen,
             ];
             $user = User::create($data);
             $assign_role = $user->assignRole(2);
@@ -429,6 +438,9 @@ class WebsiteAuthController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'user_id' => $user->id,
+                'parent_name'=>$parent_name,
+                'assign_class_id'=>$request->assign_class_id,
+                'board_id'=>$request->board_id,
             ]);
             $user = User::where('email', $request['email'])->select('id', 'email', 'phone', 'name', 'is_activate', 'created_at')->first();
             return response()->json([

@@ -55,7 +55,7 @@ Route::prefix('course')->group(function () {
         Route::post('video/watch-time-update', [CourseController::class, 'LessonVideoWatchTimeUpdate'])->name('website.course.package.subject.video.duration.update');
     });
 });
-Route::group(['middleware' => WebSite::class], function(){
+Route::group(['middleware' => WebSite::class], function () {
     Route::prefix('subject')->group(function () {
         Route::get('/{subject_id}', [SubjectController::class, 'subjectDetails'])->name('website.subject.detatils');
         Route::prefix('mcq')->group(function () {
@@ -92,7 +92,7 @@ Route::prefix('gallery')->group(function () {
 /* ------------------------------- Admin Login ------------------------------------ */
 Route::view('login', 'admin.auth.login')->middleware('customRedirect')->name('login');
 Route::post('signin', [AuthController::class, 'customLogin'])->name('custom.signin');
-
+// Route::get('login',[AuthController::class,'index'])->middleware('customRedirect')->name('login');
 
 /* ------------------------------- Website Login ---------------------------------- */
 Route::prefix('auth')->group(function () {
