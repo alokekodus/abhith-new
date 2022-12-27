@@ -119,19 +119,18 @@
                                         <div class="form-group col-lg-12">
                                             <div class="row g-0">
                                                 <div class="col-lg-8">
-                                                    <select class="custom-select shadow-none">
+                                                    <select class="custom-select shadow-none board">
                                                         <option selected>Board</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        <option value="1">SEBA</option>
+                                                        <option value="2">CBSE</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-4 pl-0">
-                                                    <select class="custom-select shadow-none">
+                                                    <select class="custom-select shadow-none class">
                                                         <option selected>Class</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
                                                     </select>
                                                 </div>
                                             </div>
