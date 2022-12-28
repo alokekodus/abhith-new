@@ -398,6 +398,7 @@ class WebsiteAuthController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'phone' => 'required|numeric|unique:users',
+                'is_above_eighteen' => 'required',
                 'assign_class_id' => 'required',
                 'board_id' => 'required',
 
@@ -407,7 +408,21 @@ class WebsiteAuthController extends Controller
             if ($validator->fails()) {
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
-            $parent_name = null;
+            if ($request->is_above_eighteen == 0) {
+                $validator = Validator::make($request->all(), [
+
+                    'parent_name' => 'required'
+
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['status' => false, 'message' => $validator->errors()]);
+                }
+            }
+            $parent_name=null;
+            if ($request->is_above_eighteen == 0) {
+                $parent_name=$request->parent_name;
+            }
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
             $user_mobile_in_use = User::where('phone', $request->phone)->where('is_activate', 1)->first();
@@ -449,7 +464,7 @@ class WebsiteAuthController extends Controller
                 'type_id' => 2,
                 'password' => Hash::make($request->password),
                 'is_active' => 1,
-                'is_above_eighteen' => $request->is_above_eighteen,
+               
             ];
             $user = User::create($data);
             $assign_role = $user->assignRole(2);
@@ -462,6 +477,10 @@ class WebsiteAuthController extends Controller
                 'parent_name' => $parent_name,
                 'assign_class_id' => $request->assign_class_id,
                 'board_id' => $request->board_id,
+                'assign_board_id'=>$request->board_id,
+                'assign_class_id'=>$request->class_id,
+                'parent_name'=>$request->parent_name,
+                'is_above_eighteen'=>$request->is_above_eighteen,
             ]);
             $user = User::where('email', $request['email'])->select('id', 'email', 'phone', 'name', 'is_activate', 'created_at')->first();
             return response()->json([
