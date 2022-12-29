@@ -120,6 +120,10 @@ function teacherReferralId()
     $referralId         = 'ABHITHSIKSHA' . date('dmY') . '/' . random_int(10000000, 99999999);
     return $referralId;
 }
+function reciptGenerate($id){
+    $reciptId         = 'ABHITHSIKSHA/' . $id;
+    return $reciptId;
+}
 function getlessonAttachment($lesson_id)
 {
     $lesson = Lesson::with('lessonAttachment')->where('id', $lesson_id)->first();
