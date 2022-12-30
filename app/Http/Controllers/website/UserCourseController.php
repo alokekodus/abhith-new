@@ -71,11 +71,12 @@ class UserCourseController extends Controller
                     'subjects'=>$purchase_history->assignSubject,
                     'total_amount'=>  number_format($purchase_history->assignSubject->sum('amount')??'00', 2, '.', '') ,
                 ];
-                $pdf = PDF::loadView('common.receipt', [
+                $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+                     ->loadView('common.receipt', [
                     'user_details' => $user,
                     'course_detatils' => $course_detatils
                 ]);
-               
+                $pdf->setPaper('A4','landscape');
                 Storage::put('public/pdf/'.auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf', $pdf->output());
                 $file_path='storage/pdf/'.auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf';
                 $update_data=[
@@ -86,6 +87,7 @@ class UserCourseController extends Controller
                 $purchase_history->update($update_data);
                 
                 // $generated_pdf= $pdf->download(auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf')->getOriginalContent();
+               
                 return $pdf->download(auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf');
                 
             }else{

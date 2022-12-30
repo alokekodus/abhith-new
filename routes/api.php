@@ -62,7 +62,7 @@ Route::middleware('auth:sanctum')->prefix('account')->group(function () {
     Route::get('address', [AccountController::class, 'getUserAddress']);
 });
 Route::middleware('auth:sanctum')->group(function () {
-   
+    Route::get('all-class', [CourseController::class, 'findAllClass']);
     Route::post('subjects', [SubjectController::class, 'findSubject']);
     Route::get('subject-details', [SubjectController::class, 'subjectDetails']);
     Route::get('subject/lessons', [SubjectController::class, 'LessonDetails']);
@@ -119,5 +119,5 @@ Route::group(['prefix' => 'user'], function () {
     Route::POST('/verifyotp', [UserController::class, 'verifyOtpForgotPassword']);
     Route::POST('/reset-password', [UserController::class, 'resetForgotPassword']);
 });
-Route::get('all-class', [CourseController::class, 'findAllClass']);
+Route::get('get-all-class', [CourseController::class, 'getAllClass']);
 Route::get('/board', [SubjectController::class, 'getBoard']);
