@@ -76,6 +76,8 @@ class UserCourseController extends Controller
                     'user_details' => $user,
                     'course_detatils' => $course_detatils
                 ]);
+               
+                $pdf->setPaper('A4', 'portrait');
                 Storage::put('public/pdf/'.auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf', $pdf->output());
                 $file_path='storage/pdf/'.auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf';
                 $update_data=[
