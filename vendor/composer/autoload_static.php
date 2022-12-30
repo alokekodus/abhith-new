@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a
+class ComposerStaticInitd7dece940e1d2a4d81775437df5f211d
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -406,8 +406,8 @@ class ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -1102,6 +1102,9 @@ class ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a
         'Doctrine\\Common\\Cache\\Psr6\\DoctrineProvider' => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/DoctrineProvider.php',
         'Doctrine\\Common\\Cache\\Psr6\\InvalidArgument' => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/InvalidArgument.php',
         'Doctrine\\Common\\Cache\\Psr6\\TypedCacheItem' => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache/Psr6/TypedCacheItem.php',
+        'Doctrine\\Common\\EventArgs' => __DIR__ . '/..' . '/doctrine/event-manager/src/EventArgs.php',
+        'Doctrine\\Common\\EventManager' => __DIR__ . '/..' . '/doctrine/event-manager/src/EventManager.php',
+        'Doctrine\\Common\\EventSubscriber' => __DIR__ . '/..' . '/doctrine/event-manager/src/EventSubscriber.php',
         'Doctrine\\Common\\Lexer\\AbstractLexer' => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer/AbstractLexer.php',
         'Doctrine\\DBAL\\ArrayParameters\\Exception' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception.php',
         'Doctrine\\DBAL\\ArrayParameters\\Exception\\MissingNamedParameter' => __DIR__ . '/..' . '/doctrine/dbal/src/ArrayParameters/Exception/MissingNamedParameter.php',
@@ -7951,10 +7954,10 @@ class ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit293a810db9d22887e7b097ba5e3e9b8a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd7dece940e1d2a4d81775437df5f211d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd7dece940e1d2a4d81775437df5f211d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitd7dece940e1d2a4d81775437df5f211d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitd7dece940e1d2a4d81775437df5f211d::$classMap;
 
         }, null, ClassLoader::class);
     }

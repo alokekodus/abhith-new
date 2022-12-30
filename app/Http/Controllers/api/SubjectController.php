@@ -987,4 +987,84 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
+    public function getSuggestedClass(){
+        try {
+           
+            //get all subject
+            // $subjects = AssignSubject::with('review')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('board_id',2)->where('assign_class_id', 3)->where('is_activate', 1)->where('published', 1)->get();
+            $subjects = AssignSubject::with('review','assignClass', 'boards')->where('assign_class_id',auth()->user()->userDetail->assign_class_id)->where('board_id',auth()->user()->userDetail->board_id)->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get();
+             if($subjects->count()>0){
+                $subjects=$subjects;
+             }else{
+                $subjects = AssignSubject::with('review','assignClass', 'boards')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get(); 
+             }
+            // calculate total amount
+           
+            if (!$subjects->isEmpty()) {
+                $total_amount = 0;
+                foreach ($subjects as $key => $subject) {
+                    if (subjectAlreadyPurchase($subject->id) == 1) {
+                        $total_amount = $total_amount + 0;
+                    } else {
+                        $total_amount = $total_amount + $subject->subject_amount;
+                    }
+                }
+                $all_subject = [];
+                foreach ($subjects as $key => $subject) {
+                    if ($subject->review->count() > 0) {
+                        $total_rating = $subject->review()->count() * 5;
+                        $rating_average =  round($subject->review()->sum('rating') / $total_rating * 5);
+                    } else {
+                        $rating_average = "No reviews yet";
+                    }
+    
+                    $data = [
+                        'id' => $subject->id,
+                        'subject_name' => $subject->subject_name,
+                        'image' => $subject->image,
+                        'subject_amount' => $subject->subject_amount,
+                        'rating' => $rating_average,
+                        'already_purchase' => subjectAlreadyPurchase($subject->id),
+                    ];
+                    $all_subject[] = $data;
+                }
+    
+    
+    
+    
+                $data = [
+                    'subjects' => $all_subject,
+                    'total_amount' => $total_amount,
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "all board",
+                    "result" => $data,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            } else {
+                $data = [
+                    'subjects' => null,
+                    'total_amount' => null,
+                ];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No record found",
+                    "result" => $data,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
 }

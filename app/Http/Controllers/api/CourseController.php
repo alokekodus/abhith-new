@@ -95,7 +95,7 @@ class CourseController extends Controller
     public function findClass(Request $request)
     {
 
-        $board = AssignClass::where(['board_id' => $request->board_id,'is_activate'=>1])->get();
+        $board = AssignClass::where(['board_id' => $request->board_id, 'is_activate' => 1])->get();
         return response()->json($board);
     }
     public function findBoardClassSubject(Request $request)
@@ -106,54 +106,52 @@ class CourseController extends Controller
     public function allCourses()
     {
         try {
-            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id','is_activate','published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate',1)->where('published',1)->where('assign_class_id',auth()->user()->userDetail->assign_class_id)->where('board_id',auth()->user()->userDetail->board_id)->limit(4)->get();
-            if($courses->count()>0){
+            $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id', 'is_activate', 'published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->where('assign_class_id', auth()->user()->userDetail->assign_class_id)->where('board_id', auth()->user()->userDetail->board_id)->limit(4)->get();
+            if ($courses->count() > 0) {
                 $courses = $courses;
-            }else{
-                $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id','is_activate','published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate',1)->where('published',1)->limit(4)->get();
+            } else {
+                $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id', 'is_activate', 'published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->limit(4)->get();
             }
             if ($courses) {
 
                 $all_courses = [];
                 foreach ($courses as $key => $course) {
-                  
-                        if ($course->review->count() > 0) {
-                            $total_rating = $course->review()->count() * 5;
-                            $rating_average = round($course->review()->sum('rating') / $total_rating * 5);
-                        } else {
-                            $rating_average = "No reviews yet";
-                        }
-                        $data = [
-                            "id" => $course->id,
-                            "subject_name" => $course->subject_name,
-                            "image" => $course->image,
-                            "subject_amount" => $course->subject_amount,
-                            "assign_class_id" => $course->assign_class_id,
-                            "board_id" => $course->board_id,
-                            "assign_class" => $course->assignClass,
-                            "boards" => $course->boards,
-                            "rating" => $rating_average,
-                           
-                        ];
-                        $all_courses[] = $data;
-                    
-                }
-                
+
+                    if ($course->review->count() > 0) {
+                        $total_rating = $course->review()->count() * 5;
+                        $rating_average = round($course->review()->sum('rating') / $total_rating * 5);
+                    } else {
+                        $rating_average = "No reviews yet";
+                    }
                     $data = [
-                        "code" => 200,
-                        "status" => 1,
-                        "message" => "all courses",
-                        "result" => $all_courses,
+                        "id" => $course->id,
+                        "subject_name" => $course->subject_name,
+                        "image" => $course->image,
+                        "subject_amount" => $course->subject_amount,
+                        "assign_class_id" => $course->assign_class_id,
+                        "board_id" => $course->board_id,
+                        "assign_class" => $course->assignClass,
+                        "boards" => $course->boards,
+                        "rating" => $rating_average,
 
                     ];
-                    return response()->json(['status' => 1, 'result' => $data]);
-                
+                    $all_courses[] = $data;
+                }
+
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "all courses",
+                    "result" => $all_courses,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
             } else {
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "No record found",
-                    "result"=>[],
+                    "result" => [],
 
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
@@ -194,7 +192,7 @@ class CourseController extends Controller
                             "assign_class" => $course->assignClass,
                             "boards" => $course->boards,
                             "rating" => $rating_average,
-                            
+
                         ];
                         $all_courses[] = $data;
                     }
@@ -204,7 +202,7 @@ class CourseController extends Controller
                         "code" => 200,
                         "status" => 1,
                         "message" => "No record found",
-                        "result"=>$all_courses,
+                        "result" => $all_courses,
 
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
@@ -223,7 +221,7 @@ class CourseController extends Controller
                     "code" => 200,
                     "status" => 1,
                     "message" => "No record found",
-                    "result"=>[],
+                    "result" => [],
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
@@ -244,7 +242,7 @@ class CourseController extends Controller
             $board = Board::where('exam_board', $board_name)->where('is_activate', 1)->first();
 
             if ($board) {
-                $assign_class = AssignClass::select('id', 'class', 'board_id')->where('board_id', $board->id)->where('is_activate',1)->get();
+                $assign_class = AssignClass::select('id', 'class', 'board_id')->where('board_id', $board->id)->where('is_activate', 1)->get();
                 if ($assign_class) {
                     $all_class = [];
                     $all_class[0] = "Select class";
@@ -280,6 +278,56 @@ class CourseController extends Controller
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function getAllClass(Request $request)
+    {
+        try {
+            $board_id = $_GET['board_id'];
+
+            $assign_class = AssignClass::select('id', 'class', 'board_id')->where('board_id', $board_id)->where('is_activate', 1)->get();
+
+
+
+            if ($assign_class->count()>0) {
+                $all_class = [];
+                $all_class[0]['id'] =0;
+                $all_class[0]['name'] ="Select Class";
+                foreach ($assign_class as $key => $class) {
+                    $class = [
+                        'id' => $class->id,
+                        'name' => $class->class,
+                    ];
+                    $all_class[] = $class;
+                }
+                $result = ["all_class" => $all_class];
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "all Class",
+                    "result" => $result,
+
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+
+            $result = ["all_class" => []];
+            $data = [
+                "code" => 200,
+                "status" => 1,
+                "message" => "No Recored Found",
+                "result" => $result,
+
+            ];
+            return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $th]);
         }
     }
 }

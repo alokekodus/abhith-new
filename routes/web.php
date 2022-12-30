@@ -186,3 +186,5 @@ Route::prefix('contact')->group(function () {
 /* --------------------------------------- View -> Become A Teacher ------------------------------------------------------------ */
 
 Route::view('become-a-teacher', 'website.becomeTeacher.becomeTeacher')->name('website.becomeTeacher');
+
+Route::view('receipt', 'common.receipt');

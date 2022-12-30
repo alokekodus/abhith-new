@@ -77,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('subject/mcq/result', [SubjectController::class, 'practiceTestReport']);
     Route::get('/gallery', [GalleryController::class, 'index']);
     Route::get('subject/lesson/topic-details', [SubjectController::class, 'LessonTopicsDetails']);
+    Route::get('all-suggested-subject',[SubjectController::class,'getSuggestedClass']);
     //get board
     
 });
