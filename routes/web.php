@@ -55,7 +55,7 @@ Route::prefix('course')->group(function () {
         Route::post('video/watch-time-update', [CourseController::class, 'LessonVideoWatchTimeUpdate'])->name('website.course.package.subject.video.duration.update');
     });
 });
-Route::group(['middleware' => WebSite::class], function(){
+Route::group(['middleware' => WebSite::class], function () {
     Route::prefix('subject')->group(function () {
         Route::get('/{subject_id}', [SubjectController::class, 'subjectDetails'])->name('website.subject.detatils');
         Route::prefix('mcq')->group(function () {
@@ -92,7 +92,7 @@ Route::prefix('gallery')->group(function () {
 /* ------------------------------- Admin Login ------------------------------------ */
 Route::view('login', 'admin.auth.login')->middleware('customRedirect')->name('login');
 Route::post('signin', [AuthController::class, 'customLogin'])->name('custom.signin');
-
+// Route::get('login',[AuthController::class,'index'])->middleware('customRedirect')->name('login');
 
 /* ------------------------------- Website Login ---------------------------------- */
 Route::prefix('auth')->group(function () {
@@ -116,6 +116,8 @@ Route::prefix('account')->middleware([WebSite::class])->group(function () {
     Route::get('lesson/{id}', [LessonController::class, 'LessonDetails'])->name('website.user.lessonbyid');
     Route::get('/performance', [PerformanceController::class, 'allPerformance'])->name('website.user.performance');
     Route::get('/performancebysubjectid/{id}', [PerformanceController::class, 'allPerformanceBySubject'])->name('website.user.performance.bysubjectid');
+    Route::get('my-courses/receipt/{id}', [UserCourseController::class, 'receiptGenerate'])->name('receipt.download');
+    
 });
 
 
@@ -184,3 +186,5 @@ Route::prefix('contact')->group(function () {
 /* --------------------------------------- View -> Become A Teacher ------------------------------------------------------------ */
 
 Route::view('become-a-teacher', 'website.becomeTeacher.becomeTeacher')->name('website.becomeTeacher');
+
+Route::view('receipt', 'common.receipt');

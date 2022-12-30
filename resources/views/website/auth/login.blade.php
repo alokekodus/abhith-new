@@ -1,74 +1,73 @@
 @extends('layout.website.auth')
 @if ($prefix == 'teacher')
-    @section('title', 'Teacher | Login')
+@section('title', 'Teacher | Login')
 @else
-    @section('title', 'User | Login')
+@section('title', 'User | Login')
 @endif
 
 @section('header')
 @endsection
 @section('main')
 
-    <section class="login-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="login-div">
-                        <div class="login-logo"><img src="{{ asset('asset_website/img/home/logo_.png') }}" class="w100">
-                        </div>
+<section class="login-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="login-div">
+                    <div class="login-logo"><img src="{{ asset('asset_website/img/home/logo_.png') }}" class="w100">
+                    </div>
 
-                        <a onclick="goBack()" class="page-close"><span class="icon-cancel-30"></span></a>
-                        <div class="login-cover">
-                            <ul class="nav nav-tabs login-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-                                        role="tab" aria-controls="home" aria-selected="true">Log In</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                        aria-controls="profile" aria-selected="false">Sign Up</a>
-                                </li>
+                    <a onclick="goBack()" class="page-close"><span class="icon-cancel-30"></span></a>
+                    <div class="login-cover">
+                        <ul class="nav nav-tabs login-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                    aria-controls="home" aria-selected="true">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                    aria-controls="profile" aria-selected="false">Sign Up</a>
+                            </li>
 
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                {{-- Login --}}
-                                <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                    aria-labelledby="home-tab">
-                                    <form class="row" action="{{ route('website.auth.login') }}" method="POST"
-                                        id="loginForm">
-                                        @csrf
-                                        <div class="form-group col-lg-12">
-                                            <input type="email" name="email" class="form-control" placeholder="Email"
-                                                id="email" required>
-                                            <span class="text-danger">
-                                                @error('email')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
-                                        </div>
-                                        <div class="form-group col-lg-12">
-                                            <input type="password" name="password" class="form-control"
-                                                placeholder="password" id="password" required>
-                                            <span class="text-danger">
-                                                @error('password')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
-                                        </div>
-                                        <span class="text-danger ml-2">
-                                            @if ($errors->any())
-                                                {{ $errors->first() }}
-                                            @endif
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            {{-- Login --}}
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form class="row" action="{{ route('website.auth.login') }}" method="POST"
+                                    id="loginForm">
+                                    @csrf
+                                    <div class="form-group col-lg-12">
+                                        <input type="email" name="email" class="form-control" placeholder="Email"
+                                            id="email" required>
+                                        <span class="text-danger">
+                                            @error('email')
+                                            {{ $message }}
+                                            @enderror
                                         </span>
-                                        <div class="form-group mb0 col-lg-12">
-                                            <button type="submit" class="btn btn-block login-btn"
-                                                id="loginBtn">Login</button>
-                                        </div>
-                                        <div class="col-lg-12 forgot-div"><a href="{{ route('website.forgot.password') }}"
-                                                class="text-center">Forgot Password</a></div>
-                                    </form>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <input type="password" name="password" class="form-control"
+                                            placeholder="password" id="password" required>
+                                        <span class="text-danger">
+                                            @error('password')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <span class="text-danger ml-2">
+                                        @if ($errors->any())
+                                        {{ $errors->first() }}
+                                        @endif
+                                    </span>
+                                    <div class="form-group mb0 col-lg-12">
+                                        <button type="submit" class="btn btn-block login-btn"
+                                            id="loginBtn">Login</button>
+                                    </div>
+                                    <div class="col-lg-12 forgot-div"><a href="{{ route('website.forgot.password') }}"
+                                            class="text-center">Forgot Password</a></div>
+                                </form>
 
-                                    {{-- <div class="google-div"><a href="#" class="google-btn"><span
+                                {{-- <div class="google-div"><a href="#" class="google-btn"><span
                                             class="icon-google-30 google-icon"><span class="path1"></span><span
                                                 class="path2"></span><span class="path3"></span><span
                                                 class="path4"></span><span class="path5"></span><span
@@ -77,187 +76,226 @@
                                 <div class="facebook-div"><a href="#" class="facebook-btn"><span
                                             class="icon-facebook-07 facebook-icon"></span>Continue with Facebook</a>
                                 </div> --}}
-                                </div>
+                            </div>
 
-                                {{-- Register --}}
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <form class="row" id="signupForm">
-                                        @csrf
-                                        <div class="form-group col-lg-12 mb-1" style="font-size: 14px">
-                                            <label class="mr-3">I am above 18 years old.</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input age-check-radio" type="radio"
-                                                    name="inlineRadioOptions" id="ageCheckYes" value="option1">
-                                                <label class="form-check-label" for="ageCheckYes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input age-check-radio" type="radio"
-                                                    name="inlineRadioOptions" id="ageCheckNo" value="option2">
-                                                <label class="form-check-label" for="ageCheckNo">No</label>
-                                            </div>
+                            {{-- Register --}}
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <form class="row" id="signupForm">
+                                    @csrf
+                                    <div class="form-group col-lg-12 mb-1" style="font-size: 14px">
+                                        <label class="mr-3">I am above 18 years old.</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input age-check-radio is_above_eighteen" type="radio"
+                                                name="is_above_eighteen" id="ageCheckYes" value="1">
+                                            <label class="form-check-label" for="ageCheckYes">Yes</label>
                                         </div>
-                                        <div class="form-group col-lg-12 d-none">
-                                            <input type="text" class="form-control" name="parent_name"
-                                                placeholder="Parent Name" id="parentname" maxlength="50"
-                                                value="{{ old('parentname') }}" required>
-                                            <span class="text-danger">
-                                                @error('parentname')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input age-check-radio is_above_eighteen" type="radio"
+                                                name="is_above_eighteen" id="ageCheckNo" value="0">
+                                            <label class="form-check-label" for="ageCheckNo">No</label>
                                         </div>
-                                        <div class="form-group col-lg-12">
-                                            <input type="text" class="form-control" name="name" placeholder="Name"
-                                                id="name" maxlength="50" value="{{ old('name') }}" required>
-                                            <span class="text-danger">
-                                                @error('name')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
-                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12 d-none">
+                                        <input type="text" class="form-control" name="parent_name"
+                                            placeholder="Parent Name" id="parentname" maxlength="50"
+                                            value="{{ old('parentname') }}">
+                                        <span class="text-danger">
+                                            @error('parentname')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <input type="text" class="form-control" name="name" placeholder="Name" id="name"
+                                            maxlength="50" value="{{ old('name') }}">
+                                        <span class="text-danger">
+                                            @error('name')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
 
-                                        <div class="form-group col-lg-12">
-                                            <div class="row g-0">
-                                                <div class="col-lg-8">
-                                                    <select class="custom-select shadow-none board">
-                                                        <option selected>Board</option>
-                                                        <option value="1">SEBA</option>
-                                                        <option value="2">CBSE</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-4 pl-0">
-                                                    <select class="custom-select shadow-none class">
-                                                        <option selected>Class</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                    </select>
-                                                </div>
+                                    <div class="form-group col-lg-12">
+                                        <div class="row g-0">
+                                            <div class="col-lg-8">
+                                                <select class="custom-select shadow-none" name="assignedBoard"
+                                                    id="assignedBoard" onchange="changeBoard()" required>
+                                                    <option selected>Board</option>
+                                                    @forelse ($boards as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->exam_board }}</option>
+                                                    @empty
+                                                    <option>No boards to show</option>
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 pl-0">
+                                                <select class="custom-select shadow-none" id="board-class-dd"
+                                                    name="class_id">
+
+                                                </select>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        {{-- <div class="form-group col-lg-12">
+                                    {{-- <div class="form-group col-lg-12">
                                         <input type="email" name="email" class="form-control" placeholder="Email"
                                             id="signupEmail" value="{{old('email')}}" required>
                                         <span class="text-danger">@error('email'){{$message}}@enderror</span>
                                     </div> --}}
 
-                                        <div class="form-group col-lg-12">
-                                            <div class="input-group">
-                                                <input type="email" name="signupEmail" class="form-control"
-                                                    placeholder="e.g. abc@gmail.com" id="signupEmail"
-                                                    pattern="(0|91)?[6-9][0-9]{9}" title="Please enter valid email ID"
-                                                    required>
-                                                <div class="input-group-append">
-                                                    <button class="input-group-text" id="sendEmailOtpBtn"
-                                                        style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send
-                                                        OTP</button>
-                                                </div>
+                                    <div class="form-group col-lg-12">
+                                        <div class="input-group">
+                                            <input type="email" name="signupEmail" class="form-control"
+                                                placeholder="e.g. abc@gmail.com" id="signupEmail"
+                                                pattern="(0|91)?[6-9][0-9]{9}" title="Please enter valid email ID"
+                                                required>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="sendEmailOtpBtn"
+                                                    style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send
+                                                    OTP</button>
                                             </div>
-                                            <span class="text-danger">
-                                                @error('email')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
                                         </div>
-                                        <div class="form-group  verify-email-otp-div col-lg-12" style="display: none;">
-                                            <div class="input-group ">
-                                                <input type="text" name="emailotp" class="form-control"
-                                                    placeholder="Enter OTP e.g. 123456" id="enterEmailOtp"
-                                                    pattern="[0-9]+" title="Enter numbers only." required>
-                                                <div class="input-group-append">
-                                                    <button class="btn input-group-text" id="verifyEmailOtpBtn"
-                                                        style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify
-                                                        OTP</button>
-                                                </div>
+                                        <span class="text-danger">
+                                            @error('email')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <div class="form-group  verify-email-otp-div col-lg-12" style="display: none;">
+                                        <div class="input-group ">
+                                            <input type="text" name="emailotp" class="form-control"
+                                                placeholder="Enter OTP e.g. 123456" id="enterEmailOtp" pattern="[0-9]+"
+                                                title="Enter numbers only." required>
+                                            <div class="input-group-append">
+                                                <button class="btn input-group-text" id="verifyEmailOtpBtn"
+                                                    style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify
+                                                    OTP</button>
                                             </div>
-                                            <span class="text-danger">
-                                                @error('otp')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
                                         </div>
+                                        <span class="text-danger">
+                                            @error('otp')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
 
 
 
-                                        <div class="form-group col-lg-12">
-                                            <div class="input-group">
-                                                <input type="text" name="phone" class="form-control"
-                                                    placeholder="e.g. 7895123572" id="phone"
-                                                    pattern="(0|91)?[6-9][0-9]{9}" maxlength="10"
-                                                    title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)"
-                                                    required>
-                                                <div class="input-group-append">
-                                                    <button class="input-group-text" id="sendOtpBtn"
-                                                        style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send
-                                                        OTP</button>
-                                                </div>
+                                    <div class="form-group col-lg-12">
+                                        <div class="input-group">
+                                            <input type="text" name="phone" class="form-control"
+                                                placeholder="e.g. 7895123572" id="phone" pattern="(0|91)?[6-9][0-9]{9}"
+                                                maxlength="10"
+                                                title="Phone number should start with 6 or 7 or 8 or 9 and 10 chars long. ( e.g 7896845214)"
+                                                required>
+                                            <div class="input-group-append">
+                                                <button class="input-group-text" id="sendOtpBtn"
+                                                    style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #076fef, #01b9f1);">Send
+                                                    OTP</button>
                                             </div>
-                                            <span class="text-danger">
-                                                @error('phone')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
                                         </div>
-                                        <div class="form-group  verify-otp-div col-lg-12" style="display: none;">
-                                            <div class="input-group ">
-                                                <input type="text" name="otp" class="form-control"
-                                                    placeholder="Enter OTP e.g. 123456" id="enterOtp" pattern="[0-9]+"
-                                                    title="Enter numbers only." required>
-                                                <div class="input-group-append">
-                                                    <button class="btn input-group-text" id="verifyOtpBtn"
-                                                        style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify
-                                                        OTP</button>
-                                                </div>
+                                        <span class="text-danger">
+                                            @error('phone')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <div class="form-group  verify-otp-div col-lg-12" style="display: none;">
+                                        <div class="input-group ">
+                                            <input type="text" name="otp" class="form-control"
+                                                placeholder="Enter OTP e.g. 123456" id="enterOtp" pattern="[0-9]+"
+                                                title="Enter numbers only." required>
+                                            <div class="input-group-append">
+                                                <button class="btn input-group-text" id="verifyOtpBtn"
+                                                    style="cursor: pointer;font-size:13px;color:white;background-image: linear-gradient(to left, #7d9fc9, #79adbd);">Verify
+                                                    OTP</button>
                                             </div>
-                                            <span class="text-danger">
-                                                @error('otp')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
                                         </div>
-                                        <div class="form-group col-lg-12">
-                                            <input type="password" name="password" class="form-control"
-                                                placeholder="Password" id="pwd" required>
-                                            <span class="text-danger">
-                                                @error('password')
-                                                    {{ $message }}
-                                                @enderror
-                                            </span>
-                                        </div>
-                                        <div class="form-group col-lg-12">
-                                            <input type="password" name="password_confirmation" class="form-control"
-                                                placeholder="Confirm Password" id="confPwd" required>
-                                        </div>
-                                        <div class="form-group mb0 col-lg-12">
-                                            <button type="submit" class="btn btn-block sign-btn" id="signupBtn">Sign
-                                                up</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                        <span class="text-danger">
+                                            @error('otp')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <input type="password" name="password" class="form-control"
+                                            placeholder="Password" id="pwd" required>
+                                        <span class="text-danger">
+                                            @error('password')
+                                            {{ $message }}
+                                            @enderror
+                                        </span>
+                                    </div>
+                                    <div class="form-group col-lg-12">
+                                        <input type="password" name="password_confirmation" class="form-control"
+                                            placeholder="Confirm Password" id="confPwd" required>
+                                    </div>
+                                    <div class="form-group mb0 col-lg-12">
+                                        <button type="submit" class="btn btn-block sign-btn" id="signupBtn">Sign
+                                            up</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection
 
 @section('script')
+<script>
+    function changeBoard() {
+            $("#board-class-dd").html('');
+            let board_id = $("#assignedBoard").val();
+            $.ajax({
+                url: "{{ route('webboard.class') }}",
+                type: "post",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'board_id': board_id
+                },
+                success: function(data) {
+                    if (data.length > 0) {
+                        $("#board-class-dd").prop("disabled", false);
+                        $('#board-class-dd').html('<option value="">Class</option>');
+                        data.forEach((boardClass) => {
+                            $("#board-class-dd").append('<option value="' + boardClass
+                                .id + '">' + 'Class-' + boardClass.class + '</option>');
 
-    <script>
-        $('.age-check-radio').on('change', function() {
+                        });
+                    } else {
+                        $("#board-class-dd").prop("disabled", true);
+
+                    }
+
+
+
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 500 || xhr.status == 422) {
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+        }
+</script>
+<script>
+    $('.age-check-radio').on('change', function() {
             if ($('#ageCheckYes').is(':checked')) {
-                $('#parentname').parent().removeClass("d-none");
-            } else if ($('#ageCheckNo').is(':checked')) {
                 $('#parentname').parent().addClass("d-none");
+            } else if ($('#ageCheckNo').is(':checked')) {
+                $('#parentname').parent().removeClass("d-none");
+               
             }
         })
-    </script>
+</script>
 
-    <script>
-        $('#verifyOtpBtn').attr('disabled', true);
+<script>
+    $('#verifyOtpBtn').attr('disabled', true);
 
         let interval = '';
         let no_of_otp_sent = 0;
@@ -588,6 +626,10 @@
                         'phone': $('#phone').val(),
                         'password': $('#pwd').val(),
                         'name': $('#name').val(),
+                        'is_above_eighteen':$('.is_above_eighteen').val(),
+                        'parent_name':$('#parent_name').val(),
+                        'board_id':$('#assignedBoard').val(),
+                        'class_id':$('#board-class-dd').val()
                     },
                     success: function(data) {
                         console.log(data);
@@ -596,7 +638,7 @@
                         } else {
                             toastr.error(data.message);
                         }
-                        location.reload(true);
+                        // location.reload(true);
                     },
                     error: function(xhr, status, error) {
                         if (xhr.status == 500 || xhr.status == 422) {
@@ -606,7 +648,7 @@
                 });
             }
         });
-    </script>
+</script>
 @endsection
 
 

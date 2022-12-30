@@ -484,7 +484,7 @@
                                                 '00', 2, '.', '') }}
                                             </td>
                                             <td>{{ $item->updated_at->format('d-M-Y') }}</td>
-                                            <td><a href="#">Download</a></td>
+                                            <td><a href="{{route('receipt.download',$item->id)}}">Download</a></td>
                                         </tr>
                                         @empty
                                         <tr>

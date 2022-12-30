@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Common\Activation;
 use App\Common\Type;
 use App\Mail\OtpVerfication;
+use App\Models\Board;
 use App\Models\MobileAndEmailVerification;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
@@ -183,20 +184,37 @@ class WebsiteAuthController extends Controller
 
     public function completeSignup(Request $request)
     {
-       
+
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'phone' => 'required|numeric',
                 'password' => 'required',
-                'name'=>'required'
+                'name' => 'required',
+                'is_above_eighteen' => 'required',
+                'board_id'=>'required',
+                'class_id'=>'required'
 
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['status' => false, 'message' => $validator->errors()]);
             }
+            if ($request->is_above_eighteen == 0) {
+                $validator = Validator::make($request->all(), [
 
+                    'parent_name' => 'required'
+
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['status' => false, 'message' => $validator->errors()]);
+                }
+            }
+            $parent_name=null;
+            if ($request->is_above_eighteen == 0) {
+                $parent_name=$request->parent_name;
+            }
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
             $user_mobile_in_use = User::where('phone', $request->phone)->where('is_activate', 1)->first();
@@ -224,8 +242,8 @@ class WebsiteAuthController extends Controller
             }
 
             $details = User::where('email', $request->email)->where('phone', $request->phone)->where('verify_otp', 1)->where('is_activate', 1)->first();
-            
-            if ($details==null) {
+
+            if ($details == null) {
                 if (getPrefix($request) == "teacher") {
                     $roles = 3;
                 } else {
@@ -241,7 +259,7 @@ class WebsiteAuthController extends Controller
                     'password' => Hash::make($request->password),
                     'is_active' => 1,
                 ];
-               
+
                 $user = User::create($data);
                 $assign_role = $user->assignRole(2);
                 $token = $user->createToken('auth_token')->plainTextToken;
@@ -250,9 +268,12 @@ class WebsiteAuthController extends Controller
                     'email' => $request->email,
                     'phone' => $request->phone,
                     'user_id' => $user->id,
+                    'assign_board_id'=>$request->board_id,
+                    'assign_class_id'=>$request->class_id,
+                    'parent_name'=>$request->parent_name,
+                    'is_above_eighteen'=>$request->is_above_eighteen,
                 ]);
                 return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
-                
             } else {
                 return response()->json(['message' => 'Already registered user.', 'status' => 0]);
             }
@@ -264,7 +285,7 @@ class WebsiteAuthController extends Controller
 
     public function login(Request $request)
     {
-        
+
         try {
 
             if (getPrefix($request) == "api") {
@@ -274,7 +295,7 @@ class WebsiteAuthController extends Controller
             } else {
                 $type = Type::User;
             }
-           
+
             if (getPrefix($request) == "api") {
                 $validator = Validator::make($request->all(), [
                     'email' => 'required|email',
@@ -319,12 +340,11 @@ class WebsiteAuthController extends Controller
                     if ($request->current_route == null) {
                         if (auth()->user()->hasRole('Teacher')) {
                             return redirect()->route('teacher.dashboard');
-                        }
-                        elseif (auth()->user()->hasRole('Student')) {
+                        } elseif (auth()->user()->hasRole('Student')) {
 
                             Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                             return redirect()->route('website.dashboard');
-                        }else{
+                        } else {
                             return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
                         }
                     } else {
@@ -365,8 +385,10 @@ class WebsiteAuthController extends Controller
             $prefix = "teacher";
         } else {
             $prefix = "user";
+            $boards = Board::where('is_activate', 1)->get();
         }
-        return view('website.auth.login', compact('prefix'));
+
+        return view('website.auth.login', compact('prefix', 'boards'));
     }
     public function mobileSignUp(Request $request)
     {
@@ -376,12 +398,30 @@ class WebsiteAuthController extends Controller
                 'name' => 'required',
                 'email' => 'required|email|unique:users',
                 'phone' => 'required|numeric|unique:users',
+                'is_above_eighteen' => 'required',
+                'assign_class_id' => 'required',
+                'board_id' => 'required',
 
 
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['status' => 0, 'message' => $validator->errors()]);
+            }
+            if ($request->is_above_eighteen == 0) {
+                $validator = Validator::make($request->all(), [
+
+                    'parent_name' => 'required'
+
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['status' => false, 'message' => $validator->errors()]);
+                }
+            }
+            $parent_name=null;
+            if ($request->is_above_eighteen == 0) {
+                $parent_name=$request->parent_name;
             }
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
@@ -411,7 +451,11 @@ class WebsiteAuthController extends Controller
                     'message' => "This email address already exists",
                 ]);
             }
+            if ($request->has('parent_name')) {
+                $parent_name = $request->parent_name;
+            }
             $data = [
+
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -420,6 +464,7 @@ class WebsiteAuthController extends Controller
                 'type_id' => 2,
                 'password' => Hash::make($request->password),
                 'is_active' => 1,
+               
             ];
             $user = User::create($data);
             $assign_role = $user->assignRole(2);
@@ -429,6 +474,13 @@ class WebsiteAuthController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'user_id' => $user->id,
+                'parent_name' => $parent_name,
+                'assign_class_id' => $request->assign_class_id,
+                'board_id' => $request->board_id,
+                'assign_board_id'=>$request->board_id,
+                'assign_class_id'=>$request->class_id,
+                'parent_name'=>$request->parent_name,
+                'is_above_eighteen'=>$request->is_above_eighteen,
             ]);
             $user = User::where('email', $request['email'])->select('id', 'email', 'phone', 'name', 'is_activate', 'created_at')->first();
             return response()->json([
@@ -561,9 +613,9 @@ class WebsiteAuthController extends Controller
     public function sendEmailOtp(Request $request)
     {
         try {
-           
+
             $user = User::where('email', $request->email)->where('is_activate', 1)->first();
-            
+
             if ($user != null) {
                 $data = [
                     "code" => 400,

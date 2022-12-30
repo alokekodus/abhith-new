@@ -13,6 +13,9 @@ use Brian2694\Toastr\Facades\Toastr;
 class AuthController extends Controller
 {
   //
+  public function index(){
+    return view('admin.auth.login');
+  }
   protected function customLogin(Request $request)
   {
     try {
