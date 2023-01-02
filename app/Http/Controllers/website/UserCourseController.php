@@ -66,17 +66,17 @@ class UserCourseController extends Controller
                     'email'=>$user_details->email
                 ];
                 $course_detatils=[
+                    'created_at'=>$purchase_history->created_at,
                     'board'=>$purchase_history->board->exam_board,
                     'class'=>$purchase_history->assignClass->class,
                     'subjects'=>$purchase_history->assignSubject,
                     'total_amount'=>  number_format($purchase_history->assignSubject->sum('amount')??'00', 2, '.', '') ,
                 ];
-                $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                     ->loadView('common.receipt', [
+                $pdf = PDF::loadView('common.receipt', [
                     'user_details' => $user,
                     'course_detatils' => $course_detatils
                 ]);
-               
+                $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
                 $pdf->setPaper('A4', 'portrait');
                 Storage::put('public/pdf/'.auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf', $pdf->output());
                 $file_path='storage/pdf/'.auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf';
