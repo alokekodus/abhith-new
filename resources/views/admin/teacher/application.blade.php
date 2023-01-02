@@ -47,9 +47,9 @@
                 <div class="card-footer">
                     <a href="{{ asset($user_details->resume_url) }}" class="btn btn-primary" data-toggle="modal"
                         data-target=".bd-example-modal-lg">View Resume</a>
-
+                    
                     @if ($user_details->status == 1 &&
-                        auth()->user()->hasRole('Admin'))
+                        auth()->user()->type_id==1)
                         <button class="btn btn-outline-danger" id="rejectTeacherBtn" data-id="{{ Crypt::encrypt($user_details->id) }}"
                             style="float:right">Reject</button>
 

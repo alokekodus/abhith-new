@@ -192,8 +192,8 @@ class WebsiteAuthController extends Controller
                 'password' => 'required',
                 'name' => 'required',
                 'is_above_eighteen' => 'required',
-                'board_id'=>'required',
-                'class_id'=>'required'
+                'board_id' => 'required',
+                'class_id' => 'required'
 
             ]);
 
@@ -211,9 +211,9 @@ class WebsiteAuthController extends Controller
                     return response()->json(['status' => false, 'message' => $validator->errors()]);
                 }
             }
-            $parent_name=null;
+            $parent_name = null;
             if ($request->is_above_eighteen == 0) {
-                $parent_name=$request->parent_name;
+                $parent_name = $request->parent_name;
             }
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
@@ -268,10 +268,90 @@ class WebsiteAuthController extends Controller
                     'email' => $request->email,
                     'phone' => $request->phone,
                     'user_id' => $user->id,
-                    'assign_board_id'=>$request->board_id,
-                    'assign_class_id'=>$request->class_id,
-                    'parent_name'=>$request->parent_name,
-                    'is_above_eighteen'=>$request->is_above_eighteen,
+                    'assign_board_id' => $request->board_id,
+                    'assign_class_id' => $request->class_id,
+                    'parent_name' => $request->parent_name,
+                    'is_above_eighteen' => $request->is_above_eighteen,
+                ]);
+                return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
+            } else {
+                return response()->json(['message' => 'Already registered user.', 'status' => 0]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th, 'status' => 0]);
+        }
+    }
+    public function teacherSignup(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
+                'password' => 'required',
+                'name' => 'required',
+
+
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => false, 'message' => $validator->errors()]);
+            }
+
+
+            $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
+            $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
+            $user_mobile_in_use = User::where('phone', $request->phone)->where('is_activate', 1)->first();
+            $user_email_in_use = User::where('email', $request->phone)->where('is_activate', 1)->first();
+            if ($is_mobile_verified == null) {
+                return response()->json(['message' => 'Please verify your mobile number', 'status' => 0]);
+            }
+            if ($is_email_verified == null) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => "Please verify your email address",
+                ]);
+            }
+            if ($user_mobile_in_use) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => "This mobile number already exists",
+                ]);
+            }
+            if ($user_email_in_use) {
+                return response()->json([
+                    'status' => 0,
+                    'message' => "This email address already exists",
+                ]);
+            }
+
+            $details = User::where('email', $request->email)->where('phone', $request->phone)->where('verify_otp', 1)->where('is_activate', 1)->first();
+
+            if ($details == null) {
+                if (getPrefix($request) == "teacher") {
+                    $roles = 3;
+                } else {
+                    $roles = 2;
+                }
+                $data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'otp' => 00000,
+                    'verify_otp' => 1,
+                    'type_id' => $roles,
+                    'password' => Hash::make($request->password),
+                    'is_active' => 1,
+                ];
+
+                $user = User::create($data);
+                $assign_role = $user->assignRole($roles);
+                $token = $user->createToken('auth_token')->plainTextToken;
+                $userDetails = UserDetails::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'user_id' => $user->id,
+
                 ]);
                 return response()->json(['message' => 'Signed up successfully', 'status' => 1]);
             } else {
@@ -282,7 +362,6 @@ class WebsiteAuthController extends Controller
         }
     }
 
-
     public function login(Request $request)
     {
 
@@ -290,11 +369,12 @@ class WebsiteAuthController extends Controller
 
             if (getPrefix($request) == "api") {
                 $type = Type::User;
-            } elseif (getPrefix($request) == "teacher") {
+            } elseif (getPrefix($request) == "/auth") {
                 $type = Type::Teacher;
             } else {
                 $type = Type::User;
             }
+            
 
             if (getPrefix($request) == "api") {
                 $validator = Validator::make($request->all(), [
@@ -335,24 +415,19 @@ class WebsiteAuthController extends Controller
                     'password' => 'required'
                 ]);
 
-                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
-
-                    if ($request->current_route == null) {
-                        if (auth()->user()->hasRole('Teacher')) {
-                            return redirect()->route('teacher.dashboard');
-                        } elseif (auth()->user()->hasRole('Student')) {
-
-                            Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
-                            return redirect()->route('website.dashboard');
-                        } else {
-                            return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
-                        }
-                    } else {
-                        return redirect($request->current_route);
-                    }
-                } else {
-                    return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
+                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])&&($type==2)) {
+                    Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
+                    return redirect()->route('website.dashboard');
+                }elseif(Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])&&($type==3)){
+                    Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
+                    return redirect()->route('teacher.dashboard');
+                }else{
+                    return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());  
                 }
+
+
+
+                
             }
         } catch (\Throwable $th) {
             return response()->json(['code' => 500, 'message' => 'Whoops! Something Went Wrong', 'status' => 0]);
@@ -383,12 +458,12 @@ class WebsiteAuthController extends Controller
     {
         if ($request->route()->getPrefix() == "teacher") {
             $prefix = "teacher";
+            return view('website.auth.teacherlogin', compact('prefix'));
         } else {
             $prefix = "user";
             $boards = Board::where('is_activate', 1)->get();
+            return view('website.auth.login', compact('prefix', 'boards'));
         }
-
-        return view('website.auth.login', compact('prefix', 'boards'));
     }
     public function mobileSignUp(Request $request)
     {
@@ -419,9 +494,9 @@ class WebsiteAuthController extends Controller
                     return response()->json(['status' => false, 'message' => $validator->errors()]);
                 }
             }
-            $parent_name=null;
+            $parent_name = null;
             if ($request->is_above_eighteen == 0) {
-                $parent_name=$request->parent_name;
+                $parent_name = $request->parent_name;
             }
             $is_mobile_verified = MobileAndEmailVerification::where('mobile', $request->phone)->where('mobile_email_verification', 1)->first();
             $is_email_verified = MobileAndEmailVerification::where('email', $request->email)->where('mobile_email_verification', 1)->first();
@@ -464,7 +539,7 @@ class WebsiteAuthController extends Controller
                 'type_id' => 2,
                 'password' => Hash::make($request->password),
                 'is_active' => 1,
-               
+
             ];
             $user = User::create($data);
             $assign_role = $user->assignRole(2);
@@ -477,10 +552,10 @@ class WebsiteAuthController extends Controller
                 'parent_name' => $parent_name,
                 'assign_class_id' => $request->assign_class_id,
                 'board_id' => $request->board_id,
-                'assign_board_id'=>$request->board_id,
-                'assign_class_id'=>$request->class_id,
-                'parent_name'=>$request->parent_name,
-                'is_above_eighteen'=>$request->is_above_eighteen,
+                'assign_board_id' => $request->board_id,
+                'assign_class_id' => $request->class_id,
+                'parent_name' => $request->parent_name,
+                'is_above_eighteen' => $request->is_above_eighteen,
             ]);
             $user = User::where('email', $request['email'])->select('id', 'email', 'phone', 'name', 'is_activate', 'created_at')->first();
             return response()->json([

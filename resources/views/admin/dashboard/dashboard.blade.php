@@ -9,7 +9,6 @@
         font-size: 14px;
     }
 </style>
-
 @if(auth()->user()->hasRole('Teacher') && !isTeacherApply())
 @include('admin.teacher.applicationform')
 @else

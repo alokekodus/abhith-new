@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('login',[WebsiteAuthController::class,'viewLogin'])->name('teacher.login');
 Route::post('signup', [WebsiteAuthController::class, 'signup'])->name('teacher.signup');
 Route::post('verify-otp', [WebsiteAuthController::class, 'verifyOtp'])->name('teacher.verifyOtp');
-Route::post('complete-signup', [WebsiteAuthController::class, 'completeSignup'])->name('teacher.completeSignup');
+Route::post('complete-signup', [WebsiteAuthController::class, 'teacherSignup'])->name('teacher.completeSignup');
 Route::post('login', [WebsiteAuthController::class, 'login'])->name('teacher.auth.login');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('teacher.dashboard')->middleware('admin');
