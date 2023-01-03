@@ -37,7 +37,7 @@
         }
 
         .text-right {
-           
+
             text-align: right;
         }
 
@@ -55,6 +55,7 @@
         }
 
         .signature {
+            display: none;
             padding-top: 300px;
             padding-bottom: 200px;
         }
@@ -76,9 +77,10 @@
         <table>
             <tr>
                 <td>
-                    <img src="{{asset('asset_website/img/home/logo_.png')}}" />
+                    {{-- <img src="{{asset('asset_website/img/home/logo_.png')}}" /> --}}
+                    <img src="http://206.189.132.212/abhith-siksha/public/asset_website/img/home/logo_.png" />
                 </td>
-                <td colspan="2">
+                <td>
                     <p class="text-right heading">E-Receipt</p>
                 </td>
             </tr>
@@ -86,14 +88,29 @@
             <tr>
                 <td>
                     <p>Receipt to :</p>
-                    <p><span>{{$user_details['user_name']}}</span></p>
-                    <p>{{$user_details['mobile']}}</p>
-                    <p>{{$user_details['email']}}</p>
+                    <p><span>{{ $user_details['user_name'] }}</span></p>
+                    <p>{{ $user_details['mobile'] }}</p>
+                    <p>{{ $user_details['email'] }}</p>
                 </td>
 
                 <td>
-                    <p class="text-right"><span>#{{$user_details['receipt_no']}}</span></p>
-                    <p>Date: <span>{{dateFormat($course_detatils['created_at'],"d-m-Y")}}</span></p>
+                    <p class="text-right"><span>#{{ $user_details['receipt_no'] }}</span></p>
+                    <p class="text-right">Date: <span>{{ dateFormat($course_detatils['created_at'], 'd-m-Y') }}</span>
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p style="display: inline-block">Board :<br>
+                        <span>CBSE</span>
+                    </p>
+                    <p style="display: inline-block; margin-left:40px">Class :<br>
+                        <span>9</span>
+                    </p>
+                    <p style="display: inline-block; margin-left:40px">Package Type :<br>
+                        <span>Full Course</span>
+                    </p>
                 </td>
             </tr>
         </table>
@@ -108,29 +125,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($course_detatils['subjects'] as $key=>$subject)
-                <tr class="text-center">
-                    <td>{{$key+1}}</td>
-                    <td>{{$course_detatils['subjects'][$key]['subject']['subject_name']}}</td>
-                    <td>1</td>
-                    <td>&#8377; {{$course_detatils['subjects'][$key]['amount']}}</td>
-                </tr>
+                @foreach ($course_detatils['subjects'] as $key => $subject)
+                    <tr class="text-center">
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $course_detatils['subjects'][$key]['subject']['subject_name'] }}</td>
+                        <td>1</td>
+                        <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_detatils['subjects'][$key]['amount'] }}</td>
+                    </tr>
                 @endforeach
 
                 <tr class="text-center">
                     <td colspan="2"></td>
                     <td>Subtotal</td>
-                    <td>&#8377;{{$course_detatils['total_amount']}}</td>
+                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_detatils['total_amount'] }}</td>
                 </tr>
                 <tr class="text-center">
                     <td colspan="2"></td>
                     <td>Tax</td>
-                    <td>&#8377; 0.00</td>
+                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">0.00</td>
                 </tr>
                 <tr class="text-center">
                     <td colspan="2"></td>
                     <td>Total</td>
-                    <td>&#8377; {{$course_detatils['subjects'][$key]['amount']}}</td>
+                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_detatils['subjects'][$key]['amount'] }}</td>
                 </tr>
             </tbody>
         </table>

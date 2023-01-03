@@ -72,6 +72,10 @@ class UserCourseController extends Controller
                     'subjects'=>$purchase_history->assignSubject,
                     'total_amount'=>  number_format($purchase_history->assignSubject->sum('amount')??'00', 2, '.', '') ,
                 ];
+
+                // Return view for debug
+                // return view('common.receipt')->with(['course_detatils' => $course_detatils, 'user_details' => $user_details]);
+
                 $pdf = PDF::loadView('common.receipt', [
                     'user_details' => $user,
                     'course_detatils' => $course_detatils
