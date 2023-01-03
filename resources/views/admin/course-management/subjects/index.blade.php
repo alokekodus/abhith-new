@@ -104,8 +104,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".bd-example-modal-lg"><i class="mdi mdi-grease-pencil"></i></a>
+                                    <button class="btn btn-sm assignTeacherModal actionBtn"
+                                        data-id="{{ Crypt::encrypt($subject->id) }}"><i
+                                            class="mdi mdi-account-check"></i></button>
+
                                     <a href="{{ route('admin.course.management.subject.edit', Crypt::encrypt($subject->id)) }}"
                                         title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                     <a href="{{ route('admin.course.management.subject.view', Crypt::encrypt($subject->id)) }}"
@@ -121,11 +123,33 @@
         </div>
     </div>
 </div>
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="assignTeacherModal" tabindex="-1" aria-labelledby="assignTeacherModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
-            ...
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignTeacherModalLabel">Assign Teacher</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="#" id="assignTeacherForm">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" id="subjectId" name="subject_id">
+                    <div class="mb-3">
+                        <label for="boardName">Teacher Name</label>
+                        <select name="teacher_id" id="teacherId" class="form-control">
+                           
+                        </select>
+                        
+                    </div>
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="AssignSubjectCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-success" id="saveAssignSubject">save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -236,6 +260,82 @@
                         // location.reload();
                         toastr.success(data.message);
                     }
+                }
+            });
+        });
+</script>
+<script>
+        // Open assign teacher modal
+        $('.assignTeacherModal').on('click', function() {
+            $('#assignTeacherModal').modal('show');
+            $('#subjectId').val($(this).data('id'));
+            let subject_id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('admin.course.assign.teacher') }}",
+                type: "post",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'subject_id': subject_id
+                },
+                success: function(data) {
+                    if(data.code==200){
+                        $('#teacherId').html('<option value="">Select Teacher</option>');
+                        data.teachers.forEach((teacher) => {
+                        $("#teacherId").append('<option value="' + teacher
+                            .id + '">' + teacher.name + '</option>');
+                        });
+                    }else{
+                        $('#teacherId').html('<option value="">Teacher Not Available for assign</option>');
+                        $("#saveAssignSubject").attr('disabled', true);
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 500 || xhr.status == 422) {
+                        toastr.error('Whoops! Something went wrong. Failed to fetch course');
+                    }
+                }
+            });
+        })
+        //assign teacher submittion
+        $('#assignTeacherForm').on('submit', function(e) {
+            e.preventDefault();
+
+            $('#saveAssignSubject').attr('disabled', true);
+            $('#saveAssignSubject').text('Please wait...');
+            $('#AssignSubjectCancelBtn').attr('disabled', true);
+
+
+            let formData = new FormData(this);
+         
+
+            $.ajax({
+                url: "{{ route('admin.teacher.tosubject') }}",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        toastr.success(data.msg);
+                        location.reload(true);
+                    }
+                     else {
+                        toastr.error(data.msg);
+                        $('#saveAssignSubject').attr('disabled', false);
+                        $('#saveAssignSubject').text('Submit');
+                        $('#AssignSubjectCancelBtn').attr('disabled', false);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 500 || xhr.status == 422) {
+                        toastr.error('Whoops! Something went wrong failed to assign class');
+                    }
+
+                    $('#saveAssignSubject').attr('disabled', false);
+                    $('#saveAssignSubject').text('Submit');
+                    $('#AssignSubjectCancelBtn').attr('disabled', false);
                 }
             });
         });

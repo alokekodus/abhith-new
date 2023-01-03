@@ -33,8 +33,8 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{route('teacher.student.index')}}">
-                <span class="menu-title">My Students</span>
+            <a class="nav-link" href="{{route('teacher.subject.index')}}">
+                <span class="menu-title">My Subjects</span>
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>

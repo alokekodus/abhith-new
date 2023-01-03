@@ -224,10 +224,9 @@ class AssignSubjectController extends Controller
     {
         try {
             $subject = AssignSubject::where('id', Crypt::decrypt($subject_id))->first();
-            $lesson_groupby_teachers = Lesson::where('assign_subject_id', $subject->id)->where('teacher_id', '!=', null)
-                ->get()->groupBy('teacher_id');
-
-            return view('admin.course-management.subjects.view')->with(['subject' => $subject, 'lesson_groupby_teachers' => $lesson_groupby_teachers]);
+            $assign_teachers = $subject->assignTeacher;
+           
+            return view('admin.course-management.subjects.view')->with(['subject' => $subject, 'assignTeachers' => $assign_teachers]);
         } catch (\Throwable $th) {
             Toastr::error("Something went wrong", '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();

@@ -71,4 +71,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetails::class);
     }
+    public function assignSubject(){
+        return $this->hasMany(TeacherAssignToSubject::class,'user_id','id');
+    }
 }

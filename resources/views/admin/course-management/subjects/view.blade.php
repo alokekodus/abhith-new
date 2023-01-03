@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('asset_admin/css/lesson.css') }}">
 
 <style>
-    p span.heading{
+    p span.heading {
         display: inline-block;
         width: 150px !important;
         font-style: italic;
@@ -47,8 +47,8 @@
             <p>
                 <span class="heading">Class:</span>
                 <span class="text">{{$subject->assignClass->class}}</span>
-            </p>            
-            
+            </p>
+
             <p>
                 <span class="heading">Image:</span>
                 <span class="text"><a target="_blank" href="{{asset($subject->image)}}">Click to view</a></span>
@@ -57,28 +57,28 @@
             <p>
                 <span class="heading">Thumbnail Image:</span>
                 <span class="text">@if($subject->subjectAttachment)<a target="_blank"
-                    href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to view</a>
-                @else NA @endif</span>
+                        href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to view</a>
+                    @else NA @endif</span>
             </p>
 
             <p>
                 <span class="heading">Promo Video:</span>
                 <span class="text">
                     @if($subject->subjectAttachment)<a target="_blank"
-                    href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to view</a>
-                @else NA @endif</span>
+                        href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to view</a>
+                    @else NA @endif</span>
             </p>
 
             <p>
                 <span class="heading">Description:</span>
                 <span class="text">{!!$subject->description!!}</span>
             </p>
-            
+
             <p>
                 <span class="heading">Why Learn:</span>
                 <span class="text">{!!$subject->why_learn!!}</span>
             </p>
-            
+
             <p>
                 <span class="heading">Requirements:</span>
                 <span class="text">{!!$subject->requirements??'NA'!!}</span>
@@ -98,8 +98,8 @@
                         <tr>
                             <td> Subject Name: </td>
                             <td><b>{{$subject->subject_name}} </b></td>
-                            
-                            
+
+
                         </tr>
                         <tr>
                             <td>Board:</td>
@@ -111,18 +111,21 @@
                         </tr>
                         <tr>
                             <td>Image: </td>
-                            <td colspan="2"><b><a target="_blank" href="{{asset($subject->image)}}">Click to view</a></b></td>
+                            <td colspan="2"><b><a target="_blank" href="{{asset($subject->image)}}">Click to
+                                        view</a></b></td>
                         </tr>
                         <tr>
                             <td>Thumbnail Image: </td>
                             <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
-                                        href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to view</a>
+                                        href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to
+                                        view</a>
                                     @else NA @endif</b></td>
                         </tr>
                         <tr>
                             <td>Promo Video: </td>
                             <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
-                                        href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to view</a>
+                                        href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to
+                                        view</a>
                                     @else NA @endif</b></td>
 
                         </tr>
@@ -150,7 +153,7 @@
 
 @include('admin.course-management.lesson.all')
 
-@if($lesson_groupby_teachers)
+@if($assignTeachers)
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -160,18 +163,31 @@
                     <tr>
                         <th>#No</th>
                         <th> Name </th>
-                        <th> Total Topic Assign </th>
+                        <th> Assign Date </th>
+                        <th>Action</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     @php $no=1; @endphp
-                    @foreach($lesson_groupby_teachers as $key=>$teacher)
+                    @foreach($assignTeachers as $key=>$assignTeacher)
                     <tr>
                         <td>{{$no++}}</td>
-                        <td><a href="{{route('admin.teacher.details',Crypt::encrypt($teacher[0]->assignTeacher->id))}}">
-                                {{$teacher[0]->assignTeacher->name}}</a>
-                        <td>{{totalTopicFindById($teacher[0]->assignTeacher->id)}} topics</td>
+                        <td>{{$assignTeacher->user->userDetail->name}}</td>
+                        <td>{{dateFormat($assignTeacher->created_at,"F j, Y, g:i a")}}</td>
+                        <td>
+                            @if ($assignTeacher->status == 1)
+                            <label class="switch">
+                                <input type="checkbox" id="teacherStatus" data-id="{{ $assignTeacher->id }}" checked>
+                                <span class="slider round"></span>
+                            </label>
+                            @else
+                            <label class="switch">
+                                <input type="checkbox" id="teacherStatus" data-id="{{ $assignTeacher->id }}">
+                                <span class="slider round"></span>
+                            </label>
+                            @endif
+                        </td>
 
                     </tr>
                     @endforeach
@@ -202,5 +218,35 @@
         });
         
     });
+</script>
+<script>
+     $(document.body).on('change', '#teacherStatus', function() {
+            let status = $(this).prop('checked') == true ? 1 : 0;
+            let assign_id = $(this).data('id');
+            let formData = {
+                "assign_id": assign_id,
+                "active": status,
+                "_token": "{{ csrf_token() }}"
+            }
+            $.ajax({
+                url: "{{ route('admin.course.management.assignteacher.update.status') }}",
+                type: "POST",
+                data: formData,
+                success: function(data) {
+                    if (data.status == 1) {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status == 500 || xhr.status == 422) {
+                        toastr.error('Whoops! Something went wrong. Failed to update status.');
+                    }
+                }
+
+            });
+
+        });
 </script>
 @endsection

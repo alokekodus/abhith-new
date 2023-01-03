@@ -37,4 +37,14 @@ class AssignSubject extends Model
     public function review(){
         return $this->hasMany(Review::class,'subject_id','id');
     }
+    public function assignTeacher(){
+        return $this->hasMany(TeacherAssignToSubject::class,'assign_subject_id','id');
+    }
+    public function assignedActiveTeacher(){
+        return $this->hasMany(TeacherAssignToSubject::class,'assign_subject_id','id')->where('status',1);
+    }
+    public function assignedInActiveTeacher(){
+        return $this->hasMany(TeacherAssignToSubject::class,'assign_subject_id','id')->where('status',0);
+    }
+
 }

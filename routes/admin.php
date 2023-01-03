@@ -72,9 +72,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('approved/{userdetails_id}', [TeacherController::class, 'approvedApplication'])->name('approved.teacher');
             Route::post('reject', [TeacherController::class, 'rejectApplication'])->name('reject.teacher');
         });
+        //all new assign teacher
         Route::prefix('class')->group(function () {
             Route::get('', [AssignClassController::class, 'allClasses'])->name('admin.course.management.class.all');
             Route::post('assign', [AssignClassController::class, 'assignClass'])->name('admin.course.management.class.assign');
+            Route::post('assign-teacher', [AssignClassController::class, 'assignTeacher'])->name('admin.course.assign.teacher');
+            Route::post('assign-teacher-to-subject', [AssignClassController::class, 'assignTeacherToSubject'])->name('admin.teacher.tosubject');
+            Route::post('update-assign-teacher-status', [AssignClassController::class, 'changeAssignTeacherStatus'])->name('admin.course.management.assignteacher.update.status');
             Route::post('update-board-status', [AssignClassController::class, 'updateClassStatus'])->name('admin.course.management.class.update.status');
         });
 
