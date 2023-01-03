@@ -364,15 +364,15 @@ class WebsiteAuthController extends Controller
 
     public function login(Request $request)
     {
-
+          
         try {
 
             if (getPrefix($request) == "api") {
                 $type = Type::User;
-            } elseif (getPrefix($request) == "/auth") {
-                $type = Type::Teacher;
+            } elseif ($request->type == 3) {
+                $type = 3;
             } else {
-                $type = Type::User;
+                $type = 2;
             }
             
 

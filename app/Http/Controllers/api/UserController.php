@@ -11,8 +11,9 @@ use App\Models\UserDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use PDF;
 class UserController extends Controller
 {
     public function index()
@@ -285,17 +286,15 @@ class UserController extends Controller
                     $otp = rand(100000, 999999);
                     $user->update(['otp' => $otp]);
                     $otpsend = otpSendForgotPassword($request->phone, $otp);
-                   
-                        $data = [
-                            "user_id" => $user->id,
-                            "otp" => $otp,
-                            "code" => 200,
-                            "message" => "Verification code send to your registered mobile number.",
 
-                        ];
-                        return response()->json(['status' => 1, 'result' => $data]);
-                    
-                   
+                    $data = [
+                        "user_id" => $user->id,
+                        "otp" => $otp,
+                        "code" => 200,
+                        "message" => "Verification code send to your registered mobile number.",
+
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
                 }
                 $data = [
                     "code" => 400,
@@ -314,7 +313,7 @@ class UserController extends Controller
                         'otp' => $otp,
 
                     ];
-                   
+
                     Mail::to($request->email)->send(new OtpVerfication($details));
 
 
@@ -470,5 +469,136 @@ class UserController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
+    }
+    public function purchaseHistory(Request $request)
+    {
+        try {
+
+            $purchase_history = Order::with('board', 'assignClass', 'assignSubject')->where('user_id', auth()->user()->id)->where('payment_status', 'paid')->orderBy('created_at', 'DESC')->get();
+            if ($purchase_history->count() > 0) {
+                foreach ($purchase_history as $key => $purchase_history_item) {
+                    if ($purchase_history_item->is_full_course_selected == 1) {
+                        $course_type = "Full Course";
+                    } else {
+                        $course_type = "Custom package";
+                    }
+                    $subjects = [];
+                    foreach ($purchase_history_item->assignSubject as $key => $subject) {
+                        $subject_data = [
+                            'id' => $subject->subject->id,
+                            'name' => $subject->subject->subject_name,
+                        ];
+                        $subjects[] = $subject_data;
+                    }
+                    $result = [
+                        'id' => $purchase_history_item->id,
+                        'board' => $purchase_history_item->board->exam_board,
+                        'class' => $purchase_history_item->assignClass->class,
+                        'course_type' => $course_type,
+                        'subjects' => $subjects,
+                        'total_amount' => number_format($purchase_history_item->assignSubject->sum('amount') ??
+                            '00', 2, '.', ''),
+                        'created_at' => $purchase_history_item->updated_at->format('d-M-Y'),
+                    ];
+                    $data = [
+                        "code" => 200,
+                        "status" => 1,
+                        "message" => "Purchase History",
+                        "result" => $result,
+                    ];
+                    return response()->json(['status' => 1, 'result' => $data]);
+                }
+            } else {
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No record found",
+                    "result" => $purchase_history,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function purchaseHistoryInvoice(Request $request)
+    {
+        try {
+            $id = $_GET['order_id'];
+            
+            $purchase_history = Order::with('board', 'assignClass', 'assignSubject')->where('id', $id)->first();
+            
+            if ($purchase_history->is_receipt_generated == 0) {
+                $receipt_no = reciptGenerate($purchase_history->id);
+                $user_details = $purchase_history->user->userDetail;
+                if ($user_details->is_above_eighteen == 1) {
+                    $user_name = $user_details->name;
+                } else {
+                    $user_name = $user_details->parent_name;
+                }
+                $user = [
+                    'receipt_no' => $receipt_no,
+                    'user_name' => $user_name,
+                    'mobile' => $user_details->phone,
+                    'email' => $user_details->email
+                ];
+                $course_detatils = [
+                    'created_at' => $purchase_history->created_at,
+                    'board' => $purchase_history->board->exam_board,
+                    'class' => $purchase_history->assignClass->class,
+                    'subjects' => $purchase_history->assignSubject,
+                    'total_amount' =>  number_format($purchase_history->assignSubject->sum('amount') ?? '00', 2, '.', ''),
+                ];
+                $pdf = PDF::loadView('common.receipt', [
+                    'user_details' => $user,
+                    'course_detatils' => $course_detatils
+                ]);
+                $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
+                $pdf->setPaper('A4', 'portrait');
+                Storage::put('public/pdf/' . auth()->user()->name . '_' . date('d-m-Y-H-i-s') . '_' . $id . '.pdf', $pdf->output());
+                $file_path = 'storage/pdf/' . auth()->user()->name . '_' . date('d-m-Y-H-i-s') . '_' . $id . '.pdf';
+                $update_data = [
+                    'is_receipt_generated' => 1,
+                    'receipt_no' => $receipt_no,
+                    'receipt_url' => $file_path,
+                ];
+                $purchase_history->update($update_data);
+    
+                // $generated_pdf= $pdf->download(auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf')->getOriginalContent();
+    
+                $invoice_url=$file_path;
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "Course Receipt",
+                    "invoice_url" => $invoice_url,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }else{
+                $invoice_url=$purchase_history->receipt_url;
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "Course Receipt",
+                    "invoice_url" => $invoice_url,
+                ];
+                return response()->json(['status' => 1, 'result' => $data]);
+            }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+        
     }
 }

@@ -36,6 +36,7 @@
                                 <form class="row" action="{{ route('website.auth.login') }}" method="POST"
                                     id="loginForm">
                                     @csrf
+                                    <input type="hidden" name="type" value="3">
                                     <div class="form-group col-lg-12">
                                         <input type="email" name="email" class="form-control" placeholder="Email"
                                             id="email" required>

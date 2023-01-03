@@ -102,6 +102,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:sanctum']], function ()
     Route::post('/password-reset', [UserController::class, 'resetPassword']);
     Route::get('/performance', [PerformanceController::class, 'allPerformance']);
     Route::get('/performanceById', [PerformanceController::class, 'allPerformanceBySubject']);
+    Route::get('/purchase-history',[UserController::class,'purchaseHistory']);
+    Route::get('/purchase-history/receipt',[UserController::class,'purchaseHistoryInvoice']);
     // Route::POST('/sendotp', [UserController::class, 'sendOtpForgotPassword']);
     // Route::POST('/verifyotp', [UserController::class, 'verifyOtpForgotPassword']);
     // Route::POST('/reset-password', [UserController::class, 'resetForgotPassword']);
