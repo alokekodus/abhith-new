@@ -639,7 +639,7 @@
                         } else {
                             toastr.error(data.message);
                         }
-                        // location.reload(true);
+                         location.reload(true);
                     },
                     error: function(xhr, status, error) {
                         if (xhr.status == 500 || xhr.status == 422) {
