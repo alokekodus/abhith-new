@@ -308,7 +308,7 @@
             if ($('#signupEmail').val().length == 0) {
                 toastr.error('Email is required');
             } else {
-                if (no_of_otp_sent < 2) {
+                if (no_of_otp_sent < 100) {
                     no_of_otp_sent += 1;
                     var prefix = @json($prefix);
                     if (prefix == "teacher") {
@@ -362,7 +362,7 @@
                 let no_of_phone_otp_sent = 0;
 
 
-                if (no_of_phone_otp_sent < 2) {
+                if (no_of_phone_otp_sent < 100) {
                     no_of_otp_sent += 1;
                     var prefix = @json($prefix);
                     var url = "{{ route('apimobileotpsend') }}";
