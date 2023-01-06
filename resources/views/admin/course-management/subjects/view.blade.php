@@ -87,69 +87,7 @@
     </div>
 </div>
 
-{{-- <div class="col-lg-12 grid-margin stretch-card">
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Subject Details</h4>
-            <div style="overflow-x:auto;">
-                <table class="table table-bordered">
 
-                    <tbody>
-                        <tr>
-                            <td> Subject Name: </td>
-                            <td><b>{{$subject->subject_name}} </b></td>
-
-
-                        </tr>
-                        <tr>
-                            <td>Board:</td>
-                            <td><b>{{$subject->boards->exam_board}} </b></td>
-                        </tr>
-                        <tr>
-                            <td>Class:</td>
-                            <td> <b>{{$subject->assignClass->class}} </b> </td>
-                        </tr>
-                        <tr>
-                            <td>Image: </td>
-                            <td colspan="2"><b><a target="_blank" href="{{asset($subject->image)}}">Click to
-                                        view</a></b></td>
-                        </tr>
-                        <tr>
-                            <td>Thumbnail Image: </td>
-                            <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
-                                        href="{{asset($subject->subjectAttachment->video_thumbnail_image)}}">Click to
-                                        view</a>
-                                    @else NA @endif</b></td>
-                        </tr>
-                        <tr>
-                            <td>Promo Video: </td>
-                            <td colspan="2"><b>@if($subject->subjectAttachment)<a target="_blank"
-                                        href="{{asset($subject->subjectAttachment->attachment_origin_url)}}">Click to
-                                        view</a>
-                                    @else NA @endif</b></td>
-
-                        </tr>
-                        <tr>
-                            <td>Description: </td>
-                            <td colspan="2">{!!$subject->description!!}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Why Learn: </td>
-                            <td colspan="2">{!!$subject->why_learn!!}</td>
-
-                        </tr>
-                        <tr>
-                            <td>Requirements: </td>
-                            <td colspan="2">{!!$subject->requirements??'NA'!!}</td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div> --}}
 
 @include('admin.course-management.lesson.all')
 

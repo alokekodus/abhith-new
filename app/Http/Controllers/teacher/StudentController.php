@@ -26,8 +26,10 @@ class StudentController extends Controller
 
     return view('teacher.student.index', compact('assign_subjects'));
   }
+  // Display all enrolled student for a subject
   public function subjectWiseStudent($subject_id)
   {
+  
 
     $assign_orders = $this->getAssignOrder($subject_id);
     return view('teacher.student.index', compact('assign_orders'));
@@ -36,9 +38,9 @@ class StudentController extends Controller
   {
     try {
       $subject = AssignSubject::find(Crypt::decrypt($subject_id));
-      $student = User::find(Crypt::decrypt($student_id));
-      $assign_orders = $this->getAssignOrder($subject_id);
-      return view('teacher.student.report',compact('subject','student','assign_orders'));
+      $user=User::find(Crypt::decrypt($student_id));
+    
+      return view('teacher.student.report')->with(['subject'=>$subject,'user'=>$user]);
     } catch (\Throwable $th) {
       //throw $th;
     }

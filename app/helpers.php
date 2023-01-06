@@ -265,7 +265,7 @@ function isPracticeTestPlayed($set_id)
 }
 function getPracticeTestId($set_id)
 {
-    $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->first();
+    $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->where('end_time','!=',null)->latest('created_at')->first();
     if ($user_practice_tests) {
         return $user_practice_tests->id;
     } else {
@@ -461,4 +461,12 @@ function orderNo()
     $order_count = Order::count() + 1;
     $order_no         = date('dmY') . '/' . $order_count;
     return $order_no;
+}
+function videoWatchTime($user_id,$subject_id,$lesson_id){
+    $video_watch_time=SubjectLessonVisitor::where('visitor_id',$user_id)->where('subject_id',$subject_id)->where('lesson_subject_id',$lesson_id)->first();
+    if($video_watch_time){
+        return $video_watch_time->video_watch_time;
+    }else{
+        return "00:00:00";
+    }
 }

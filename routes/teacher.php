@@ -25,8 +25,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/create', [CourseController::class, 'create'])->name('teacher.course.create');
         Route::get('/view/{subject_id}', [CourseController::class, 'view'])->name('teacher.course.view');
         Route::get('/details/{subject_id}', [CourseController::class, 'details'])->name('teacher.course.details');
-        Route::get('/subjects', [CourseController::class, 'details'])->name(' teacher.subject.index');
-       
+        Route::get('/subjects', [CourseController::class, 'mySubject'])->name('teacher.subject.index');
+        Route::get('{lesson_id}/{user_id}', [CourseController::class, 'topicWiseReport'])->name('admin.course.management.lesson.topic.report');
     });
     Route::prefix('lesson')->group(function () {
         Route::get('/', [LessonController::class, 'index'])->name('teacher.lesson');
