@@ -27,6 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/details/{subject_id}', [CourseController::class, 'details'])->name('teacher.course.details');
         Route::get('/subjects', [CourseController::class, 'mySubject'])->name('teacher.subject.index');
         Route::get('{lesson_id}/{user_id}', [CourseController::class, 'topicWiseReport'])->name('admin.course.management.lesson.topic.report');
+        Route::get('/mcq-attempt/{set_id}/{user_id}', [CourseController::class, 'mcqAttemptReport'])->name('teacher.view.mcq.attempt');
+      
     });
     Route::prefix('lesson')->group(function () {
         Route::get('/', [LessonController::class, 'index'])->name('teacher.lesson');

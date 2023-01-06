@@ -33,9 +33,6 @@
             </nav>
             <br><br>
             <div class="tab-content" id="nav-tabContent">
-
-
-
                 <div class="tab-pane fade show active" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
                     <div style="overflow-x:auto;">
                         <table class="table table-striped" id="lessonTableVideo">
@@ -127,7 +124,7 @@
                                     <td> @if($set->is_activate==1)Active @else InActive @endif</td>
                                     {{-- <td>@if($topic->status==1)Active @else InActive @endif</td> --}}
                                     <td>
-                                        <a href="{{route('admin.view.mcq.question',Crypt::encrypt($set->id))}}"
+                                        <a href="{{route('teacher.view.mcq.attempt',[Crypt::encrypt($set->id),Crypt::encrypt($user->id)])}}"
                                             title="View Details"><i class="mdi mdi-eye"></i></a>
                                     </td>
                                 </tr>

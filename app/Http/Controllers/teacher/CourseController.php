@@ -7,8 +7,10 @@ use App\Models\AssignClass;
 use App\Models\AssignSubject;
 use App\Models\Board;
 use App\Models\Lesson;
+use App\Models\Set;
 use App\Models\TeacherAssignToSubject;
 use App\Models\User;
+use App\Models\UserPracticeTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -65,5 +67,11 @@ class CourseController extends Controller
         $lesson = Lesson::with(['assignClass', 'board', 'assignSubject', 'lessonAttachment', 'topics'])->where('id', $lesson_id)->first();
         $user = User::find(Crypt::decrypt($user_id));
         return view('teacher.subject.lessonreport')->with(['lesson' => $lesson,'user'=>$user]);
+    }
+    public function mcqAttemptReport($set_id,$user_id){
+        $set=Set::find(Crypt::decrypt($set_id));
+        $user=User::find(Crypt::decrypt($user_id));
+        $mcq_attempts=UserPracticeTest::where('user_id',$user->id)->where('set_id',$set->id)->where('end_time','!=',null)->get();
+        return view('teacher.subject.mcq')->with(['set' => $set,'user'=>$user,'mcq_attempts'=>$mcq_attempts]);
     }
 }

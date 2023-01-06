@@ -476,6 +476,7 @@ class UserController extends Controller
 
             $purchase_history = Order::with('board', 'assignClass', 'assignSubject')->where('user_id', auth()->user()->id)->where('payment_status', 'paid')->orderBy('created_at', 'DESC')->get();
             if ($purchase_history->count() > 0) {
+                  $purchase_history_data = [];
                 foreach ($purchase_history as $key => $purchase_history_item) {
                     if ($purchase_history_item->is_full_course_selected == 1) {
                         $course_type = "Full Course";
@@ -500,11 +501,12 @@ class UserController extends Controller
                             '00', 2, '.', ''),
                         'created_at' => $purchase_history_item->updated_at->format('d-M-Y'),
                     ];
+                    $purchase_history_data[]=$result;
                     $data = [
                         "code" => 200,
                         "status" => 1,
                         "message" => "Purchase History",
-                        "result" => $result,
+                        "result" => $purchase_history_data,
                     ];
                     return response()->json(['status' => 1, 'result' => $data]);
                 }
