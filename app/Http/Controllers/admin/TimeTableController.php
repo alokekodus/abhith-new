@@ -48,11 +48,11 @@ class TimeTableController extends Controller
     public function adminCreateTimeTable(Request $request){
         // $class_details =  AssignClass::with('boards')->where('is_activate', 1)->orderBy('id', 'DESC')->get();
         $boards =  Board::orderBy('id', 'DESC')->get();
-        $chapters = [];
-        if($request->ajax()){
-                $chapters = Chapter::where('course_id', $request->course_id)->get();
-            return response()->json(['chapter' => $chapters]);
-        }
+        // $chapters = [];
+        // if($request->ajax()){
+        //         $chapters = Chapter::where('course_id', $request->course_id)->get();
+        //     return response()->json(['chapter' => $chapters]);
+        // }
         
         return view('admin.time-table.add-time-table')->with(['boards' => $boards]);
     }

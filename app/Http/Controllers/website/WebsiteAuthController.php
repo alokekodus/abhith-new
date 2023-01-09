@@ -471,8 +471,8 @@ class WebsiteAuthController extends Controller
             $validator = Validator::make($request->all(), [
 
                 'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'phone' => 'required|numeric|unique:users',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
                 'is_above_eighteen' => 'required',
                 'assign_class_id' => 'required',
                 'board_id' => 'required',
@@ -481,7 +481,7 @@ class WebsiteAuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['status' => 0, 'message' => $validator->errors()]);
+                return response()->json(['status' => 0, 'message' => $validator->errors()->first()]);
             }
             if ($request->is_above_eighteen == 0) {
                 $validator = Validator::make($request->all(), [
