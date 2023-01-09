@@ -165,7 +165,7 @@ class WebsiteAuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json(['status' => false, 'message' => $validator->errors()]);
+                return response()->json(['status' => 0, 'message' => $validator->errors()]);
             }
 
             $details = User::where([['email', $request->email], ['phone', $request->phone], ['verify_otp', 0], ['is_activate', 0]])->first();
@@ -587,7 +587,7 @@ class WebsiteAuthController extends Controller
                         "status" => 0,
                         "message" => "Oops! User already exists",
                     ];
-                    return response()->json(['status' => 1, 'result' => $data]);
+                    return response()->json(['status' => 0, 'result' => $data]);
                 }
 
                 $phone = $request->phone;
@@ -697,7 +697,7 @@ class WebsiteAuthController extends Controller
                     "status" => 0,
                     "message" => "Oops! User already exists",
                 ];
-                return response()->json(['status' => 1, 'result' => $data]);
+                return response()->json(['status' => 0, 'result' => $data]);
             }
             $email = $request->email;
             $otp = rand(100000, 999999);
