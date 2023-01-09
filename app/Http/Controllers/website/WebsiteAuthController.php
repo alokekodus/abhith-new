@@ -491,7 +491,7 @@ class WebsiteAuthController extends Controller
                 ]);
 
                 if ($validator->fails()) {
-                    return response()->json(['status' => false, 'message' => $validator->errors()]);
+                    return response()->json(['status' => 0, 'message' => $validator->errors()]);
                 }
             }
             $parent_name = null;

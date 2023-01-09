@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use PDF;
+
 class UserController extends Controller
 {
     public function index()
@@ -476,7 +477,7 @@ class UserController extends Controller
 
             $purchase_history = Order::with('board', 'assignClass', 'assignSubject')->where('user_id', auth()->user()->id)->where('payment_status', 'paid')->orderBy('created_at', 'DESC')->get();
             if ($purchase_history->count() > 0) {
-                  $purchase_history_data = [];
+                $purchase_history_data = [];
                 foreach ($purchase_history as $key => $purchase_history_item) {
                     if ($purchase_history_item->is_full_course_selected == 1) {
                         $course_type = "Full Course";
@@ -501,7 +502,7 @@ class UserController extends Controller
                             '00', 2, '.', ''),
                         'created_at' => $purchase_history_item->updated_at->format('d-M-Y'),
                     ];
-                    $purchase_history_data[]=$result;
+                    $purchase_history_data[] = $result;
                     $data = [
                         "code" => 200,
                         "status" => 1,
@@ -531,11 +532,12 @@ class UserController extends Controller
     }
     public function purchaseHistoryInvoice(Request $request)
     {
+
         try {
             $id = $_GET['order_id'];
-            
+
             $purchase_history = Order::with('board', 'assignClass', 'assignSubject')->where('id', $id)->first();
-            
+
             if ($purchase_history->is_receipt_generated == 0) {
                 $receipt_no = reciptGenerate($purchase_history->id);
                 $user_details = $purchase_history->user->userDetail;
@@ -571,10 +573,10 @@ class UserController extends Controller
                     'receipt_url' => $file_path,
                 ];
                 $purchase_history->update($update_data);
-    
+
                 // $generated_pdf= $pdf->download(auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf')->getOriginalContent();
-    
-                $invoice_url=$file_path;
+
+                $invoice_url = $file_path;
                 $data = [
                     "code" => 200,
                     "status" => 1,
@@ -582,8 +584,8 @@ class UserController extends Controller
                     "invoice_url" => $invoice_url,
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
-            }else{
-                $invoice_url=$purchase_history->receipt_url;
+            } else {
+                $invoice_url = $purchase_history->receipt_url;
                 $data = [
                     "code" => 200,
                     "status" => 1,
@@ -601,6 +603,5 @@ class UserController extends Controller
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
-        
     }
 }

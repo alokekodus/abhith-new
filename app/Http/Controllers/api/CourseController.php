@@ -107,11 +107,15 @@ class CourseController extends Controller
     {
         try {
             $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id', 'is_activate', 'published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->where('assign_class_id', auth()->user()->userDetail->assign_class_id)->where('board_id', auth()->user()->userDetail->board_id)->limit(4)->get();
-            if ($courses->count() > 0) {
+            
+            $courses= AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('assign_class_id',auth()->user()->userDetail->assign_class_id)->where('board_id',auth()->user()->userDetail->board_id)->limit(4)->get();
+            if($courses->count()>0){
                 $courses = $courses;
-            } else {
-                $courses = AssignSubject::select('id', 'subject_name', 'image', 'subject_amount', 'assign_class_id', 'board_id', 'is_activate', 'published')->with('assignClass:id,class', 'boards:id,exam_board')->with('review:subject_id,rating')->where('is_activate', 1)->where('published', 1)->limit(4)->get();
+            }else{
+                $courses = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->limit(4)->get();
             }
+            
+          
             if ($courses) {
 
                 $all_courses = [];
