@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OtpVerfication;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\TimeTable;
 use App\Models\User;
 use App\Models\UserDetails;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $user_details = UserDetails::select('name', 'email', 'phone', 'education', 'gender', 'image', 'address')->where('email', auth()->user()->email)->first();
+            $user_details = UserDetails::select('name', 'email', 'phone', 'education', 'gender', 'image', 'address')->where('user_id', auth()->user()->id)->first();
             $cart = Cart::select('id', 'user_id', 'is_full_course_selected', 'assign_class_id', 'board_id', 'is_paid', 'is_remove_from_cart')
                 ->with(['assignClass:id,class', 'board:id,exam_board', 'assignSubject:id,cart_id,assign_subject_id,amount', 'assignSubject.subject:id,subject_name'])
                 ->where('user_id', auth()->user()->id)
@@ -103,7 +104,7 @@ class UserController extends Controller
                 $new_imgage_name = time() . '-' . auth()->user()->name . '.' . $image->extension();
                 $image_path = $image->move(public_path('files/profile'), $new_imgage_name);
                 $path_name = 'files/profile/' . $new_imgage_name;
-                UserDetails::where('email', auth()->user()->email)->update(['image' => $path_name]);
+                UserDetails::where('user_id', auth()->user()->id)->update(['image' => $path_name]);
                 $data = [
                     "code" => 200,
                     "message" => "Profile photo uploaded",
@@ -594,6 +595,59 @@ class UserController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
+        } catch (\Throwable $th) {
+            $data = [
+                "code" => 400,
+                "status" => 0,
+                "message" => "Something went wrong",
+
+            ];
+            return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+    public function timeTableDisplay()
+    {
+        try {
+            $time_tables = TimeTable::whereHas('assignSubject', function ($q) {
+                $q->whereHas('assignOrder', function ($query) {
+                    $query->whereHas('order', function ($qu) {
+                        $qu->where('user_id', auth()->user()->id);
+                    });
+                });
+            })->orderBy('created_at', 'DESC')->get();
+            if ($time_tables->count()> 0) {
+                $time_table = [];
+                foreach ($time_tables as $key => $item) {
+                    $data = [
+                        'board' => $item->board->exam_board,
+                        'class' => $item->assignClass->class,
+                        'subject' => $item->assignSubject->subject_name,
+                        'Link' => $item->zoom_link,
+                        'class_date' => $item->date,
+                        'class_time' => $item->time,
+                        'status' => $item->is_activate,
+                    ];
+                    $time_table[] = $data;
+                }
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "All Time-Table",
+                    "result" => $time_table,
+
+                ];
+            }else{
+                $data = [
+                    "code" => 200,
+                    "status" => 1,
+                    "message" => "No Recored Found",
+                    "result" => $time_tables,
+    
+                ];
+            }
+           
+        
+            return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,

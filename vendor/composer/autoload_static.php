@@ -824,6 +824,7 @@ class ComposerStaticInitd7dece940e1d2a4d81775437df5f211d
         'App\\Models\\Set' => __DIR__ . '/../..' . '/app/Models/Set.php',
         'App\\Models\\Subject' => __DIR__ . '/../..' . '/app/Models/Subject.php',
         'App\\Models\\SubjectLessonVisitor' => __DIR__ . '/../..' . '/app/Models/SubjectLessonVisitor.php',
+        'App\\Models\\TeacherAssignToSubject' => __DIR__ . '/../..' . '/app/Models/TeacherAssignToSubject.php',
         'App\\Models\\Testimonial' => __DIR__ . '/../..' . '/app/Models/Testimonial.php',
         'App\\Models\\TimeTable' => __DIR__ . '/../..' . '/app/Models/TimeTable.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

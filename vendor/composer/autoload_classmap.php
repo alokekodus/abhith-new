@@ -124,6 +124,7 @@ return array(
     'App\\Models\\Set' => $baseDir . '/app/Models/Set.php',
     'App\\Models\\Subject' => $baseDir . '/app/Models/Subject.php',
     'App\\Models\\SubjectLessonVisitor' => $baseDir . '/app/Models/SubjectLessonVisitor.php',
+    'App\\Models\\TeacherAssignToSubject' => $baseDir . '/app/Models/TeacherAssignToSubject.php',
     'App\\Models\\Testimonial' => $baseDir . '/app/Models/Testimonial.php',
     'App\\Models\\TimeTable' => $baseDir . '/app/Models/TimeTable.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

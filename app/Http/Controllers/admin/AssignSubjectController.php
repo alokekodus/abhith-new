@@ -34,9 +34,9 @@ class AssignSubjectController extends Controller
     }
     public function store(Request $request)
     {
-        
+
         try {
-            
+
             $validate = Validator::make(
                 $request->all(),
                 [
@@ -45,19 +45,19 @@ class AssignSubjectController extends Controller
                     'subject_amount' => 'required|integer|min:100|digits_between:3,7',
                     'description' => 'required',
                     'why_learn' => 'required',
-                    'requirements'=> 'required',
+                    'requirements' => 'required',
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_url' => 'mimes:mp4,webm,mov|max:2097152',
-                    
+
 
                 ],
                 [
                     'subjectName.required' => 'Subject name is required',
                     'assignedClass.required' => 'Subject class is required',
                     'subject_amount.required' => 'Amount filed is required',
-                    'subject_amount.digits_between'=>'Please insert a valid amount',
-                    'subject_amount.min'=>'Please insert a valid amount',
+                    'subject_amount.digits_between' => 'Please insert a valid amount',
+                    'subject_amount.min' => 'Please insert a valid amount',
                     'description.required' => 'Subject descripttion filed can not be null',
                     'why_learn.required' => 'Why will students learn this subject filed can not be null',
                     'requirements.required' => 'Requirements filed can nit be null',
@@ -70,21 +70,21 @@ class AssignSubjectController extends Controller
             );
 
             if ($validate->fails()) {
-                return response()->json(['status'=>0,'message' => $validate->errors()->toArray()]);
+                return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
             }
 
             $split_assignedClass = str_split($request->assignedClass);
 
             $assignedClass = $request->assignedClass;
             $assignedBoard = $request->assignedBoard;
-            
+
             // Check request ID for update
             if ($request->subject_id == null) {
                 $is_in_assignsubject = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('assign_class_id', $assignedClass)->where('board_id', $assignedBoard)->first();
                 if ($is_in_assignsubject) {
-                    return response()->json(['status'=> 2,'message' => "'$request->subjectName'.'already active'"]);               
+                    return response()->json(['status' => 2, 'message' => "'$request->subjectName'.'already active'"]);
                 }
-            } 
+            }
 
             // Check same subject on same board
             // $getAllSubjects = AssignSubject::where('subject_name', ucfirst($request->subjectName))->where('board_id', $request->assignedBoard)->first();
@@ -136,7 +136,7 @@ class AssignSubjectController extends Controller
                     $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
                 }
             }
-            $subject_name=strtolower($request->subjectName);
+            $subject_name = strtolower($request->subjectName);
             $data = [
                 'subject_name' => ucfirst($subject_name),
                 'image' =>  $image_path,
@@ -147,16 +147,16 @@ class AssignSubjectController extends Controller
                 'is_activate' => 0, //initially subject not active
                 'description' => $request->description,
                 'why_learn' => $request->why_learn,
-                'requirements'=>$request->requirements,
+                'requirements' => $request->requirements,
             ];
-            
+
             if ($request->subject_id == null) {
                 $assign_subject = AssignSubject::create($data);
             } else {
                 $assign_subject = AssignSubject::find($request->subject_id);
                 $assign_subject->update($data);
-                if($request->has('subject_amount')){
-                    $cart_subjects=CartOrOrderAssignSubject::where('assign_subject_id',$request->subject_id)->update(['amount' => $request->subject_amount]);
+                if ($request->has('subject_amount')) {
+                    $cart_subjects = CartOrOrderAssignSubject::where('assign_subject_id', $request->subject_id)->update(['amount' => $request->subject_amount]);
                 }
             }
 
@@ -177,29 +177,27 @@ class AssignSubjectController extends Controller
                 $assign_subject->subjectAttachment->update($data_attachment);
             }
             if ($request->subject_id == null) {
-                return response()->json(['status'=>1,'message' => 'Subject added successfully.']);
+                return response()->json(['status' => 1, 'message' => 'Subject added successfully.']);
             } else {
-                return response()->json(['status'=>1,'message' => 'Subject updated successfully.']);
-              
+                return response()->json(['status' => 1, 'message' => 'Subject updated successfully.']);
             }
-           
         } catch (\Throwable $th) {
-            return response()->json(['status'=>0,'message' => $th]);
+            return response()->json(['status' => 0, 'message' => $th]);
         }
     }
 
     public function create()
     {
         $boards =  Board::where('is_activate', 1)->get();
-       
+
         $teachers = $students = User::whereHas(
             'roles',
             function ($q) {
                 $q->where('name', 'Teacher');
             }
         )->get();
-        
-              
+
+
         return view('admin.course-management.subjects.create')->with(['subject' => null, 'boards' => $boards, 'teachers' => $teachers]);
     }
     public function edit($id)
@@ -218,14 +216,14 @@ class AssignSubjectController extends Controller
         $subject = AssignSubject::with('subjectAttachment')->where('id', $subject_id)->first();
         $classBoard = $subject->assign_class_id . $subject->board_id;
 
-        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard,'boards'=>$boards]);
+        return view('admin.course-management.subjects.edit')->with(['subject' => $subject, 'subjects' => $assign_subject, 'classes' => $class_details, 'teachers' => $teachers, 'classBoard' => $classBoard, 'boards' => $boards]);
     }
     public function view($subject_id)
     {
         try {
             $subject = AssignSubject::where('id', Crypt::decrypt($subject_id))->first();
             $assign_teachers = $subject->assignTeacher;
-           
+
             return view('admin.course-management.subjects.view')->with(['subject' => $subject, 'assignTeachers' => $assign_teachers]);
         } catch (\Throwable $th) {
             Toastr::error("Something went wrong", '', ["positionClass" => "toast-top-right"]);
@@ -234,10 +232,27 @@ class AssignSubjectController extends Controller
     }
     public function assignSubjectLesson($lesson_id)
     {
-       
+
         $lesson = Lesson::where('id', Crypt::decrypt($lesson_id))->first();
-       
-        
+
+
         return view('admin.course-management.subjects.lesson')->with(['lesson' => $lesson]);
+    }
+    public function findSubject(Request $request)
+    {
+        $subjects = AssignSubject::where('board_id', $request->board_id)->where('assign_class_id', $request->class_id)->where('is_activate', 1)->where('published', 1)->select('id', 'subject_name')->orderBy('created_at', 'DESC')->get();
+        if ($subjects->count() > 0) {
+            $data = [
+                'code' => 200,
+                'subjects' => $subjects
+            ];
+            return response()->json($data);
+        }else{
+            $data = [
+                'code' => 400,
+                'subjects' => $subjects
+            ];
+            return response()->json($data);
+        }
     }
 }

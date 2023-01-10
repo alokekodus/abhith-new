@@ -46,5 +46,8 @@ class AssignSubject extends Model
     public function assignedInActiveTeacher(){
         return $this->hasMany(TeacherAssignToSubject::class,'assign_subject_id','id')->where('status',0);
     }
+    public function timeTables(){
+        return $this->hasMany(TimeTable::class,'assign_subject_id','id');
+    }
 
 }

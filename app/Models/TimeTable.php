@@ -10,14 +10,18 @@ class TimeTable extends Model
     use HasFactory;
 
     protected $table = 'time_tables';
+   
     protected $guarded = [];
 
-
-    public function chapter(){
-        return $this->belongsTo('App\Models\Chapter');
+    public function assignClass(){
+        return $this->belongsTo(AssignClass::class, 'assign_class_id', 'id');
     }
 
-    public function course(){
-        return $this->belongsTo('App\Models\Course');
+    public function board(){
+        return $this->belongsTo(Board::class, 'board_id', 'id');
     }
+    public function assignSubject(){
+        return $this->belongsTo(AssignSubject::class, 'assign_subject_id', 'id');
+    }
+    
 }
