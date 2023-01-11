@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\BoardController;
 use App\Http\Controllers\api\AccountController;
 use App\Http\Controllers\api\BannerController;
+use App\Http\Controllers\api\BlogController;
 use App\Http\Controllers\api\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -116,6 +117,10 @@ Route::group(['prefix' => 'review', 'middleware' => ['auth:sanctum']], function 
 Route::group(['prefix' => 'payment', 'middleware' => ['auth:sanctum']], function () {
     Route::get('/order-generate', [PaymentController::class, 'paymentOrderGenerate']);
     Route::post('/', [PaymentController::class, 'paymentVerification']);
+});
+Route::group(['prefix' => 'blog', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('/', [BlogController::class, 'index']);
+    
 });
 Route::post('/upload-note', [GalleryController::class, 'testapi']);
 Route::group(['prefix' => 'user'], function () {
