@@ -93,9 +93,6 @@
                             {{-- <td><a href="#">view</a></td> --}}
                         </tr>
                         @empty
-                        <div class="text-center">
-                            <p>No Data Found</p>
-                        </div>
                         @endforelse
                     </tbody>
                 </table>

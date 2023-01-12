@@ -3,7 +3,7 @@
         <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
                 <div class="nav-profile-image">
-                    <img src="{{ asset('asset_admin/images/faces/face1.jpg') }}" alt="profile">
+                    <img src="{{ asset('asset_admin/images/faces/admin.png') }}" alt="profile">
                     <span class="login-status online"></span>
                     <!--change to offline or busy as needed-->
                 </div>
@@ -38,18 +38,6 @@
                 <i class="mdi mdi-home menu-icon"></i>
             </a>
         </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link collapsed" data-toggle="collapse" href="#course-management" aria-expanded="false">
-                <span class="menu-title">Course Management</span>
-                <i class="menu-arrow"></i>
-                <i class="mdi mdi-book menu-icon"></i>
-            </a>
-            <div class="collapse" id="course-management">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{route('teacher.course')}}">Subjects</a></li>
-                </ul>
-            </div>
-        </li> --}}
         @endif
         @else
         <li class="nav-item">
@@ -69,13 +57,14 @@
             </div>
         </li>
         {{-- course management sidebar --}}
+     
         <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Course Managemen</span>
+            <a class="nav-link" data-toggle="collapse" href="#course-management" aria-expanded="false" aria-controls="course-management">
+                <span class="menu-title">Course Management</span>
                 <i class="menu-arrow"></i>
                 <i class="mdi mdi-book menu-icon"></i>
             </a>
-            <div @if(ifSubjectActive(Route::currentRouteName())==true||ifClassActive(Route::currentRouteName())==true||ifExamBoardActive(Route::currentRouteName())==true) class="collapse show" @else  class="collapse" @endif id="ui-basic">
+            <div @if(ifSubjectActive(Route::currentRouteName())==true||ifClassActive(Route::currentRouteName())==true||ifExamBoardActive(Route::currentRouteName())==true) class="collapse show" @else  class="collapse" @endif id="course-management">
                 <ul class="nav flex-column sub-menu">
 
                     <li @if(ifExamBoardActive(Route::currentRouteName())==true) class="nav-item active" @else class="nav-item" @endif> <a @if(ifExamBoardActive(Route::currentRouteName())==true) class="nav-link active" @else class="nav-link" @endif href="{{route('admin.course.management.board.all')}}">Examination Board</a></li>

@@ -86,17 +86,16 @@ function getPrefix($request)
 }
 function getAssignSubjects()
 {
-    if(auth()->check()){
-        $assign_subject= AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('assign_class_id',auth()->user()->userDetail->assign_class_id)->where('board_id',auth()->user()->userDetail->board_id)->limit(4)->get();
-            if($assign_subject->count()>0){
-                return  $assign_subject;
-            }else{
-                return AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->limit(4)->get();
-            }
-    }else{
+    if (auth()->check()) {
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('assign_class_id', auth()->user()->userDetail->assign_class_id)->where('board_id', auth()->user()->userDetail->board_id)->limit(4)->get();
+        if ($assign_subject->count() > 0) {
+            return  $assign_subject;
+        } else {
+            return AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->limit(4)->get();
+        }
+    } else {
         return AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->limit(4)->get();
     }
-    
 }
 
 function isTeacherApply()
@@ -120,7 +119,8 @@ function teacherReferralId()
     $referralId         = 'ABHITHSIKSHA' . date('dmY') . '/' . random_int(10000000, 99999999);
     return $referralId;
 }
-function reciptGenerate($id){
+function reciptGenerate($id)
+{
     $reciptId         = 'ABHITHSIKSHA/' . $id;
     return $reciptId;
 }
@@ -192,7 +192,7 @@ function otpSendForgotPassword($phone, $otp)
 
     //Your message to send, Adding URL encoding.
     $message = urlencode("<#> Use $otp as your verification code. The OTP expires within 10 mins. Do not share it with anyone. -regards Abhith Siksha");
-    
+
     //Preparing post parameters
     $postData = array(
         'authkey' => '19403ARfxb6xCGLJ619221c6P15',
@@ -252,7 +252,7 @@ function timeDifference($from, $to)
 function addTime($first, $second)
 {
     $secs = strtotime($second) - strtotime("00:00:00");
-   return  date("H:i:s", strtotime($first) + $secs);
+    return  date("H:i:s", strtotime($first) + $secs);
 }
 function isPracticeTestPlayed($set_id)
 {
@@ -265,7 +265,7 @@ function isPracticeTestPlayed($set_id)
 }
 function getPracticeTestId($set_id)
 {
-    $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->where('end_time','!=',null)->latest('created_at')->first();
+    $user_practice_tests = UserPracticeTest::where('user_id', auth()->user()->id)->where('set_id', $set_id)->where('end_time', '!=', null)->latest('created_at')->first();
     if ($user_practice_tests) {
         return $user_practice_tests->id;
     } else {
@@ -399,21 +399,24 @@ function ifGalleryActive($current_route)
 }
 function ifSubjectActive($current_route)
 {
-   
-    if ($current_route == "admin.course.management.subject.all" || $current_route == "admin.course.management.subject.create" || $current_route == "admin.course.management.subject.edit" || $current_route == "admin.course.management.subject.store" || $current_route == "admin.course.management.subject.view" || $current_route == "admin.course.management.subject.assign" || $current_route == "admin.course.management.lesson.topic.display" || $current_route == "admin.published.subject" || $current_route == "admin.active.subject" || $current_route =="admin.course.management.lesson.all" || $current_route =="admin.course.management.lesson.create" ||$current_route =="admin.course.management.lesson.topic.create"||$current_route =="admin.course.management.lesson.view" ||$current_route="admin.course.management.lesson.create" || $current_route="admin.course.management.lesson.create" ) {
+    
+    if ($current_route == "admin.course.management.subject.all" || $current_route == "admin.course.management.subject.create" || $current_route == "admin.course.management.subject.edit" || $current_route == "admin.course.management.subject.store" || $current_route == "admin.course.management.subject.view" || $current_route == "admin.course.management.subject.assign" || $current_route == "admin.course.management.lesson.topic.display" || $current_route == "admin.published.subject" || $current_route == "admin.active.subject" || $current_route == "admin.course.management.lesson.all" || $current_route == "admin.course.management.lesson.create" || $current_route == "admin.course.management.lesson.topic.create" || $current_route == "admin.course.management.lesson.view" || $current_route == "admin.course.management.lesson.create") {
         return true;
     } else {
         return false;
     }
 }
-function ifClassActive($current_route){
+function ifClassActive($current_route)
+{
+    
     if ($current_route == "admin.course.management.class.all") {
         return true;
     } else {
         return false;
     }
 }
-function ifExamBoardActive($current_route){
+function ifExamBoardActive($current_route)
+{
     if ($current_route == "admin.course.management.board.all") {
         return true;
     } else {
@@ -427,7 +430,7 @@ function subjectStatus($subject_id)
     })->where("user_id", auth()->user()->id)->first();
 
     $isSubjectActive = AssignSubject::where('is_activate', 1)->where('published', 1)->where('id', $subject_id)->first();
-    if ($isSubjectActive && (!$isBuy)) {//subject activate and not buy
+    if ($isSubjectActive && (!$isBuy)) { //subject activate and not buy
         return 3;
     } elseif ($isBuy) {
         return 1;
@@ -462,11 +465,12 @@ function orderNo()
     $order_no         = date('dmY') . '/' . $order_count;
     return $order_no;
 }
-function videoWatchTime($user_id,$subject_id,$lesson_id){
-    $video_watch_time=SubjectLessonVisitor::where('visitor_id',$user_id)->where('subject_id',$subject_id)->where('lesson_subject_id',$lesson_id)->first();
-    if($video_watch_time){
+function videoWatchTime($user_id, $subject_id, $lesson_id)
+{
+    $video_watch_time = SubjectLessonVisitor::where('visitor_id', $user_id)->where('subject_id', $subject_id)->where('lesson_subject_id', $lesson_id)->first();
+    if ($video_watch_time) {
         return $video_watch_time->video_watch_time;
-    }else{
+    } else {
         return "00:00:00";
     }
 }

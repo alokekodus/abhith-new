@@ -87,7 +87,7 @@
                                         <label class="mr-3">I am above 18 years old.</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input age-check-radio is_above_eighteen" type="radio"
-                                                name="is_above_eighteen" id="ageCheckYes" value="1">
+                                                name="is_above_eighteen" id="ageCheckYes" value="1" checked>
                                             <label class="form-check-label" for="ageCheckYes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -107,7 +107,7 @@
                                         </span>
                                     </div>
                                     <div class="form-group col-lg-12">
-                                        <input type="text" class="form-control" name="name" placeholder="Name" id="name"
+                                        <input type="text" class="form-control" name="name" placeholder="Student Name" id="name"
                                             maxlength="50" value="{{ old('name') }}">
                                         <span class="text-danger">
                                             @error('name')
@@ -633,13 +633,14 @@
                         'class_id':$('#board-class-dd').val()
                     },
                     success: function(data) {
-                        console.log(data);
+                        
                         if (data.status == 1) {
                             toastr.success(data.message);
+                            location.reload(true);
                         } else {
                             toastr.error(data.message);
                         }
-                         location.reload(true);
+                        
                     },
                     error: function(xhr, status, error) {
                         if (xhr.status == 500 || xhr.status == 422) {

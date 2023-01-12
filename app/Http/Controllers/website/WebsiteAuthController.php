@@ -366,7 +366,7 @@ class WebsiteAuthController extends Controller
     {
           
         try {
-
+              
             if (getPrefix($request) == "api") {
                 $type = Type::User;
             } elseif ($request->type == 3) {
@@ -415,10 +415,10 @@ class WebsiteAuthController extends Controller
                     'password' => 'required'
                 ]);
 
-                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])&&($type==2)) {
+                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate,'type_id'=>$type])&&($type==2)) {
                     Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                     return redirect()->route('website.dashboard');
-                }elseif(Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])&&($type==3)){
+                }elseif(Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate,'type_id'=>$type])&&($type==3)){
                     Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                     return redirect()->route('teacher.dashboard');
                 }else{

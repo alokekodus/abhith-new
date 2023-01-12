@@ -96,7 +96,7 @@
                                         <option value="{{ $item->id }}">
                                             {{ $item->exam_board }}</option>
                                     @empty
-                                        <option>No boards to show</option>
+                                        <option value="">No boards to show</option>
                                     @endforelse
                                 </select>
                             </div>
