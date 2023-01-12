@@ -269,7 +269,7 @@
                                                 <div class="d-flex justify-content-between myCourses-details">
                                                     <div style="width: 25%; display:flex; flex-direction: column">
                                                         <h6>Board</h6>
-                                                        <h5 class="font-weight-bold">
+                                                        <h5>
                                                             {{ $item->board->exam_board }}</h5>
 
                                                         <div class="myCourses-view-btn">
@@ -280,13 +280,13 @@
                                                     </div>
                                                     <div style="width: 25%">
                                                         <h6>Class</h6>
-                                                        <h5 class="font-weight-bold">
+                                                        <h5>
                                                             {{ $item->assignClass->class ?? '' }}
                                                         </h5>
                                                     </div>
                                                     <div style="width: 25%">
                                                         <h6>Course Type</h6>
-                                                        <h5 class="font-weight-bold">
+                                                        <h5>
                                                             @if ($item->is_full_course_selected == 1)
                                                             Full Course
                                                             @else
@@ -296,7 +296,7 @@
                                                     </div>
                                                     <div style="width: 25%">
                                                         <h6>Total Subject(s)</h6>
-                                                        <h5 class="font-weight-bold">
+                                                        <h5>
                                                             @foreach($item->assignSubject as $key=>$subject)
                                                             <a href="{{route('website.subject.detatils',Crypt::encrypt( $subject->subject->id))}}">{{$key+1}}. {{ $subject->subject->subject_name }}</a><br>
                                                             @endforeach
@@ -332,9 +332,7 @@
                                 <h4 class="font-weight-bold">My Performance</h4>
                             </div>
                             @if($purchase_history->count()>0)
-                            <div class="col-lg-6">
-                                <h2 class="font-weight-bold">My Performance</h2>
-                            </div>
+                            
                             <div class="col-lg-6">
                                 <div class="dropdown">
                                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -342,7 +340,9 @@
                                         Select Subject
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <div id="subjectDisplay"></div>
+                                        <button class="dropdown-item" onClick="1" > Name: Name 1 </button>
+                                        <button class="dropdown-item" onClick="2" > Name: Name 2 </button>
+                                        {{-- <div id="subjectDisplay"></div> --}}
                                     </div>
                                 </div>
                             </div>
