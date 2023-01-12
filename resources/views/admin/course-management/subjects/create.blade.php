@@ -2,6 +2,31 @@
 @section('title', 'Course Management - Subjects')
 @section('head')
     <link rel="stylesheet" href="{{ asset('asset_admin/css/lesson.css') }}">
+
+    <style>
+        .showImageDiv .showUploadedImage {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .showImageDiv {
+            position: relative;
+        }
+
+        .clearImageBtn, .clearVideoThumbnailBtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        .clearImageBtn:hover, .clearVideoThumbnailBtn:hover{
+            cursor: pointer;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="page-header">
@@ -43,6 +68,21 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $('.clearImageBtn').on('click', function(e) {
+            e.preventDefault();
+            $('#imageUpload').val('');
+            $('#noCoverImage').text('No file chosen...');
+            $(this).prev().attr('src', "{{ asset('files/subject/placeholder.jpg') }}");
+        })
+
+        $('.clearVideoThumbnailBtn').on('click', function(e) {
+            e.preventDefault();
+            $('#videoThumbnailImageUpload').val('');
+            $('#noImageFilePromoVideo').text('No file chosen...');
+            $(this).prev().attr('src', "{{ asset('files/subject/placeholder.jpg') }}");
+        })
+    </script>
 
     <script>
         CKEDITOR.replace('description', {

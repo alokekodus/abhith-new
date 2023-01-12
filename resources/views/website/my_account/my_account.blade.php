@@ -336,15 +336,12 @@
                                 <h2 class="font-weight-bold">My Performance</h2>
                             </div>
                             <div class="col-lg-6">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Select Subject
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <div id="subjectDisplay"></div>
-                                    </div>
-                                </div>
+                                <div class="form-group">
+                                    <label for="subjectDisplay">Select Subject</label>
+                                    <select class="form-control" id="subjectDisplay">
+
+                                    </select>
+                                  </div>
                             </div>
                             <div class="col-lg-12 mt-5 mb-5">
                                 <h3 class="text-center font-weight-bold">All Subject</h3>
@@ -765,7 +762,7 @@
              const allsubjects=result.all_subjects;
              let subjects='';
              allsubjects.forEach(list => {
-                subjects += `<button class="dropdown-item" onClick="performanceById(${list.id})" > Name: ${list.name} Board:${list.board} Class:${list.class} </button>`;
+                subjects += `<option onClick="performanceById(${list.id})" > Name: ${list.name} Board:${list.board} Class:${list.class} </option>`;
             });
             $('#subjectDisplay').html(subjects);  
         }

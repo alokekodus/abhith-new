@@ -54,10 +54,11 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="form-group">
-            <img id="blah"
+        <div class="form-group showImageDiv">
+            <img id="blah" class="showUploadedImage"
                 src="@if(isset($subject)){{asset($subject->subjectAttachment->img_url)}} @else {{asset('files/subject/placeholder.jpg')}} @endif"
-                alt="your image" height="200" width="350" controls style="" />
+                alt="your image" controls style="" />
+                <img class="clearImageBtn shadow" src="{{asset('cancel.png')}}" alt="Close">
         </div>
     </div>
 </div>
@@ -78,10 +79,11 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="form-group">
-            <img id="videothumbnailimagepreview"
+        <div class="form-group showImageDiv">
+            <img id="videothumbnailimagepreview" class="showUploadedImage"
                 src="@if(isset($subject)){{asset($subject->subjectAttachment->video_thumbnail_image)}} @else {{asset('files/subject/placeholder.jpg')}} @endif"
                 alt="your image" height="200" width="350" controls style="" />
+                <img class="clearVideoThumbnailBtn shadow" src="{{asset('cancel.png')}}" alt="Close">
         </div>
     </div>
 </div>
