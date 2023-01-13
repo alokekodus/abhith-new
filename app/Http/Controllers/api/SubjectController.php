@@ -431,6 +431,7 @@ class SubjectController extends Controller
                     }
                     $count = sizeof($array);
                     $video_details = [
+                        'user_id'=>auth()->user()->id,
                         'videos' => $all_videos,
                         'total_videos' => $count,
 
@@ -446,7 +447,7 @@ class SubjectController extends Controller
                     $video_details = [
                         'videos' => [],
                         'total_videos' => 0,
-
+                        'user_id'=>auth()->user()->id,
                     ];
                     $data = [
                         "code" => 200,
@@ -460,7 +461,7 @@ class SubjectController extends Controller
                 $video_details = [
                     'videos' => [],
                     'total_videos' => 0,
-
+                    'user_id'=>auth()->user()->id,
                 ];
                 $data = [
                     "code" => 200,
