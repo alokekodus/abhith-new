@@ -30,7 +30,6 @@ class StudentController extends Controller
   public function subjectWiseStudent($subject_id)
   {
   
-
     $assign_orders = $this->getAssignOrder($subject_id);
     return view('teacher.student.index', compact('assign_orders'));
   }

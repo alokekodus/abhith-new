@@ -87,7 +87,7 @@
                                         <label class="mr-3">I am above 18 years old.</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input age-check-radio is_above_eighteen" type="radio"
-                                                name="is_above_eighteen" id="ageCheckYes" value="1" checked>
+                                                name="is_above_eighteen" id="ageCheckYes" value="1">
                                             <label class="form-check-label" for="ageCheckYes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -627,8 +627,8 @@
                         'phone': $('#phone').val(),
                         'password': $('#pwd').val(),
                         'name': $('#name').val(),
-                        'is_above_eighteen':$('.is_above_eighteen').val(),
-                        'parent_name':$('#parent_name').val(),
+                        'is_above_eighteen':$("input[type='radio'][name='is_above_eighteen']:checked").val(),
+                        'parent_name':$('#parentname').val(),
                         'board_id':$('#assignedBoard').val(),
                         'class_id':$('#board-class-dd').val()
                     },
@@ -636,11 +636,10 @@
                         
                         if (data.status == 1) {
                             toastr.success(data.message);
-                            location.reload(true);
                         } else {
                             toastr.error(data.message);
                         }
-                        
+                        location.reload(true);
                     },
                     error: function(xhr, status, error) {
                         if (xhr.status == 500 || xhr.status == 422) {
