@@ -428,9 +428,9 @@ class PerformanceController extends Controller
 
 
 
-            $user_practice_tests = UserPracticeTest::with(['userPracticeTestAnswer', 'set' => function ($q) use ($subject_id) {
+            $user_practice_tests = UserPracticeTest::whereHas('set', function ($q) use ($subject_id) {
                 $q->where('assign_subject_id', $subject_id);
-            }])->where('user_id', auth()->user()->id)->get();
+            })->where('user_id', auth()->user()->id)->get();
             if ($user_practice_tests->count() > 0) {
                 foreach ($user_practice_tests as $key => $user_practice_test) {
                     $practice_test_duration[] = $user_practice_test->total_duration;
@@ -463,7 +463,7 @@ class PerformanceController extends Controller
 
 
             $data = [
-
+                'id'=>$subject_id,
                 'subject_progress' => $subject_progress,
                 'time_spent' => $time_spent,
                 'mcq_performance' => $mcq_performance
@@ -473,7 +473,7 @@ class PerformanceController extends Controller
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
-                "message" => "Something went wrong",
+                "message" => $th->getMessage(),
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);

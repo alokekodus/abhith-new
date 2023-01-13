@@ -269,7 +269,7 @@
                                                 <div class="d-flex justify-content-between myCourses-details">
                                                     <div style="width: 25%; display:flex; flex-direction: column">
                                                         <h6>Board</h6>
-                                                        <h5>
+                                                        <h5 class="font-weight-bold">
                                                             {{ $item->board->exam_board }}</h5>
 
                                                         <div class="myCourses-view-btn">
@@ -280,13 +280,13 @@
                                                     </div>
                                                     <div style="width: 25%">
                                                         <h6>Class</h6>
-                                                        <h5>
+                                                        <h5 class="font-weight-bold">
                                                             {{ $item->assignClass->class ?? '' }}
                                                         </h5>
                                                     </div>
                                                     <div style="width: 25%">
                                                         <h6>Course Type</h6>
-                                                        <h5>
+                                                        <h5 class="font-weight-bold">
                                                             @if ($item->is_full_course_selected == 1)
                                                             Full Course
                                                             @else
@@ -296,11 +296,13 @@
                                                     </div>
                                                     <div style="width: 25%">
                                                         <h6>Total Subject(s)</h6>
-                                                        <h5>
+                                                        <h5 class="font-weight-bold">
                                                             @foreach($item->assignSubject as $key=>$subject)
-                                                            <a href="{{route('website.subject.detatils',Crypt::encrypt( $subject->subject->id))}}">{{$key+1}}. {{ $subject->subject->subject_name }}</a><br>
+                                                            <a
+                                                                href="{{route('website.subject.detatils',Crypt::encrypt( $subject->subject->id))}}">{{$key+1}}.
+                                                                {{ $subject->subject->subject_name }}</a><br>
                                                             @endforeach
-                                                            
+
                                                         </h5>
                                                     </div>
                                                 </div>
@@ -332,18 +334,15 @@
                                 <h4 class="font-weight-bold">My Performance</h4>
                             </div>
                             @if($purchase_history->count()>0)
-                            
                             <div class="col-lg-6">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Select Subject
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item" onClick="1" > Name: Name 1 </button>
-                                        <button class="dropdown-item" onClick="2" > Name: Name 2 </button>
-                                        {{-- <div id="subjectDisplay"></div> --}}
-                                    </div>
+                                <h2 class="font-weight-bold"></h2>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="subjectDisplay">Select Subject</label>
+                                    <select class="form-control" id="subjectDisplay" onchange="performanceById()">
+
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-12 mt-5 mb-5">
@@ -384,7 +383,7 @@
                                 </div>
                                 <div class="tab-content" id="myTabContent">
                                     <div>
-                                        <canvas id="myChart"></canvas>
+                                        <canvas id="progreceGraph"></canvas>
                                     </div>
 
                                 </div>
@@ -524,10 +523,6 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
-
-
-
-
         /******************  For Profile Section ******************/
         $('#name').attr("disabled", true);
         $('#email').attr("readonly", "readonly");
@@ -545,7 +540,6 @@
             "newestOnTop": true,
             "positionClass": "toast-top-right"
         };
-
         $('.edit-btn').on('click', function() {
             $('#name').attr("disabled", false);
             $('#education').attr("disabled", false);
@@ -558,7 +552,6 @@
             $('.profile-save-btn').addClass('knowledge-link');
             $('.profile-save-btn').removeClass('knowledge-link-old');
         });
-
         $('.cancel-edit-btn').on('click', function() {
             $('.edit-btn').show();
             $('.cancel-edit-btn').hide();
@@ -571,18 +564,13 @@
             $('.profile-save-btn').addClass('knowledge-link-old');
             $('.profile-save-btn').removeClass('knowledge-link');
         });
-
-
         $('#profileForm').on('submit', function(e) {
             e.preventDefault();
-
             $('.profile-save-btn').text('saving...');
-
             $.ajax({
                 url: "{{ route('website.user.details') }}",
                 type: "POST",
                 data: $('#profileForm').serialize(),
-
                 success: function(data) {
                     toastr.success(data.message);
                     $('#gender').attr("disabled", true);
@@ -602,19 +590,13 @@
                 }
             });
         });
-
-
-
         /*******************************User Photo Upload*****************************/
         $('#photoUploadForm').on('submit', function(e) {
             e.preventDefault();
-
             let formData = new FormData(this);
             $('.upload-photo-btn').text('uploading...');
-
             let photoName = $('#imageUpload').val();
             let extension = photoName.split('.').pop();
-
             if (!(extension == 'jpg' || extension == 'png' || extension == 'jpeg')) {
                 toastr.error('Oops! Not an image. Allowed extensions JPG, PNG, JPEG');
                 $('#photoUploadForm')[0].reset();
@@ -629,7 +611,7 @@
                     cache: false,
                     data: formData,
                     success: function(data) {
-                        toastr.success(data.message);
+                        
                         $('#photoUploadForm')[0].reset();
                         $('.upload-photo-btn').text('save');
                         location.reload(true);
@@ -644,16 +626,13 @@
                 });
             }
         });
-
         /**************************** Update Password Section **************************/
         $('#updatePasswordForm').on('submit', function(e) {
             e.preventDefault();
             $('.change-password-btn').text('please wait...')
-
             let crntPwd = $('#currentPassword').val();
             let newPwd = $('#newPassword').val();
             let confPwd = $('#confirmPassword').val();
-
             if (crntPwd == newPwd) {
                 toastr.error('Oops! New Password and Current Password should not be same');
                 $('#updatePasswordForm')[0].reset();
@@ -690,82 +669,65 @@
                 });
             }
         });
-
         /*******************************  Purchase History***************************************/
         $(document).ready(function() {
             $('#purchase_history_table').DataTable({
                 "processing": true,
                 dom: 'Bfrtip',
                 buttons: ['excel', 'pdf', 'print'
-                    // {
-                    //     extend:'pdfHtml5',
-                    //     title:'Purchase History',
-                    //     orientation:'landscape',
-                    //     header:true,
-
-                    //     customize:function(doc){
-                    //         let colCount = new Array();
-                    //         $('#purchase_history_table').find('tbody tr:first-child td').each(function(){
-                    //             if($(this).attr('colspan')){
-                    //                 for(let i=1;i<=$(this).attr('colspan'); i++){
-                    //                     colCount.push('*');
-                    //                 }
-                    //             }else{
-                    //                 colCount.push('*');
-                    //             }
-                    //         });
-                    //         doc.content[1].table.widths = colCount;
-                    //     }
-
-                    // }
+                  
                 ]
             });
         });
         // $(function() {
         //     $(".dial").knob();
         // });
-
-
-
         $(document).ready(function() {
+           completeReportDetails();
+        });
+        function completeReportDetails(){
             $.ajax({
                 url: "{{ route('website.user.performance') }}",
                 method: 'get',
-
                 success: function(result) {
+                   
                     displayAllPurchaseSubject(result.result);
                     watchedNotWatchedVideo(result.result);
                     subjectProgressInPercentage(result.result);
                     progreceGraph(result.result);
                     mcqTestPerformance(result.result);
-                    // dailyGraph(result.result);
+                    dailyGraph(result.result);
                 }
             })
-        });
-        function performanceById(subjectId){
-           
-            var url = '{{ route("website.user.performance.bysubjectid", ":id") }}';
+        }
+        function performanceById(){
+          
+            let subjectId=$("#subjectDisplay").val();
+            if(subjectId==0){
+                completeReportDetails();
+            }else{
+                var url = '{{ route("website.user.performance.bysubjectid", ":id") }}';
             url = url.replace(':id', subjectId);
             $.ajax({
                 url:url, 
                 method: 'get',
-
                 success: function(result) {
-                    console.log(result);
-                 
                     watchedNotWatchedVideo(result.result);
                     subjectProgressInPercentage(result.result);
                     progreceGraph(result.result);
                     mcqTestPerformance(result.result);
-                    // dailyGraph(result.result);
+                    dailyGraph(result.result);
                 }
             })
+            }
+            
         }
         function displayAllPurchaseSubject(result){
              const allsubjects=result.all_subjects;
              let subjects='';
+             subjects +=`<option value="0">---Select Subject---</option>`
              allsubjects.forEach(list => {
-                subjects += `<button class="dropdown-item" onClick="performanceById(${list.id})" > Name: ${list.name} Board:${list.board} Class:${list.class} </button>`;
+                subjects += `<option value="${list.id}" > Name: ${list.name} Board:${list.board} Class:${list.class} </option>`;
             });
             $('#subjectDisplay').html(subjects);  
         }
@@ -807,12 +769,17 @@
                         }
                     }
         };
+        let watchedNotWatchedVideoChart = Chart.getChart("watchedNotWatchedVideo"); // <canvas> id
+        if (watchedNotWatchedVideoChart != undefined) {
+            watchedNotWatchedVideoChart.destroy();
+        }
+        
 
-        const myChart = new Chart(
+        const watchedNotWatchedVideoChartNew = new Chart(
         document.getElementById('watchedNotWatchedVideo'),
         config
         );
-
+        
         }
         function subjectProgressInPercentage(result){
             
@@ -821,7 +788,7 @@
     
         const data = {
                         labels: [
-                            'Watched Video Percebtage',                          
+                            'Watched Video Percentage',                          
                         ],
                         datasets: [{
                             label: 'Subject progress in percentage Based on your video',
@@ -849,11 +816,20 @@
                         }
                     }
         };
+        
+        let watchedvideopercentageChart = Chart.getChart("watchedvideopercentage"); // <canvas> id
+        if (watchedvideopercentageChart != undefined) {
+            watchedvideopercentageChart.destroy();
+        }
+        
 
-        const myChart = new Chart(
+        const watchedvideopercentageChartNew = new Chart(
         document.getElementById('watchedvideopercentage'),
         config
         );
+
+
+
         }
         function progreceGraph(result){
            
@@ -865,9 +841,8 @@
             var FridayTimeSpent=TimeSpent.Fri;
             var SatdayTimeSpent=TimeSpent.Sat;
             var SundayTimeSpent=TimeSpent.Sun;
-            const ctx = document.getElementById('myChart');
-
-            new Chart(ctx, {
+           
+            const data ={
                 type: 'bar',
                 data: {
                 labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat','Sun'],
@@ -884,21 +859,32 @@
                     }
                 }
                 }
-            });
+            }
+
+            let progreceGraphChart = Chart.getChart("progreceGraph"); // <canvas> id
+            if (progreceGraphChart != undefined) {
+                progreceGraphChart.destroy();
+            }
+            
+
+            const progreceGraphChartNew = new Chart(
+            document.getElementById('progreceGraph'),
+            data
+            );
+
+           
         }
         function mcqTestPerformance(result){
-            
+            console.log(result.mcq_performance);
             $("#test_attempt").html(result.mcq_performance.test_attempted);
             $("#correct_answer").html(result.mcq_performance.total_correct);
             $("#accuracy").html(Math.round(result.mcq_performance.accuracy));
             $("#totaltime").html(result.mcq_performance.total_duration);
         }
-
        
-
         function dailyGraph(result) {
             var time_spent = result.time_spent;
-            console.log(time_spent);
+            
             $("#monday").html(time_spent['Mon']);
             $("#tueday").html(time_spent['Tue']);
             $("#wedday").html(time_spent['Wed']);

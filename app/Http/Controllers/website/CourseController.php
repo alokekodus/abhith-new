@@ -238,7 +238,7 @@ class CourseController extends Controller
     {
         $data = LessonAttachment::where('id', Crypt::decrypt($id))->with('lesson')->first();
         $lesson_id = $data->lesson->id;
-        $subject_id = $data->lesson->parent_id;
+        $subject_id = $data->lesson->assign_subject_id;
         $user_id = auth()->user()->id;
 
         return view('website.my_account.video', compact('data', 'lesson_id', 'subject_id', 'user_id'));
