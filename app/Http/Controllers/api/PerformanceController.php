@@ -65,6 +65,7 @@ class PerformanceController extends Controller
                 $subject_progress=($total_video - $total_watch_video) / $total_video * 100;
 
                 $subject_progress = [
+                  
                     'watched_percentage' => round($watched_percentage),
                     'not_watched_percentage' => round($not_watched_percentage),
                     'subject_progress' => round($watched_percentage),

@@ -50,6 +50,7 @@ class UserCourseController extends Controller
     }
     public function receiptGenerate($id){
         try {
+           
             $purchase_history = Order::with('board','assignClass','assignSubject')->where('id',$id)->first();
             if( $purchase_history->is_receipt_generated==0){
                 $receipt_no=reciptGenerate($purchase_history->id);
@@ -58,6 +59,11 @@ class UserCourseController extends Controller
                     $user_name=$user_details->name;
                 }else{
                     $user_name=$user_details->parent_name;
+                }
+                if($purchase_history->is_full_course_selected==0){
+                    $package_type="Custom Package";
+                }else{
+                    $package_type="Full Package";
                 }
                 $user=[
                     'receipt_no'=>$receipt_no,
@@ -70,6 +76,7 @@ class UserCourseController extends Controller
                     'board'=>$purchase_history->board->exam_board,
                     'class'=>$purchase_history->assignClass->class,
                     'subjects'=>$purchase_history->assignSubject,
+                    'package_type'=>$purchase_history->package_type,
                     'total_amount'=>  number_format($purchase_history->assignSubject->sum('amount')??'00', 2, '.', '') ,
                 ];
 

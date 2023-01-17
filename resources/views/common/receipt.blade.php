@@ -103,13 +103,13 @@
             <tr>
                 <td>
                     <p style="display: inline-block">Board :<br>
-                        <span>CBSE</span>
+                        <span>{{$course_detatils['board']}}</span>
                     </p>
                     <p style="display: inline-block; margin-left:40px">Class :<br>
-                        <span>9</span>
+                        <span>{{$course_detatils['class']}}</span>
                     </p>
                     <p style="display: inline-block; margin-left:40px">Package Type :<br>
-                        <span>Full Course</span>
+                        <span>{{$course_details['package_type']}}</span>
                     </p>
                 </td>
             </tr>

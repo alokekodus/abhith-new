@@ -364,7 +364,7 @@
                                 <div class="progress-bar-text d-flex justify-content-between">
                                     <div class="progress-bar-left">
                                         <h5 class="font-weight-bold">Time Spent</h5>
-                                        <p>Based on your activities in app ( Mins)</p>
+                                        <p>Based on your activities in app (Secs)</p>
                                     </div>
                                     <div class="progress-bar-right">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -690,7 +690,7 @@
                 url: "{{ route('website.user.performance') }}",
                 method: 'get',
                 success: function(result) {
-                   
+                  
                     displayAllPurchaseSubject(result.result);
                     watchedNotWatchedVideo(result.result);
                     subjectProgressInPercentage(result.result);
@@ -782,9 +782,9 @@
         
         }
         function subjectProgressInPercentage(result){
-            
-            var watchedVideoPercentage=result.subject_progress.watched_percentage;
-            var notWatchedVideoPercentage=100-watchedVideoPercentage;
+            let total_video=result.subject_progress.watched_percentage+result.subject_progress.not_watched_percentage
+            let watchedVideoPercentage=result.subject_progress.watched_percentage;
+            let notWatchedVideoPercentage=total_video-watchedVideoPercentage;
     
         const data = {
                         labels: [
@@ -875,7 +875,7 @@
            
         }
         function mcqTestPerformance(result){
-            console.log(result.mcq_performance);
+            
             $("#test_attempt").html(result.mcq_performance.test_attempted);
             $("#correct_answer").html(result.mcq_performance.total_correct);
             $("#accuracy").html(Math.round(result.mcq_performance.accuracy));
