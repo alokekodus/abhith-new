@@ -4,15 +4,6 @@
 
 @section('head')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-        #addNewTestimonial {
-            position: fixed;
-            right: 20px;
-            bottom: 30px;
-        }
-    </style>
-
 @endsection
 
 @section('content')
@@ -24,6 +15,13 @@
             </span>
             Testimonial
         </h3>
+        <nav aria-label="breadcrumb p-2">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="{{ route('admin.testimonial.add') }}" class="btn btn-gradient-primary" id="addNewTestimonial">Add New</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     @if (Session::has('message'))
@@ -64,8 +62,6 @@
             </div>
         @endforelse
     </div>
-
-    <a href="{{ route('admin.testimonial.add') }}" class="btn btn-success" id="addNewTestimonial">Add New</a>
 
 @endsection
 

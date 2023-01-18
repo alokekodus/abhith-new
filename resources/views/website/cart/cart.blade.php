@@ -19,7 +19,7 @@
                     <p>Oops! No items found.</p>
                     <div class="shipping-div text-center"><a href="{{route('website.course')}}"
                             class="shipping-btn">Continue
-                            shoping</a></div>
+                            enrolling</a></div>
                 </div>
                 @endif
             </div>
