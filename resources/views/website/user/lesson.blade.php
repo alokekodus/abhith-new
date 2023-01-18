@@ -71,7 +71,7 @@ $prefix = Request::route()->getPrefix();
     var demoVideoPlayer=``;
     url = url.replace(':id', lesson_id);
     // http://206.189.132.212/abhith-siksha/public
-    let base_url= "http://206.189.132.212/abhith-siksha/public";
+    let base_url= "http://localhost/abhith-new/public";
     $.ajax({
 				url: url,
 				method: 'get',
