@@ -75,11 +75,9 @@ class TimeTableController extends Controller
                     'board' => 'required',
                     'class' => 'required',
                     'subject' => 'required',
-                    'zoom_link' => 'required',
+                    'zoom_link' => 'required|max:100',
                     'add_time' => 'required',
                     'add_date' => 'required',
-
-
                 ],
                 [
                     'board.required' => 'Board name is required',
@@ -95,7 +93,7 @@ class TimeTableController extends Controller
             
 
             if ($validate->fails()) {
-                return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
+                return response()->json(['status' => 0, 'message' => $validate->errors()->first()]);
             }
 
 
