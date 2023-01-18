@@ -44,6 +44,8 @@
                             <th> Name </th>
                             <th>Parent Name</th>
                             <th>Is above 18</th>
+                            <th>Board</th>
+                            <th>Class</th>
                             <th> Email </th>
                             <th> Phone number </th>
                             <th> Registration Date </th>
@@ -57,6 +59,8 @@
                             <td>{{ $user->userDetail->name ?? 'NA' }}</td>
                             <td>{{ $user->userDetail->parent_name ?? 'NA' }}</td>
                             <td>@if($user->userDetail->is_above_eighteen==1)Yes @else No @endif</td>
+                            <td>{{$user->userDetail->board->exam_board??'NA'}}</td>
+                            <td>{{$user->userDetail->assignClass->class??'NA'}}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone ?? 'NA' }}</td>
                             <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
