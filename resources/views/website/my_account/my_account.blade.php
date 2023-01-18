@@ -433,7 +433,7 @@
                                     <p>Oops! No performance details for display.</p>
                                     <div class="shipping-div text-center"><a href="{{ route('website.course') }}"
                                             class="shipping-btn">Continue
-                                            shoping</a></div>
+                                            enrolling</a></div>
                                 </div>
                             </div>
 

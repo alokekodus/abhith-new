@@ -210,7 +210,7 @@ function setFileInfo() {
         },
         messages: {
             name: {
-                required: "Resource name may not be empty ."
+                required: "Resource name can not be empty."
             },    
             resource_type:{
                 required:"Please Select Resource Type."

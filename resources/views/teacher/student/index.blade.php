@@ -47,8 +47,8 @@
                                                 style="text-transform: capitalize">{{$assign_order->order->user->name}}</b>
                                         </td>
                                         <td>@if($assign_order->order->is_full_course_selected==1)<label
-                                                class="badge badge-gradient-success">Full Package</label> @else
-                                            <label class="badge badge-gradient-warning"> Customized Package </label>
+                                                class="badge badge-success">Full Package</label> @else
+                                            <label class="badge badge-warning"> Customized Package </label>
                                             @endif
                                         </td>
 
@@ -57,7 +57,7 @@
                                         <td> Rs. {{number_format((float)$assign_order->amount, 2, '.', '') }} </td>
                                         <td><a
                                                 href="{{route('teacher.subject.student.report',[Crypt::encrypt($assign_orders[0]->subject->id),Crypt::encrypt($assign_order->order->user->id)])}}"><label
-                                                    class="badge badge-gradient-info"> PROGRESS REPORT <i
+                                                    class="badge badge-info"> PROGRESS REPORT <i
                                                         class="mdi mdi-eye"></i> </label></a> </td>
                                     </tr>
 
