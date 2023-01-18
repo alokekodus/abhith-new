@@ -105,9 +105,8 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-sm assignTeacherModal actionBtn"
-                                        data-id="{{ Crypt::encrypt($subject->id) }}"><i
+                                        data-id="{{ Crypt::encrypt($subject->id) }}" title="Assign Teacher"><i
                                             class="mdi mdi-account-check"></i></button>
-
                                     <a href="{{ route('admin.course.management.subject.edit', Crypt::encrypt($subject->id)) }}"
                                         title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
                                     <a href="{{ route('admin.course.management.subject.view', Crypt::encrypt($subject->id)) }}"
@@ -123,7 +122,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="assignTeacherModal" tabindex="-1" aria-labelledby="assignTeacherModalLabel" aria-hidden="true">
+<div class="modal fade" id="assignTeacherModal" tabindex="-1" aria-labelledby="assignTeacherModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,14 +139,15 @@
                     <div class="mb-3">
                         <label for="boardName">Teacher Name</label>
                         <select name="teacher_id" id="teacherId" class="form-control">
-                           
+
                         </select>
-                        
+
                     </div>
-                  
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="AssignSubjectCancelBtn">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="AssignSubjectCancelBtn">Cancel</button>
                     <button type="submit" class="btn btn-success" id="saveAssignSubject">save</button>
                 </div>
             </form>
@@ -265,7 +266,7 @@
         });
 </script>
 <script>
-        // Open assign teacher modal
+    // Open assign teacher modal
         $('.assignTeacherModal').on('click', function() {
             $('#assignTeacherModal').modal('show');
             $('#subjectId').val($(this).data('id'));
