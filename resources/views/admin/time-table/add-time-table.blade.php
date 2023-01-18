@@ -117,11 +117,15 @@
                     processData: false,
                     contentType: false,
                     success: function(result) {
-                        toastr.success(result.message);
-                        $('#addTimeTableForm')[0].reset();
                         btn.text('Submit');
                         btn.attr('disabled', false);
-                        location.reload(true);
+                        if (result.status == 1) {
+                            toastr.success(result.message);
+                            $('#addTimeTableForm')[0].reset();
+                            location.reload(true);
+                        } else {
+                            toastr.error(result.message);
+                        }
                     },
                     error: function(xhr, status, error) {
                         btn.text('Submit');
