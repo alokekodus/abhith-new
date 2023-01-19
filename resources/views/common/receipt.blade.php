@@ -95,7 +95,7 @@
 
                 <td>
                     <p class="text-right"><span>#{{ $user_details['receipt_no'] }}</span></p>
-                    <p class="text-right">Date: <span>{{ dateFormat($course_detatils['created_at'], 'd-m-Y') }}</span>
+                    <p class="text-right">Date: <span>{{ dateFormat($course_details['created_at'], 'd-m-Y') }}</span>
                     </p>
                 </td>
             </tr>
@@ -103,10 +103,10 @@
             <tr>
                 <td>
                     <p style="display: inline-block">Board :<br>
-                        <span>{{$course_detatils['board']}}</span>
+                        <span>{{$course_details['board']}}</span>
                     </p>
                     <p style="display: inline-block; margin-left:40px">Class :<br>
-                        <span>{{$course_detatils['class']}}</span>
+                        <span>{{$course_details['class']}}</span>
                     </p>
                     <p style="display: inline-block; margin-left:40px">Package Type :<br>
                         <span>{{$course_details['package_type']}}</span>
@@ -125,19 +125,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($course_detatils['subjects'] as $key => $subject)
+                @foreach ($course_details['subjects'] as $key => $subject)
                     <tr class="text-center">
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $course_detatils['subjects'][$key]['subject']['subject_name'] }}</td>
+                        <td>{{ $course_details['subjects'][$key]['subject']['subject_name'] }}</td>
                         <td>1</td>
-                        <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_detatils['subjects'][$key]['amount'] }}</td>
+                        <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_details['subjects'][$key]['amount'] }}</td>
                     </tr>
                 @endforeach
 
                 <tr class="text-center">
                     <td colspan="2"></td>
                     <td>Subtotal</td>
-                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_detatils['total_amount'] }}</td>
+                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_details['total_amount'] }}</td>
                 </tr>
                 <tr class="text-center">
                     <td colspan="2"></td>
@@ -147,7 +147,7 @@
                 <tr class="text-center">
                     <td colspan="2"></td>
                     <td>Total</td>
-                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_detatils['subjects'][$key]['amount'] }}</td>
+                    <td><img src="https://cdn-icons-png.flaticon.com/512/25/25473.png" alt="Rupee" width="13">{{ $course_details['subjects'][$key]['amount'] }}</td>
                 </tr>
             </tbody>
         </table>
