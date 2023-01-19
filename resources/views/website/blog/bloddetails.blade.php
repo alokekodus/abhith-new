@@ -42,7 +42,7 @@
     <section class="blog-section">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12 p0">
+                <div class="col-lg-12">
                     <span class="icon-Calender-09 calendar-icon"></span><span>{{\Carbon\Carbon::parse($blog->created_at)->format('F d, Y')}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
                         @auth
                         <a href="javascript:void(0);" data-id="{{$blog->id}}" data-toggle="modal" data-target="#ReportBlogModal" class="reportBlogModal" style="display:inline;font-size:12px;" >
