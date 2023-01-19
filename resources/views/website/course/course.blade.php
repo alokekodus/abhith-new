@@ -34,6 +34,11 @@
             font-weight: 500;
             border: 1px solid #f3f0f0;
         }
+
+        #submitWebsiteFilterCourseForm{
+            font-weight: 600;
+        }
+        
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" rel="stylesheet" />
 @endsection
@@ -124,7 +129,7 @@
 
         @if ($subjects->count() != 0 && Request::get('assignedBoard') && Request::get('class_id'))
         <div class="container-fluid">
-            <h5 class="mb-4">Search result for "{{$subjects[0]->boards->exam_board}} Class {{$subjects[0]->assignClass->class}}"</h5>
+            <h6 class="mb-4">Search result for "{{$subjects[0]->boards->exam_board}} Class {{$subjects[0]->assignClass->class}}"</h6>
         </div>
             
         @endif

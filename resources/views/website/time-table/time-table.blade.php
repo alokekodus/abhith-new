@@ -46,15 +46,18 @@
                                     <td>{{$item->board->exam_board}}</td>
                                     <td>{{$item->assignClass->class}}</td>
                                     <td>{{$item->assignSubject->subject_name}}</td>
-                                    <td>{!! Illuminate\Support\Str::limit(strip_tags($item->zoom_link), $limit = 50,
+                                    <td>
+                                        <a href="{{$item->zoom_link}}" target="_blank">{!! Illuminate\Support\Str::limit(strip_tags($item->zoom_link), $limit = 50,
                                         $end =
-                                        '...') !!}</td>
+                                        '...') !!}
+                                        </a>
+                                    </td>
                                     <td>{{$item->date}} &nbsp;at&nbsp; {{$item->time}}</td>
                                     <td>
                                         @if ($item->is_activate == 1)
                                         Active
                                         @else
-                                        InActive
+                                        Inactive
                                         @endif
                                     </td>
                                 </tr>
