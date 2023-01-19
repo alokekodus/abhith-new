@@ -87,7 +87,7 @@ function getPrefix($request)
 function getAssignSubjects()
 {
     if (auth()->check()) {
-        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('assign_class_id', auth()->user()->userDetail->assign_class_id)->where('board_id', auth()->user()->userDetail->board_id)->limit(4)->get();
+        $assign_subject = AssignSubject::with('assignClass', 'boards')->where('is_activate', 1)->where('assign_class_id', auth()->user()->userDetail->assign_class_id)->where('board_id', auth()->user()->userDetail->board_id)->limit(4)->orderBy('created_at', 'DESC')->get();
         if ($assign_subject->count() > 0) {
             return  $assign_subject;
         } else {
