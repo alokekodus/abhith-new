@@ -547,22 +547,28 @@ class UserController extends Controller
                 } else {
                     $user_name = $user_details->parent_name;
                 }
+                if ($purchase_history->is_full_course_selected == 0) {
+                    $package_type = "Custom Package";
+                } else {
+                    $package_type = "Full Package";
+                }
                 $user = [
                     'receipt_no' => $receipt_no,
                     'user_name' => $user_name,
                     'mobile' => $user_details->phone,
                     'email' => $user_details->email
                 ];
-                $course_detatils = [
+                $course_details = [
                     'created_at' => $purchase_history->created_at,
                     'board' => $purchase_history->board->exam_board,
                     'class' => $purchase_history->assignClass->class,
                     'subjects' => $purchase_history->assignSubject,
+                    'package_type' => $package_type,
                     'total_amount' =>  number_format($purchase_history->assignSubject->sum('amount') ?? '00', 2, '.', ''),
                 ];
                 $pdf = PDF::loadView('common.receipt', [
                     'user_details' => $user,
-                    'course_detatils' => $course_detatils
+                    'course_details' => $course_details
                 ]);
                 $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
                 $pdf->setPaper('A4', 'portrait');
