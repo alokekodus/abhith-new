@@ -318,6 +318,16 @@ class UserController extends Controller
 
                     Mail::to($request->email)->send(new OtpVerfication($details));
 
+                    // check for failures
+                    if (Mail::failures()) {
+                        $data = [
+                            "user_id" => $user->id,
+                            "code" => 200,
+                            "message" => "Mail not sent",
+                        ];
+
+                        return response()->json(['status' => 0, 'result' => $data]);
+                    }
 
                     $data = [
                         "user_id" => $user->id,
@@ -621,7 +631,7 @@ class UserController extends Controller
                     });
                 });
             })->orderBy('created_at', 'DESC')->get();
-            if ($time_tables->count()> 0) {
+            if ($time_tables->count() > 0) {
                 $time_table = [];
                 foreach ($time_tables as $key => $item) {
                     $data = [
@@ -642,17 +652,17 @@ class UserController extends Controller
                     "result" => $time_table,
 
                 ];
-            }else{
+            } else {
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "No Recored Found",
                     "result" => $time_tables,
-    
+
                 ];
             }
-           
-        
+
+
             return response()->json(['status' => 1, 'result' => $data]);
         } catch (\Throwable $th) {
             $data = [

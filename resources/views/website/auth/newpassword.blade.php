@@ -18,6 +18,9 @@
                                     <h4 class="small-heading-grey">New Password</h4>
                                 </div>
                                 <div class="form-group col-lg-12">
+                                    <input type="text" class="form-control" placeholder="6 digit OTP" id="otp">
+                                </div>
+                                <div class="form-group col-lg-12">
                                     <input type="text" class="form-control" placeholder="New Password" id="pass">
                                 </div>
                                 <div class="form-group col-lg-12">
@@ -27,7 +30,7 @@
                                 <div class="form-group mb0 col-lg-12">
                                     <button type="submit" class="btn btn-block login-btn">Change</button>
                                     <p>Please Creat a new Password that you
-                                        don’t use on any other site</p>
+                                        don't use on any other site</p>
                                 </div>
 
                             </form>
@@ -41,6 +44,11 @@
 @endsection
 
 @section('script')
+<script>
+    $("#otp").inputFilter(function(value) {
+        return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 999999);
+    });
+</script>
 @endsection
 
 </body>
