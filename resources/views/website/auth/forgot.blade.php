@@ -131,10 +131,10 @@
                     $('#sendOtpForm')[0].reset();
 
                     if (data.status == 1) {
-                        alert(data.result.message);
+                        toastr.success(data.result.message);
                         location.href = "{{ route('website.new.password') }}";
                     } else {
-                        alert(data.result['message']);
+                        toastr.error(data.result.message);                    
                     }
                 }
             });
