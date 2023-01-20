@@ -31,7 +31,7 @@ class TimeTableController extends Controller
                 });
             });
 
-        })->orderBy('created_at', 'DESC')->get();
+        })->where('is_activate',1)->orderBy('created_at', 'DESC')->get();
       
         
 
