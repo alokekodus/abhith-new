@@ -127,6 +127,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::POST('/sendotp', [UserController::class, 'sendOtpForgotPassword']);
     Route::POST('/verifyotp', [UserController::class, 'verifyOtpForgotPassword']);
     Route::POST('/reset-password', [UserController::class, 'resetForgotPassword']);
+    Route::post('/update-password', [UserController::class, 'resetForgotPasswordForWeb'])->name('useer.reset.password');
 });
 Route::get('get-all-class', [CourseController::class, 'getAllClass']);
 Route::get('/board', [SubjectController::class, 'getBoard']);

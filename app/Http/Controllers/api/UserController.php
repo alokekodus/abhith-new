@@ -10,6 +10,7 @@ use App\Models\TimeTable;
 use App\Models\User;
 use App\Models\UserDetails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -245,7 +246,7 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'result' => $data]);
         }
     }
-    public function resetPassword(Request $request)
+    public function resetPasswordForWeb(Request $request)
     {
         try {
             $user = User::find(auth()->user()->id);
@@ -672,6 +673,53 @@ class UserController extends Controller
 
             ];
             return response()->json(['status' => 0, 'result' => $data]);
+        }
+    }
+
+    public function resetForgotPasswordForWeb(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+
+                'user_id' => 'required',
+                'otp' => 'required',
+                'password' => 'min:6|required_with:confirm_password|same:confirm_password',
+                'confirm_password' => 'min:6'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['status' => 0, 'message' => $validator->errors()->first()]);
+            }
+
+            // $dec_id = Crypt::decrypt($request->user_id);
+            $dec_id = $request->user_id;
+            $user = User::find($dec_id);
+
+            // If no user found
+            if (!$user) {
+                return response()->json(['status' => 0, 'message' => 'User not found']);
+            }
+
+            // Verify otp
+            if ($user->otp != $request->otp) {
+                return response()->json(['status' => 0, 'message' => 'OTP not match']);
+            }
+
+            // Update otp
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            $data = [
+                "code" => 200,
+                "message" => "Password reset successful",
+            ];
+
+            // Return success
+            return response()->json(['status' => 1, 'result' => $data]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['status' => 0, 'message' => $th->getMessage()]);
         }
     }
 }
