@@ -170,7 +170,7 @@ Route::view('about-us', 'website.about.about')->name('website.about');
 Route::view('contact', 'website.contact.contact')->name('website.contact');
 Route::get('website/login', [WebsiteAuthController::class, 'viewLogin'])->name('website.login');
 Route::view('website/forgot-password', 'website.auth.forgot')->name('website.forgot.password');
-Route::view('website/new-password', 'website.auth.newpassword')->name('website.new.password');
+Route::view('website/new-password/{user_id}', 'website.auth.newpassword')->name('website.new.password');
 Route::view('admin/course/view', 'admin.course.view')->name('admin.course.view');
 
 Route::view('website/faq', 'website.docs.faq')->name('website.faq');
