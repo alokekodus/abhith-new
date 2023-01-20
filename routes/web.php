@@ -64,6 +64,7 @@ Route::group(['middleware' => WebSite::class], function () {
             Route::get('/get/analysis/{id}', [SubjectController::class, 'mcqAnalysis'])->name('website.subject.analysis');
             Route::post('/question', [SubjectController::class, 'mcqGetQuestion'])->name('website.subject.mcqgetquestion');
             Route::post('/final/submit', [SubjectController::class, 'finalSubmit'])->name('website.subject.mcqSubmit');
+            Route::post('/final/totalattempt', [SubjectController::class, 'countTotalAttempt'])->name('website.subject.totalAttempt');
         });
         Route::get('/topic/{topic_id}', [SubjectController::class, 'topicDetails'])->name('subject.topic.details');
     });

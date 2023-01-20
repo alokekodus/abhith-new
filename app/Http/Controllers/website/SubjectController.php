@@ -84,7 +84,7 @@ class SubjectController extends Controller
         $data = [
 
             'set_title' => $user_practice_test->set->set_name,
-            'total_question' => $user_practice_test->set->question->count(),
+            'total_question' => $user_practice_test->total_active_question,
             'attempted_question' => $attempted_question,
             'correct_attempted' => $correct_attempted,
             'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
@@ -103,7 +103,7 @@ class SubjectController extends Controller
         $data = [
 
             'set_title' => $user_practice_test->set->set_name,
-            'total_question' => $user_practice_test->set->question->count(),
+            'total_question' => $user_practice_test->total_active_question,
             'attempted_question' => $attempted_question,
             'correct_attempted' => $correct_attempted,
             'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
@@ -136,7 +136,7 @@ class SubjectController extends Controller
             $question_id = $request->question_id;
 
 
-            $set_question = Set::with('question')->where('id', $set_id)->first();
+            $set_question = Set::with(['question','activequestion'])->where('id', $set_id)->first();
             if (!$set_question) {
                 $result = [
                     'set_name' => null,
@@ -157,6 +157,7 @@ class SubjectController extends Controller
                         'user_id' => auth()->user()->id,
                         'set_id' => $set_question->id,
                         'start_time' => date('Y-m-d H:i:s'),
+                        'total_active_question'=>$set_question->activequestion->count(),
 
                     ];
 
@@ -338,6 +339,28 @@ class SubjectController extends Controller
                 'user_practice_test_id'=>$user_practice_test->id,
             ];
             return response()->json($data);
+        } catch (\Throwable $th) {
+            $data=[
+                'code'=>400,
+               
+            ];
+            return response()->json($data);
+        }
+    }
+    public function countTotalAttempt(Request $request){
+        try {
+            $user_practice_test = UserPracticeTest::find($request->user_practice_test);
+            if($user_practice_test->total_attempts==0){
+                $data=[
+                    'code'=>401,
+                ];
+                return response()->json($data);
+            }else{
+                $data=[
+                    'code'=>200,
+                ];
+                return response()->json($data);
+            }
         } catch (\Throwable $th) {
             $data=[
                 'code'=>400,

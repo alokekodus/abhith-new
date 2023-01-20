@@ -186,10 +186,33 @@
 
     }
     function mcqSubmit(){
+    
         var user_practice_test_store_id=$("#user_practice_test_store_id").val();
         const redirectURL = "{{ route('website.subject.mcqresult') }}"+"?id="+user_practice_test_store_id;
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+             });
 
-        window.location.href = redirectURL
+
+            $.ajax({
+                    url: "{{ route('website.subject.totalAttempt') }}" ,
+                    type: "POST",
+                    data: {
+                        "user_practice_test":user_practice_test_store_id,
+                       
+                        },
+                     success: function( response ) {
+                        console.log(response)
+                        if(response.code==401){
+                            toastr.error('You have to submit atleast one answer.');
+                        }else{
+                            window.location.href = redirectURL
+                        }
+                     }
+            });
+
         // return 0;
 
     }

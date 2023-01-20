@@ -17,7 +17,8 @@ class UserPracticeTest extends Model
         'end_time',
         'total_correct_count',
         'total_attempts',
-        'total_duration'
+        'total_duration',
+        'total_active_question'
     ];
     public function userPracticeTestAnswer(){
         return $this->hasMany(UserPracticeTestAnswer::class,'user_practice_test_id','id');
