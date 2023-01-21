@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'phone' =>8867589870,
             'otp'=>123456,
             'verify_otp'=>1,
-            'type_id'=>3,
+            'type_id'=>2,
             'password' => Hash::make('123456teacher'),
             'is_activate'=>1, 
         ];

@@ -16,8 +16,8 @@ class RoleSeeder extends Seeder
     {
         $roles = array(
             array('name' => "Admin",'guard_name'=>'web'),
-            array('name' => "Teacher",'guard_name'=>'web'),
             array('name' => "Student",'guard_name'=>'web'),
+            array('name' => "Teacher",'guard_name'=>'web'),
         );
         DB::table('roles')->insert($roles);
     }

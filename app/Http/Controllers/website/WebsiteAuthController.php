@@ -186,7 +186,7 @@ class WebsiteAuthController extends Controller
     {
 
         try {
-            
+
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'phone' => 'required|numeric',
@@ -365,9 +365,9 @@ class WebsiteAuthController extends Controller
 
     public function login(Request $request)
     {
-          
+
         try {
-              
+
             if (getPrefix($request) == "api") {
                 $type = Type::User;
             } elseif ($request->type == 3) {
@@ -375,7 +375,7 @@ class WebsiteAuthController extends Controller
             } else {
                 $type = 2;
             }
-            
+
 
             if (getPrefix($request) == "api") {
                 $validator = Validator::make($request->all(), [
@@ -415,20 +415,18 @@ class WebsiteAuthController extends Controller
                     'email' => 'required',
                     'password' => 'required'
                 ]);
-
-                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate,'type_id'=>$type])&&($type==2)) {
+               
+                if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
+                      
+                    if ($type == 3) {
+                        return redirect()->route('teacher.dashboard');
+                    } else {
+                        return redirect()->route('website.dashboard');
+                    }
                     Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
-                    return redirect()->route('website.dashboard');
-                }elseif(Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate,'type_id'=>$type])&&($type==3)){
-                    Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
-                    return redirect()->route('teacher.dashboard');
-                }else{
-                    return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());  
+                } else {
+                    return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
                 }
-
-
-
-                
             }
         } catch (\Throwable $th) {
             return response()->json(['code' => 500, 'message' => 'Whoops! Something Went Wrong', 'status' => 0]);

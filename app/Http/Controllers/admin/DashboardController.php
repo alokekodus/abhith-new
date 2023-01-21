@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
   public function index()
   {
-
+   
     $boards = Board::where('is_activate', 1)->get();
     $total_student = User::where('type_id', 2)->where('verify_otp', 1)->get()->count();
     $total_teacher = User::where('type_id', 3)->where('verify_otp', 1)->get()->count();
