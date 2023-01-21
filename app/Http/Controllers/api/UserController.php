@@ -631,7 +631,7 @@ class UserController extends Controller
                         $qu->where('user_id', auth()->user()->id);
                     });
                 });
-            })->orderBy('created_at', 'DESC')->get();
+            })->where('is_activate',1)->orderBy('created_at', 'DESC')->get();
             if ($time_tables->count() > 0) {
                 $time_table = [];
                 foreach ($time_tables as $key => $item) {
