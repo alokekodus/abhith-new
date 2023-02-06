@@ -95,7 +95,7 @@ class SubjectController extends Controller
     }
     public function mcqAnalysis($id)
     {
-        $practice_test_id=Crypt::decrypt($id);
+        $practice_test_id = Crypt::decrypt($id);
         $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $practice_test_id)->first();
         $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
         $correct_attempted = $user_practice_test->correctAnswer->count();
@@ -136,7 +136,7 @@ class SubjectController extends Controller
             $question_id = $request->question_id;
 
 
-            $set_question = Set::with(['question','activequestion'])->where('id', $set_id)->first();
+            $set_question = Set::with(['question', 'activequestion'])->where('id', $set_id)->first();
             if (!$set_question) {
                 $result = [
                     'set_name' => null,
@@ -151,13 +151,13 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-            if (!$set_question->question->isEmpty()) {
+            if (!$set_question->activequestion->isEmpty()) {
                 if ($type == "start") {
                     $user_practice_test = [
                         'user_id' => auth()->user()->id,
                         'set_id' => $set_question->id,
                         'start_time' => date('Y-m-d H:i:s'),
-                        'total_active_question'=>$set_question->activequestion->count(),
+                        'total_active_question' => $set_question->activequestion->count(),
 
                     ];
 
@@ -293,9 +293,10 @@ class SubjectController extends Controller
             return response()->json(['status' => 0, 'result' => $th]);
         }
     }
-    public function finalSubmit(Request $request){
+    public function finalSubmit(Request $request)
+    {
         try {
-          
+
 
             $user_practice_test = UserPracticeTest::find($request->user_practice_test_store_id);
 
@@ -307,7 +308,7 @@ class SubjectController extends Controller
                 'total_duration' => $total_duration,
             ];
             $user_practice_test->update($update_data);
-            if($request->question_answer!=null){
+            if ($request->question_answer != null) {
                 $question = Question::find($request->question_id);
                 if ($question->correct_answer == $request->question_answer) {
                     $is_correct = 1;
@@ -321,50 +322,58 @@ class SubjectController extends Controller
                     'user_answer' => $request->question_answer,
                     'is_correct' => $is_correct
                 ];
-    
+
                 $user_pract_test_answer = UserPracticeTestAnswer::create($data);
             }
-           
 
-          
+
+
             $update_user_practice_test_store =
                 [
                     'total_attempts' => $user_practice_test->UserPracticeTestAnswer->count(),
                     'total_correct_count' => $user_practice_test->correctAnswer->count(),
                 ];
             $user_practice_test->update($update_user_practice_test_store);
+            if ($user_practice_test->UserPracticeTestAnswer->count() > 0) {
+                $data = [
+                    'code' => 200,
+                    'user_practice_test_id' => $user_practice_test->id,
+                ];
+            } else {
+                $data = [
+                    'code' => 400,
+                    'user_practice_test_id' => null,
+                ];
+            }
 
-            $data=[
-                'code'=>200,
-                'user_practice_test_id'=>$user_practice_test->id,
-            ];
             return response()->json($data);
         } catch (\Throwable $th) {
-            $data=[
-                'code'=>400,
-               
+            $data = [
+                'code' => 400,
+
             ];
             return response()->json($data);
         }
     }
-    public function countTotalAttempt(Request $request){
+    public function countTotalAttempt(Request $request)
+    {
         try {
             $user_practice_test = UserPracticeTest::find($request->user_practice_test);
-            if($user_practice_test->total_attempts==0){
-                $data=[
-                    'code'=>401,
+            if ($user_practice_test->total_attempts == 0) {
+                $data = [
+                    'code' => 401,
                 ];
                 return response()->json($data);
-            }else{
-                $data=[
-                    'code'=>200,
+            } else {
+                $data = [
+                    'code' => 200,
                 ];
                 return response()->json($data);
             }
         } catch (\Throwable $th) {
-            $data=[
-                'code'=>400,
-               
+            $data = [
+                'code' => 400,
+
             ];
             return response()->json($data);
         }

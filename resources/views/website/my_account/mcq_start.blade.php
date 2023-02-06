@@ -77,6 +77,7 @@
         getQuestion(page,set_id,last,type,question_answer,user_practice_test_store_id,question_id);
     }
     function skipQuestion(current_page){
+       
         $('#submit_test').prop('disabled', false);
         var current_page=current_page;
         var page=current_page+1;
@@ -85,9 +86,9 @@
         var type="skip";
         var user_practice_test_store_id=$("#user_practice_test_store_id").val();
         if(current_page==last){
-
-            var question_answer = $("input[name='question_option']:checked").val();
-            mcqSubmit();
+            toastr.error('Please submit your answer by clicking the submit button.');
+            // var question_answer = $("input[name='question_option']:checked").val();
+            // mcqSubmit();
 
         }else{
             var question_answer=null;
@@ -186,7 +187,7 @@
 
     }
     function mcqSubmit(){
-    
+            
         var user_practice_test_store_id=$("#user_practice_test_store_id").val();
         const redirectURL = "{{ route('website.subject.mcqresult') }}"+"?id="+user_practice_test_store_id;
         $.ajaxSetup({
@@ -204,7 +205,7 @@
                        
                         },
                      success: function( response ) {
-                        console.log(response)
+                        
                         if(response.code==401){
                             toastr.error('You have to submit atleast one answer.');
                         }else{
@@ -246,6 +247,8 @@
                             const redirectURL = "{{ route('website.subject.mcqresult') }}"+"?id="+user_practice_test_store_id;
 
                                         window.location.href = redirectURL
+                        }else{
+                            toastr.error('You have to submit atleast one answer.');
                         }
                      }
             });
