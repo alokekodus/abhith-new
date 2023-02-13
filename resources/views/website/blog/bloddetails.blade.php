@@ -3,7 +3,11 @@
 @section('title', 'Blog')
 
 @section('head')
-
+<style>
+    #blogDetailsDiv a{
+        color: #1877f2;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -58,12 +62,12 @@
                                 <a href="#" id="whatsappLink" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true" style="color:#128c7e;font-size: 20px;margin-top:10px;"></i></a>&nbsp;&nbsp;&nbsp;
                                 <a href="#" id="mailLink" target="_blank"><i class="fa fa-envelope" aria-hidden="true" style="color:#dd4b39;font-size: 20px;margin-top:10px;"></i></a>&nbsp;&nbsp;&nbsp;
                                 <a href="#" id="redditLink" target="_blank"><i class="fa fa-reddit-square" aria-hidden="true" style="color:#ff4500;font-size: 20px;margin-top:10px;"></i></a>
-                                
+
                             </div>
                             {{-- <a href="javascript:void(0);" class="dropdown-item"  data-toggle="modal" data-target="#sharePostModal" style="font-size:12px;"><i class="fa fa-share" aria-hidden="true"></i> &nbsp; Share</a> --}}
                         </div>
                         </a>
-                    <div class="mt-5">
+                    <div id="blogDetailsDiv" class="mt-5">
                         {!!$blog->blog!!}
                     </div>
                 </div>
@@ -73,7 +77,7 @@
     </section>
     @include('layout.website.include.modals')
 @endsection
-    
+
 @section('scripts')
     @include('layout.website.include.modal_scripts')
     <script>
