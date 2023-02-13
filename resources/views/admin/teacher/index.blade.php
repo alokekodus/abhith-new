@@ -49,10 +49,10 @@
                                 <th> Name </th>
                                 {{-- <th> Email </th>
                             <th> Phone </th> --}}
-                                <th> Apply For<br><br>(Board/Class/Subject) </th>
+                                <th> Applied For<br><br>(Board/Class/Subject) </th>
                                 <th> Total Exprience </th>
                                 <th> Status </th>
-                                <th> Applyed Date </th>
+                                <th> Applied Date </th>
                                 <th>
                                     @if (auth()->user()->hasRole('Teacher'))
                                         View
