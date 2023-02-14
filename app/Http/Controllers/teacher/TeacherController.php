@@ -32,7 +32,7 @@ class TeacherController extends Controller
                     'assign_subject_id' => 'required',
                     'hslc_percentage' => 'required|numeric|min:10|max:100',
                     'hs_percentage' => 'required|numeric|min:10|max:100',
-                    'resume' => 'required',
+                    'resume' => 'required|mimes:pdf',
                     'teacherdemovideo' => 'required',
                 ],
                 [
@@ -56,6 +56,7 @@ class TeacherController extends Controller
                     'hs_percentage.min' => 'HS percentage must be in between 10 to 100',
                     'hs_percentage.max' => 'HS percentage must be in between 10 to 100',
                     'resume.required' => 'Please upload your Resume',
+                    'resume.mimes'=>'Resume should be in .pdf formate',
                     'teacherdemovideo.required' => 'Please upload a demo video which and video duration must be less then 5 minutes.'
                 ]
             );

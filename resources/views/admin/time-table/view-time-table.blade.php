@@ -66,8 +66,8 @@
                             <td>{{$item->board->exam_board}}</td>
                             <td>{{$item->assignClass->class}}</td>
                             <td>{{$item->assignSubject->subject_name}}</td>
-                            <td>{!! Illuminate\Support\Str::limit(strip_tags($item->zoom_link), $limit = 50, $end =
-                                '...') !!}</td>
+                            <td><a href="{{$item->zoom_link}}">{!! Illuminate\Support\Str::limit(strip_tags($item->zoom_link), $limit = 50, $end =
+                                '...') !!}</a></td>
                             <td>{{$item->date}} &nbsp;at&nbsp; {{$item->time}}</td>
                             <td>
                                 @if ($item->is_activate == 1)
@@ -114,7 +114,7 @@
 
                 success: function(result) {
                     toastr.success(result.message);
-                   
+
                 },
                 error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){
@@ -130,6 +130,6 @@
                 'searching':false
             });
         });
-    
+
 </script>
 @endsection

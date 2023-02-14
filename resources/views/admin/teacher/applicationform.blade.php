@@ -128,7 +128,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <div class="form-group">
-                            <label>Upload resume (Document should be in .doc/.pdf format)<span class="text-danger">*</span></label>
+                            <label>Upload resume (Document should be in .pdf format)<span class="text-danger">*</span></label>
                             <input type="file" name="resume" class="file-upload-default">
                             <div class="input-group col-xs-12">
                                 <input type="text" class="form-control file-upload-info" disabled

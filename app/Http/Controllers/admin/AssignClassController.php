@@ -76,7 +76,7 @@ class AssignClassController extends Controller
     }
     public function assignTeacher(Request $request)
     {
-        ;
+
         $subject_id =Crypt::decrypt($request->subject_id);
         $assign_subject = AssignSubject::find($subject_id);
         $board_id = $assign_subject->board_id;
@@ -113,7 +113,7 @@ class AssignClassController extends Controller
                 'status'=>1,
             ];
             $assign_teacher=TeacherAssignToSubject::create($data);
-         
+
             $data=[
                 'code'=>200,
                 'msg'=>'Teacher assign successfully.'
