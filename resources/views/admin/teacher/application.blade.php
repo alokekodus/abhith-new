@@ -47,25 +47,24 @@
                 <div class="card-footer">
                     <a href="{{ asset($user_details->resume_url) }}" class="btn btn-primary" data-toggle="modal"
                         data-target=".bd-example-modal-lg">View Resume</a>
-                    
-                    @if ($user_details->status == 1 &&
-                        auth()->user()->type_id==1)
-                        <button class="btn btn-outline-danger" id="rejectTeacherBtn" data-id="{{ Crypt::encrypt($user_details->id) }}"
-                            style="float:right">Reject</button>
+
+                    @if ($user_details->status == 1 && auth()->user()->type_id == 1)
+                        <button class="btn btn-outline-danger" id="rejectTeacherBtn"
+                            data-id="{{ Crypt::encrypt($user_details->id) }}" style="float:right">Reject</button>
 
                         <a href="{{ route('approved.teacher', Crypt::encrypt($user_details->id)) }}"
                             class="btn btn-inverse-success btn-fw" style="float: right; margin-right: 10px"
                             onclick="return confirm('Are you sure you would like to approve this application for Teacher Role?');"><i
                                 class="mdi mdi-check-all"></i>
-                            Approved For Become a Teacher</a>
+                            Approve Teacher</a>
                     @endif
                     @if ($user_details->status == 2)
                         <div class="btn btn-gradient-success" style="float:right!important;">Referral Code :
                             {{ $user_details->referral_id }}</div>
                     @endif
                     @if ($user_details->status == 3)
-                    <div class="btn btn-gradient-warning" style="float:right!important;">Rejected</div>
-                @endif
+                        <div class="btn btn-gradient-warning" style="float:right!important;">Rejected</div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -160,7 +159,7 @@
             e.preventDefault();
             const id = $(this).data('id');
 
-            if(confirm("Are you sure you want to reject this teacher?") == true) {
+            if (confirm("Are you sure you want to reject this teacher?") == true) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
