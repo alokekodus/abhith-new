@@ -99,14 +99,14 @@
 
                             <span class="font-weight-bold"> Gender :</span><span> {{ $user_details->gender }}</span><br>
 
-                            <span class="font-weight-bold"> DOB :</span><span> {{ $user_details->dob }} </span>
+                            <span class="font-weight-bold"> DOB :</span><span> {{ dateFormat($user_details->dob) }} </span>
 
 
                         </div>
                         <div class="col-4 text-primary padding-1">
 
 
-                            <span class="font-weight-bold"> Apply For : </span><span>
+                            <span class="font-weight-bold"> Applied For : </span><span>
                                 {{ $user_details->board->exam_board }}--Class{{ $user_details->assignClass->class }}--{{ $user_details->assignSubject->subject_name }}
                             </span><br>
                             <span class="font-weight-bold"> Highest Qualification:
@@ -116,8 +116,8 @@
                             <span class="font-weight-bold"> Class 12th Percentage:
                             </span><span>{{ $user_details->hs_percentage }}% </span> <br>
                             <span class="font-weight-bold">Total Exprience:
-                            </span><span>{{ $user_details->total_experience_year ?? 0 }} YEAR
-                                {{ $user_details->total_experience_month ?? 0 }} Month</span> <br>
+                            </span><span>{{ $user_details->total_experience_year ?? 0 }}-Year
+                                {{ $user_details->total_experience_month ?? 0 }}-Month</span> <br>
 
 
                         </div>
