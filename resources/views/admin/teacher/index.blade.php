@@ -70,7 +70,7 @@
                                     <td>{{ $item->name }}</td>
                                     {{-- <td>{{ $item->email }}</td>
                             <td>{{ $item->phone }}</td> --}}
-                                    <td>{{ $item->board->exam_board ??''}} / Class{{ $item->assignClass->class ??''}} /
+                                    <td>{{ $item->board->exam_board ?? '' }} / Class{{ $item->assignClass->class ?? '' }} /
                                         {{ $item->assignSubject->subject_name ?? '' }}</td>
                                     <td>{{ $item->total_experience_year ?? '0' }}Years
                                         {{ $item->total_experience_month ?? '0' }}Months</td>
@@ -86,7 +86,7 @@
                                             @endif
                                         @else
                                             @if ($item->status == 1)
-                                                <span class="badge badge-warning">Apply for approve</span>
+                                                <span class="badge badge-warning">Pending Approval</span>
                                             @elseif($item->status == 3)
                                                 <span class="badge badge-danger">Rejected</span>
                                             @else
