@@ -2,8 +2,8 @@
     <div class="card">
 
         <div class="card-header">
-            Board:<b>{{$subject->boards->exam_board}}</b>/Class:<b>{{$subject->assignClass->class}}</b>/Subject:<b>{{$subject->subject_name}}</b>
-            <span style="float: right"> Studen Name: <b>{{$user->name}}</b></span>
+            Board:<b>{{$subject->boards->exam_board}}</b> / Class:<b>{{$subject->assignClass->class}}</b> / Subject:<b>{{$subject->subject_name}}</b>
+            <span style="float: right"> Student Name: <b>{{$user->name}}</b></span>
         </div>
         {{-- <a href="" style="float:right" class="btn btn-gradient-primary btn-fw">All
             Subject</a> --}}

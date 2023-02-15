@@ -1,7 +1,7 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Become a teacher</h4>
+            <h4 class="card-title" style="text-transform: unset">Become a Teacher</h4>
             <form class="forms-sample" id="applyForm" enctype="multipart/form-data">
                 @csrf
                 <p class="card-description"> Personal Details </p>

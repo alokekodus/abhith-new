@@ -148,7 +148,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         id="AssignSubjectCancelBtn">Cancel</button>
-                    <button type="submit" class="btn btn-success" id="saveAssignSubject">save</button>
+                    <button type="submit" class="btn btn-success" id="saveAssignSubject">Save</button>
                 </div>
             </form>
         </div>
