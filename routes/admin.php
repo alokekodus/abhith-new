@@ -39,8 +39,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard')->middleware('admin');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('log.out');
-    
-   
+
+
     //     return view('admin.dashboard.dashboard');
     // })->name('admin.dashboard')->middleware('admin');
 
@@ -122,7 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('view-mcq-question/{id}', [MultipleChoiceController::class, 'viewMcq'])->name('admin.view.mcq.question');
                 Route::get('status/{lesson_id}', [MultipleChoiceController::class, 'statusChange'])->name('admin.mcq.status');
                 Route::get('status-set/{set_id}', [MultipleChoiceController::class, 'mcqSetStatusChange'])->name('admin.mcq.set.status');
-                
+
             });
 
 
@@ -200,9 +200,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* ------------------------------- Enrolled Students ------------------------------------ */
     Route::prefix('enrolled')->group(function () {
-        Route::get('students', [EnrolledController::class, 'getEnrolledStudents'])->name('admin.get.enrolled.students');
+        Route::get('all', [EnrolledController::class, 'getEnrolledStudents'])->name('admin.get.enrolled.students');
         Route::get('pending', [EnrolledController::class, 'getPendingStudents'])->name('admin.get.enrolled.pending');
-        Route::get('registerd/students', [EnrolledController::class, 'getRegisterdStudents'])->name('admin.get.registered.students');
+        Route::get('students', [EnrolledController::class, 'getRegisterdStudents'])->name('admin.registered.students');
     });
 
     /* ------------------------------- Enquiry ------------------------------------ */
@@ -213,7 +213,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('contact')->group(function () {
         Route::get('get-contact-details', [ContactController::class, 'getContactDetails'])->name('website.get.contact.details');
-        
+
     });
 
     /* ------------------------------- Time Table ------------------------------------ */
