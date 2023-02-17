@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignSubject;
 use App\Models\Lesson;
 use App\Models\Order;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -107,6 +108,7 @@ class UserCourseController extends Controller
                 return response()->download($purchase_history->receipt_url);
             }
         } catch (\Throwable $th) {
+            Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
     }
