@@ -33,6 +33,7 @@ class TeacherController extends Controller
                     'hslc_percentage' => 'required|numeric|min:10|max:100',
                     'hs_percentage' => 'required|numeric|min:10|max:100',
                     'resume' => 'required|mimes:pdf',
+                    'current_ctc'=>'numeric|between:0,9999999999.99',
                     'teacherdemovideo' => 'required',
                 ],
                 [
@@ -57,8 +58,9 @@ class TeacherController extends Controller
                     'hs_percentage.max' => 'HS percentage must be in between 10 to 100',
                     'resume.required' => 'Please upload your Resume',
                     'resume.mimes'=>'Resume should be in .pdf formate',
-                    'teacherdemovideo.required' => 'Please upload a demo video which and video duration must be less then 5 minutes.'
-                ]
+                    'teacherdemovideo.required' => 'Please upload a demo video which and video duration must be less then 5 minutes.',
+                    'current_ctc.numeric'=>'Please insert a valid CTC',
+                    ]
             );
             if ($validate->fails()) {
                 return response()->json(['status' => 0, 'message' => $validate->errors()->toArray()]);
