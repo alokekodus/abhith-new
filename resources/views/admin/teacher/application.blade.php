@@ -45,8 +45,7 @@
 
                 </div>
                 <div class="card-footer">
-                    <a href="{{ asset($user_details->resume_url) }}" class="btn btn-primary" data-toggle="modal"
-                        data-target=".bd-example-modal-lg">View Resume</a>
+                    <a href="{{ asset($user_details->resume_url) }}" class="btn btn-primary" target="_blank">View Resume</a>
 
                     @if ($user_details->status == 1 && auth()->user()->type_id == 1)
                         <button class="btn btn-outline-danger" id="rejectTeacherBtn"
@@ -71,18 +70,7 @@
     </div>
 
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="card">
-                    <div class="card-body">
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
@@ -128,7 +116,12 @@
                                 {{ $user_details->current_designation ?? 'NA' }}
                             </span><br>
                             <span class="font-weight-bold"> Current CTC : </span><span>
-                                {{ $user_details->ctc ?? 'NA' }}
+                                @if($user_details->current_ctc!=null)
+                                {{number_format((float)$user_details->current_ctc, 2, '.', '')}}
+                                @else
+                                NA
+                                @endif
+
                             </span>
                         </div>
                     </div>
