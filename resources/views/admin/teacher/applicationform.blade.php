@@ -54,7 +54,7 @@
                     <div class="form-group col-md-4">
                         <label for="inputCity">Total Experience in Month</label>
                         <input type="text" class="form-control" id="total_experience_month"
-                            name="total_experience_month" min="1" max="11">
+                            name="total_experience_month" min="0" max="11">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="exampleTextarea1">Highest Qualification<span class="text-danger">*</span></label>
