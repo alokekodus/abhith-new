@@ -91,8 +91,9 @@ class UserCourseController extends Controller
                 ]);
                 $pdf->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]);
                 $pdf->setPaper('A4', 'portrait');
-                Storage::put('public/pdf/' . auth()->user()->name . '_' . date('d-m-Y-H-i-s') . '_' . $id . '.pdf', $pdf->output());
-                $file_path = 'storage/pdf/' . auth()->user()->name . '_' . date('d-m-Y-H-i-s') . '_' . $id . '.pdf';
+                $url_temp=auth()->user()->name . '_' . date('d-m-Y-H-i-s') . '_' . $id . '.pdf';
+                Storage::put('public/pdf/' . $url_temp, $pdf->output());
+                $file_path = 'storage/pdf/' . $url_temp;
                 $update_data = [
                     'is_receipt_generated' => 1,
                     'receipt_no' => $receipt_no,
@@ -102,10 +103,10 @@ class UserCourseController extends Controller
 
                 // $generated_pdf= $pdf->download(auth()->user()->name.'_'.date('d-m-Y-H-i-s') . '_' . $id.'.pdf')->getOriginalContent();
 
-                return $pdf->download(auth()->user()->name . '_' . date('d-m-Y-H-i-s') . '_' . $id . '.pdf');
+                return $pdf->download($url_temp);
             } else {
 
-                return response()->download($purchase_history->receipt_url);
+                return response()->download(public_path($purchase_history->receipt_url));
             }
         } catch (\Throwable $th) {
             Toastr::error('Something went wrong.', '', ["positionClass" => "toast-top-right"]);
