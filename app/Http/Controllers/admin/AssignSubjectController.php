@@ -102,29 +102,34 @@ class AssignSubjectController extends Controller
                 $image_path = LessonAttachmentTrait::uploadAttachment($document, "image", $name_slug); //lesson image store
                 $image_path = $image_path;
             } else {
-                if ($request->subject_id == null) {
-                    $image_path = '/files/subject/placeholder.jpg';
-                    $image_path = $image_path;
-                } else {
-                    $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
-                    $image_path = $assign_subject->subjectAttachment->img_url;
-                }
+                $image_path = '/files/subject/placeholder.jpg';
+                $image_path = $image_path;
+                // if ($request->subject_id == null) {
+                //     $image_path = '/files/subject/placeholder.jpg';
+                //     $image_path = $image_path;
+                // } else {
+                //     $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                //     $image_path = $assign_subject->subjectAttachment->img_url;
+                // }
             }
 
             if (!empty($lessonVideo)) {
                 $video_path = LessonAttachmentTrait::uploadAttachment($lessonVideo, "video", $name_slug);
                 $video_path = $video_path;
+
                 if (!empty($videoThumbnailImageUrl)) {
                     $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image", $name_slug); //lesson image store
                     $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
                 } else {
-                    if ($request->subject_id == null) {
-                        $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
-                        $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
-                    } else {
-                        $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
-                        $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
-                    }
+                    $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
+                    $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                    // if ($request->subject_id == null) {
+                    //     $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
+                    //     $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                    // } else {
+                    //     $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
+                    //     $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                    // }
                 }
             } else {
                 if ($request->subject_id == null) {
@@ -133,7 +138,15 @@ class AssignSubjectController extends Controller
                 } else {
                     $assign_subject = AssignSubject::with('subjectAttachment')->where('id', $request->subject_id)->first();
                     $video_path = $assign_subject->attachment_origin_url;
-                    $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                    // $video_thumbnail_image_url_path = $assign_subject->subjectAttachment->video_thumbnail_image;
+                    if (!empty($videoThumbnailImageUrl)) {
+                        $video_thumbnail_image_url_path = LessonAttachmentTrait::uploadAttachment($videoThumbnailImageUrl, "image", $name_slug); //lesson image store
+                        $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+                    } else {
+                        $video_thumbnail_image_url_path = '/files/subject/placeholder.jpg';
+                        $video_thumbnail_image_url_path = $video_thumbnail_image_url_path;
+
+                    }
                 }
             }
             $subject_name = strtolower($request->subjectName);

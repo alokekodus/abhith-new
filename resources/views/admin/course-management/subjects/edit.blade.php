@@ -84,8 +84,8 @@
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
 	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
 	]
-}); 
-	
+});
+
 </script>
 <script>
     CKEDITOR.replace( 'why_learn', {
@@ -121,7 +121,7 @@
         messages: {
             subjectName: {
                 required: "Please Enter Subjet Name ."
-            },    
+            },
             assignedClass:{
                 required:"Please Select Class."
             },
@@ -130,7 +130,7 @@
             }
         },
         submitHandler: function() {
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -141,7 +141,7 @@
                      CKEDITOR.instances[instance].updateElement();
                 }
                 var data = new FormData(document.getElementById("addSubject"));
-                
+
             $.ajax({
                 url: "{{route('admin.course.management.subject.store')}}" ,
                 type: "POST",
@@ -149,30 +149,30 @@
                 processData: false,
                 contentType: false,
                 success: function( response ) {
-                    console.log(response);
+
                     toastr.options.timeOut = 3000;
                     if(response.status==1){
-                        
+
                         toastr.success(response.message);
                         $('#assignSubjectSubmitBtn').html('Submit');
-                        
+
                         location.reload();
                     }
                     if(response.status==0){
                         $.each(response.message,function(prefix,val){
                             toastr.error(val[0]);
                         })
-                       
+
                         $('#assignSubjectSubmitBtn').html('Submit');
                     }
-                           
+
                 }
             });
         }
       });
     });
     $('#assignSubjectCancelBtn').on('click', function(){
-            
+
         document.getElementById("addSubject").reset();
     });
 
@@ -202,7 +202,7 @@
         var input=evt.srcElement;
             $("#noFileVideo").html(input.files[0].name);
    }
-    
+
    function changeBoard()
 {
     let board_id=$("#assignedBoard").val();
@@ -215,16 +215,16 @@
                     'board_id' : board_id
                 },
                 success:function(data){
-                   
+
                     $("#assignedBoard").prop("disabled",false);
                     $('#assignedClass').html('<option value="" selected disabled>Select Class</option>');
                     data.forEach((boardClass) => {
                             $("#assignedClass").append('<option value="' + boardClass
                                 .id + '">'+'Class-' + boardClass.class + '</option>');
-      
+
                     });
-                   
-                      
+
+
                 },
                 error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){
@@ -232,6 +232,6 @@
                     }
                 }
             });
-}  
+}
 </script>
 @endsection
