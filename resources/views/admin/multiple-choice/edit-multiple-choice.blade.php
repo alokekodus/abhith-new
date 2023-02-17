@@ -19,7 +19,7 @@
         </h3>
 
         <nav aria-label="breadcrumb" style="width: 50%">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb d-flex justify-content-end">
                 <li class="breadcrumb-item"><a href="{{ route('admin.course.management.subject.all') }}">Subject</a></li>
                 <li class="breadcrumb-item" aria-current="page"><a
                         href="{{ route('admin.course.management.lesson.create', Crypt::encrypt($lesson->assignSubject->id)) }}">{{ $lesson->assignSubject->subject_name }}</a>

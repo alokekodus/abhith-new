@@ -50,7 +50,7 @@
                             <th> # </th>
                             <th> Name </th>
                             <th> Email </th>
-                            <th> Board/Course Name </th>
+                            <th> Board / Course Name </th>
                             <th> Enroll Status </th>
                         </tr>
 
@@ -61,7 +61,7 @@
                             <td>{{$key + 1}}</td>
                             <td>{{$item->user->name??"NA"}}</td>
                             <td>{{$item->user->email}}</td>
-                            <td>{{$item->board->exam_board??"NA"}} -- Class {{$item->assignClass->class}}</td>
+                            <td>{{$item->board->exam_board??"NA"}} / Class {{$item->assignClass->class}}</td>
                             <td>
                                 @if ($item->payment_status == 'paid')
                                 <span style="color: green;">Enrolled</span>

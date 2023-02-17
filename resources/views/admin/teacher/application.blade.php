@@ -63,7 +63,7 @@
                             {{ $user_details->referral_id }}</div>
                     @endif
                     @if ($user_details->status == 3)
-                        <div class="btn btn-gradient-warning" style="float:right!important;">Rejected</div>
+                        <div class="btn btn-warning" style="float:right!important;">Rejected</div>
                     @endif
                 </div>
             </div>
