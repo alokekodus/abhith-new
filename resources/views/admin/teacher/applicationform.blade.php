@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-gradient-primary me-2" id="applicationSubmit">Submit</button>
-                <button class="btn btn-light" id="applicationCancel">Cancel</button>
+                <button class="btn btn-secondary btn-fw" id="applicationCancel" type="reset" value="Reset">Reset</button>
             </form>
         </div>
     </div>
