@@ -25,7 +25,7 @@
     </nav>
 </div>
 
-@include('common.lesson.report')
+@include('common.lesson.details')
 
 <!-- Large modal -->
 
@@ -88,23 +88,23 @@
             videothumbnailimagepreview.src = URL.createObjectURL(file)
             var input=evt.srcElement;
             $("#noImageFilePromoVideo").html(input.files[0].name);
-            
+
         }
     }
-    
-    // videoUpload.onchange = function (event) { 
+
+    // videoUpload.onchange = function (event) {
     //     videoPriview.style.display = "block";
     //     let file = event.target.files[0];
     //     let blobURL = URL.createObjectURL(file);
     //     document.querySelector("video").src = blobURL;
     //     var input=event.srcElement;
     //     $("#noFileVideo").html(input.files[0].name);
-       
+
     // }
-    
+
     function showDiv(){
    var showDivId= document.getElementById("resource_type").value;
-  
+
    if(showDivId==1){
           $('#fileattachment').show();
             $('#video').hide();
@@ -130,7 +130,7 @@
             $('#video').hide();
             $('#article').hide();
    }
-   
+
  }
 
     $('#assignTopicCancelBtn').on('click', function() {
@@ -159,7 +159,7 @@ function setFileInfo() {
     var duration = video.duration;
     myVideos[myVideos.length - 1].duration = duration;
     document.getElementById("duration").value=duration;
-    
+
   }
 
   video.src = URL.createObjectURL(files[0]);
@@ -180,19 +180,19 @@ function setFileInfo() {
             resource_type:{
                 required:true
             }
-          
+
         },
         messages: {
             name: {
                 required: "Resource name may not be empty ."
-            },    
+            },
             resource_type:{
                 required:"Please Select Resource Type."
             },
-           
+
         },
         submitHandler: function() {
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -203,7 +203,7 @@ function setFileInfo() {
                      CKEDITOR.instances[instance].updateElement();
                 }
                 var data = new FormData(document.getElementById("assignTopicForm"));
-                
+
             $.ajax({
                 url: "{{route('admin.course.management.lesson.topic.store')}}" ,
                 type: "POST",
@@ -214,30 +214,30 @@ function setFileInfo() {
                     console.log(response);
                     toastr.options.timeOut = 3000;
                     if(response.status==1){
-                        
+
                         toastr.success(response.message);
                         $('#assignTopicSubmitBtn').html('Submit');
-                        
+
                         location.reload();
                     }
                     if(response.status==0){
                         $.each(response.message,function(prefix,val){
                             toastr.error(val[0]);
                         })
-                       
+
                         $('#assignTopicSubmitBtn').html('Submit');
                     }
                     if(response.status==2){
                         toastr.error(response.message);
-                       
+
                         $('#assignTopicSubmitBtn').html('Submit');
                     }
                     if(response.status==3){
                         toastr.error(response.message);
-                       
+
                         $('#assignTopicSubmitBtn').html('Submit');
                     }
-                           
+
                 }
             });
         }

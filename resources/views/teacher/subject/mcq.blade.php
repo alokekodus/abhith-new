@@ -23,7 +23,7 @@
 @section('scripts')
 <script>
     $(document).ready(function() {
-        $('#all-assign-subject').DataTable({
+        $('#lessonTableMcq').DataTable({
             "processing": true,
             dom: 'Bfrtip',
             buttons: [
