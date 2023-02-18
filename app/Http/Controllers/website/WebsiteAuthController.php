@@ -415,9 +415,9 @@ class WebsiteAuthController extends Controller
                     'email' => 'required',
                     'password' => 'required'
                 ]);
-               
+
                 if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
-                      
+
                     if ($type == 3) {
                         return redirect()->route('teacher.dashboard');
                     } else {
@@ -614,7 +614,7 @@ class WebsiteAuthController extends Controller
                     $data = [
                         "code" => 200,
                         "status" => 1,
-                        "message" => "Otp sent successfully",
+                        "message" => "OTP sent successfully",
                         'data' => $data
 
 
@@ -724,7 +724,7 @@ class WebsiteAuthController extends Controller
             $data = [
                 "code" => 200,
                 "status" => 1,
-                "message" => "Otp sent successfully",
+                "message" => "OTP sent successfully",
                 'data' => $data
 
 
