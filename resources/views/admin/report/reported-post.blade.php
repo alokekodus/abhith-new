@@ -33,13 +33,13 @@
                                     <td> {{ $key + 1 }} </td>
                                     <td id="postId">
                                         <a href="{{route('website.knowledge.details.post',['id' => Crypt::encryptString($item->knowledge_forum_post_id)])}}" target="_blank">
-                                            {!! Illuminate\Support\Str::limit(strip_tags($item->knowledgeForumPost->question), $limit = 50, $end = '...') !!}                             
+                                            {!! Illuminate\Support\Str::limit(strip_tags($item->knowledgeForumPost->question), $limit = 50, $end = '...') !!}
                                         </a>
-                                    </td>     
+                                    </td>
                                     <td>{{ $item->report_count }}</td>
                                     <td>
-                                        @php 
-                                            $all_reason = implode(', ', array_unique($item->report_reason)); 
+                                        @php
+                                            $all_reason = implode(', ', array_unique($item->report_reason));
                                             echo $all_reason;
                                         @endphp
                                     </td>
@@ -57,14 +57,14 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @empty 
+                            @empty
                                 <tr>
                                     <td colspan="6">
-                                        <div class="text-center">No Reported Post's Found.</div>
+                                        <div class="text-center">No Reported Post Found.</div>
                                     </td>
                                 </tr>
                             @endforelse
-    
+
                         </tbody>
                     </table>
                     <div style="float: right;margin-top:10px;">
