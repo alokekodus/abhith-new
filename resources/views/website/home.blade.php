@@ -38,8 +38,8 @@
         }
 
         /* .course-desc {
-                            padding: 15px 20px 30px;
-                        } */
+                                padding: 15px 20px 30px;
+                            } */
 
         .course-wrapper .enroll {
             position: absolute;
@@ -184,16 +184,24 @@
                             Coures</a>
                     </div>
                 </div>
+
+                <div class="col-lg-8 col-md-12 col-sm-12 mb-3">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/9HI8nN3xvn8"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen style="border-radius:10px"></iframe>
+                </div>
+
                 @foreach (getAssignSubjects() as $key => $subject)
                     <!-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                                    <div class="course-pic"><img src="{{ asset($subject->image) }}" class="w100"></div>
-                                    <div class="course-desc">
-                                        {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
-                                        <h4 class="small-heading-black">{{ $subject->subject_name }}(Class-{{ $subject->assignClass->class }},{{ $subject->boards->exam_board }})</h4>
-                                        <span><b><i class="fa fa-inr" aria-hidden="true"></i> {{ number_format($subject->subject_amount, 2, '.', '') }}</b></span>
-                                    </div>
-                                    <a href="{{ route('website.course.package.enroll.all', Crypt::encrypt($subject->id)) }}" class="enroll">Enroll Now</a>
-                                </div> -->
+                                        <div class="course-pic"><img src="{{ asset($subject->image) }}" class="w100"></div>
+                                        <div class="course-desc">
+                                            {{-- <span class="icon-clock-09 clock-icon"></span><span>{{ $item['duration'] }}</span> --}}
+                                            <h4 class="small-heading-black">{{ $subject->subject_name }}(Class-{{ $subject->assignClass->class }},{{ $subject->boards->exam_board }})</h4>
+                                            <span><b><i class="fa fa-inr" aria-hidden="true"></i> {{ number_format($subject->subject_amount, 2, '.', '') }}</b></span>
+                                        </div>
+                                        <a href="{{ route('website.course.package.enroll.all', Crypt::encrypt($subject->id)) }}" class="enroll">Enroll Now</a>
+                                    </div> -->
                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <div class="course-pic">
                             <img src="{{ asset($subject->image) }}" class="w100">
