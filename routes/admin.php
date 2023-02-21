@@ -17,6 +17,8 @@ use App\Http\Controllers\admin\MultipleChoiceController;
 use App\Http\Controllers\admin\EnrolledController;
 use App\Http\Controllers\admin\TimeTableController;
 use App\Http\Controllers\admin\LessonController;
+use App\Http\Controllers\teacher\CourseController as TeacherCourseController;
+use App\Http\Controllers\teacher\StudentController;
 use App\Http\Controllers\teacher\TeacherController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\website\ContactController;
@@ -93,6 +95,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('published', [SubjectController::class, 'published'])->name('admin.published.subject');
             Route::get('active/{subject_id}', [SubjectController::class, 'active'])->name('admin.active.subject');
             Route::post('/get-subjects',[AssignSubjectController::class,'findSubject'])->name('find.subject');
+            Route::get('/student/{subject_id}', [StudentController::class, 'subjectWiseStudent'])->name('admin.subject.student');
+            Route::get('/report/{subject_id}/{student_id}', [StudentController::class, 'subjectWiseStudentReport'])->name('admin.subject.student.report');
+            Route::get('{lesson_id}/{user_id}', [TeacherCourseController::class, 'topicWiseReport'])->name('admin.course.management.lesson.topic.report');
+            Route::get('/mcq-attempt/{set_id}/{user_id}', [TeacherCourseController::class, 'mcqAttemptReport'])->name('admin.view.mcq.attempt');
         });
         Route::prefix('lesson')->group(function () {
             Route::get('all', [LessonController::class, 'index'])->name('admin.course.management.lesson.all');

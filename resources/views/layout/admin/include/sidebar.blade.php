@@ -154,13 +154,10 @@
                                 href="{{ route('admin.get.enrolled.pending') }}">Enrollment Pending</a></li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('admin.registered.students')}}"><span
-                                    class="menu-title">Reported
-                                    Blogs</span>
+                                    class="menu-title">Registered Students</span>
                                </a>
                         </li>
-                        {{-- <li class="nav-item"> <a class="nav-link" href="{{route('admin.get.registered.students')}}">All
-                            Registered
-                            Student</a></li> --}}
+
 
                     </ul>
                 </div>

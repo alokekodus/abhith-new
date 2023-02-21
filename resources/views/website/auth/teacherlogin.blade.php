@@ -73,8 +73,8 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form class="row" id="signupForm">
                                     @csrf
-                                   
-                                   
+
+
                                     <div class="form-group col-lg-12">
                                         <input type="text" class="form-control" name="name" placeholder="Name" id="name"
                                             maxlength="50" value="{{ old('name') }}">
@@ -278,7 +278,7 @@
 
                             if (data.status == 1) {
                                 if (data.result.code == 200) {
-                                    // $('#sendOtpBtn').attr('disabled',true); 
+                                    // $('#sendOtpBtn').attr('disabled',true);
                                     $('#sendOtpBtn').css('background-image',
                                         'linear-gradient(to left, #7d9fc9, #79adbd)');
                                     $('#sendOtpBtn').text('OTP Sent');
@@ -523,12 +523,13 @@
                         'phone': $('#phone').val(),
                         'password': $('#pwd').val(),
                         'name': $('#name').val(),
-                       
+
                     },
                     success: function(data) {
                         console.log(data);
                         if (data.status == 1) {
                             toastr.success(data.message);
+                            location.reload(true);
                         } else {
                             toastr.error(data.message);
                         }

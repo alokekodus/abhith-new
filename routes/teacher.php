@@ -26,9 +26,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/view/{subject_id}', [CourseController::class, 'view'])->name('teacher.course.view');
         Route::get('/details/{subject_id}', [CourseController::class, 'details'])->name('teacher.course.details');
         Route::get('/subjects', [CourseController::class, 'mySubject'])->name('teacher.subject.index');
-        Route::get('{lesson_id}/{user_id}', [CourseController::class, 'topicWiseReport'])->name('admin.course.management.lesson.topic.report');
+        Route::get('{lesson_id}/{user_id}', [CourseController::class, 'topicWiseReport'])->name('teacher.course.management.lesson.topic.report');
         Route::get('/mcq-attempt/{set_id}/{user_id}', [CourseController::class, 'mcqAttemptReport'])->name('teacher.view.mcq.attempt');
-      
+
     });
     Route::prefix('lesson')->group(function () {
         Route::get('/', [LessonController::class, 'index'])->name('teacher.lesson');
@@ -41,13 +41,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [StudentController::class, 'index'])->name('teacher.student.index');
         Route::get('/{subject_id}', [StudentController::class, 'subjectWiseStudent'])->name('teacher.subject.student');
         Route::get('/report/{subject_id}/{student_id}', [StudentController::class, 'subjectWiseStudentReport'])->name('teacher.subject.student.report');
-     
+
     });
-   
+
 });
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('preview')->group(function () {
         Route::get('/{type}', [CourseController::class, 'preview'])->name('teacher.course.preview');
     });
-    
+
 });

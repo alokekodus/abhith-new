@@ -1,165 +1,174 @@
 @extends('layout.admin.layout.admin')
 @section('title', 'Course Management - Subjects')
 @section('head')
-<style>
-    /* .pagination {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            list-style: none;
-            border-radius: 0.25rem;
-        } */
-</style>
+    <style>
+        /* .pagination {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    list-style: none;
+                    border-radius: 0.25rem;
+                } */
+    </style>
 @endsection
 @section('content')
-<div class="page-header">
-    <h3 class="page-title"> Subjects </h3>
-    <nav aria-label="breadcrumb">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="{{ route('admin.course.management.subject.create') }}" class="btn btn-gradient-primary btn-fw"
-                    data-keyboard="false">Add Subject</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+    <div class="page-header">
+        <h3 class="page-title"> Subjects </h3>
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="{{ route('admin.course.management.subject.create') }}" class="btn btn-gradient-primary btn-fw"
+                        data-keyboard="false">Add Subject</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 
-<div class="row">
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">All Subjects</h4>
-                <div style="overflow-x:auto;">
-                    <table class="table table-striped" id="subjectTable">
-                        <thead>
-                            <tr>
-                                <th>#No</th>
-                                <th> Image </th>
-                                <th> Name </th>
-                                <th>Board/Class</th>
-                                <th> Amount </th>
-                                <th> Total Lesson </th>
-                                <th> Enrolled Student </th>
-                                <th>Publish</th>
-                                <th>Status</th>
-                                <th> Action </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($subjects as $key => $subject)
-                            <tr>
-                                <td>{{ ++$key }}</td>
-                                <td class="py-1">
-                                    <img src="{{ asset($subject->image) }}" alt="image" />
-                                </td>
-                                <td> {{ $subject->subject_name }} </td>
-                                <td> Board -- {{ $subject->boards->exam_board }} / Class
-                                    -{{ $subject->assignClass->class }}
-                                </td>
-                                <td><i class="mdi mdi-currency-inr"></i>
-                                    {{ number_format((float) $subject->subject_amount, 2, '.', '') }}
-                                </td>
-                                <td>
-                                    @if ($subject->lesson->count() == 0)
-                                    <a
-                                        href="{{ route('admin.course.management.lesson.create', Crypt::encrypt($subject->id)) }}">Add
-                                        Lesson</a>
-                                    @else
-                                    <span class="badge rounded-pill bg-danger">
-                                        {{ $subject->lesson->count() }}
-                                    </span> <a
-                                        href="{{ route('admin.course.management.lesson.create', Crypt::encrypt($subject->id)) }}">
-                                        Add Lesson
-                                    </a>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($subject->assignOrder->count() == 0)
-                                    Not Yet Enrolled
-                                    @else
-                                    <a href="{{ route('teacher.subject.student', Crypt::encrypt($subject->id)) }}">
-                                        {{ $subject->assignOrder->count() }} student Enrolled </a>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($subject->published == 1)
-                                    <label class="switch">
-                                        <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}" checked>
-                                        <span class="slider round"></span>
-                                    </label>
-                                    @else
-                                    <label class="switch">
-                                        <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($subject->is_activate == 1)
-                                    <a href="{{ route('admin.active.subject', Crypt::encrypt($subject->id)) }}"
-                                        class="badge badge-success">Active</a>
-                                    @else
-                                    <a href="{{ route('admin.active.subject', Crypt::encrypt($subject->id)) }}"
-                                        class="badge badge-danger">Inactive</a>
-                                    @endif
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm assignTeacherModal actionBtn"
-                                        data-id="{{ Crypt::encrypt($subject->id) }}" title="Assign Teacher"><i
-                                            class="mdi mdi-account-check"></i></button>
-                                    <a href="{{ route('admin.course.management.subject.edit', Crypt::encrypt($subject->id)) }}"
-                                        title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
-                                    <a href="{{ route('admin.course.management.subject.view', Crypt::encrypt($subject->id)) }}"
-                                        title="View Details"><i class="mdi mdi-eye"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {{-- {{$subjects->links() }} --}}
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">All Subjects</h4>
+                    <div style="overflow-x:auto;">
+                        <table class="table table-striped" id="subjectTable">
+                            <thead>
+                                <tr>
+                                    <th>#No</th>
+                                    <th> Image </th>
+                                    <th> Name </th>
+                                    <th>Board/Class</th>
+                                    <th> Amount </th>
+                                    <th> Total Lesson </th>
+                                    <th> Enrolled Student </th>
+                                    <th>Publish</th>
+                                    <th>Status</th>
+                                    <th> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($subjects as $key => $subject)
+                                    <tr>
+                                        <td>{{ ++$key }}</td>
+                                        <td class="py-1">
+                                            <img src="{{ asset($subject->image) }}" alt="image" />
+                                        </td>
+                                        <td> {{ $subject->subject_name }} </td>
+                                        <td> Board -- {{ $subject->boards->exam_board }} / Class
+                                            -{{ $subject->assignClass->class }}
+                                        </td>
+                                        <td><i class="mdi mdi-currency-inr"></i>
+                                            {{ number_format((float) $subject->subject_amount, 2, '.', '') }}
+                                        </td>
+                                        <td>
+                                            @if ($subject->lesson->count() == 0)
+                                                <a
+                                                    href="{{ route('admin.course.management.lesson.create', Crypt::encrypt($subject->id)) }}">Add
+                                                    Lesson</a>
+                                            @else
+                                                <span class="badge rounded-pill bg-danger">
+                                                    {{ $subject->lesson->count() }}
+                                                </span> <a
+                                                    href="{{ route('admin.course.management.lesson.create', Crypt::encrypt($subject->id)) }}">
+                                                    Add Lesson
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($subject->assignOrder->count() == 0)
+                                                Not Yet Enrolled
+                                            @else
+                                                @if (auth()->user()->hasRole('Teacher'))
+                                                    <a
+                                                        href="{{ route('teacher.subject.student', Crypt::encrypt($subject->id)) }}">
+                                                        {{ $subject->assignOrder->count() }} student Enrolled </a>
+                                                @endif
+                                                @if (auth()->user()->hasRole('Admin'))
+                                                    <a
+                                                        href="{{ route('admin.subject.student', Crypt::encrypt($subject->id)) }}">
+                                                        {{ $subject->assignOrder->count() }} student Enrolled </a>
+                                                @endif
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($subject->published == 1)
+                                                <label class="switch">
+                                                    <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}"
+                                                        checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @else
+                                                <label class="switch">
+                                                    <input type="checkbox" id="isPublish" data-id="{{ $subject->id }}">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($subject->is_activate == 1)
+                                                <a href="{{ route('admin.active.subject', Crypt::encrypt($subject->id)) }}"
+                                                    class="badge badge-success">Active</a>
+                                            @else
+                                                <a href="{{ route('admin.active.subject', Crypt::encrypt($subject->id)) }}"
+                                                    class="badge badge-danger">Inactive</a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm assignTeacherModal actionBtn"
+                                                data-id="{{ Crypt::encrypt($subject->id) }}" title="Assign Teacher"><i
+                                                    class="mdi mdi-account-check"></i></button>
+                                            <a href="{{ route('admin.course.management.subject.edit', Crypt::encrypt($subject->id)) }}"
+                                                title="Edit Lesson"><i class="mdi mdi-grease-pencil"></i></a>
+                                            <a href="{{ route('admin.course.management.subject.view', Crypt::encrypt($subject->id)) }}"
+                                                title="View Details"><i class="mdi mdi-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{-- {{$subjects->links() }} --}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="assignTeacherModal" tabindex="-1" aria-labelledby="assignTeacherModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="assignTeacherModalLabel">Assign Teacher</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="#" id="assignTeacherForm">
-                @csrf
-                <div class="modal-body">
-                    <input type="hidden" id="subjectId" name="subject_id">
-                    <div class="mb-3">
-                        <label for="boardName">Teacher Name</label>
-                        <select name="teacher_id" id="teacherId" class="form-control">
+    <div class="modal fade" id="assignTeacherModal" tabindex="-1" aria-labelledby="assignTeacherModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignTeacherModalLabel">Assign Teacher</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="#" id="assignTeacherForm">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" id="subjectId" name="subject_id">
+                        <div class="mb-3">
+                            <label for="boardName">Teacher Name</label>
+                            <select name="teacher_id" id="teacherId" class="form-control">
 
-                        </select>
+                            </select>
+
+                        </div>
 
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="AssignSubjectCancelBtn">Cancel</button>
-                    <button type="submit" class="btn btn-success" id="saveAssignSubject">Save</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            id="AssignSubjectCancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-success" id="saveAssignSubject">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 
 @section('scripts')
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
             $('#subjectTable').DataTable({
                 "processing": true,
                 "searching": true,
@@ -264,9 +273,9 @@
                 }
             });
         });
-</script>
-<script>
-    // Open assign teacher modal
+    </script>
+    <script>
+        // Open assign teacher modal
         $('.assignTeacherModal').on('click', function() {
             $('#assignTeacherModal').modal('show');
             $('#subjectId').val($(this).data('id'));
@@ -279,14 +288,15 @@
                     'subject_id': subject_id
                 },
                 success: function(data) {
-                    if(data.code==200){
+                    if (data.code == 200) {
                         $('#teacherId').html('<option value="">Select Teacher</option>');
                         data.teachers.forEach((teacher) => {
-                        $("#teacherId").append('<option value="' + teacher
-                            .id + '">' + teacher.name + '</option>');
+                            $("#teacherId").append('<option value="' + teacher
+                                .id + '">' + teacher.name + '</option>');
                         });
-                    }else{
-                        $('#teacherId').html('<option value="">Teacher Not Available for assign</option>');
+                    } else {
+                        $('#teacherId').html(
+                            '<option value="">Teacher Not Available for assign</option>');
                         $("#saveAssignSubject").attr('disabled', true);
                     }
 
@@ -308,7 +318,7 @@
 
 
             let formData = new FormData(this);
-         
+
 
             $.ajax({
                 url: "{{ route('admin.teacher.tosubject') }}",
@@ -321,8 +331,7 @@
                     if (data.code == 200) {
                         toastr.success(data.msg);
                         location.reload(true);
-                    }
-                     else {
+                    } else {
                         toastr.error(data.msg);
                         $('#saveAssignSubject').attr('disabled', false);
                         $('#saveAssignSubject').text('Submit');
@@ -340,5 +349,5 @@
                 }
             });
         });
-</script>
+    </script>
 @endsection

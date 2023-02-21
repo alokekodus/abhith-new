@@ -54,7 +54,7 @@
                     <div class="form-group col-md-4">
                         <label for="inputCity">Total Experience in Month</label>
                         <input type="text" class="form-control" id="total_experience_month"
-                            name="total_experience_month" min="1" max="11">
+                            name="total_experience_month" min="0" max="11">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="exampleTextarea1">Highest Qualification<span class="text-danger">*</span></label>
@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-gradient-primary me-2" id="applicationSubmit">Submit</button>
-                <button class="btn btn-light" id="applicationCancel">Cancel</button>
+                <button class="btn btn-secondary btn-fw" id="applicationCancel" type="reset" value="Reset">Reset</button>
             </form>
         </div>
     </div>

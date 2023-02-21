@@ -68,7 +68,7 @@
                             <td>{{$item->assignSubject->subject_name}}</td>
                             <td><a href="{{$item->zoom_link}}">{!! Illuminate\Support\Str::limit(strip_tags($item->zoom_link), $limit = 50, $end =
                                 '...') !!}</a></td>
-                            <td>{{$item->date}} &nbsp;at&nbsp; {{$item->time}}</td>
+                            <td> {{dateFormat($item->date, $format = "d-m-Y")}} &nbsp;at&nbsp; {{$item->time}}</td>
                             <td>
                                 @if ($item->is_activate == 1)
                                 <label class="switch">

@@ -81,7 +81,7 @@ class AssignClassController extends Controller
         $assign_subject = AssignSubject::find($subject_id);
         $board_id = $assign_subject->board_id;
         $class_id = $assign_subject->assign_class_id;
-        $teachers = UserDetails::where('assign_board_id', $board_id)->where('assign_class_id', $class_id)->where('assign_subject_id', $subject_id)->select('id', 'name')->get();
+        $teachers = UserDetails::where('assign_board_id', $board_id)->where('assign_class_id', $class_id)->where('assign_subject_id', $subject_id)->select('id', 'name')->where('status',2)->get();
         if ($teachers->count() > 0) {
             $data = [
                 'code' => 200,

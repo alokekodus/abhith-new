@@ -101,12 +101,12 @@
                                         title="Please Enter Letters only." value="{{Auth::user()->name}}" required> --}}
 
                                     <input type="text" class="form-control" name="name" placeholder="Enter Name"
-                                        id="name" value="{{ Auth::user()->name }}" required>
+                                        id="name" value="{{ $user_details->name }}" required>
                                 </div>
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Email ID</label>
                                     <input type="email" class="form-control" name="email" placeholder="Enter Email"
-                                        id="email" value="{{ Auth::user()->email }}" required>
+                                        id="email" value="{{ $user_details->email }}" required>
                                 </div>
                                 <div class="form-group col-lg-6 pr10">
                                     <label>Mobile number</label>
@@ -611,7 +611,7 @@
                     cache: false,
                     data: formData,
                     success: function(data) {
-                        
+
                         $('#photoUploadForm')[0].reset();
                         $('.upload-photo-btn').text('save');
                         location.reload(true);
@@ -675,7 +675,7 @@
                 "processing": true,
                 dom: 'Bfrtip',
                 buttons: ['excel', 'pdf', 'print'
-                  
+
                 ]
             });
         });
@@ -690,7 +690,7 @@
                 url: "{{ route('website.user.performance') }}",
                 method: 'get',
                 success: function(result) {
-                  
+
                     displayAllPurchaseSubject(result.result);
                     watchedNotWatchedVideo(result.result);
                     subjectProgressInPercentage(result.result);
@@ -701,7 +701,7 @@
             })
         }
         function performanceById(){
-          
+
             let subjectId=$("#subjectDisplay").val();
             if(subjectId==0){
                 completeReportDetails();
@@ -709,7 +709,7 @@
                 var url = '{{ route("website.user.performance.bysubjectid", ":id") }}';
             url = url.replace(':id', subjectId);
             $.ajax({
-                url:url, 
+                url:url,
                 method: 'get',
                 success: function(result) {
                     watchedNotWatchedVideo(result.result);
@@ -720,7 +720,7 @@
                 }
             })
             }
-            
+
         }
         function displayAllPurchaseSubject(result){
              const allsubjects=result.all_subjects;
@@ -729,19 +729,19 @@
              allsubjects.forEach(list => {
                 subjects += `<option value="${list.id}" > Name: ${list.name} Board:${list.board} Class:${list.class} </option>`;
             });
-            $('#subjectDisplay').html(subjects);  
+            $('#subjectDisplay').html(subjects);
         }
         function watchedNotWatchedVideo(result){
-        
-    
+
+
         var watchedVideo=result.subject_progress.watched_percentage;
         var notWatchedVideo=result.subject_progress.not_watched_percentage;
-    
+
         const data = {
                         labels: [
                             'Watched Video',
                             'Not Watched Video',
-                            
+
                         ],
                         datasets: [{
                             label: 'Watched Video Report',
@@ -753,7 +753,7 @@
                             hoverOffset: 1
                         }]
                         };
-                        
+
                         const config = {
                         type: 'doughnut',
                         data: data,
@@ -773,22 +773,22 @@
         if (watchedNotWatchedVideoChart != undefined) {
             watchedNotWatchedVideoChart.destroy();
         }
-        
+
 
         const watchedNotWatchedVideoChartNew = new Chart(
         document.getElementById('watchedNotWatchedVideo'),
         config
         );
-        
+
         }
         function subjectProgressInPercentage(result){
             let total_video=result.subject_progress.watched_percentage+result.subject_progress.not_watched_percentage
             let watchedVideoPercentage=result.subject_progress.watched_percentage;
             let notWatchedVideoPercentage=total_video-watchedVideoPercentage;
-    
+
         const data = {
                         labels: [
-                            'Watched Video Percentage',                          
+                            'Watched Video Percentage',
                         ],
                         datasets: [{
                             label: 'Subject progress in percentage Based on your video',
@@ -800,7 +800,7 @@
                             hoverOffset: 1
                         }]
                         };
-                        
+
                         const config = {
                         type: 'doughnut',
                         data: data,
@@ -816,12 +816,12 @@
                         }
                     }
         };
-        
+
         let watchedvideopercentageChart = Chart.getChart("watchedvideopercentage"); // <canvas> id
         if (watchedvideopercentageChart != undefined) {
             watchedvideopercentageChart.destroy();
         }
-        
+
 
         const watchedvideopercentageChartNew = new Chart(
         document.getElementById('watchedvideopercentage'),
@@ -832,7 +832,7 @@
 
         }
         function progreceGraph(result){
-           
+
             var TimeSpent=result.time_spent;
             var MondayTimeSpent=TimeSpent.Mon;
             var TuedayTimeSpent=TimeSpent.Tue;
@@ -841,7 +841,7 @@
             var FridayTimeSpent=TimeSpent.Fri;
             var SatdayTimeSpent=TimeSpent.Sat;
             var SundayTimeSpent=TimeSpent.Sun;
-           
+
             const data ={
                 type: 'bar',
                 data: {
@@ -865,26 +865,26 @@
             if (progreceGraphChart != undefined) {
                 progreceGraphChart.destroy();
             }
-            
+
 
             const progreceGraphChartNew = new Chart(
             document.getElementById('progreceGraph'),
             data
             );
 
-           
+
         }
         function mcqTestPerformance(result){
-            
+
             $("#test_attempt").html(result.mcq_performance.test_attempted);
             $("#correct_answer").html(result.mcq_performance.total_correct);
             $("#accuracy").html(Math.round(result.mcq_performance.accuracy));
             $("#totaltime").html(result.mcq_performance.total_duration);
         }
-       
+
         function dailyGraph(result) {
             var time_spent = result.time_spent;
-            
+
             $("#monday").html(time_spent['Mon']);
             $("#tueday").html(time_spent['Tue']);
             $("#wedday").html(time_spent['Wed']);

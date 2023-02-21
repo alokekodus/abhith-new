@@ -17,6 +17,14 @@
 
 @endsection
 
-@section('scripts')
-
-@endsection
+<script>
+    $(document).ready(function() {
+        $('#lessonTable').DataTable({
+            "processing": true,
+            dom: 'Bfrtip',
+            buttons: [
+                'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>

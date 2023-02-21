@@ -31,11 +31,18 @@
                             <td style="text-align: center">{{ $lesson->topics->where('type', 3)->count() }}</td>
                             <td style="text-align: center">{{$lesson->Sets->count()}}</td>
                             <td>
+                                @if(auth()->user()->hasRole('Admin'))
                                 <a href="{{ route('admin.course.management.lesson.topic.report',
                                 [Crypt::encrypt($lesson->id),Crypt::encrypt($user->id)]) }}">
                                     Reports
                                 </a>
-
+                                @endif
+                                @if(auth()->user()->hasRole('Teacher'))
+                                <a href="{{ route('teacher.course.management.lesson.topic.report',
+                                [Crypt::encrypt($lesson->id),Crypt::encrypt($user->id)]) }}">
+                                    Reports
+                                </a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
