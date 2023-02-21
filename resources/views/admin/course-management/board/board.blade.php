@@ -104,7 +104,7 @@
 
                         <div class="form-group">
                             <label for="">Logo</label>
-                            <input type="file" name="examLogo" class="form-control" required>
+                            <input type="file" name="examLogo" class="form-control" accept="image/png, image/jpeg" required>
                         </div>
                         <div style="float: right;">
                             <button type="button" class="btn btn-md btn-default" id="addBoardCancelBtn">Cancel</button>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Logo</label>
-                            <input type="file" name="examLogo" class="form-control">
+                            <input type="file" name="examLogo" class="form-control" accept="image/png, image/jpeg">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -186,14 +186,14 @@
                 data: formData,
                 success: function(data) {
 
-                    if (data.error != null) {
-                        $.each(data.error, function(key, val) {
-                            toastr.error(val[0]);
-                        });
-                        $('#addBoardSubmitBtn').attr('disabled', false);
-                        $('#addBoardSubmitBtn').text('Submit');
-                        $('#addBoardCancelBtn').attr('disabled', false);
-                    }
+                    // if (data.error != null) {
+                    //     $.each(data.error, function(key, val) {
+                    //         toastr.error(val[0]);
+                    //     });
+                    //     $('#addBoardSubmitBtn').attr('disabled', false);
+                    //     $('#addBoardSubmitBtn').text('Submit');
+                    //     $('#addBoardCancelBtn').attr('disabled', false);
+                    // }
 
                     if (data.status == 1) {
                         toastr.success(data.message);

@@ -28,7 +28,8 @@ class BoardController extends Controller
 
         // dd($request->input());
         if ($validator->fails()) {
-            return response()->json(['message' => 'Whoops! Something went wrong', 'error' => $validator->errors()]);
+            // return response()->json(['message' => 'Whoops! Something went wrong', 'error' => $validator->errors()->first()]);
+            return response()->json(['message' => $validator->errors()->first(),  $status = 2]);
         } else {
             $document = $request->examLogo;
             if (isset($document) && !empty($document)) {
