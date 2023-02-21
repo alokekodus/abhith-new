@@ -90,8 +90,8 @@
         video.src = URL.createObjectURL(files[0]);;
         }
         function updateInfos() {
-        
-      
+
+
         for (var i = 0; i < myVideos.length; i++) {
            if(myVideos[i].duration/60>=5){
             toastr.error('Video Dureation should be less then 5 minutes');
@@ -115,7 +115,7 @@
                     'board_id' : board_id
                 },
                 success:function(data){
-                   
+
                     $('#board-class-dd').html('<option value="">Select Class</option>');
                     data.forEach((boardClass) => {
                         $("#board-class-dd").append('<option value="' + boardClass
@@ -155,7 +155,7 @@
                     }
                 });
      });
-    
+
 </script>
 
 
@@ -165,12 +165,12 @@
             rules: {
                    name: {
                         required: true,
-                        maxlength: 20,
+
                     },
                     email: {
                         required: true,
                         email: true,
-                        maxlength: 50
+
                     },
                     phone: {
                         required: true,
@@ -178,7 +178,7 @@
                         maxlength: 10,
                         number: true
                     },
-                   
+
                     gender: {
                         required: true,
                     },
@@ -218,12 +218,12 @@
                 messages: {
                     name: {
                         required: "First name is required",
-                        maxlength: "First name cannot be more than 20 characters",
+
                     },
                     email: {
                         required: "Email is required",
                         email: "Email must be a valid email address",
-                        maxlength: "Email cannot be more than 50 characters",
+
                     },
                     phone: {
                         required: "Phone number is required",
@@ -265,14 +265,14 @@
                     }
                 },
                 submitHandler: function() {
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
              var data = new FormData(document.getElementById("applyForm"));
-                
+
             $.ajax({
                 url: "{{route('teacher.store')}}" ,
                 type: "POST",
@@ -283,20 +283,20 @@
                     console.log(response);
                     toastr.options.timeOut = 3000;
                     if(response.status==1){
-                        
+
                         toastr.success(response.message);
                         $('#applicationSubmit').html('Submit');
-                        
+
                         location.reload();
                     }
                     if(response.status==0){
                         $.each(response.message,function(prefix,val){
                             toastr.error(val[0]);
                         })
-                       
+
                         $('#applicationSubmit').html('Submit');
                     }
-                           
+
                 }
             });
         }
