@@ -16,19 +16,19 @@ class PaymentController extends Controller
         try {
             $id = $_GET['cart_id'];
             $cart = Cart::where('id', $id)->where('is_remove_from_cart', 0)->where('is_paid', 0)->first();
-           
+
             if ($cart) {
                 $total_amount = $total_amount = $cart->assignSubject->sum('amount');
-              
+
                 $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
                 $orderData = [
                     'receipt'         => now()->timestamp,
                     'amount'          => $total_amount * 100, // 39900 rupees in paise
                     'currency'        => 'INR'
                 ];
-               
+
                 $razorpayOrder = $api->order->create($orderData);
-                
+
                 $order = [
                     'user_id' => auth()->user()->id,
                     'board_id' => $cart->board_id,
@@ -37,7 +37,7 @@ class PaymentController extends Controller
                     'rzp_order_id' => $razorpayOrder['id'],
                     'payment_status' => "unpaid",
                 ];
-                
+
                  Order::create($order);
                 $data = [
                     'razorpayOrderId' => $razorpayOrder['id'],
@@ -66,7 +66,7 @@ class PaymentController extends Controller
         } catch (\Throwable $th) {
             $data = [
                 "code" => 400,
-                "message" => "Something went wrong.",
+                "message" => $th->getMessage(),
 
 
             ];
@@ -79,9 +79,9 @@ class PaymentController extends Controller
             $cart_id = $request->cart_id;
             $razorpay_order_id =  $request->razorpay_order_id;
             $razorpay_payment_id = $request->razorpay_payment_id;
-           
+
             $cart = Cart::find($cart_id);
-            
+
             $order=Order::where('rzp_order_id',$razorpay_order_id)->first();
             $order_update_data=[
                 'payment_status'=>"paid",
