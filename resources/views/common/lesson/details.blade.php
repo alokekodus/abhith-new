@@ -74,7 +74,7 @@
                                         @else NA @endif
                                     </td>
                                     <td>{{$topic->lessonAttachment->video_duration ?? "00:00:00"}}</td>
-                                    <td>{{videoWatchTime($topic->assign_subject_id,$user->id,$topic->id)}}</td>
+                                    <td>{{videoWatchTime($user->id,$topic->assign_subject_id,$topic->id)}}</td>
                                     <td>
                                         @if ($topic->preview==0)
                                         No
