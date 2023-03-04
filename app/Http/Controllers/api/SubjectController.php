@@ -747,7 +747,7 @@ class SubjectController extends Controller
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
-            if (!$set_question->question->isEmpty()) {
+            if (!$set_question->activequestion->isEmpty()) {
                 $all_questions = $set_question->activequestion()->paginate(1);
                 $options = [];
                 foreach ($all_questions as $key => $question) {
@@ -767,7 +767,7 @@ class SubjectController extends Controller
 
                 $result = [
                     'set_name' => $set_question->set_name,
-                    'total_question' => $set_question->question->count(),
+                    'total_question' => $set_question->activequestion->count(),
                     'mcq_question' => $data,
                 ];
                 $data = [
@@ -809,8 +809,8 @@ class SubjectController extends Controller
             $start_time = $request->start_time;
             $end_time = $request->endtime;
             $total_duration = timeDifference($start_time, $end_time);
-            $findSet = Set::with('question')->where('id', $set_id)->first();
-            $total_question = $findSet->question->count();
+            $findSet = Set::with('activequestion')->where('id', $set_id)->first();
+            $total_question = $findSet->activequestion->count();
             $answers = $request->answers;
             $user_practice_test = UserPracticeTest::where('set_id', $set_id)->where('user_id', auth()->user()->id)->first();
             if ($user_practice_test) {
@@ -880,7 +880,7 @@ class SubjectController extends Controller
             $data = [
 
                 'set_title' => $user_practice_test->set->set_name,
-                'total_question' => $user_practice_test->set->question->count(),
+                'total_question' => $user_practice_test->set->activequestion->count(),
                 'attempted_question' => $attempted_question,
                 'correct_attempted' => $correct_attempted,
                 'incorrect_attempted' => $user_practice_test->incorrectAnswer->count(),
