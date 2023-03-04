@@ -610,7 +610,7 @@ class SubjectController extends Controller
                     "code" => 200,
                     "message" => "All Topics",
                     "result"=>$lessonTopics,
-                   
+
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }else{
@@ -625,7 +625,7 @@ class SubjectController extends Controller
             $data = [
                 "code" => 400,
                 "message" => "Something went wrong.",
-                
+
             ];
             return response()->json(['status' => 0, 'result' => $data]);
         }
@@ -732,7 +732,7 @@ class SubjectController extends Controller
 
             $set_id = $_GET['set_id'];
             $page = $_GET['page'];
-            $set_question = Set::with('question')->where('id', $set_id)->first();
+            $set_question = Set::with('activequestion')->where('id', $set_id)->first();
             if (!$set_question) {
                 $result = [
                     'set_name' => null,
@@ -748,7 +748,7 @@ class SubjectController extends Controller
                 return response()->json(['status' => 1, 'result' => $data]);
             }
             if (!$set_question->question->isEmpty()) {
-                $all_questions = $set_question->question()->paginate(1);
+                $all_questions = $set_question->activequestion()->paginate(1);
                 $options = [];
                 foreach ($all_questions as $key => $question) {
 
@@ -872,8 +872,8 @@ class SubjectController extends Controller
         try {
             $id = $_GET['id'];
             $user_practice_test = UserPracticeTest::with('userPracticeTestAnswer')->where('id', $id)->first();
-          
-            
+
+
             $attempted_question = $user_practice_test->userPracticeTestAnswer->count();
             $correct_attempted = $user_practice_test->correctAnswer->count();
             $analysis_on_attempted_question = ($correct_attempted / $attempted_question) * 100;
@@ -958,13 +958,13 @@ class SubjectController extends Controller
         try {
             $board_details = Board::where('is_activate',1)->orderBy('created_at', 'DESC')->select('id','exam_board')->get();
             if ($board_details) {
-                
+
                 $data = [
                     "code" => 200,
                     "status" => 1,
                     "message" => "All boards",
                     "board" => $board_details,
-    
+
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             } else {
@@ -973,7 +973,7 @@ class SubjectController extends Controller
                     "status" => 1,
                     "message" => "No record found",
                     "board"=>null
-    
+
                 ];
                 return response()->json(['status' => 1, 'result' => $data]);
             }
@@ -990,17 +990,17 @@ class SubjectController extends Controller
     }
     public function getSuggestedClass(){
         try {
-           
+
             //get all subject
             // $subjects = AssignSubject::with('review')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('board_id',2)->where('assign_class_id', 3)->where('is_activate', 1)->where('published', 1)->get();
             $subjects = AssignSubject::with('review','assignClass', 'boards')->where('assign_class_id',auth()->user()->userDetail->assign_class_id)->where('board_id',auth()->user()->userDetail->board_id)->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get();
              if($subjects->count()>0){
                 $subjects=$subjects;
              }else{
-                $subjects = AssignSubject::with('review','assignClass', 'boards')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get(); 
+                $subjects = AssignSubject::with('review','assignClass', 'boards')->select('id', 'subject_name', 'image', 'subject_amount', 'subject_amount')->where('is_activate', 1)->where('published', 1)->orderBy('created_at', 'DESC')->get();
              }
             // calculate total amount
-           
+
             if (!$subjects->isEmpty()) {
                 $total_amount = 0;
                 foreach ($subjects as $key => $subject) {
@@ -1018,7 +1018,7 @@ class SubjectController extends Controller
                     } else {
                         $rating_average = "No reviews yet";
                     }
-    
+
                     $data = [
                         'id' => $subject->id,
                         'subject_name' => $subject->subject_name,
@@ -1029,10 +1029,10 @@ class SubjectController extends Controller
                     ];
                     $all_subject[] = $data;
                 }
-    
-    
-    
-    
+
+
+
+
                 $data = [
                     'subjects' => $all_subject,
                     'total_amount' => $total_amount,
