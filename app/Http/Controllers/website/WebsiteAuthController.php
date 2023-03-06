@@ -368,6 +368,7 @@ class WebsiteAuthController extends Controller
 
         try {
 
+
             if (getPrefix($request) == "api") {
                 $type = Type::User;
             } elseif ($request->type == 3) {
@@ -417,13 +418,18 @@ class WebsiteAuthController extends Controller
                 ]);
 
                 if (Auth::attempt(['email' => $request->email,  'password' => $request->password, 'is_activate' => Activation::Activate])) {
-
-                    if ($type == 3) {
+                    if(auth()->user()->type_id==3){
                         return redirect()->route('teacher.dashboard');
-                    } else {
-                        return redirect()->route('website.dashboard');
+                        Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
                     }
-                    Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
+                    elseif (auth()->user()->type_id==2) {
+                        return redirect()->route('website.dashboard');
+                        Toastr::success('Signed in successfully.', '', ["positionClass" => "toast-top-right", "timeOut" => 2000]);
+                    }
+                    else{
+                        return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
+                    }
+
                 } else {
                     return redirect()->back()->withErrors(['Credentials doesn\'t match with our record'])->withInput($request->input());
                 }

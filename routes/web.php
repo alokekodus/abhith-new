@@ -118,7 +118,7 @@ Route::prefix('account')->middleware([WebSite::class])->group(function () {
     Route::get('/performance', [PerformanceController::class, 'allPerformance'])->name('website.user.performance');
     Route::get('/performancebysubjectid/{id}', [PerformanceController::class, 'allPerformanceBySubject'])->name('website.user.performance.bysubjectid');
     Route::get('my-courses/receipt/{id}', [UserCourseController::class, 'receiptGenerate'])->name('receipt.download');
-    
+
 });
 
 
