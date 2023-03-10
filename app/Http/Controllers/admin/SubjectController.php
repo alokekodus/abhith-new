@@ -46,12 +46,13 @@ class SubjectController extends Controller
     protected function published(Request $request)
     {
         $subject = AssignSubject::find($request->subjectId);
-        if(($subject->lesson->count()==0)){
-            return response()->json(['status' => 0, 'message' => 'Please add lesson before published the subject']);
+        $subject_content=Lesson::where('assign_subject_id',$subject->id)->where('parent_id','!=',null)->get();
+        if(($subject_content->count()==0)){
+            return response()->json(['status' => 0, 'message' => 'Please add lesson content before published the subject']);
         }
         $subject->published = $request->published;
         $subject->save();
-       
+
 
         if ($request->published == 0) {
             return response()->json(['status' => 1, 'message' => 'Subject publicity changed from published to not published']);
@@ -110,7 +111,7 @@ class SubjectController extends Controller
                 Toastr::success('Subject activate changed from inactivate to activate', '', ["positionClass" => "toast-top-right"]);
                 return redirect()->back();
             } else {
-               
+
                 $assignSubject->update(['is_activate' => 0]);
                 if($assignSubject->published==1){
                     $assignSubject->update(['published' => 0]);
