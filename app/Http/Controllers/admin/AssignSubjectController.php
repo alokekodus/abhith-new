@@ -48,7 +48,7 @@ class AssignSubjectController extends Controller
                     'requirements' => 'required',
                     'image_url' => 'mimes:jpg,png,jpeg|max:1024',
                     'video_thumbnail_image_url' => 'mimes:jpg,png,jpeg|max:1024',
-                    'video_url' => 'mimes:mp4,webm,mov|max:2097152',
+                    'video_url' => 'mimes:mp4,webm,mov',
 
 
                 ],
@@ -65,7 +65,7 @@ class AssignSubjectController extends Controller
                     'image_url.mimes' => " Subject cover picture only supports jpg, png and jpeg file type",
                     'video_thumbnail_image_url.max' => "Maximum file size to upload is 1MB (1024 KB). If you are uploading a photo, try to reduce its resolution to make it under 1MB",
                     'video_thumbnail_image_url.mimes' => "Subject promo video thumbnail only supports jpg, png and jpeg file type",
-                    'video_url.max' => "Maximum file size to upload is 2GB (2097152 KB).",
+                    'video_url.mimes' => "Video URL supports mp4,webm,mov",
                 ]
             );
 
