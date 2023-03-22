@@ -52,7 +52,7 @@
                 @csrf
                 @include('admin.course-management.subjects.form')
                 <div style="float: right;">
-                    <button type="button" class="btn btn-gradient-light btn-fw" id="assignSubjectCancelBtn">Cancel</button>
+                    <button type="reset" class="btn btn-gradient-light btn-fw" id="assignSubjectCancelBtn">Cancel</button>
                     <button type="submit" class="btn btn-md btn-success" id="assignSubjectSubmitBtn">
                         @if ($subject)
                             Update
@@ -211,7 +211,8 @@
             });
         });
         $('#assignSubjectCancelBtn').on('click', function() {
-            document.getElementById("addSubject").reset();
+            window.location.reload();
+            $('#addSubject')[0].reset();
         });
 
         imageUpload.onchange = evt => {
