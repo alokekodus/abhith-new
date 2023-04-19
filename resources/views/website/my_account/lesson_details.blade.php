@@ -67,8 +67,8 @@
             <button class="lessonLinks" onclick="openFile(event, 'documents')">{{ $topicDocuments->count() }}
                 Document(s)</button>
             @endif
-            @if($mcq_questions->Sets()->count())
-            <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{ $mcq_questions->Sets()->count() }}
+            @if($mcq_questions->activeSets()->count())
+            <button class="lessonLinks" onclick="openFile(event, 'mcq_test')">{{ $mcq_questions->activeSets()->count() }}
                 MCQ Test(s)</button>
             @endif
         </div>

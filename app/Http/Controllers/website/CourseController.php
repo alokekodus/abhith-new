@@ -186,7 +186,7 @@ class CourseController extends Controller
         $topicDocuments = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 1)->where('assign_subject_id', $subject_id)->where('status',1)->get();
         $topicVideos = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 2)->where('assign_subject_id', $subject_id)->where('status',1)->get();
         $topicArticles = Lesson::with('lessonAttachment')->where('parent_id', $lesson->id)->where('type', 3)->where('assign_subject_id', $subject_id)->where('status',1)->get();
-        $mcq_questions = Lesson::with('Sets')->where('id', $lesson->id)->where('assign_subject_id', $subject_id)->first();
+        $mcq_questions = Lesson::with('activeSets')->where('id', $lesson->id)->where('assign_subject_id', $subject_id)->first();
         $next_lesson_id = Lesson::where('id', '>', $lesson->id)->where('parent_id', null)->orderBy('id')->where('assign_subject_id', $subject_id)->where('status',1)->first();
         if ($next_lesson_id == null) {
             $next_lesson_id = false;
@@ -194,6 +194,7 @@ class CourseController extends Controller
             $next_lesson_id = true;
         }
         $previous_lesson_id = false;
+
         // $previous_lesson_id = Lesson::where('id', '<', $lesson->id)->orderBy('id','desc')->first()->id;
         // $next_lesson_id = Lesson::where('id', '>', $lesson->id)->orderBy('id')->first()->id;
         return view('website.my_account.lesson_details', compact('lesson', 'topicDocuments', 'topicVideos', 'topicArticles', 'mcq_questions', 'next_lesson_id', 'previous_lesson_id'));
@@ -204,7 +205,7 @@ class CourseController extends Controller
         try {
 
             $lesson = Lesson::find(Crypt::decrypt($lesson_id));
-            
+
             if ($type == 1) {
                 $lesson = Lesson::where('id', '<', $lesson->id)->where('assign_subject_id', $lesson->assign_subject_id)->where('parent_id', null)->orderBy('id', 'desc')->first();
             } else {
